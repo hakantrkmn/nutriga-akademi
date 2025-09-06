@@ -487,5 +487,138 @@ export const dummyEgitimler: Egitim[] = [
     category: "Beslenme Danışmanlığı",
     created_at: "2024-01-12",
     updated_at: "2024-01-28"
+  },
+  {
+    id: "8",
+    title: "Test Eğitimi - Görsel ve İçerik Testi",
+    description: "TipTap editor ile oluşturulan içerik test eğitimi. Görseller, başlıklar ve linkler içerir.",
+    content: {
+      "type": "doc",
+      "content": [
+        {
+          "type": "paragraph",
+          "attrs": {
+            "textAlign": null
+          },
+          "content": [
+            {
+              "type": "image",
+              "attrs": {
+                "src": "/uploads/1757183684311-instagram_post_image.jpg",
+                "alt": "",
+                "title": "",
+                "width": 197,
+                "height": 197,
+                "data-keep-ratio": true,
+                "className": "",
+                "caption": ""
+              }
+            },
+            {
+              "type": "image",
+              "attrs": {
+                "src": "/uploads/1757183576468-instagram_post_image (1).jpg",
+                "alt": "",
+                "title": "",
+                "width": 176,
+                "height": 176,
+                "data-keep-ratio": true,
+                "className": "",
+                "caption": ""
+              }
+            }
+          ]
+        },
+        {
+          "type": "heading",
+          "attrs": {
+            "textAlign": null,
+            "level": 1
+          },
+          "content": [
+            {
+              "type": "text",
+              "text": "Test Başlığı"
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "attrs": {
+            "textAlign": null
+          }
+        },
+        {
+          "type": "paragraph",
+          "attrs": {
+            "textAlign": null
+          }
+        },
+        {
+          "type": "paragraph",
+          "attrs": {
+            "textAlign": null
+          },
+          "content": [
+            {
+              "type": "text",
+              "marks": [
+                {
+                  "type": "link",
+                  "attrs": {
+                    "href": "http://localhost:3000/admin/egitimler/yeni",
+                    "target": "_blank",
+                    "rel": "noopener noreferrer nofollow",
+                    "class": "tiptap-link"
+                  }
+                }
+              ],
+              "text": "http://localhost:3000/admin/egitimler/yeni"
+            }
+          ]
+        },
+        {
+          "type": "heading",
+          "attrs": {
+            "textAlign": null,
+            "level": 2
+          },
+          "content": [
+            {
+              "type": "text",
+              "text": "Alt Başlık"
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "attrs": {
+            "textAlign": null
+          },
+          "content": [
+            {
+              "type": "text",
+              "text": "Test paragrafı içeriği"
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "attrs": {
+            "textAlign": null
+          }
+        }
+      ]
+    },
+    image_url: "https://images.unsplash.com/photo-1559757175-0eb30cd8c063?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+    slug: "test-egitimi-gorsel-ve-icerik-testi",
+    price: 299,
+    sales_count: 0,
+    duration: "2 saat",
+    level: "Başlangıç",
+    instructor: "Test Eğitmeni",
+    category: "Temel Beslenme",
+    created_at: "2025-09-06",
+    updated_at: "2025-09-06"
   }
 ];

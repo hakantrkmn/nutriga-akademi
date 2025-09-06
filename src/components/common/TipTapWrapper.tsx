@@ -1,3 +1,5 @@
+"use client";
+
 import { Box } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { generateHTML } from '@tiptap/html';
@@ -101,6 +103,22 @@ export default function TipTapWrapper({ content, className = "tiptap-content" }:
           height: "auto !important",
           borderRadius: "8px !important",
           margin: "1rem 0 !important"
+        },
+        // Inline görseller için özel stil
+        "& p img": {
+          display: "inline-block !important",
+          verticalAlign: "middle !important",
+          margin: "0 0.5rem !important",
+          maxWidth: "200px !important",
+          minWidth: "50px !important",
+          minHeight: "50px !important"
+        },
+        // Block görseller için stil
+        "& img.block": {
+          display: "block !important",
+          margin: "1rem auto !important",
+          textAlign: "center !important",
+          maxWidth: "100% !important"
         },
         "& h1": {
           fontSize: "2rem !important",

@@ -14,7 +14,8 @@ import { TableCell } from '@tiptap/extension-table-cell'
 import { TableHeader } from '@tiptap/extension-table-header'
 import CodeBlockLowlight from '@tiptap/extension-code-block-lowlight'
 import { createLowlight } from 'lowlight'
-import ResizeImage from 'tiptap-extension-resize-image'
+import { ResizableImage } from 'tiptap-extension-resizable-image'
+import 'tiptap-extension-resizable-image/styles.css'
 import Highlight from '@tiptap/extension-highlight'
 import TextAlign from '@tiptap/extension-text-align'
 import Underline from '@tiptap/extension-underline'
@@ -91,9 +92,10 @@ export default function TipTapEditor({
           class: 'tiptap-image',
         },
       }),
-      ResizeImage.configure({
-        inline: true, // Varsayılan olarak inline, sonra kullanıcı değiştirebilir
+      ResizableImage.configure({
         allowBase64: true,
+        defaultWidth: 200,
+        defaultHeight: 200,
         HTMLAttributes: {
           class: 'tiptap-image-resizable',
         },
@@ -459,44 +461,46 @@ export default function TipTapEditor({
               title="Görsel Ekle"
             />
             
-            {/* Image Inline/Block Toggle - her zaman görünür, sadece görsel seçiliyken aktif */}
+            {/* Image Inline/Block Toggle - yeni paket için güncellendi */}
             <Separator orientation="vertical" h="20px" />
             <ToolbarButton
               onClick={() => {
-                // TipTap'ta görsel seçimini doğru şekilde kontrol et
+                // Yeni pakette görsel seçimini kontrol et
                 const { selection } = editor.state
                 const { from } = selection
                 
                 // Cursor pozisyonundaki node'u kontrol et
                 const nodeAtPos = editor.state.doc.nodeAt(from)
                 
-                // Debug için console.log ekle
                 console.log('=== Click Debug ===')
                 console.log('Selection:', selection)
                 console.log('From position:', from)
                 console.log('Node at position:', nodeAtPos)
                 console.log('Node type:', nodeAtPos?.type?.name)
                 console.log('Node attrs:', nodeAtPos?.attrs)
-                console.log('Is image?', nodeAtPos && (nodeAtPos.type.name === 'image' || nodeAtPos.type.name === 'imageResize'))
+                console.log('Is image?', nodeAtPos && (nodeAtPos.type.name === 'image' || nodeAtPos.type.name === 'resizableImage'))
                 console.log('==================')
                 
-                if (nodeAtPos && (nodeAtPos.type.name === 'image' || nodeAtPos.type.name === 'imageResize')) {
-                  const isCurrentlyInline = nodeAtPos.attrs.inline === true
+                if (nodeAtPos && (nodeAtPos.type.name === 'image' || nodeAtPos.type.name === 'resizableImage')) {
+                  // Yeni pakette inline/block geçişi farklı şekilde çalışır
+                  // CSS class'ları ile kontrol edilir
+                  const currentClass = nodeAtPos.attrs.class || ''
+                  const isCurrentlyInline = currentClass.includes('inline')
                   
-                  console.log('Current inline state:', isCurrentlyInline)
-                  console.log('Current inline attr:', nodeAtPos.attrs.inline)
+                  console.log('Current class:', currentClass)
+                  console.log('Is currently inline:', isCurrentlyInline)
                   
                   if (isCurrentlyInline) {
-                    // Block yap (ortalamayı etkinleştir)
+                    // Block yap
                     console.log('Switching to block mode')
-                    editor.chain().focus().updateAttributes('imageResize', {
-                      inline: false
+                    editor.chain().focus().updateAttributes('image', {
+                      class: 'tiptap-image-resizable block'
                     }).run()
                   } else {
-                    // Inline yap (yanına metin yazılabilir)
+                    // Inline yap
                     console.log('Switching to inline mode')
-                    editor.chain().focus().updateAttributes('imageResize', {
-                      inline: true
+                    editor.chain().focus().updateAttributes('image', {
+                      class: 'tiptap-image-resizable inline'
                     }).run()
                   }
                 } else {
@@ -506,25 +510,23 @@ export default function TipTapEditor({
               text="🔄"
               title="Görsel Modu Değiştir (Inline/Block)"
               disabled={(() => {
-                // TipTap'ta görsel seçimini doğru şekilde kontrol et
+                // Yeni pakette görsel seçimini kontrol et
                 const { selection } = editor.state
                 const { from } = selection
                 
                 // Cursor pozisyonundaki node'u kontrol et
                 const nodeAtPos = editor.state.doc.nodeAt(from)
                 
-                // Debug için console.log ekle
                 console.log('=== Selection Debug ===')
                 console.log('Selection:', selection)
                 console.log('From position:', from)
                 console.log('Node at position:', nodeAtPos)
                 console.log('Node type:', nodeAtPos?.type?.name)
                 console.log('Node attrs:', nodeAtPos?.attrs)
-                console.log('Is image?', nodeAtPos && (nodeAtPos.type.name === 'image' || nodeAtPos.type.name === 'imageResize'))
-                console.log('Current inline attr:', nodeAtPos?.attrs?.inline)
+                console.log('Is image?', nodeAtPos && (nodeAtPos.type.name === 'image' || nodeAtPos.type.name === 'resizableImage'))
                 console.log('========================')
                 
-                return !(nodeAtPos && (nodeAtPos.type.name === 'image' || nodeAtPos.type.name === 'imageResize'))
+                return !(nodeAtPos && (nodeAtPos.type.name === 'image' || nodeAtPos.type.name === 'resizableImage'))
               })()}
             />
           </HStack>
