@@ -1,7 +1,6 @@
 import {
   Box,
   Card,
-  Image,
   VStack,
   HStack,
   Heading,
@@ -11,6 +10,7 @@ import {
   Icon
 } from "@chakra-ui/react";
 import Link from "next/link";
+import Image from "next/image";
 import { FiClock, FiUser, FiShoppingCart } from "react-icons/fi";
 import { Egitim } from "@/data/dummyEgitimData";
 
@@ -37,26 +37,17 @@ export default function EgitimCard({ egitim }: EgitimCardProps) {
           <Image
             src={egitim.image_url}
             alt={egitim.title}
-            h="full"
-            w="full"
-            objectFit="cover"
-            onError={(e) => {
-              const target = e.target as HTMLImageElement;
-              target.style.display = 'none';
+            width={400}
+            height={200}
+            loading="lazy"
+            style={{
+              width: "auto",
+              height: "200px",
+              objectFit: "cover",
+              aspectRatio: "2/1"
             }}
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
           />
-          <VStack 
-            position="absolute"
-            top="0"
-            left="0"
-            h="full" 
-            w="full"
-            justify="center" 
-            bg="gray.100"
-            color="gray.400"
-          >
-            <Text fontSize="sm">Eğitim Görseli</Text>
-          </VStack>
         </Box>
         
         <Badge

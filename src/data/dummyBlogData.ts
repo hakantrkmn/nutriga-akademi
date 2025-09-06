@@ -103,7 +103,7 @@ export const dummyBlogPosts: BlogPost[] = [
         }
       ]
     },
-    image_url: "/images/blog/protein-hesaplama.jpg",
+    image_url: "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
     slug: "protein-ihtiyacini-dogru-hesaplama-yontemleri",
     category: "Beslenme Bilimi",
     excerpt: "Günlük protein ihtiyacınızı doğru hesaplama yöntemlerini öğrenerek sağlıklı beslenme planınızı optimize edin.",
@@ -128,7 +128,7 @@ export const dummyBlogPosts: BlogPost[] = [
 
       <p>Bu besinleri günlük diyetinize dahil ederek kış aylarında sağlıklı kalabilirsiniz.</p>
     `,
-    image_url: "/images/blog/bagisiklik-gucendiren.jpg",
+    image_url: "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
     slug: "kis-aylarinda-bagisiklik-guclendiren-beslenme",
     category: "Beslenme Bilimi",
     excerpt: "Kış aylarında bağışıklık sisteminizi güçlendiren besinler ve beslenme önerileri ile sağlıklı kalın.",
@@ -156,7 +156,7 @@ export const dummyBlogPosts: BlogPost[] = [
       <h3>Kaçınılması Gerekenler</h3>
       <p>İşlenmiş gıdalar, şekerli içecekler ve trans yağ içeren atıştırmalıklardan uzak durulmalıdır.</p>
     `,
-    image_url: "/images/blog/cocuk-atiştirmalik.jpg",
+    image_url: "https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
     slug: "cocuklarda-saglikli-atistirmalik-secenekleri",
     category: "Çocuk Beslenmesi",
     excerpt: "Çocuklarınız için sağlıklı ve besleyici atıştırmalık seçenekleri ile doğru beslenme alışkanlıkları kazandırın.",
@@ -187,7 +187,7 @@ export const dummyBlogPosts: BlogPost[] = [
         <li>Sıvı kaybının yerine konması</li>
       </ul>
     `,
-    image_url: "/images/blog/spor-beslenmesi.jpg",
+    image_url: "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
     slug: "spor-oncesi-ve-sonrasi-beslenme-rehberi", 
     category: "Sporcu Beslenmesi",
     excerpt: "Spor performansınızı artırmak için spor öncesi ve sonrası beslenme stratejilerini öğrenin.",
@@ -213,7 +213,7 @@ export const dummyBlogPosts: BlogPost[] = [
       <h3>Chia Pudingi</h3>
       <p>Omega-3 bakımından zengin, tok tutan sağlıklı bir tatlı alternatifi.</p>
     `,
-    image_url: "/images/blog/saglikli-tarifler.jpg", 
+    image_url: "https://images.unsplash.com/photo-1490645935967-10de6ba17061?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80", 
     slug: "evde-kolayca-yapabileceginiz-saglikli-tarifler",
     category: "Sağlıklı Tarifler",
     excerpt: "Evde kolayca uygulayabileceğiniz besleyici ve lezzetli tariflerle sağlıklı beslenmeyi sürdürün.",
@@ -240,7 +240,7 @@ export const dummyBlogPosts: BlogPost[] = [
       <h3>Beslenme Önerileri</h3>
       <p>Küçük sık öğünler, yumuşak dokulu gıdalar ve çeşitli besin gruplarından seçimler yapılmalıdır.</p>
     `,
-    image_url: "/images/blog/yasli-beslenmesi.jpg",
+    image_url: "https://images.unsplash.com/photo-1559757175-0eb30cd8c063?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
     slug: "yaslilkta-beslenme-dikkat-edilmesi-gerekenler",
     category: "Yaşlı Beslenmesi", 
     excerpt: "Yaşlılık döneminde sağlıklı beslenme için dikkat edilmesi gereken noktalar ve özel beslenme önerileri.",

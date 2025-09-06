@@ -1,7 +1,6 @@
 import {
   Box,
   Card,
-  Image,
   VStack,
   HStack,
   Heading,
@@ -10,6 +9,7 @@ import {
   Icon
 } from "@chakra-ui/react";
 import Link from "next/link";
+import Image from "next/image";
 import { FiClock, FiUser } from "react-icons/fi";
 import { BlogPost } from "@/data/dummyBlogData";
 
@@ -37,31 +37,17 @@ export default function BlogCard({ post }: BlogCardProps) {
           <Image
             src={post.image_url}
             alt={post.title}
-            h="full"
-            w="full"
-            objectFit="cover"
-            onError={(e) => {
-              const target = e.target as HTMLImageElement;
-              target.style.display = 'none';
+            width={400}
+            height={200}
+            loading="lazy"
+            style={{
+              width: "auto",
+              height: "200px",
+              objectFit: "cover",
+              aspectRatio: "2/1"
             }}
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
           />
-          <VStack 
-            position="absolute"
-            top="0"
-            left="0"
-            h="full" 
-            w="full"
-            justify="center" 
-            bg="gray.100"
-            color="gray.400"
-            css={{
-              '&:has(+ img)': {
-                display: 'none'
-              }
-            }}
-          >
-            <Text fontSize="sm">Görsel Bulunamadı</Text>
-          </VStack>
         </Box>
         
         <Card.Body p={6}>

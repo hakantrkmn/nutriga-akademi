@@ -293,7 +293,7 @@ export const dummyEgitimler: Egitim[] = [
         }
       ]
     },
-    image_url: "/images/egitimler/temel-beslenme.jpg",
+    image_url: "https://images.unsplash.com/photo-1490645935967-10de6ba17061?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
     slug: "temel-beslenme-ilkeleri-ve-makro-besinler",
     price: 299,
     sales_count: 156,
@@ -338,7 +338,7 @@ export const dummyEgitimler: Egitim[] = [
 
       <p><strong>Sertifikasyon:</strong> Bu eğitimi başarıyla tamamlayanlar, klinik beslenme uzmanlık sertifikası alacaklardır.</p>
     `,
-    image_url: "/images/egitimler/klinik-beslenme.jpg",
+    image_url: "https://images.unsplash.com/photo-1559757148-5c350d0d3c56?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
     slug: "klinik-beslenme-ve-hastalik-yonetimi",
     price: 599,
     sales_count: 89,
@@ -383,7 +383,7 @@ export const dummyEgitimler: Egitim[] = [
 
       <p><strong>Bonus:</strong> Gerçek sporcu vaka analizleri ve beslenme planı örnekleri dahildir.</p>
     `,
-    image_url: "/images/egitimler/sporcu-beslenmesi.jpg",
+    image_url: "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
     slug: "sporcu-beslenmesi-ve-performans-optimizasyonu",
     price: 449,
     sales_count: 134,
@@ -433,7 +433,7 @@ export const dummyEgitimler: Egitim[] = [
         <li>Otizm spektrum bozukluğunda beslenme</li>
       </ul>
     `,
-    image_url: "/images/egitimler/cocuk-beslenmesi.jpg",
+    image_url: "https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
     slug: "cocuk-ve-adolesan-beslenmesi",
     price: 399,
     sales_count: 78,
@@ -479,7 +479,7 @@ export const dummyEgitimler: Egitim[] = [
       <h3>Pratik Uygulamalar</h3>
       <p>Yaşlı bakımevleri için menü planlama, texture modified foods, ve aile eğitimi konularını kapsar.</p>
     `,
-    image_url: "/images/egitimler/yasli-beslenmesi.jpg",
+    image_url: "https://images.unsplash.com/photo-1559757175-0eb30cd8c063?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
     slug: "yasli-beslenmesi-ve-geriatrik-yaklasimlar",
     price: 349,
     sales_count: 45,
@@ -532,7 +532,7 @@ export const dummyEgitimler: Egitim[] = [
 
       <p><strong>Özel Bonus:</strong> Gerçek danışmanlık seansı örnekleri ve rol play egzersizleri.</p>
     `,
-    image_url: "/images/egitimler/beslenme-danismanligi.jpg",
+    image_url: "https://images.unsplash.com/photo-1559757175-0eb30cd8c063?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
     slug: "beslenme-danismanligi-ve-muvekkil-iletisimi",
     price: 549,
     sales_count: 92,
