@@ -1,196 +1,161 @@
 import { Box } from "@chakra-ui/react";
-import { useMemo } from "react";
-
-interface TipTapContent {
-  type: string;
-  content?: TipTapContent[];
-  attrs?: Record<string, unknown>;
-  text?: string;
-}
+import { useEffect, useState } from "react";
+import { generateHTML } from '@tiptap/html';
+import StarterKit from '@tiptap/starter-kit';
+import Image from '@tiptap/extension-image';
+import Highlight from '@tiptap/extension-highlight';
+import TextAlign from '@tiptap/extension-text-align';
+import { TextStyle } from '@tiptap/extension-text-style';
+import Color from '@tiptap/extension-color';
 
 interface TipTapWrapperProps {
   content: string | object;
   className?: string;
 }
 
-// TipTap JSON verisini HTML string'e çeviren fonksiyon
-const convertTipTapToHTML = (content: TipTapContent): string => {
-  if (!content) return "";
+// TipTap extensions - sadece görüntüleme için gerekli olanlar
+const extensions = [
+  StarterKit.configure({
+    heading: {
+      levels: [1, 2, 3, 4, 5, 6],
+    },
+  }),
+  Image,
+  Highlight,
+  TextAlign,
+  TextStyle,
+  Color,
+];
 
-  const { type, content: children, attrs, text } = content;
-
-  // Text node
-  if (type === "text") {
-    return text || "";
+// imageResize node'larını image node'larına dönüştür
+const convertImageResizeToImage = (node: Record<string, unknown>): Record<string, unknown> => {
+  if (node.type === 'imageResize') {
+    const attrs = node.attrs as Record<string, unknown> || {};
+    return {
+      ...node,
+      type: 'image',
+      attrs: {
+        ...attrs,
+        // imageResize specific attrs'ları temizle
+        containerStyle: undefined,
+        wrapperStyle: undefined,
+      }
+    };
   }
-
-  // Paragraph
-  if (type === "paragraph") {
-    const innerHTML = children ? children.map(convertTipTapToHTML).join("") : "";
-    return `<p>${innerHTML}</p>`;
+  
+  if (node.content && Array.isArray(node.content)) {
+    return {
+      ...node,
+      content: (node.content as Record<string, unknown>[]).map(convertImageResizeToImage)
+    };
   }
-
-  // Headings
-  if (type === "heading") {
-    const level = attrs?.level || 1;
-    const innerHTML = children ? children.map(convertTipTapToHTML).join("") : "";
-    return `<h${level}>${innerHTML}</h${level}>`;
-  }
-
-  // Bullet List
-  if (type === "bulletList") {
-    const innerHTML = children ? children.map(convertTipTapToHTML).join("") : "";
-    return `<ul>${innerHTML}</ul>`;
-  }
-
-  // List Item
-  if (type === "listItem") {
-    const innerHTML = children ? children.map(convertTipTapToHTML).join("") : "";
-    return `<li>${innerHTML}</li>`;
-  }
-
-  // Ordered List
-  if (type === "orderedList") {
-    const innerHTML = children ? children.map(convertTipTapToHTML).join("") : "";
-    return `<ol>${innerHTML}</ol>`;
-  }
-
-  // Bold text
-  if (type === "text" && attrs?.bold) {
-    return `<strong>${text || ""}</strong>`;
-  }
-
-  // Italic text
-  if (type === "text" && attrs?.italic) {
-    return `<em>${text || ""}</em>`;
-  }
-
-  // Link
-  if (type === "text" && attrs?.link) {
-    const linkAttrs = attrs.link as { href?: string };
-    const href = linkAttrs.href || "#";
-    return `<a href="${href}">${text || ""}</a>`;
-  }
-
-  // Default: process children if available
-  if (children) {
-    return children.map(convertTipTapToHTML).join("");
-  }
-
-  return "";
+  
+  return node;
 };
 
 // Ana wrapper fonksiyonu
 const processContent = (content: string | object): string => {
-  // Eğer string ise, zaten HTML formatında
+  // Eğer string ise, zaten HTML formatında (React Quill'den gelen)
   if (typeof content === "string") {
     return content;
   }
 
   // Eğer object ise, TipTap JSON formatında
   if (typeof content === "object" && content !== null) {
-    const tipTapContent = content as TipTapContent;
-    
-    // Eğer doc type'ı varsa, content array'ini işle
-    if (tipTapContent.type === "doc" && tipTapContent.content) {
-      return tipTapContent.content.map(convertTipTapToHTML).join("");
+    try {
+      // imageResize node'larını image node'larına dönüştür
+      const convertedContent = convertImageResizeToImage(content as Record<string, unknown>);
+      
+      // TipTap'ın resmi generateHTML fonksiyonunu kullan
+      return generateHTML(convertedContent, extensions);
+    } catch (error) {
+      console.error('TipTap JSON to HTML conversion error:', error);
+      return '<p>İçerik yüklenirken hata oluştu.</p>';
     }
-    
-    // Diğer durumlarda direkt işle
-    return convertTipTapToHTML(tipTapContent);
   }
 
   return "";
 };
 
 export default function TipTapWrapper({ content, className = "tiptap-content" }: TipTapWrapperProps) {
-  // Memoize HTML content processing for better performance
-  const htmlContent = useMemo(() => processContent(content), [content]);
+  const [htmlContent, setHtmlContent] = useState<string>("");
+  const [isClient, setIsClient] = useState(false);
 
-  // Eğitim içeriği için özel styling
-  const isEgitimContent = className === "egitim-content";
+  useEffect(() => {
+    setIsClient(true);
+    setHtmlContent(processContent(content));
+  }, [content]);
+
+  // SSR sırasında boş div göster, client-side'da HTML göster
+  if (!isClient) {
+    return <Box className={className} />;
+  }
   
   return (
     <Box 
       className={className}
       css={{
-        "h1, h2, h3, h4, h5, h6": {
-          fontWeight: "bold",
-          marginBottom: "1rem",
-          marginTop: "2rem",
-          color: "var(--chakra-colors-gray-700)"
+        padding: "8px !important",
+        "& img": {
+          maxWidth: "100% !important",
+          height: "auto !important",
+          borderRadius: "8px !important",
+          margin: "1rem 0 !important"
         },
-        "h2": {
-          fontSize: isEgitimContent ? "1.75rem" : "1.8rem",
-          color: isEgitimContent ? "var(--chakra-colors-green-600)" : "var(--chakra-colors-gray-700)"
+        "& h1": {
+          fontSize: "2rem !important",
+          fontWeight: "bold !important",
+          lineHeight: "1.2 !important",
+          margin: "1.5rem 0 1rem 0 !important",
+          color: "inherit !important"
         },
-        "h3": {
-          fontSize: "1.4rem"
+        "& h2": {
+          fontSize: "1.5rem !important",
+          fontWeight: "bold !important",
+          lineHeight: "1.3 !important",
+          margin: "1.25rem 0 0.75rem 0 !important",
+          color: "inherit !important"
         },
-        "p": {
-          marginBottom: "1rem",
-          lineHeight: "1.8",
-          color: "var(--chakra-colors-gray-700)",
-          fontSize: "1rem"
+        "& h3": {
+          fontSize: "1.25rem !important",
+          fontWeight: "semibold !important",
+          lineHeight: "1.4 !important",
+          margin: "1rem 0 0.5rem 0 !important",
+          color: "inherit !important"
         },
-        "ul, ol": {
-          marginBottom: "1rem",
-          paddingLeft: "1.5rem"
+        "& h4": {
+          fontSize: "1.125rem !important",
+          fontWeight: "semibold !important",
+          lineHeight: "1.4 !important",
+          margin: "0.875rem 0 0.5rem 0 !important",
+          color: "inherit !important"
         },
-        "li": {
-          marginBottom: "0.5rem",
-          color: "var(--chakra-colors-gray-700)",
-          lineHeight: "1.6"
+        "& h5": {
+          fontSize: "1rem !important",
+          fontWeight: "semibold !important",
+          lineHeight: "1.5 !important",
+          margin: "0.75rem 0 0.5rem 0 !important",
+          color: "inherit !important"
         },
-        "strong": {
-          fontWeight: "600",
-          color: "var(--chakra-colors-gray-800)"
+        "& h6": {
+          fontSize: "0.875rem !important",
+          fontWeight: "semibold !important",
+          lineHeight: "1.5 !important",
+          margin: "0.75rem 0 0.5rem 0 !important",
+          color: "inherit !important"
         },
-        "em": {
-          fontStyle: "italic",
-          color: "var(--chakra-colors-gray-700)"
+        "& p": {
+          margin: "0.75rem 0 !important",
+          lineHeight: "1.6 !important"
         },
-        "a": {
-          color: "var(--chakra-colors-green-500)",
-          textDecoration: "underline"
+        "& ul, & ol": {
+          margin: "0.75rem 0 !important",
+          paddingLeft: "1.5rem !important"
         },
-        "a:hover": {
-          color: "var(--chakra-colors-green-600)"
-        },
-        // Eğitim içeriği için ekstra styling
-        ...(isEgitimContent && {
-          "h2": {
-            fontSize: "1.75rem",
-            color: "var(--chakra-colors-green-600)",
-            borderBottom: "2px solid var(--chakra-colors-green-100)",
-            paddingBottom: "0.5rem",
-            marginBottom: "1.5rem"
-          },
-          "h3": {
-            fontSize: "1.4rem",
-            color: "var(--chakra-colors-gray-700)",
-            marginTop: "2rem",
-            marginBottom: "1rem"
-          },
-          "ul": {
-            backgroundColor: "var(--chakra-colors-gray-50)",
-            padding: "1rem",
-            borderRadius: "8px",
-            border: "1px solid var(--chakra-colors-gray-200)"
-          },
-          "li": {
-            marginBottom: "0.75rem",
-            position: "relative",
-            paddingLeft: "1rem"
-          },
-          "li::before": {
-            content: '"•"',
-            color: "var(--chakra-colors-green-500)",
-            fontWeight: "bold",
-            position: "absolute",
-            left: "0"
-          }
-        })
+        "& li": {
+          margin: "0.25rem 0 !important",
+          lineHeight: "1.5 !important"
+        }
       }}
       dangerouslySetInnerHTML={{ __html: htmlContent }}
     />

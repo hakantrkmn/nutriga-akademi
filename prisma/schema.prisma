@@ -1,0 +1,59 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+model Egitim {
+  id          String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  title       String
+  description String?
+  content     Json?
+  imageUrl    String?  @map("image_url")
+  slug        String   @unique
+  price       Decimal? @db.Decimal(10, 2)
+  salesCount  Int      @default(0) @map("sales_count")
+  createdAt   DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt   DateTime @default(now()) @updatedAt @map("updated_at") @db.Timestamptz(6)
+
+  // Relations
+  cartItems   CartItem[]
+
+  @@map("egitimler")
+}
+
+model BlogPost {
+  id        String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  title     String
+  content   Json
+  imageUrl  String?  @map("image_url")
+  slug      String   @unique
+  category  String?
+  excerpt   String?
+  author    String?
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt DateTime @default(now()) @updatedAt @map("updated_at") @db.Timestamptz(6)
+
+  @@map("blog_posts")
+}
+
+model CartItem {
+  id          String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  userId      String   @map("user_id") @db.Uuid
+  educationId String   @map("education_id") @db.Uuid
+  quantity    Int      @default(1)
+  createdAt   DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
+
+  // Relations
+  education   Egitim   @relation(fields: [educationId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, educationId])
+  @@map("cart_items")
+}

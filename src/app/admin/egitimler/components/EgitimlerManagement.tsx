@@ -1,0 +1,298 @@
+'use client'
+
+import { useState, useEffect } from 'react'
+import { useRouter } from 'next/navigation'
+import {
+  Box,
+  VStack,
+  HStack,
+  Heading,
+  Text,
+  Button,
+  Card,
+  Table,
+  Icon,
+  Badge,
+  Spinner,
+  Center,
+} from '@chakra-ui/react'
+import { FiPlus, FiEdit, FiTrash2 } from 'react-icons/fi'
+import { egitimlerApi, EgitimData } from '@/lib/api'
+
+export default function EgitimlerManagement() {
+  const router = useRouter()
+  const [egitimler, setEgitimler] = useState<EgitimData[]>([])
+  const [loading, setLoading] = useState(true)
+
+  // Eğitimleri yükle
+  const loadEgitimler = async () => {
+    try {
+      setLoading(true)
+      const response = await egitimlerApi.getAll()
+      
+      if (response.success && response.data) {
+        setEgitimler(response.data)
+      } else {
+        console.error('Eğitimler yüklenemedi:', response.error)
+      }
+    } catch (error) {
+      console.error('Eğitimler yüklenirken hata:', error)
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  useEffect(() => {
+    loadEgitimler()
+  }, [])
+
+  // Yeni eğitim ekle
+  const handleAddEgitim = () => {
+    router.push('/admin/egitimler/yeni')
+  }
+
+  // Eğitim düzenle
+  const handleEditEgitim = (egitim: EgitimData) => {
+    if (egitim.id) {
+      router.push(`/admin/egitimler/${egitim.id}/duzenle`)
+    }
+  }
+
+  // Eğitim sil
+  const handleDeleteEgitim = async (id: string) => {
+    if (!confirm('Bu eğitimi silmek istediğinizden emin misiniz?')) {
+      return
+    }
+
+    try {
+      const response = await egitimlerApi.delete(id)
+      
+      if (response.success) {
+        await loadEgitimler() // Listeyi yenile
+        console.log('Eğitim başarıyla silindi')
+      } else {
+        console.error('Eğitim silinemedi')
+      }
+    } catch (error) {
+      console.error('Eğitim silinirken hata:', error)
+    }
+  }
+
+  if (loading) {
+    return (
+      <Box>
+        <VStack gap={6} align="stretch">
+          {/* Header */}
+          <HStack justify="space-between" align="center">
+            <Box>
+              <Heading size="lg" color="gray.900">
+                Eğitimler Yönetimi
+              </Heading>
+              <Text color="gray.600">
+                Eğitimlerinizi ekleyin, düzenleyin ve yönetin
+              </Text>
+            </Box>
+            <Button
+              colorScheme="green"
+              onClick={handleAddEgitim}
+            >
+              <Icon as={FiPlus} mr={2} />
+              Yeni Eğitim
+            </Button>
+          </HStack>
+
+          {/* Loading State */}
+          <Card.Root className="loading-container">
+            <Card.Body>
+              <Center py={20}>
+                <VStack gap={4}>
+                  <Spinner
+                    size="xl"
+                    color="green.500"
+                    className="loading-spinner"
+                  />
+                  <Text color="gray.600" fontSize="lg" className="loading-text">
+                    Eğitimler yükleniyor...
+                  </Text>
+                </VStack>
+              </Center>
+            </Card.Body>
+          </Card.Root>
+        </VStack>
+      </Box>
+    )
+  }
+
+  return (
+    <Box>
+      <VStack gap={6} align="stretch">
+        {/* Header */}
+        <HStack justify="space-between" align="center">
+          <Box>
+            <Heading size="lg" color="gray.900">
+              Eğitimler Yönetimi
+            </Heading>
+            <Text color="gray.600">
+              Eğitimlerinizi ekleyin, düzenleyin ve yönetin
+            </Text>
+          </Box>
+          <Button
+            colorScheme="green"
+            onClick={handleAddEgitim}
+          >
+            <Icon as={FiPlus} mr={2} />
+            Yeni Eğitim
+          </Button>
+        </HStack>
+
+        {/* Eğitimler Tablosu */}
+        <Card.Root bg="white" borderRadius="lg" boxShadow="sm" className="admin-table-container">
+          <Card.Body p={0}>
+            <Table.Root size="sm" className="admin-table">
+              <Table.Header>
+                <Table.Row bg="gray.50" className="admin-table-header-row">
+                  <Table.ColumnHeader 
+                    color="gray.700" 
+                    fontWeight="semibold"
+                    fontSize="sm"
+                    py={4}
+                    px={6}
+                  >
+                    Başlık
+                  </Table.ColumnHeader>
+                  <Table.ColumnHeader 
+                    color="gray.700" 
+                    fontWeight="semibold"
+                    fontSize="sm"
+                    py={4}
+                    px={6}
+                  >
+                    Kategori
+                  </Table.ColumnHeader>
+                  <Table.ColumnHeader 
+                    color="gray.700" 
+                    fontWeight="semibold"
+                    fontSize="sm"
+                    py={4}
+                    px={6}
+                  >
+                    Fiyat
+                  </Table.ColumnHeader>
+                  <Table.ColumnHeader 
+                    color="gray.700" 
+                    fontWeight="semibold"
+                    fontSize="sm"
+                    py={4}
+                    px={6}
+                  >
+                    Satış
+                  </Table.ColumnHeader>
+                  <Table.ColumnHeader 
+                    color="gray.700" 
+                    fontWeight="semibold"
+                    fontSize="sm"
+                    py={4}
+                    px={6}
+                  >
+                    Tarih
+                  </Table.ColumnHeader>
+                  <Table.ColumnHeader 
+                    color="gray.700" 
+                    fontWeight="semibold"
+                    fontSize="sm"
+                    py={4}
+                    px={6}
+                    textAlign="center"
+                  >
+                    İşlemler
+                  </Table.ColumnHeader>
+                </Table.Row>
+              </Table.Header>
+              <Table.Body>
+                {egitimler.length === 0 ? (
+                  <Table.Row>
+                    <Table.Cell colSpan={6} textAlign="center" py={12}>
+                      <VStack gap={3}>
+                        <Text color="gray.500" fontSize="lg">
+                          Henüz eğitim eklenmemiş
+                        </Text>
+                        <Text color="gray.400" fontSize="sm">
+                          İlk eğitiminizi eklemek için "Yeni Eğitim" butonuna tıklayın
+                        </Text>
+                      </VStack>
+                    </Table.Cell>
+                  </Table.Row>
+                ) : (
+                  egitimler.map((egitim, index) => (
+                    <Table.Row 
+                      key={egitim.id}
+                      bg={index % 2 === 0 ? "white" : "gray.25"}
+                      _hover={{ bg: "gray.50" }}
+                    >
+                      <Table.Cell py={4} px={6}>
+                        <VStack align="start" gap={1}>
+                          <Text fontWeight="medium" color="gray.900">
+                            {egitim.title}
+                          </Text>
+                          <Text fontSize="sm" color="gray.500">
+                            /{egitim.slug}
+                          </Text>
+                        </VStack>
+                      </Table.Cell>
+                      <Table.Cell py={4} px={6}>
+                        {egitim.category ? (
+                          <Badge colorScheme="blue" variant="subtle">
+                            {egitim.category}
+                          </Badge>
+                        ) : (
+                          <Text color="gray.400">-</Text>
+                        )}
+                      </Table.Cell>
+                      <Table.Cell py={4} px={6}>
+                        {egitim.price ? (
+                          <Text fontWeight="medium" color="green.600">
+                            ₺{egitim.price}
+                          </Text>
+                        ) : (
+                          <Text color="gray.400">-</Text>
+                        )}
+                      </Table.Cell>
+                      <Table.Cell py={4} px={6}>
+                        <Text color="gray.700">{egitim.salesCount || 0}</Text>
+                      </Table.Cell>
+                      <Table.Cell py={4} px={6}>
+                        <Text fontSize="sm" color="gray.500">
+                          {egitim.createdAt ? new Date(egitim.createdAt).toLocaleDateString('tr-TR') : '-'}
+                        </Text>
+                      </Table.Cell>
+                      <Table.Cell py={4} px={6} textAlign="center">
+                        <HStack gap={2} justify="center">
+                          <Button
+                            size="sm"
+                            variant="outline"
+                            colorScheme="blue"
+                            onClick={() => handleEditEgitim(egitim)}
+                          >
+                            <Icon as={FiEdit} />
+                          </Button>
+                          <Button
+                            size="sm"
+                            variant="outline"
+                            colorScheme="red"
+                            onClick={() => egitim.id && handleDeleteEgitim(egitim.id)}
+                          >
+                            <Icon as={FiTrash2} />
+                          </Button>
+                        </HStack>
+                      </Table.Cell>
+                    </Table.Row>
+                  ))
+                )}
+              </Table.Body>
+            </Table.Root>
+          </Card.Body>
+        </Card.Root>
+      </VStack>
+    </Box>
+  )
+}

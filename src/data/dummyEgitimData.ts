@@ -44,252 +44,196 @@ export const dummyEgitimler: Egitim[] = [
       "content": [
         {
           "type": "heading",
-          "attrs": { "level": 2 },
+          "attrs": {
+            "textAlign": null,
+            "level": 1
+          },
           "content": [
-            { "type": "text", "text": "Eğitim İçeriği" }
+            {
+              "type": "text",
+              "text": "çok önemli bir konu"
+            }
           ]
         },
         {
           "type": "paragraph",
-          "content": [
-            { "type": "text", "text": "Bu eğitimde beslenmenin temel ilkelerini ve makro besinlerin vücuttaki önemli rollerini detaylı olarak ele alacağız." }
-          ]
-        },
-        {
-          "type": "heading",
-          "attrs": { "level": 3 },
-          "content": [
-            { "type": "text", "text": "1. Beslenme Biliminin Temelleri" }
-          ]
-        },
-        {
-          "type": "bulletList",
+          "attrs": {
+            "textAlign": null
+          },
           "content": [
             {
-              "type": "listItem",
-              "content": [
-                {
-                  "type": "paragraph",
-                  "content": [
-                    { "type": "text", "text": "Beslenme biliminin tarihçesi ve gelişimi" }
-                  ]
-                }
-              ]
-            },
-            {
-              "type": "listItem",
-              "content": [
-                {
-                  "type": "paragraph",
-                  "content": [
-                    { "type": "text", "text": "Besin öğelerinin sınıflandırılması" }
-                  ]
-                }
-              ]
-            },
-            {
-              "type": "listItem",
-              "content": [
-                {
-                  "type": "paragraph",
-                  "content": [
-                    { "type": "text", "text": "Enerji metabolizması ve kalori hesaplama" }
-                  ]
-                }
-              ]
-            },
-            {
-              "type": "listItem",
-              "content": [
-                {
-                  "type": "paragraph",
-                  "content": [
-                    { "type": "text", "text": "Besin emilimi ve sindirim süreçleri" }
-                  ]
-                }
-              ]
+              "type": "imageResize",
+              "attrs": {
+                "src": "/uploads/1757182098651-IMG_9899.png",
+                "alt": null,
+                "title": null,
+                "width": "160",
+                "height": null,
+                "containerStyle": "position: relative; width: 160px; height: auto; cursor: pointer; display: inline-block;",
+                "wrapperStyle": "display: inline-block; float: left; padding-right: 8px;"
+              }
             }
-          ]
-        },
-        {
-          "type": "heading",
-          "attrs": { "level": 3 },
-          "content": [
-            { "type": "text", "text": "2. Karbonhidratlar" }
-          ]
-        },
-        {
-          "type": "bulletList",
-          "content": [
-            {
-              "type": "listItem",
-              "content": [
-                {
-                  "type": "paragraph",
-                  "content": [
-                    { "type": "text", "text": "Basit ve karmaşık karbonhidratlar" }
-                  ]
-                }
-              ]
-            },
-            {
-              "type": "listItem",
-              "content": [
-                {
-                  "type": "paragraph",
-                  "content": [
-                    { "type": "text", "text": "Glisemik indeks ve glisemik yük" }
-                  ]
-                }
-              ]
-            },
-            {
-              "type": "listItem",
-              "content": [
-                {
-                  "type": "paragraph",
-                  "content": [
-                    { "type": "text", "text": "Lif tüketimi ve prebiyotik etkileri" }
-                  ]
-                }
-              ]
-            },
-            {
-              "type": "listItem",
-              "content": [
-                {
-                  "type": "paragraph",
-                  "content": [
-                    { "type": "text", "text": "Diabetik beslenmedeki rolü" }
-                  ]
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "type": "heading",
-          "attrs": { "level": 3 },
-          "content": [
-            { "type": "text", "text": "3. Proteinler" }
-          ]
-        },
-        {
-          "type": "bulletList",
-          "content": [
-            {
-              "type": "listItem",
-              "content": [
-                {
-                  "type": "paragraph",
-                  "content": [
-                    { "type": "text", "text": "Amino asit profili ve biyolojik değer" }
-                  ]
-                }
-              ]
-            },
-            {
-              "type": "listItem",
-              "content": [
-                {
-                  "type": "paragraph",
-                  "content": [
-                    { "type": "text", "text": "Tam ve eksik protein kaynakları" }
-                  ]
-                }
-              ]
-            },
-            {
-              "type": "listItem",
-              "content": [
-                {
-                  "type": "paragraph",
-                  "content": [
-                    { "type": "text", "text": "Protein ihtiyacının belirlenmesi" }
-                  ]
-                }
-              ]
-            },
-            {
-              "type": "listItem",
-              "content": [
-                {
-                  "type": "paragraph",
-                  "content": [
-                    { "type": "text", "text": "Sporcu ve yaşlı bireylerde protein gereksinimleri" }
-                  ]
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "type": "heading",
-          "attrs": { "level": 3 },
-          "content": [
-            { "type": "text", "text": "4. Yağlar" }
-          ]
-        },
-        {
-          "type": "bulletList",
-          "content": [
-            {
-              "type": "listItem",
-              "content": [
-                {
-                  "type": "paragraph",
-                  "content": [
-                    { "type": "text", "text": "Doymuş, tekli ve çoklu doymamış yağlar" }
-                  ]
-                }
-              ]
-            },
-            {
-              "type": "listItem",
-              "content": [
-                {
-                  "type": "paragraph",
-                  "content": [
-                    { "type": "text", "text": "Omega-3 ve Omega-6 yağ asitlerinin önemi" }
-                  ]
-                }
-              ]
-            },
-            {
-              "type": "listItem",
-              "content": [
-                {
-                  "type": "paragraph",
-                  "content": [
-                    { "type": "text", "text": "Trans yağların zararları" }
-                  ]
-                }
-              ]
-            },
-            {
-              "type": "listItem",
-              "content": [
-                {
-                  "type": "paragraph",
-                  "content": [
-                    { "type": "text", "text": "Kolesterol metabolizması" }
-                  ]
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "type": "heading",
-          "attrs": { "level": 3 },
-          "content": [
-            { "type": "text", "text": "Eğitim Sonunda Kazanacağınız Yetkinlikler" }
           ]
         },
         {
           "type": "paragraph",
+          "attrs": {
+            "textAlign": null
+          }
+        },
+        {
+          "type": "paragraph",
+          "attrs": {
+            "textAlign": null
+          }
+        },
+        {
+          "type": "paragraph",
+          "attrs": {
+            "textAlign": null
+          }
+        },
+        {
+          "type": "paragraph",
+          "attrs": {
+            "textAlign": null
+          }
+        },
+        {
+          "type": "paragraph",
+          "attrs": {
+            "textAlign": null
+          }
+        },
+        {
+          "type": "paragraph",
+          "attrs": {
+            "textAlign": null
+          }
+        },
+        {
+          "type": "paragraph",
+          "attrs": {
+            "textAlign": null
+          }
+        },
+        {
+          "type": "paragraph",
+          "attrs": {
+            "textAlign": null
+          }
+        },
+        {
+          "type": "paragraph",
+          "attrs": {
+            "textAlign": null
+          },
           "content": [
-            { "type": "text", "text": "Bu eğitimi tamamladığınızda, makro besinlerin vücuttaki rollerini anlayacak, dengeli beslenme planları hazırlayabilecek ve danışanlarınıza temel beslenme konularında rehberlik edebileceksiniz." }
+            {
+              "type": "text",
+              "marks": [
+                {
+                  "type": "textStyle",
+                  "attrs": {
+                    "color": "#999999"
+                  }
+                }
+              ],
+              "text": "bak şu işe yaw."
+            },
+            {
+              "type": "text",
+              "marks": [
+                {
+                  "type": "textStyle",
+                  "attrs": {
+                    "color": "#999999"
+                  }
+                },
+                {
+                  "type": "bold"
+                }
+              ],
+              "text": "kalın yazıoz"
+            },
+            {
+              "type": "text",
+              "marks": [
+                {
+                  "type": "textStyle",
+                  "attrs": {
+                    "color": "#999999"
+                  }
+                },
+                {
+                  "type": "bold"
+                },
+                {
+                  "type": "italic"
+                }
+              ],
+              "text": "italik"
+            },
+            {
+              "type": "text",
+              "marks": [
+                {
+                  "type": "textStyle",
+                  "attrs": {
+                    "color": "#999999"
+                  }
+                },
+                {
+                  "type": "bold"
+                },
+                {
+                  "type": "italic"
+                },
+                {
+                  "type": "underline"
+                }
+              ],
+              "text": "altçizgiliz "
+            },
+            {
+              "type": "text",
+              "marks": [
+                {
+                  "type": "textStyle",
+                  "attrs": {
+                    "color": "#999999"
+                  }
+                },
+                {
+                  "type": "bold"
+                },
+                {
+                  "type": "italic"
+                },
+                {
+                  "type": "underline"
+                },
+                {
+                  "type": "highlight",
+                  "attrs": {
+                    "color": null
+                  }
+                }
+              ],
+              "text": "asdasd"
+            },
+            {
+              "type": "text",
+              "marks": [
+                {
+                  "type": "textStyle",
+                  "attrs": {
+                    "color": "#999999"
+                  }
+                }
+              ],
+              "text": "ad"
+            }
           ]
         }
       ]
