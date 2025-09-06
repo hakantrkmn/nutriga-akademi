@@ -11,7 +11,7 @@ import {
   Icon
 } from "@chakra-ui/react";
 import Link from "next/link";
-import { FiClock, FiUser, FiBarChart, FiShoppingCart } from "react-icons/fi";
+import { FiClock, FiUser, FiShoppingCart } from "react-icons/fi";
 import { Egitim } from "@/data/dummyEgitimData";
 
 interface EgitimCardProps {

@@ -4,13 +4,14 @@ import { dummyBlogPosts } from "@/data/dummyBlogData";
 import type { Metadata } from "next";
 
 interface BlogDetailPageProps {
-  params: {
+  params: Promise<{
     slug: string;
-  };
+  }>;
 }
 
 export async function generateMetadata({ params }: BlogDetailPageProps): Promise<Metadata> {
-  const post = dummyBlogPosts.find(p => p.slug === params.slug);
+  const { slug } = await params;
+  const post = dummyBlogPosts.find(p => p.slug === slug);
   
   if (!post) {
     return {
@@ -24,8 +25,9 @@ export async function generateMetadata({ params }: BlogDetailPageProps): Promise
   };
 }
 
-export default function BlogDetailPage({ params }: BlogDetailPageProps) {
-  const post = dummyBlogPosts.find(p => p.slug === params.slug);
+export default async function BlogDetailPage({ params }: BlogDetailPageProps) {
+  const { slug } = await params;
+  const post = dummyBlogPosts.find(p => p.slug === slug);
 
   if (!post) {
     notFound();

@@ -4,13 +4,14 @@ import { dummyEgitimler } from "@/data/dummyEgitimData";
 import type { Metadata } from "next";
 
 interface EgitimDetailPageProps {
-  params: {
+  params: Promise<{
     slug: string;
-  };
+  }>;
 }
 
 export async function generateMetadata({ params }: EgitimDetailPageProps): Promise<Metadata> {
-  const egitim = dummyEgitimler.find(e => e.slug === params.slug);
+  const { slug } = await params;
+  const egitim = dummyEgitimler.find(e => e.slug === slug);
   
   if (!egitim) {
     return {
@@ -24,8 +25,9 @@ export async function generateMetadata({ params }: EgitimDetailPageProps): Promi
   };
 }
 
-export default function EgitimDetailPage({ params }: EgitimDetailPageProps) {
-  const egitim = dummyEgitimler.find(e => e.slug === params.slug);
+export default async function EgitimDetailPage({ params }: EgitimDetailPageProps) {
+  const { slug } = await params;
+  const egitim = dummyEgitimler.find(e => e.slug === slug);
 
   if (!egitim) {
     notFound();

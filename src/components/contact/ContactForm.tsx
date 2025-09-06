@@ -3,10 +3,11 @@
 import {
   Box,
   VStack,
-  HStack,
   Button,
   Text,
   Heading,
+  Input,
+  Textarea,
 } from "@chakra-ui/react";
 import { useState } from "react";
 
@@ -77,8 +78,7 @@ export default function ContactForm() {
               >
                 İsim Soyisim *
               </Text>
-              <Box
-                as="input"
+              <Input
                 type="text"
                 name="name"
                 value={formData.name}
@@ -111,8 +111,7 @@ export default function ContactForm() {
               >
                 E-posta Adresi *
               </Text>
-              <Box
-                as="input"
+              <Input
                 type="email"
                 name="email"
                 value={formData.email}
@@ -145,8 +144,7 @@ export default function ContactForm() {
               >
                 Mesajınız *
               </Text>
-              <Box
-                as="textarea"
+              <Textarea
                 name="message"
                 value={formData.message}
                 onChange={handleChange}
@@ -180,7 +178,7 @@ export default function ContactForm() {
               borderRadius="12px"
               _hover={{ bg: "green.600" }}
               _active={{ bg: "green.700" }}
-              isLoading={isSubmitting}
+              loading={isSubmitting}
               loadingText="Gönderiliyor..."
             >
               Mesaj Gönder

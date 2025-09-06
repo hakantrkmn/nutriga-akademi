@@ -4,8 +4,6 @@ const nextConfig = {
     optimizePackageImports: ["@chakra-ui/react", "react-icons"],
     // Enable faster builds
     esmExternals: true,
-    // Optimize CSS
-    optimizeCss: true,
   },
   // Enable compression
   compress: true,
