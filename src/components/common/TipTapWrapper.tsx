@@ -1,4 +1,5 @@
 import { Box } from "@chakra-ui/react";
+import { useMemo } from "react";
 
 interface TipTapContent {
   type: string;
@@ -103,7 +104,8 @@ const processContent = (content: string | object): string => {
 };
 
 export default function TipTapWrapper({ content, className = "tiptap-content" }: TipTapWrapperProps) {
-  const htmlContent = processContent(content);
+  // Memoize HTML content processing for better performance
+  const htmlContent = useMemo(() => processContent(content), [content]);
 
   // Eğitim içeriği için özel styling
   const isEgitimContent = className === "egitim-content";
