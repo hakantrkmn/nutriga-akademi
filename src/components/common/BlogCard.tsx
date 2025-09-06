@@ -10,7 +10,7 @@ import {
 } from "@chakra-ui/react";
 import Link from "next/link";
 import Image from "next/image";
-import { FiClock, FiUser } from "react-icons/fi";
+import { FiUser } from "react-icons/fi";
 import { BlogPost } from "@/data/dummyBlogData";
 
 interface BlogCardProps {
@@ -100,13 +100,6 @@ export default function BlogCard({ post }: BlogCardProps) {
                   <FiUser />
                 </Icon>
                 <Text>{post.author}</Text>
-              </HStack>
-              
-              <HStack gap={2} fontSize="xs" color="gray.500">
-                <Icon boxSize={4}>
-                  <FiClock />
-                </Icon>
-                <Text>{post.reading_time} dk okuma</Text>
               </HStack>
             </HStack>
             

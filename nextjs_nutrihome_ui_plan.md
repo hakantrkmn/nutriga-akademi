@@ -115,6 +115,8 @@ CREATE TABLE blog_posts (
   image_url text,
   slug text UNIQUE NOT NULL,
   category text,
+  excerpt text,
+  author text,
   created_at timestamp DEFAULT now(),
   updated_at timestamp DEFAULT now()
 );

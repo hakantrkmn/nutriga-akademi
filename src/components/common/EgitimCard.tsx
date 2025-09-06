@@ -60,7 +60,7 @@ export default function EgitimCard({ egitim }: EgitimCardProps) {
           py={1}
           borderRadius="6px"
         >
-          {egitim.level}
+          {egitim.level || "Seviye"}
         </Badge>
       </Box>
       
@@ -117,14 +117,14 @@ export default function EgitimCard({ egitim }: EgitimCardProps) {
                 <Icon boxSize={4}>
                   <FiUser />
                 </Icon>
-                <Text>{egitim.instructor}</Text>
+                <Text>{egitim.instructor || "Eğitmen"}</Text>
               </HStack>
               
               <HStack gap={2}>
                 <Icon boxSize={4}>
                   <FiClock />
                 </Icon>
-                <Text>{egitim.duration}</Text>
+                <Text>{egitim.duration || "Süre"}</Text>
               </HStack>
             </HStack>
             

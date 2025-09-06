@@ -7,9 +7,8 @@ export interface BlogPost {
   category: string;
   excerpt: string;
   author: string;
-  reading_time: number;
   created_at: string;
-  updated_at: string; // Plan'a göre eklenen alan
+  updated_at: string;
 }
 
 export const blogCategories = [
@@ -108,7 +107,6 @@ export const dummyBlogPosts: BlogPost[] = [
     category: "Beslenme Bilimi",
     excerpt: "Günlük protein ihtiyacınızı doğru hesaplama yöntemlerini öğrenerek sağlıklı beslenme planınızı optimize edin.",
     author: "Dr. Ayşe Nutritionist",
-    reading_time: 5,
     created_at: "2024-01-15",
     updated_at: "2024-01-15"
   },
@@ -133,7 +131,6 @@ export const dummyBlogPosts: BlogPost[] = [
     category: "Beslenme Bilimi",
     excerpt: "Kış aylarında bağışıklık sisteminizi güçlendiren besinler ve beslenme önerileri ile sağlıklı kalın.",
     author: "Dyt. Mehmet Beslenme",
-    reading_time: 4,
     created_at: "2024-01-10",
     updated_at: "2024-01-10"
   },
@@ -161,7 +158,6 @@ export const dummyBlogPosts: BlogPost[] = [
     category: "Çocuk Beslenmesi",
     excerpt: "Çocuklarınız için sağlıklı ve besleyici atıştırmalık seçenekleri ile doğru beslenme alışkanlıkları kazandırın.",
     author: "Dyt. Zeynep Çocuk",
-    reading_time: 3,
     created_at: "2024-01-08",
     updated_at: "2024-01-08"
   },
@@ -192,7 +188,6 @@ export const dummyBlogPosts: BlogPost[] = [
     category: "Sporcu Beslenmesi",
     excerpt: "Spor performansınızı artırmak için spor öncesi ve sonrası beslenme stratejilerini öğrenin.",
     author: "Dr. Ahmet Sporcu",
-    reading_time: 6,
     created_at: "2024-01-05",
     updated_at: "2024-01-05"
   },
@@ -218,7 +213,6 @@ export const dummyBlogPosts: BlogPost[] = [
     category: "Sağlıklı Tarifler",
     excerpt: "Evde kolayca uygulayabileceğiniz besleyici ve lezzetli tariflerle sağlıklı beslenmeyi sürdürün.",
     author: "Dyt. Fatma Tarif",
-    reading_time: 7,
     created_at: "2024-01-03",
     updated_at: "2024-01-03"
   },
@@ -245,7 +239,6 @@ export const dummyBlogPosts: BlogPost[] = [
     category: "Yaşlı Beslenmesi", 
     excerpt: "Yaşlılık döneminde sağlıklı beslenme için dikkat edilmesi gereken noktalar ve özel beslenme önerileri.",
     author: "Prof. Dr. Aylin Geriatri",
-    reading_time: 5,
     created_at: "2024-01-01",
     updated_at: "2024-01-01"
   }

@@ -7,12 +7,13 @@ export interface Egitim {
   slug: string;
   price: number;
   sales_count: number;
-  duration: string;
-  level: string;
-  instructor: string;
-  category: string;
   created_at: string;
   updated_at: string;
+  // Ekstra alanlar (UI için gerekli)
+  duration?: string;
+  level?: string;
+  instructor?: string;
+  category?: string;
 }
 
 export const egitimCategories = [
