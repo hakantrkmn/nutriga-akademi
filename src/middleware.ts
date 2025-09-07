@@ -1,18 +1,92 @@
+import { createServerClient } from "@supabase/ssr";
 import { NextRequest, NextResponse } from "next/server";
-import { supabase } from "./lib/supabase";
 
 export async function middleware(request: NextRequest) {
-  // Public routes - no auth required
   const adminRoutes = ["/admin/dashboard", "/admin/egitimler", "/admin/blog"];
-  if (adminRoutes.includes(request.nextUrl.pathname)) {
-    const {
-      data: { session },
-    } = await supabase.auth.getSession();
-    if (session?.user?.email !== process.env.NEXT_PUBLIC_ADMIN_EMAIL) {
+  const pathname = request.nextUrl.pathname;
+
+  // Admin routes için auth kontrolü
+  if (adminRoutes.some((route) => pathname.startsWith(route))) {
+    const response = NextResponse.next({
+      request,
+    });
+
+    const supabase = createServerClient(
+      process.env.NEXT_PUBLIC_SUPABASE_URL!,
+      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+      {
+        cookies: {
+          getAll() {
+            return request.cookies.getAll();
+          },
+          setAll(cookiesToSet) {
+            cookiesToSet.forEach(({ name, value, options }) => {
+              response.cookies.set(name, value, options);
+            });
+          },
+        },
+      }
+    );
+
+    try {
+      // Critical: Use getUser() instead of getSession() for security
+      const {
+        data: { user },
+        error,
+      } = await supabase.auth.getUser();
+
+      console.log("User:", user);
+      console.log("Error:", error);
+
+      // User yoksa admin login'e yönlendir
+      if (!user) {
+        console.log("User bulunamadı - admin login'e yönlendiriliyor");
+        return NextResponse.redirect(new URL("/admin", request.url));
+      }
+
+      // Email kontrolü
+      if (user.email !== process.env.NEXT_PUBLIC_ADMIN_EMAIL) {
+        console.log("Email kontrolü başarısız:", user.email);
+        return NextResponse.redirect(new URL("/admin", request.url));
+      }
+
+      console.log("Auth kontrolü başarılı:", user.email);
+    } catch (error) {
+      console.error("Middleware auth error:", error);
       return NextResponse.redirect(new URL("/admin", request.url));
     }
-    if (!session) {
-      return NextResponse.redirect(new URL("/admin", request.url));
+
+    return response;
+  }
+  if (pathname.startsWith("/admin")) {
+    const response = NextResponse.next({
+      request,
+    });
+    const supabase = createServerClient(
+      process.env.NEXT_PUBLIC_SUPABASE_URL!,
+      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+      {
+        cookies: {
+          getAll() {
+            return request.cookies.getAll();
+          },
+          setAll(cookiesToSet) {
+            cookiesToSet.forEach(({ name, value, options }) => {
+              response.cookies.set(name, value, options);
+            });
+          },
+        },
+      }
+    );
+    const {
+      data: { user },
+      error,
+    } = await supabase.auth.getUser();
+    console.log("User:", user);
+    console.log("Error:", error);
+    if (user?.email === process.env.NEXT_PUBLIC_ADMIN_EMAIL) {
+      console.log("Email kontrolü başarısız:", user?.email);
+      return NextResponse.redirect(new URL("/admin/dashboard", request.url));
     }
   }
 

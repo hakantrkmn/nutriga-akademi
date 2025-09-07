@@ -1,6 +1,6 @@
 "use client";
 
-import { supabase } from "@/lib/supabase";
+import { createClient } from "@/lib/supabase/client";
 import {
   Alert,
   Box,
@@ -20,6 +20,7 @@ export default function AdminLogin() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const router = useRouter();
+  const supabase = createClient();
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -38,9 +39,11 @@ export default function AdminLogin() {
       }
 
       if (data.user) {
+        console.log(data.user);
         // Admin email kontrolü
         if (data.user.email === process.env.NEXT_PUBLIC_ADMIN_EMAIL) {
           // Dashboard'a yönlendir - layout otomatik yönlendirecek
+          console.log("Admin email kontrolü başarılı");
           router.push("/admin/dashboard");
         } else {
           setError("Bu email adresi admin yetkisine sahip değil.");

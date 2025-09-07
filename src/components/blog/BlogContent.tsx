@@ -1,11 +1,11 @@
 "use client";
 
-import { useState, useMemo } from "react";
-import { VStack } from "@chakra-ui/react";
-import BlogHero from "./BlogHero";
-import CategoryFilter from "./CategoryFilter";
-import BlogGrid from "./BlogGrid";
 import { dummyBlogPosts } from "@/data/dummyBlogData";
+import { VStack } from "@chakra-ui/react";
+import { useMemo, useState } from "react";
+import CategoryFilter from "./BlogCategoryFilter";
+import BlogGrid from "./BlogGrid";
+import BlogHero from "./BlogHero";
 
 export default function BlogContent() {
   const [selectedCategory, setSelectedCategory] = useState("Tümü");
@@ -14,7 +14,7 @@ export default function BlogContent() {
     if (selectedCategory === "Tümü") {
       return dummyBlogPosts;
     }
-    return dummyBlogPosts.filter(post => post.category === selectedCategory);
+    return dummyBlogPosts.filter((post) => post.category === selectedCategory);
   }, [selectedCategory]);
 
   const handleCategoryChange = (category: string) => {
@@ -24,7 +24,7 @@ export default function BlogContent() {
   return (
     <VStack gap={0} w="full">
       <BlogHero />
-      <CategoryFilter 
+      <CategoryFilter
         selectedCategory={selectedCategory}
         onCategoryChange={handleCategoryChange}
       />

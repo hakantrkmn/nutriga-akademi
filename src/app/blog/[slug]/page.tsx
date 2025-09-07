@@ -1,8 +1,7 @@
 import BlogDetailContent from "@/components/blog/detail/BlogDetailContent";
-import { dummyBlogPosts } from "@/data/dummyBlogData";
+import { prisma } from "@/lib/prisma";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-
 interface BlogDetailPageProps {
   params: Promise<{
     slug: string;
@@ -13,7 +12,11 @@ export async function generateMetadata({
   params,
 }: BlogDetailPageProps): Promise<Metadata> {
   const { slug } = await params;
-  const post = dummyBlogPosts.find((p) => p.slug === slug);
+  const post = await prisma.blogPost.findUnique({
+    where: {
+      slug: slug,
+    },
+  });
 
   if (!post) {
     return {
@@ -29,7 +32,11 @@ export async function generateMetadata({
 
 export default async function BlogDetailPage({ params }: BlogDetailPageProps) {
   const { slug } = await params;
-  const post = dummyBlogPosts.find((p) => p.slug === slug);
+  const post = await prisma.blogPost.findUnique({
+    where: {
+      slug: slug,
+    },
+  });
 
   if (!post) {
     notFound();
@@ -39,7 +46,7 @@ export default async function BlogDetailPage({ params }: BlogDetailPageProps) {
 }
 
 export async function generateStaticParams() {
-  return dummyBlogPosts.map((post) => ({
+  return (await prisma.blogPost.findMany()).map((post) => ({
     slug: post.slug,
   }));
 }

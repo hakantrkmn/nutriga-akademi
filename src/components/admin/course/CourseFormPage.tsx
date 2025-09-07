@@ -20,7 +20,7 @@ import {
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { FiArrowLeft, FiSave } from "react-icons/fi";
-import EgitimSettings from "./EgitimSettings";
+import EgitimSettings from "./CourseSettings";
 export default function EgitimFormPage({ egitimId }: { egitimId?: string }) {
   const router = useRouter();
   const [loading, setLoading] = useState(false);

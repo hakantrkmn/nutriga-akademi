@@ -12,7 +12,7 @@ import {
 import { FiLogOut, FiHome, FiBookOpen, FiFileText } from 'react-icons/fi'
 import { useRouter, usePathname } from 'next/navigation'
 import { useState, useEffect } from 'react'
-import { supabase } from '@/lib/supabase'
+import { createClient } from '@/lib/supabase/client'
 import Link from 'next/link'
 
 
@@ -21,6 +21,7 @@ export default function AdminHeader() {
   const router = useRouter()
   const pathname = usePathname()
   const [adminEmail, setAdminEmail] = useState<string>('')
+  const supabase = createClient()
   
   const bgColor = 'white'
   const borderColor = 'gray.200'
