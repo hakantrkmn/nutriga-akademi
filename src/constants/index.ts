@@ -9,3 +9,21 @@ export const COMPANY_TWITTER_URL = "https://twitter.com/nutrihome";
 export const COMPANY_INSTAGRAM_URL = "https://instagram.com/nutrihome";
 export const COMPANY_LINKEDIN_URL = "https://linkedin.com/company/nutrihome";
 export const COMPANY_YOUTUBE_URL = "https://youtube.com/nutrihome";
+
+export const COURSE_CATEGORIES = [
+    "Tümü",
+    "Temel Beslenme",
+    "Klinik Beslenme", 
+    "Sporcu Beslenmesi",
+    "Pediatrik Beslenme",
+    "Geriatrik Beslenme",
+    "Beslenme Danışmanlığı",
+    "Fonksiyonel Beslenme"
+  ];
+  
+  export const COURSE_LEVELS = [
+    "Başlangıç",
+    "Orta",
+    "İleri",
+    "Uzman"
+  ];

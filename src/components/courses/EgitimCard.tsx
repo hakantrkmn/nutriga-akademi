@@ -34,7 +34,7 @@ export default function EgitimCard({ egitim }: EgitimCardProps) {
       <Box position="relative">
         <Box h="200px" w="full" bg="gray.100" position="relative" overflow="hidden">
           <Image
-            src={egitim.image_url}
+            src={egitim.imageUrl || "/images/egitim-default.jpg"}
             alt={egitim.title}
             width={400}
             height={200}
@@ -76,7 +76,7 @@ export default function EgitimCard({ egitim }: EgitimCardProps) {
               {egitim.category}
             </Badge>
             <Text fontSize="xs" color="gray.500">
-              {egitim.sales_count} kişi aldı
+              {egitim.salesCount} kişi aldı
             </Text>
           </HStack>
           
@@ -123,14 +123,14 @@ export default function EgitimCard({ egitim }: EgitimCardProps) {
                 <Icon boxSize={4}>
                   <FiClock />
                 </Icon>
-                <Text>{egitim.duration || "Süre"}</Text>
+                <Text>{egitim.salesCount || "Süre"}</Text>
               </HStack>
             </HStack>
             
             <HStack justify="space-between" w="full" align="center">
               <VStack align="start" gap={1}>
                 <Text fontSize="2xl" fontWeight="bold" color="green.600">
-                  ₺{egitim.price}
+                  ₺{egitim.price?.toString()}
                 </Text>
                 <Text fontSize="xs" color="gray.500">
                   Tek seferlik ödeme

@@ -91,13 +91,13 @@ export const dummyBlogPosts: BlogPost[] = [
         }
       ]
     },
-    image_url: "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+    imageUrl: "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
     slug: "protein-ihtiyacini-dogru-hesaplama-yontemleri",
     category: "Beslenme Bilimi",
     excerpt: "Günlük protein ihtiyacınızı doğru hesaplama yöntemlerini öğrenerek sağlıklı beslenme planınızı optimize edin.",
     author: "Dr. Ayşe Nutritionist",
-    created_at: "2024-01-15",
-    updated_at: "2024-01-15"
+    createdAt: new Date("2024-01-15"),
+    updatedAt: new Date("2024-01-15")
   },
   {
     id: "2", 
@@ -115,13 +115,13 @@ export const dummyBlogPosts: BlogPost[] = [
 
       <p>Bu besinleri günlük diyetinize dahil ederek kış aylarında sağlıklı kalabilirsiniz.</p>
     `,
-    image_url: "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+    imageUrl: "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
     slug: "kis-aylarinda-bagisiklik-guclendiren-beslenme",
     category: "Beslenme Bilimi",
     excerpt: "Kış aylarında bağışıklık sisteminizi güçlendiren besinler ve beslenme önerileri ile sağlıklı kalın.",
     author: "Dyt. Mehmet Beslenme",
-    created_at: "2024-01-10",
-    updated_at: "2024-01-10"
+    createdAt: new Date("2024-01-10"),
+    updatedAt: new Date("2024-01-10")
   },
   {
     id: "3",
@@ -142,13 +142,13 @@ export const dummyBlogPosts: BlogPost[] = [
       <h3>Kaçınılması Gerekenler</h3>
       <p>İşlenmiş gıdalar, şekerli içecekler ve trans yağ içeren atıştırmalıklardan uzak durulmalıdır.</p>
     `,
-    image_url: "https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+    imageUrl: "https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
     slug: "cocuklarda-saglikli-atistirmalik-secenekleri",
     category: "Çocuk Beslenmesi",
     excerpt: "Çocuklarınız için sağlıklı ve besleyici atıştırmalık seçenekleri ile doğru beslenme alışkanlıkları kazandırın.",
     author: "Dyt. Zeynep Çocuk",
-    created_at: "2024-01-08",
-    updated_at: "2024-01-08"
+    createdAt: new Date("2024-01-08"),
+    updatedAt: new Date("2024-01-08")
   },
   {
     id: "4",
@@ -172,13 +172,13 @@ export const dummyBlogPosts: BlogPost[] = [
         <li>Sıvı kaybının yerine konması</li>
       </ul>
     `,
-    image_url: "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+    imageUrl: "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
     slug: "spor-oncesi-ve-sonrasi-beslenme-rehberi", 
     category: "Sporcu Beslenmesi",
     excerpt: "Spor performansınızı artırmak için spor öncesi ve sonrası beslenme stratejilerini öğrenin.",
     author: "Dr. Ahmet Sporcu",
-    created_at: "2024-01-05",
-    updated_at: "2024-01-05"
+    createdAt: new Date("2024-01-05"),
+    updatedAt: new Date("2024-01-05")
   },
   {
     id: "5",
@@ -197,13 +197,13 @@ export const dummyBlogPosts: BlogPost[] = [
       <h3>Chia Pudingi</h3>
       <p>Omega-3 bakımından zengin, tok tutan sağlıklı bir tatlı alternatifi.</p>
     `,
-    image_url: "https://images.unsplash.com/photo-1490645935967-10de6ba17061?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80", 
+    imageUrl: "https://images.unsplash.com/photo-1490645935967-10de6ba17061?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80", 
     slug: "evde-kolayca-yapabileceginiz-saglikli-tarifler",
     category: "Sağlıklı Tarifler",
     excerpt: "Evde kolayca uygulayabileceğiniz besleyici ve lezzetli tariflerle sağlıklı beslenmeyi sürdürün.",
     author: "Dyt. Fatma Tarif",
-    created_at: "2024-01-03",
-    updated_at: "2024-01-03"
+    createdAt: new Date("2024-01-03"),
+    updatedAt: new Date("2024-01-03")
   },
   {
     id: "6",
@@ -223,12 +223,12 @@ export const dummyBlogPosts: BlogPost[] = [
       <h3>Beslenme Önerileri</h3>
       <p>Küçük sık öğünler, yumuşak dokulu gıdalar ve çeşitli besin gruplarından seçimler yapılmalıdır.</p>
     `,
-    image_url: "https://images.unsplash.com/photo-1559757175-0eb30cd8c063?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+    imageUrl: "https://images.unsplash.com/photo-1559757175-0eb30cd8c063?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
     slug: "yaslilkta-beslenme-dikkat-edilmesi-gerekenler",
     category: "Yaşlı Beslenmesi", 
     excerpt: "Yaşlılık döneminde sağlıklı beslenme için dikkat edilmesi gereken noktalar ve özel beslenme önerileri.",
     author: "Prof. Dr. Aylin Geriatri",
-    created_at: "2024-01-01",
-    updated_at: "2024-01-01"
+    createdAt: new Date("2024-01-01"),
+    updatedAt: new Date("2024-01-01")
   }
 ];

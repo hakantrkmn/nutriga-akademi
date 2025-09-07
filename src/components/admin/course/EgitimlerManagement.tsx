@@ -17,11 +17,12 @@ import {
   Center,
 } from '@chakra-ui/react'
 import { FiPlus, FiEdit, FiTrash2 } from 'react-icons/fi'
-import { egitimlerApi, EgitimData } from '@/lib/api'
+import { egitimlerApi } from '@/lib/api'
+import { Egitim } from '@/types'
 
 export default function EgitimlerManagement() {
   const router = useRouter()
-  const [egitimler, setEgitimler] = useState<EgitimData[]>([])
+  const [egitimler, setEgitimler] = useState<Egitim[]>([])
   const [loading, setLoading] = useState(true)
 
   // Eğitimleri yükle
@@ -48,13 +49,13 @@ export default function EgitimlerManagement() {
 
   // Yeni eğitim ekle
   const handleAddEgitim = () => {
-    router.push('/admin/egitimler/yeni')
+    router.push('/admin/egitimler/course')
   }
 
   // Eğitim düzenle
-  const handleEditEgitim = (egitim: EgitimData) => {
+  const handleEditEgitim = (egitim: Egitim) => {
     if (egitim.id) {
-      router.push(`/admin/egitimler/${egitim.id}/duzenle`)
+      router.push(`/admin/egitimler/course/${egitim.id}`)
     }
   }
 
@@ -251,7 +252,7 @@ export default function EgitimlerManagement() {
                       <Table.Cell py={4} px={6}>
                         {egitim.price ? (
                           <Text fontWeight="medium" color="green.600">
-                            ₺{egitim.price}
+                            ₺{egitim.price?.toString()}
                           </Text>
                         ) : (
                           <Text color="gray.400">-</Text>

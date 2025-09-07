@@ -1,40 +1,12 @@
 // Type-safe API client
 
+import { BlogPost } from "@prisma/client"
+import { Egitim } from "@/types"
 export interface ApiResponse<T = unknown> {
   success: boolean
   data?: T
   error?: string
   message?: string
-}
-
-export interface EgitimData {
-  id?: string
-  title: string
-  description?: string
-  content: object | string
-  imageUrl?: string
-  slug: string
-  price?: number
-  category?: string
-  level?: string
-  duration?: string
-  instructor?: string
-  salesCount?: number
-  createdAt?: string
-  updatedAt?: string
-}
-
-export interface BlogPostData {
-  id?: string
-  title: string
-  content: object | string
-  imageUrl?: string
-  slug: string
-  category?: string
-  excerpt?: string
-  author?: string
-  createdAt?: string
-  updatedAt?: string
 }
 
 export interface AdminStats {
@@ -75,23 +47,23 @@ async function apiCall<T>(
 // Eğitimler API
 export const egitimlerApi = {
   // Tüm eğitimleri getir
-  getAll: (): Promise<ApiResponse<EgitimData[]>> => 
-    apiCall<EgitimData[]>('/egitimler'),
+  getAll: (): Promise<ApiResponse<Egitim[]>> => 
+    apiCall<Egitim[]>('/egitimler'),
 
   // Tek eğitim getir
-  getById: (id: string): Promise<ApiResponse<EgitimData>> => 
-    apiCall<EgitimData>(`/egitimler/${id}`),
+  getById: (id: string): Promise<ApiResponse<Egitim>> => 
+    apiCall<Egitim>(`/egitimler/${id}`),
 
   // Yeni eğitim oluştur
-  create: (data: Omit<EgitimData, 'id' | 'createdAt' | 'updatedAt'>): Promise<ApiResponse<EgitimData>> => 
-    apiCall<EgitimData>('/egitimler', {
+  create: (data: Omit<Egitim, 'id' | 'createdAt' | 'updatedAt'>): Promise<ApiResponse<Egitim>> => 
+    apiCall<Egitim>('/egitimler', {
       method: 'POST',
       body: JSON.stringify(data)
     }),
 
   // Eğitim güncelle
-  update: (id: string, data: Partial<EgitimData>): Promise<ApiResponse<EgitimData>> => 
-    apiCall<EgitimData>(`/egitimler/${id}`, {
+  update: (id: string, data: Partial<Egitim>): Promise<ApiResponse<Egitim>> => 
+    apiCall<Egitim>(`/egitimler/${id}`, {
       method: 'PUT',
       body: JSON.stringify(data)
     }),
@@ -106,23 +78,23 @@ export const egitimlerApi = {
 // Blog Posts API
 export const blogApi = {
   // Tüm blog yazılarını getir
-  getAll: (): Promise<ApiResponse<BlogPostData[]>> => 
-    apiCall<BlogPostData[]>('/blog'),
+  getAll: (): Promise<ApiResponse<BlogPost[]>> => 
+    apiCall<BlogPost[]>('/blog'),
 
   // Tek blog yazısı getir
-  getById: (id: string): Promise<ApiResponse<BlogPostData>> => 
-    apiCall<BlogPostData>(`/blog/${id}`),
+  getById: (id: string): Promise<ApiResponse<BlogPost>> => 
+    apiCall<BlogPost>(`/blog/${id}`),
 
   // Yeni blog yazısı oluştur
-  create: (data: Omit<BlogPostData, 'id' | 'createdAt' | 'updatedAt'>): Promise<ApiResponse<BlogPostData>> => 
-    apiCall<BlogPostData>('/blog', {
+  create: (data: Omit<BlogPost, 'id' | 'createdAt' | 'updatedAt'>): Promise<ApiResponse<BlogPost>> => 
+    apiCall<BlogPost>('/blog', {
       method: 'POST',
       body: JSON.stringify(data)
     }),
 
   // Blog yazısı güncelle
-  update: (id: string, data: Partial<BlogPostData>): Promise<ApiResponse<BlogPostData>> => 
-    apiCall<BlogPostData>(`/blog/${id}`, {
+  update: (id: string, data: Partial<BlogPost>): Promise<ApiResponse<BlogPost>> => 
+    apiCall<BlogPost>(`/blog/${id}`, {
       method: 'PUT',
       body: JSON.stringify(data)
     }),

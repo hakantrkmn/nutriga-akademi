@@ -8,7 +8,7 @@ import {
   NativeSelectField,
   NativeSelectRoot
 } from "@chakra-ui/react";
-import { egitimCategories, egitimLevels } from "@/data/dummyEgitimData";
+import { COURSE_CATEGORIES, COURSE_LEVELS } from "@/constants";
 
 interface CategoryFilterProps {
   selectedCategory: string;
@@ -32,7 +32,7 @@ export default function CategoryFilter({
           justify="center"
           align="center"
         >
-          {egitimCategories.map((category) => (
+          {COURSE_CATEGORIES.map((category) => (
             <Button
               key={category}
               size="md"
@@ -71,7 +71,7 @@ export default function CategoryFilter({
               }}
             >
               <option value="">Seviye Seçin</option>
-              {egitimLevels.map((level) => (
+              {COURSE_LEVELS.map((level) => (
                 <option key={level} value={level}>
                   {level} Seviye
                 </option>

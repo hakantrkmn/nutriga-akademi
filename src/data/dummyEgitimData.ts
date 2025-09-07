@@ -1,22 +1,6 @@
 import { Egitim } from "@/types";
-
-export const egitimCategories = [
-  "Tümü",
-  "Temel Beslenme",
-  "Klinik Beslenme", 
-  "Sporcu Beslenmesi",
-  "Pediatrik Beslenme",
-  "Geriatrik Beslenme",
-  "Beslenme Danışmanlığı",
-  "Fonksiyonel Beslenme"
-];
-
-export const egitimLevels = [
-  "Başlangıç",
-  "Orta",
-  "İleri",
-  "Uzman"
-];
+import { COURSE_CATEGORIES, COURSE_LEVELS } from "@/constants";
+import { Prisma } from '@prisma/client' // ✅ Prisma Decimal'ini import edin
 
 export const dummyEgitimler: Egitim[] = [
   {
@@ -222,16 +206,15 @@ export const dummyEgitimler: Egitim[] = [
         }
       ]
     },
-    image_url: "https://images.unsplash.com/photo-1490645935967-10de6ba17061?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+    imageUrl: "https://images.unsplash.com/photo-1490645935967-10de6ba17061?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
     slug: "temel-beslenme-ilkeleri-ve-makro-besinler",
     price: 299,
-    sales_count: 156,
-    duration: "8 saat",
-    level: "Başlangıç",
+    salesCount: 156,
+    level: COURSE_LEVELS[1],
     instructor: "Prof. Dr. Ayşe Beslenme",
-    category: "Temel Beslenme",
-    created_at: "2024-01-01",
-    updated_at: "2024-01-15"
+    category: COURSE_CATEGORIES[1],
+    createdAt: new Date("2024-01-01"),
+    updatedAt: new Date("2024-01-15")
   },
   {
     id: "2",
@@ -267,16 +250,15 @@ export const dummyEgitimler: Egitim[] = [
 
       <p><strong>Sertifikasyon:</strong> Bu eğitimi başarıyla tamamlayanlar, klinik beslenme uzmanlık sertifikası alacaklardır.</p>
     `,
-    image_url: "https://images.unsplash.com/photo-1559757148-5c350d0d3c56?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+    imageUrl: "https://images.unsplash.com/photo-1559757148-5c350d0d3c56?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
     slug: "klinik-beslenme-ve-hastalik-yonetimi",
     price: 599,
-    sales_count: 89,
-    duration: "12 saat",
-    level: "İleri",
+    salesCount: 89,
+    level: COURSE_LEVELS[3],
     instructor: "Doç. Dr. Mehmet Klinik",
-    category: "Klinik Beslenme",
-    created_at: "2024-01-03",
-    updated_at: "2024-01-20"
+    category: COURSE_CATEGORIES[2],
+    createdAt: new Date("2024-01-03"),
+    updatedAt: new Date("2024-01-20")
   },
   {
     id: "3",
@@ -312,16 +294,15 @@ export const dummyEgitimler: Egitim[] = [
 
       <p><strong>Bonus:</strong> Gerçek sporcu vaka analizleri ve beslenme planı örnekleri dahildir.</p>
     `,
-    image_url: "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+    imageUrl: "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
     slug: "sporcu-beslenmesi-ve-performans-optimizasyonu",
     price: 449,
-    sales_count: 134,
-    duration: "10 saat",
-    level: "Orta",
+    salesCount: 134,
+    level: COURSE_LEVELS[2],
     instructor: "Dr. Ahmet Spor",
-    category: "Sporcu Beslenmesi",
-    created_at: "2024-01-05",
-    updated_at: "2024-01-18"
+    category: COURSE_CATEGORIES[3],
+    createdAt: new Date("2024-01-05"),
+    updatedAt: new Date("2024-01-18")
   },
   {
     id: "4",
@@ -362,16 +343,15 @@ export const dummyEgitimler: Egitim[] = [
         <li>Otizm spektrum bozukluğunda beslenme</li>
       </ul>
     `,
-    image_url: "https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+    imageUrl: "https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
     slug: "cocuk-ve-adolesan-beslenmesi",
     price: 399,
-    sales_count: 78,
-    duration: "9 saat",
-    level: "Orta",
+    salesCount: 78,
+    level: COURSE_LEVELS[2],
     instructor: "Dr. Zeynep Pediatri",
-    category: "Pediatrik Beslenme",
-    created_at: "2024-01-08",
-    updated_at: "2024-01-22"
+    category: COURSE_CATEGORIES[4],
+    createdAt: new Date("2024-01-08"),
+    updatedAt: new Date("2024-01-22")
   },
   {
     id: "5",
@@ -408,16 +388,15 @@ export const dummyEgitimler: Egitim[] = [
       <h3>Pratik Uygulamalar</h3>
       <p>Yaşlı bakımevleri için menü planlama, texture modified foods, ve aile eğitimi konularını kapsar.</p>
     `,
-    image_url: "https://images.unsplash.com/photo-1559757175-0eb30cd8c063?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+    imageUrl: "https://images.unsplash.com/photo-1559757175-0eb30cd8c063?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
     slug: "yasli-beslenmesi-ve-geriatrik-yaklasimlar",
     price: 349,
-    sales_count: 45,
-    duration: "7 saat",
-    level: "Orta",
+    salesCount: 45,
+    level: COURSE_LEVELS[2],
     instructor: "Prof. Dr. Aylin Geriatri",
-    category: "Geriatrik Beslenme",
-    created_at: "2024-01-10",
-    updated_at: "2024-01-25"
+    category: COURSE_CATEGORIES[5],
+    createdAt: new Date("2024-01-10"),
+    updatedAt: new Date("2024-01-25")
   },
   {
     id: "6",
@@ -461,16 +440,15 @@ export const dummyEgitimler: Egitim[] = [
 
       <p><strong>Özel Bonus:</strong> Gerçek danışmanlık seansı örnekleri ve rol play egzersizleri.</p>
     `,
-    image_url: "https://images.unsplash.com/photo-1559757175-0eb30cd8c063?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+    imageUrl: "https://images.unsplash.com/photo-1559757175-0eb30cd8c063?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
     slug: "beslenme-danismanligi-ve-muvekkil-iletisimi",
     price: 549,
-    sales_count: 92,
-    duration: "11 saat",
-    level: "İleri",
+    salesCount: 92,
+    level: COURSE_LEVELS[3],
     instructor: "Dr. Fatma İletişim",
-    category: "Beslenme Danışmanlığı",
-    created_at: "2024-01-12",
-    updated_at: "2024-01-28"
+    category: COURSE_CATEGORIES[6],
+    createdAt: new Date("2024-01-12"),
+    updatedAt: new Date("2024-01-28")
   },
   {
     id: "8",
@@ -594,15 +572,14 @@ export const dummyEgitimler: Egitim[] = [
         }
       ]
     },
-    image_url: "https://images.unsplash.com/photo-1559757175-0eb30cd8c063?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+    imageUrl: "https://images.unsplash.com/photo-1559757175-0eb30cd8c063?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
     slug: "test-egitimi-gorsel-ve-icerik-testi",
     price: 299,
-    sales_count: 0,
-    duration: "2 saat",
-    level: "Başlangıç",
+    salesCount: 0,
+    level: COURSE_LEVELS[1],
     instructor: "Test Eğitmeni",
-    category: "Temel Beslenme",
-    created_at: "2025-09-06",
-    updated_at: "2025-09-06"
+    category: COURSE_CATEGORIES[1],
+    createdAt: new Date("2025-09-06"),
+    updatedAt: new Date("2025-09-06")
   }
 ];

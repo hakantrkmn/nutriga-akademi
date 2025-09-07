@@ -22,24 +22,28 @@ import {
   FiArrowLeft, 
   FiSave
 } from 'react-icons/fi'
-import { blogApi, BlogPostData } from '@/lib/api'
+import { blogApi } from '@/lib/api'
+import { BlogPost } from '@/types'
 import TipTapEditor from '@/components/admin/TipTapEditor'
 
 export default function BlogFormPage({ blogId }: { blogId?: string }) {
   const router = useRouter()
   const [loading, setLoading] = useState(false)
-  const [, setInitialData] = useState<BlogPostData | null>(null)
+  const [, setInitialData] = useState<BlogPost | null>(null)
   const [loadingData, setLoadingData] = useState(!!blogId)
   
   // Form state
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<BlogPost>({
     title: '',
-    description: '',
+    excerpt: '',
     content: null as object | null,
+    imageUrl: '',
     slug: '',
     category: 'Genel',
     author: 'Admin',
-    publishedAt: new Date().toISOString().split('T')[0]
+    createdAt: new Date(),
+    updatedAt: new Date(),
+    id: ''
   })
   
   // Görsel yükleme state'i
@@ -58,19 +62,7 @@ export default function BlogFormPage({ blogId }: { blogId?: string }) {
           
           if (response.success && response.data) {
             setInitialData(response.data)
-            setFormData({
-              title: response.data.title || '',
-              description: response.data.excerpt || '',
-              content: typeof response.data.content === 'object' 
-                ? response.data.content 
-                : typeof response.data.content === 'string' 
-                  ? JSON.parse(response.data.content) 
-                  : null,
-              slug: response.data.slug || '',
-              category: response.data.category || 'Genel',
-              author: response.data.author || 'Admin',
-              publishedAt: response.data.createdAt ? new Date(response.data.createdAt).toISOString().split('T')[0] : new Date().toISOString().split('T')[0]
-            })
+            setFormData(response.data)
             setUploadedImage(response.data.imageUrl || null)
           } else {
             console.error('Blog verileri yüklenemedi')
@@ -94,7 +86,7 @@ export default function BlogFormPage({ blogId }: { blogId?: string }) {
       setLoading(true)
       const data = {
         title: formData.title,
-        excerpt: formData.description,
+        excerpt: formData.excerpt,
         content: JSON.stringify(formData.content),
         imageUrl: uploadedImage || '',
         slug: formData.slug,
@@ -109,7 +101,7 @@ export default function BlogFormPage({ blogId }: { blogId?: string }) {
         response = await blogApi.update(blogId, data)
       } else {
         // Yeni oluştur
-        response = await blogApi.create(data as Omit<BlogPostData, 'id' | 'createdAt' | 'updatedAt'>)
+        response = await blogApi.create(data as Omit<BlogPost, 'id' | 'createdAt' | 'updatedAt'>)
       }
 
       if (response.success) {
@@ -273,7 +265,7 @@ export default function BlogFormPage({ blogId }: { blogId?: string }) {
                   </Text>
                   <NativeSelectRoot>
                     <NativeSelectField
-                      value={formData.category}
+                      value={formData.category || ''}
                       onChange={(e) => setFormData({ ...formData, category: e.target.value })}
                     >
                       <option value="Genel">Genel</option>
@@ -295,7 +287,7 @@ export default function BlogFormPage({ blogId }: { blogId?: string }) {
                   </Text>
                   <Input
                     placeholder="Yazar adı"
-                    value={formData.author}
+                    value={formData.author || ''}
                     onChange={(e) => setFormData({ ...formData, author: e.target.value })}
                   />
                 </Box>
@@ -309,8 +301,8 @@ export default function BlogFormPage({ blogId }: { blogId?: string }) {
                   </Text>
                   <Input
                     type="date"
-                    value={formData.publishedAt}
-                    onChange={(e) => setFormData({ ...formData, publishedAt: e.target.value })}
+                    value={formData.createdAt ? new Date(formData.createdAt).toISOString().split('T')[0] : ''}
+                    onChange={(e) => setFormData({ ...formData, createdAt: new Date(e.target.value) })}
                   />
                 </Box>
               </GridItem>
@@ -368,8 +360,8 @@ export default function BlogFormPage({ blogId }: { blogId?: string }) {
               </Text>
               <Input
                 placeholder="Blog yazısının kısa açıklamasını girin..."
-                value={formData.description}
-                onChange={(e) => setFormData({ ...formData, description: e.target.value })}
+                value={formData.excerpt || ''}
+                onChange={(e) => setFormData({ ...formData, excerpt: e.target.value })}
                 size="lg"
               />
             </Box>
@@ -383,7 +375,7 @@ export default function BlogFormPage({ blogId }: { blogId?: string }) {
               Blog İçeriği
             </Heading>
             <TipTapEditor
-              content={formData.content}
+              content={formData.content as object}
               onChange={(content) => setFormData({ ...formData, content })}
               placeholder="Blog yazısının içeriğini buraya yazın..."
             />

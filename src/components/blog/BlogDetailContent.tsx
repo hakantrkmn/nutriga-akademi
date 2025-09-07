@@ -64,7 +64,7 @@ export default function BlogDetailContent({ post }: BlogDetailContentProps) {
               </HStack>
               
               <Text fontSize="sm" color="gray.500">
-                {new Date(post.created_at).toLocaleDateString('tr-TR', {
+                {new Date(post.createdAt).toLocaleDateString('tr-TR', {
                   year: 'numeric',
                   month: 'long', 
                   day: 'numeric'
@@ -74,7 +74,7 @@ export default function BlogDetailContent({ post }: BlogDetailContentProps) {
           </VStack>
 
           <Image
-            src={post.image_url}
+            src={post.imageUrl || ''}
             alt={post.title}
             w="full"
             h="400px"
@@ -83,7 +83,7 @@ export default function BlogDetailContent({ post }: BlogDetailContentProps) {
           />
 
           <TipTapWrapper 
-            content={post.content}
+            content={post.content as object}
             className="blog-content"
           />
 

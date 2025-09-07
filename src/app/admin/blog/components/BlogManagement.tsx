@@ -17,11 +17,11 @@ import {
   Center,
 } from '@chakra-ui/react'
 import { FiPlus, FiEdit, FiTrash2 } from 'react-icons/fi'
-import { blogApi, BlogPostData } from '@/lib/api'
-
+import { blogApi } from '@/lib/api'
+import { BlogPost } from '@/types'
 export default function BlogManagement() {
   const router = useRouter()
-  const [blogPosts, setBlogPosts] = useState<BlogPostData[]>([])
+  const [blogPosts, setBlogPosts] = useState<BlogPost[]>([])
   const [loading, setLoading] = useState(true)
 
   // Blog yazılarını yükle
@@ -52,7 +52,7 @@ export default function BlogManagement() {
   }
 
   // Blog yazısı düzenle
-  const handleEditPost = (post: BlogPostData) => {
+  const handleEditPost = (post: BlogPost) => {
     if (post.id) {
       router.push(`/admin/blog/${post.id}/duzenle`)
     }

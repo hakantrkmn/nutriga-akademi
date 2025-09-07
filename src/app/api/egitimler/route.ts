@@ -25,7 +25,7 @@ export async function GET() {
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json()
-    const { title, description, content, imageUrl, slug, price } = body
+    const { title, description, content, imageUrl, slug, price, category, level, instructor } = body
 
     // Gerekli alanları kontrol et
     if (!title || !slug || !content) {
@@ -55,7 +55,10 @@ export async function POST(request: NextRequest) {
         imageUrl: imageUrl || null,
         slug,
         price: price ? parseFloat(price) : null,
-        salesCount: 0
+        salesCount: 0,
+        category,
+        level,
+        instructor
       }
     })
 

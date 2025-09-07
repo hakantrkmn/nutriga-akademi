@@ -32,7 +32,7 @@ export default function BlogCard({ post }: BlogCardProps) {
       >
         <Box h="200px" w="full" bg="gray.100" position="relative" overflow="hidden">
           <Image
-            src={post.image_url}
+            src={post.imageUrl || "/images/blog-default.jpg"}
             alt={post.title}
             width={400}
             height={200}
@@ -101,7 +101,7 @@ export default function BlogCard({ post }: BlogCardProps) {
             </HStack>
             
             <Text fontSize="xs" color="gray.400">
-              {new Date(post.created_at).toLocaleDateString('tr-TR', {
+              {new Date(post.createdAt).toLocaleDateString('tr-TR', {
                 year: 'numeric',
                 month: 'long', 
                 day: 'numeric'

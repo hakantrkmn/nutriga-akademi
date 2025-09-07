@@ -22,7 +22,7 @@ export default function EgitimPrice({ egitim }: EgitimPriceProps) {
           <VStack gap={6}>
             <VStack gap={2} align="center">
               <Text fontSize="5xl" fontWeight="bold" color="green.500" fontFamily="Poppins, sans-serif">
-                ₺{egitim.price}
+                ₺{egitim.price?.toString()}
               </Text>
               <Text fontSize="sm" color="gray.500" fontWeight="medium">
                 Tek seferlik ödeme
@@ -79,13 +79,6 @@ export default function EgitimPrice({ egitim }: EgitimPriceProps) {
                 Bu Eğitim İçerir:
               </Heading>
               <VStack gap={3} w="full">
-                <HStack justify="space-between" w="full" p={3} bg="gray.50" borderRadius="8px">
-                  <HStack gap={3}>
-                    <Icon as={FiClock} color="green.500" boxSize={4} />
-                    <Text fontWeight="medium" color="gray.700">Süre</Text>
-                  </HStack>
-                  <Text fontWeight="semibold" color="gray.800">{egitim.duration}</Text>
-                </HStack>
                 <HStack justify="space-between" w="full" p={3} bg="gray.50" borderRadius="8px">
                   <HStack gap={3}>
                     <Icon as={FiBarChart} color="green.500" boxSize={4} />

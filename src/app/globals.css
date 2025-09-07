@@ -824,3 +824,10 @@ h1, h2, h3, h4, h5, h6 {
 .ProseMirror img.tiptap-image-resizable.block .resize-handle {
   display: block;
 }
+
+/* add important to the custom option */
+.custom-option {
+  color: #2D3748;
+  background-color: white;
+  padding: 8px;
+}

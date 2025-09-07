@@ -20,6 +20,9 @@ model Egitim {
   slug        String   @unique
   price       Decimal? @db.Decimal(10, 2)
   salesCount  Int      @default(0) @map("sales_count")
+  category    String 
+  level       String
+  instructor  String
   createdAt   DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
   updatedAt   DateTime @default(now()) @updatedAt @map("updated_at") @db.Timestamptz(6)
 

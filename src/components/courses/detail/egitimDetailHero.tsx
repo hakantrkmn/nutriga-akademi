@@ -91,11 +91,11 @@ export default function EgitimDetailHero({ egitim, isImageError, setIsImageError
                 </HStack>
                 <HStack gap={2}>
                   <Icon as={FiUsers} color="green.500" boxSize={4} />
-                  <Text fontWeight="medium"><Text as="span" color="gray.800">{egitim.sales_count}</Text> öğrenci</Text>
+                  <Text fontWeight="medium"><Text as="span" color="gray.800">{egitim.salesCount}</Text> öğrenci</Text>
                 </HStack>
                 <HStack gap={2}>
                   <Icon as={FiClock} color="green.500" boxSize={4} />
-                  <Text fontWeight="medium"><Text as="span" color="gray.800">{egitim.duration}</Text></Text>
+                  <Text fontWeight="medium"><Text as="span" color="gray.800">{egitim.salesCount}</Text></Text>
                 </HStack>
               </HStack>
             </VStack>
@@ -117,7 +117,7 @@ export default function EgitimDetailHero({ egitim, isImageError, setIsImageError
             >
               {!isImageError ? (
                 <Image
-                  src={egitim.image_url}
+                  src={egitim.imageUrl || "/images/egitim-default.jpg"}
                   alt={egitim.title}
                   h="full"
                   w="full"

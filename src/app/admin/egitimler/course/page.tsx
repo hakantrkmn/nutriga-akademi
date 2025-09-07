@@ -1,4 +1,4 @@
-import EgitimFormPage from './components/EgitimFormPage'
+import EgitimFormPage from '@/components/admin/course/EgitimFormPage'
 
 interface EgitimEditPageProps {
   params: Promise<{

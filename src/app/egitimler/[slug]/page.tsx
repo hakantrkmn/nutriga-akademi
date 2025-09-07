@@ -1,14 +1,24 @@
 import { notFound } from "next/navigation";
 import EgitimDetailContent from "@/components/courses/detail/EgitimDetailContent";
-import { dummyEgitimler } from "@/data/dummyEgitimData";
 import type { Metadata } from "next";
 import { EgitimDetailPageProps } from "@/types";
 import { COMPANY_NAME } from "@/constants";
-
-export async function generateMetadata({ params }: EgitimDetailPageProps): Promise<Metadata> {
+import { prisma } from "@/lib/prisma";
+import { convertEgitimToDecimal } from "@/utils";
+export async function generateMetadata({ params, egitim: egitimData }: EgitimDetailPageProps): Promise<Metadata> {
+  if (egitimData) {
+    return {
+      title: `${egitimData.title} | ` + COMPANY_NAME,
+      description: egitimData.description,
+    };
+  }
   const { slug } = await params;
-  const egitim = dummyEgitimler.find(e => e.slug === slug);
-  
+  const egitim = await prisma.egitim.findUnique({
+    where: {
+      slug: slug
+    }
+  });
+
   if (!egitim) {
     return {
       title: "Eğitim bulunamadı | " + COMPANY_NAME
@@ -16,24 +26,34 @@ export async function generateMetadata({ params }: EgitimDetailPageProps): Promi
   }
 
   return {
-    title: `${egitim.title} | ` + COMPANY_NAME,
+    title: `${egitim?.title || ''} | ` + COMPANY_NAME,
     description: egitim.description,
   };
 }
 
-export default async function EgitimDetailPage({ params }: EgitimDetailPageProps) {
+export default async function EgitimDetailPage({ params, egitim: egitimData }: EgitimDetailPageProps) {
+  if (egitimData) {
+    return <EgitimDetailContent egitim={egitimData} />;
+  }
+
   const { slug } = await params;
-  const egitim = dummyEgitimler.find(e => e.slug === slug);
+  const egitim = await prisma.egitim.findUnique({
+    where: {
+      slug: slug
+    }
+  });
 
   if (!egitim) {
     notFound();
   }
 
-  return <EgitimDetailContent egitim={egitim} />;
+  const convertedEgitim = convertEgitimToDecimal(egitim);
+  return <EgitimDetailContent egitim={convertedEgitim} />;
 }
 
 export async function generateStaticParams() {
-  return dummyEgitimler.map((egitim) => ({
+  const egitimler = await prisma.egitim.findMany();
+  return egitimler.map((egitim) => ({
     slug: egitim.slug,
   }));
 }

@@ -56,7 +56,7 @@ export default function EgitimCTA({ egitim }: EgitimCTAProps) {
               transition="all 0.3s ease"
               onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
             >
-              Hemen Başla - ₺{egitim.price}
+              Hemen Başla - ₺{egitim.price?.toString()}
             </Button>
             
             <Button 

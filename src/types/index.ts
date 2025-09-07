@@ -1,15 +1,9 @@
-export interface BlogPost {
-    id: string;
-    title: string;
-    content: string | object; // HTML string veya JSONB format (TipTap JSON)
-    image_url: string;
-    slug: string;
-    category: string;
-    excerpt: string;
-    author: string;
-    created_at: string;
-    updated_at: string;
-  }
+import { Egitim as PrismaEgitim } from "@prisma/client";
+export interface Egitim extends Omit<PrismaEgitim, 'price'> {
+  price: number;
+}
+import { BlogPost } from "@prisma/client";
+export type { BlogPost };
 
   export interface BlogGridProps {
     posts: BlogPost[];
@@ -26,24 +20,6 @@ export interface BlogPost {
     post: BlogPost;
   }
 
-
-  export interface Egitim {
-    id: string;
-    title: string;
-    description: string;
-    content: string | object; // HTML string veya JSONB format (TipTap JSON)
-    image_url: string;
-    slug: string;
-    price: number;
-    sales_count: number;
-    created_at: string;
-    updated_at: string;
-    // Ekstra alanlar (UI için gerekli)
-    duration?: string;
-    level?: string;
-    instructor?: string;
-    category?: string;
-  }
   export interface EgitimCardProps {
     egitim: Egitim;
   }
@@ -51,6 +27,7 @@ export interface BlogPost {
     params: Promise<{
       slug: string;
     }>;
+    egitim: Egitim;
   }
 
   export interface EgitimDetailContentProps {
@@ -64,6 +41,8 @@ export interface BlogPost {
   }
 
   export interface EgitimContentProps {
+    setFormData?: (formData: Egitim) => void;
+    isEditing?: boolean;
     egitim: Egitim;
   }
   export interface EgitimPriceProps {

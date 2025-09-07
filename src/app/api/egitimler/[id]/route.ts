@@ -41,8 +41,8 @@ export async function PUT(
   try {
     const { id } = await params
     const body = await request.json()
-    const { title, description, content, imageUrl, slug, price } = body
-
+    const { title, description, content, imageUrl, slug, price, category, level, instructor } = body
+    
     // Eğitimin var olup olmadığını kontrol et
     const existingEgitim = await prisma.egitim.findUnique({
       where: { id }
@@ -78,6 +78,9 @@ export async function PUT(
         ...(imageUrl !== undefined && { imageUrl }),
         ...(slug && { slug }),
         ...(price !== undefined && { price: parseFloat(price) }),
+        ...(category !== undefined && { category }),
+        ...(level !== undefined && { level }),
+        ...(instructor !== undefined && { instructor }),
         updatedAt: new Date()
       }
     })

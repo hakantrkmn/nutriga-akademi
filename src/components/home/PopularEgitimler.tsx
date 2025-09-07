@@ -13,15 +13,18 @@ import {
   useBreakpointValue,
 } from "@chakra-ui/react";
 import Link from "next/link";
-import { dummyEgitimler } from "@/data/dummyEgitimData";
 import EgitimCard from "@/components/courses/EgitimCard";
+import { Egitim } from "@/types";
 
-export default function PopularEgitimler() {
+interface PopularEgitimlerProps {
+  egitimler: Egitim[];
+}
+export default function PopularEgitimler({ egitimler }: PopularEgitimlerProps) {
   const columns = useBreakpointValue({ base: 1, md: 2, lg: 3 });
 
   // En popüler eğitimleri al (sales_count'a göre sırala)
-  const popularEgitimler = dummyEgitimler
-    .sort((a, b) => (b.sales_count || 0) - (a.sales_count || 0))
+  const popularEgitimler = egitimler
+    .sort((a, b) => (b.salesCount || 0) - (a.salesCount || 0))
     .slice(0, 6);
 
   return (
@@ -126,7 +129,7 @@ export default function PopularEgitimler() {
                   fontWeight="bold"
                   color="green.500"
                 >
-                  {dummyEgitimler.length}+
+                  {egitimler.length}+
                 </Text>
                 <Text fontSize="sm" color="gray.600" fontWeight="medium">
                   Toplam Eğitim
@@ -139,7 +142,7 @@ export default function PopularEgitimler() {
                   fontWeight="bold"
                   color="orange.500"
                 >
-                  {dummyEgitimler.reduce((sum, egitim) => sum + (egitim.sales_count || 0), 0)}+
+                  {egitimler.reduce((sum, egitim) => sum + (egitim.salesCount || 0), 0)}+
                 </Text>
                 <Text fontSize="sm" color="gray.600" fontWeight="medium">
                   Satılan Eğitim

@@ -20,9 +20,9 @@ import BlogCard from "@/components/blog/BlogCard";
 export default function BlogSection() {
   const columns = useBreakpointValue({ base: 1, md: 2, lg: 3 });
 
-  // En son blog yazılarını al (created_at'e göre sırala)
+  // En son blog yazılarını al (createdAt'e göre sırala)
   const latestBlogPosts = dummyBlogPosts
-    .sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime())
+    .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
     .slice(0, 6);
 
   return (

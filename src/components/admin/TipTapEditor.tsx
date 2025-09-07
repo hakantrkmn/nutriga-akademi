@@ -1,6 +1,6 @@
 'use client'
 
-import { useEditor, EditorContent } from '@tiptap/react'
+import { useEditor, EditorContent, Content, generateHTML } from '@tiptap/react'
 import { useState, useRef, useEffect } from 'react'
 import { BubbleMenu } from '@tiptap/extension-bubble-menu'
 import StarterKit from '@tiptap/starter-kit'
@@ -30,9 +30,9 @@ import {
   Separator,
   Text
 } from '@chakra-ui/react'
-
+import { getHTMLContent } from '@/utils'
 interface TipTapEditorProps {
-  content?: object | null
+  content?: object  | null
   onChange?: (content: object) => void
   placeholder?: string
   readOnly?: boolean
@@ -44,6 +44,8 @@ export default function TipTapEditor({
   placeholder = "İçeriğinizi buraya yazın...",
   readOnly = false 
 }: TipTapEditorProps) {
+  console.log('content', typeof content)
+
   const [, forceUpdate] = useState({})
   const [showColorPalette, setShowColorPalette] = useState(false)
   const colorPaletteRef = useRef<HTMLDivElement>(null)
@@ -132,7 +134,7 @@ export default function TipTapEditor({
         placeholder,
       }),
     ],
-    content: content || '',
+    content: getHTMLContent(content) || '',
     editable: !readOnly,
     immediatelyRender: false, // SSR hydration mismatch'ini önler
     onUpdate: ({ editor }) => {
@@ -472,39 +474,25 @@ export default function TipTapEditor({
                 // Cursor pozisyonundaki node'u kontrol et
                 const nodeAtPos = editor.state.doc.nodeAt(from)
                 
-                console.log('=== Click Debug ===')
-                console.log('Selection:', selection)
-                console.log('From position:', from)
-                console.log('Node at position:', nodeAtPos)
-                console.log('Node type:', nodeAtPos?.type?.name)
-                console.log('Node attrs:', nodeAtPos?.attrs)
-                console.log('Is image?', nodeAtPos && (nodeAtPos.type.name === 'image' || nodeAtPos.type.name === 'resizableImage'))
-                console.log('==================')
-                
                 if (nodeAtPos && (nodeAtPos.type.name === 'image' || nodeAtPos.type.name === 'resizableImage')) {
                   // Yeni pakette inline/block geçişi farklı şekilde çalışır
                   // CSS class'ları ile kontrol edilir
                   const currentClass = nodeAtPos.attrs.class || ''
                   const isCurrentlyInline = currentClass.includes('inline')
                   
-                  console.log('Current class:', currentClass)
-                  console.log('Is currently inline:', isCurrentlyInline)
                   
                   if (isCurrentlyInline) {
                     // Block yap
-                    console.log('Switching to block mode')
                     editor.chain().focus().updateAttributes('image', {
                       class: 'tiptap-image-resizable block'
                     }).run()
                   } else {
                     // Inline yap
-                    console.log('Switching to inline mode')
                     editor.chain().focus().updateAttributes('image', {
                       class: 'tiptap-image-resizable inline'
                     }).run()
                   }
                 } else {
-                  console.log('No image selected, button should be disabled')
                 }
               }}
               text="🔄"
@@ -517,14 +505,7 @@ export default function TipTapEditor({
                 // Cursor pozisyonundaki node'u kontrol et
                 const nodeAtPos = editor.state.doc.nodeAt(from)
                 
-                console.log('=== Selection Debug ===')
-                console.log('Selection:', selection)
-                console.log('From position:', from)
-                console.log('Node at position:', nodeAtPos)
-                console.log('Node type:', nodeAtPos?.type?.name)
-                console.log('Node attrs:', nodeAtPos?.attrs)
-                console.log('Is image?', nodeAtPos && (nodeAtPos.type.name === 'image' || nodeAtPos.type.name === 'resizableImage'))
-                console.log('========================')
+
                 
                 return !(nodeAtPos && (nodeAtPos.type.name === 'image' || nodeAtPos.type.name === 'resizableImage'))
               })()}
