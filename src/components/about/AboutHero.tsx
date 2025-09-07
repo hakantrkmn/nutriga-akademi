@@ -5,6 +5,7 @@ import {
   Heading,
   Text,
 } from "@chakra-ui/react";
+import { COMPANY_NAME } from "@/constants";
 
 export default function AboutHero() {
   return (
@@ -26,7 +27,7 @@ export default function AboutHero() {
             lineHeight="tall"
             fontWeight="medium"
           >
-            NutriHome Akademi olarak, beslenme bilimindeki en güncel bilgileri 
+            {COMPANY_NAME} olarak, beslenme bilimindeki en güncel bilgileri 
             paylaşarak diyetisyenlerin mesleki gelişimine katkı sağlıyoruz.
           </Text>
 

@@ -217,7 +217,7 @@ export default function EgitimlerManagement() {
                           Henüz eğitim eklenmemiş
                         </Text>
                         <Text color="gray.400" fontSize="sm">
-                          İlk eğitiminizi eklemek için "Yeni Eğitim" butonuna tıklayın
+                          İlk eğitiminizi eklemek için &quot;Yeni Eğitim&quot; butonuna tıklayın
                         </Text>
                       </VStack>
                     </Table.Cell>

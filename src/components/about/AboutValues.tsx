@@ -1,3 +1,4 @@
+import { COMPANY_NAME } from "@/constants";
 import {
   Box,
   Container,
@@ -48,7 +49,7 @@ export default function AboutValues() {
               color="gray.600" 
               maxW="600px"
             >
-              NutriHome Akademi&apos;yi ayakta tutan temel değerler ve ilkelerimiz
+              {COMPANY_NAME}&apos;yi ayakta tutan temel değerler ve ilkelerimiz
             </Text>
           </VStack>
 

@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { prisma } from '@/lib/prisma'
-import { createSupabaseAdmin } from '@/lib/supabase'
 
 // GET - Tüm eğitimleri listele
 export async function GET() {
@@ -26,7 +25,7 @@ export async function GET() {
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json()
-    const { title, description, content, imageUrl, slug, price, category } = body
+    const { title, description, content, imageUrl, slug, price } = body
 
     // Gerekli alanları kontrol et
     if (!title || !slug || !content) {

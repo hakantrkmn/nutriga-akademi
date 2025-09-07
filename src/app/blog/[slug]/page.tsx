@@ -1,5 +1,5 @@
 import { notFound } from "next/navigation";
-import BlogDetailContent from "./components/BlogDetailContent";
+import BlogDetailContent from "@/components/blog/BlogDetailContent";
 import { dummyBlogPosts } from "@/data/dummyBlogData";
 import type { Metadata } from "next";
 

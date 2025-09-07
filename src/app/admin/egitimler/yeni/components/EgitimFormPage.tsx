@@ -16,7 +16,8 @@ import {
   Card,
   Input,
   NativeSelectField,
-  NativeSelectRoot
+  NativeSelectRoot,
+  Image
 } from '@chakra-ui/react'
 import { 
   FiArrowLeft, 
@@ -49,6 +50,10 @@ export default function EgitimFormPage({ egitimId }: { egitimId?: string }) {
     instructor: 'Dr. Ahmet Yılmaz',
     salesCount: 156
   })
+  
+  // Görsel yükleme state'i
+  const [uploadedImage, setUploadedImage] = useState<string | null>(null)
+  const [uploading, setUploading] = useState(false)
 
   const isEditing = !!egitimId
 
@@ -84,6 +89,7 @@ export default function EgitimFormPage({ egitimId }: { egitimId?: string }) {
       setLoading(true)
       const data = {
         ...formData,
+        imageUrl: uploadedImage || '',
         content: JSON.stringify(formData.content)
       }
       
@@ -117,6 +123,52 @@ export default function EgitimFormPage({ egitimId }: { egitimId?: string }) {
       .replace(/[^a-z0-9\s-]/g, '')
       .replace(/\s+/g, '-')
       .trim()
+  }
+
+  // Görsel yükleme fonksiyonu
+  const handleImageUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0]
+    if (!file) return
+
+    // Dosya boyutunu kontrol et (10MB limit)
+    if (file.size > 10 * 1024 * 1024) {
+      alert('Dosya boyutu 10MB\'dan küçük olmalıdır')
+      return
+    }
+
+    // Dosya türünü kontrol et
+    const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif', 'image/webp', 'image/svg+xml']
+    if (!allowedTypes.includes(file.type)) {
+      alert('Sadece JPG, PNG, GIF, WebP ve SVG dosyaları yüklenebilir')
+      return
+    }
+
+    try {
+      setUploading(true)
+      
+      // FormData oluştur
+      const formData = new FormData()
+      formData.append('file', file)
+
+      // Upload API'sine gönder
+      const response = await fetch('/api/upload', {
+        method: 'POST',
+        body: formData,
+      })
+
+      const result = await response.json()
+
+      if (result.success) {
+        setUploadedImage(result.url)
+      } else {
+        alert(`Upload hatası: ${result.error}`)
+      }
+    } catch (error) {
+      console.error('Upload hatası:', error)
+      alert('Dosya yüklenirken bir hata oluştu')
+    } finally {
+      setUploading(false)
+    }
   }
 
   // JSON dosyası olarak kaydet
@@ -437,6 +489,48 @@ export default function EgitimFormPage({ egitimId }: { egitimId?: string }) {
                         placeholder="egitim-slug"
                         size="sm"
                       />
+                    </Box>
+
+                    <Box>
+                      <Text fontSize="sm" fontWeight="medium" color="gray.700" mb={2}>
+                        Eğitim Görseli
+                      </Text>
+                      <VStack gap={3} align="stretch">
+                        <input
+                          type="file"
+                          accept="image/*"
+                          onChange={handleImageUpload}
+                          style={{ display: 'none' }}
+                          id="image-upload"
+                        />
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          loading={uploading}
+                          loadingText="Yükleniyor..."
+                          cursor="pointer"
+                          onClick={() => document.getElementById('image-upload')?.click()}
+                        >
+                          {uploadedImage ? 'Görseli Değiştir' : 'Görsel Yükle'}
+                        </Button>
+                        {uploadedImage && (
+                          <Box>
+                            <Text fontSize="xs" color="green.600" mb={2}>
+                              ✓ Görsel yüklendi
+                            </Text>
+                            <Image
+                              src={uploadedImage}
+                              alt="Eğitim görseli"
+                              w="100%"
+                              h="120px"
+                              objectFit="cover"
+                              borderRadius="md"
+                              border="1px solid"
+                              borderColor="gray.200"
+                            />
+                          </Box>
+                        )}
+                      </VStack>
                     </Box>
                   </VStack>
                 </Card.Body>

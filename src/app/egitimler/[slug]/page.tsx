@@ -1,13 +1,9 @@
 import { notFound } from "next/navigation";
-import EgitimDetailContent from "./components/EgitimDetailContent";
+import EgitimDetailContent from "@/components/courses/detail/EgitimDetailContent";
 import { dummyEgitimler } from "@/data/dummyEgitimData";
 import type { Metadata } from "next";
-
-interface EgitimDetailPageProps {
-  params: Promise<{
-    slug: string;
-  }>;
-}
+import { EgitimDetailPageProps } from "@/types";
+import { COMPANY_NAME } from "@/constants";
 
 export async function generateMetadata({ params }: EgitimDetailPageProps): Promise<Metadata> {
   const { slug } = await params;
@@ -15,12 +11,12 @@ export async function generateMetadata({ params }: EgitimDetailPageProps): Promi
   
   if (!egitim) {
     return {
-      title: "Eğitim bulunamadı | NutriHome Akademi"
+      title: "Eğitim bulunamadı | " + COMPANY_NAME
     };
   }
 
   return {
-    title: `${egitim.title} | NutriHome Akademi`,
+    title: `${egitim.title} | ` + COMPANY_NAME,
     description: egitim.description,
   };
 }

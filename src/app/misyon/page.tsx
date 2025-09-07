@@ -1,4 +1,4 @@
-import MissionContent from "./components/MissionContent";
+import MissionContent from "../../components/mission/MissionContent";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {

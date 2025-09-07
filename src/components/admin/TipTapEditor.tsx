@@ -538,10 +538,13 @@ export default function TipTapEditor({
       <Box p={4} minH="300px" position="relative">
         <EditorContent 
           editor={editor}
+          className="tiptap-editor-container"
           style={{
             outline: 'none',
             minHeight: '250px',
-            color: textColor
+            color: textColor,
+            maxWidth: '100%',
+            overflow: 'hidden'
           }}
         />
         

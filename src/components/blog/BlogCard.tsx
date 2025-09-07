@@ -11,11 +11,8 @@ import {
 import Link from "next/link";
 import Image from "next/image";
 import { FiUser } from "react-icons/fi";
-import { BlogPost } from "@/data/dummyBlogData";
+import { BlogCardProps } from "@/types";
 
-interface BlogCardProps {
-  post: BlogPost;
-}
 
 export default function BlogCard({ post }: BlogCardProps) {
   return (

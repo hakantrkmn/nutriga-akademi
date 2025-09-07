@@ -5,23 +5,21 @@ import {
   Text,
   Box
 } from "@chakra-ui/react";
-import EgitimCard from "@/components/common/EgitimCard";
-import { Egitim } from "@/data/dummyEgitimData";
+import BlogCard from "@/components/blog/BlogCard";
+import { BlogGridProps } from "@/types";
 
-interface EgitimlerGridProps {
-  egitimler: Egitim[];
-}
 
-export default function EgitimlerGrid({ egitimler }: EgitimlerGridProps) {
-  if (egitimler.length === 0) {
+
+export default function BlogGrid({ posts }: BlogGridProps) {
+  if (posts.length === 0) {
     return (
       <Container maxW="1200px" px={{ base: 4, md: 6 }} py={16}>
         <VStack gap={4} textAlign="center">
           <Text fontSize="xl" color="gray.600">
-            Seçtiğiniz kriterlere uygun eğitim bulunamadı.
+            Bu kategoride henüz blog yazısı bulunmuyor.
           </Text>
           <Text color="gray.500">
-            Filtreleri değiştirerek tekrar deneyin veya tüm eğitimleri görüntüleyin.
+            Yakında yeni içeriklerle karşınızda olacağız!
           </Text>
         </VStack>
       </Container>
@@ -36,8 +34,8 @@ export default function EgitimlerGrid({ egitimler }: EgitimlerGridProps) {
           gap={8}
           w="full"
         >
-          {egitimler.map((egitim) => (
-            <EgitimCard key={egitim.id} egitim={egitim} />
+          {posts.map((post) => (
+            <BlogCard key={post.id} post={post} />
           ))}
         </SimpleGrid>
       </Container>

@@ -9,17 +9,15 @@ import {
   Icon,
   Badge
 } from '@chakra-ui/react'
-import { FiMenu, FiLogOut, FiHome, FiBookOpen, FiFileText, FiPlus } from 'react-icons/fi'
+import { FiLogOut, FiHome, FiBookOpen, FiFileText } from 'react-icons/fi'
 import { useRouter, usePathname } from 'next/navigation'
 import { useState, useEffect } from 'react'
 import { supabase } from '@/lib/supabase'
 import Link from 'next/link'
 
-interface AdminHeaderProps {
-  onMenuToggle?: () => void
-}
 
-export default function AdminHeader({ onMenuToggle }: AdminHeaderProps) {
+
+export default function AdminHeader() {
   const router = useRouter()
   const pathname = usePathname()
   const [adminEmail, setAdminEmail] = useState<string>('')

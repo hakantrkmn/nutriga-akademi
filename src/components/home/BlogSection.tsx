@@ -15,7 +15,7 @@ import {
 } from "@chakra-ui/react";
 import Link from "next/link";
 import { dummyBlogPosts } from "@/data/dummyBlogData";
-import BlogCard from "@/components/common/BlogCard";
+import BlogCard from "@/components/blog/BlogCard";
 
 export default function BlogSection() {
   const columns = useBreakpointValue({ base: 1, md: 2, lg: 3 });

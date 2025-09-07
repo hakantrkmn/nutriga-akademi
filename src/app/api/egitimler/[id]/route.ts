@@ -41,7 +41,7 @@ export async function PUT(
   try {
     const { id } = await params
     const body = await request.json()
-    const { title, description, content, imageUrl, slug, price, category } = body
+    const { title, description, content, imageUrl, slug, price } = body
 
     // Eğitimin var olup olmadığını kontrol et
     const existingEgitim = await prisma.egitim.findUnique({

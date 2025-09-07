@@ -1,7 +1,4 @@
 import { prisma } from './prisma'
-import { createSupabaseAdmin } from './supabase'
-import { Egitim } from '@/data/dummyEgitimData'
-import { BlogPost } from '@/data/dummyBlogData'
 
 // Admin işlemleri için helper fonksiyonlar
 
@@ -95,7 +92,7 @@ export function isAdminEmail(email: string): boolean {
 export async function createEgitim(data: {
   title: string
   description?: string
-  content?: any
+  content?: object | string
   imageUrl?: string
   slug: string
   price?: number
@@ -112,7 +109,7 @@ export async function createEgitim(data: {
 export async function updateEgitim(id: string, data: {
   title?: string
   description?: string
-  content?: any
+  content?: object | string
   imageUrl?: string
   slug?: string
   price?: number
@@ -132,7 +129,7 @@ export async function deleteEgitim(id: string) {
 // Blog CRUD işlemleri
 export async function createBlogPost(data: {
   title: string
-  content: any
+  content: object | string
   imageUrl?: string
   slug: string
   category?: string
@@ -146,7 +143,7 @@ export async function createBlogPost(data: {
 
 export async function updateBlogPost(id: string, data: {
   title?: string
-  content?: any
+  content?: object | string
   imageUrl?: string
   slug?: string
   category?: string

@@ -6,11 +6,8 @@ import {
   Container
 } from "@chakra-ui/react";
 import { blogCategories } from "@/data/dummyBlogData";
+import { CategoryFilterProps } from "@/types";
 
-interface CategoryFilterProps {
-  selectedCategory: string;
-  onCategoryChange: (category: string) => void;
-}
 
 export default function CategoryFilter({ selectedCategory, onCategoryChange }: CategoryFilterProps) {
   return (

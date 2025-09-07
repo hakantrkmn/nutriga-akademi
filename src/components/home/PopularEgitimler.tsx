@@ -14,7 +14,7 @@ import {
 } from "@chakra-ui/react";
 import Link from "next/link";
 import { dummyEgitimler } from "@/data/dummyEgitimData";
-import EgitimCard from "@/components/common/EgitimCard";
+import EgitimCard from "@/components/courses/EgitimCard";
 
 export default function PopularEgitimler() {
   const columns = useBreakpointValue({ base: 1, md: 2, lg: 3 });

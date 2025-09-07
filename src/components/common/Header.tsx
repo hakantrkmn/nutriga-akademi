@@ -17,6 +17,7 @@ import {
 } from "@chakra-ui/react";
 import { HiMenu } from "react-icons/hi";
 import Link from "next/link";
+import { COMPANY_NAME } from "@/constants";
 
 const navLinkStyles = {
   fontSize: "md",
@@ -183,7 +184,7 @@ export default function Header() {
             cursor="pointer"
             _hover={{ color: "green.600" }}
           >
-            NutriHome Akademi
+            {COMPANY_NAME}
           </Text>
         </Link>
 

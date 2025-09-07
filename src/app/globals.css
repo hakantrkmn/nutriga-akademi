@@ -19,6 +19,19 @@
   --border-radius-sm: 8px;
 }
 
+/* TipTap Editor Container */
+.tiptap-editor-container {
+  max-width: 100% !important;
+  overflow: hidden !important;
+  box-sizing: border-box !important;
+}
+
+.tiptap-editor-container .ProseMirror {
+  max-width: 100% !important;
+  overflow-x: hidden !important;
+  box-sizing: border-box !important;
+}
+
 /* TipTap Editor Styles */
 .ProseMirror {
   outline: none;
@@ -30,6 +43,9 @@
   overflow: hidden;
   word-wrap: break-word;
   overflow-wrap: break-word;
+  max-width: 100% !important; /* Editor genişliğini sınırla */
+  overflow-x: hidden !important; /* Yatay taşmayı engelle */
+  box-sizing: border-box !important; /* Box model'i düzelt */
 }
 
 .ProseMirror p {
@@ -237,7 +253,7 @@
 
 /* Resizable Image Styles - Updated for tiptap-extension-resizable-image */
 .tiptap-image-resizable {
-  max-width: 100%;
+  max-width: 100% !important;
   min-width: 50px;
   min-height: 50px;
   height: auto;
@@ -248,6 +264,16 @@
   position: relative;
   object-fit: contain; /* Aspect ratio'yu koru */
   border: 2px solid transparent;
+  width: auto !important; /* Genişliği otomatik yap */
+  display: block !important; /* Block element yap */
+  box-sizing: border-box !important; /* Box model'i düzelt */
+}
+
+/* Tüm görseller için genel genişlik sınırlaması */
+.ProseMirror img {
+  max-width: 100% !important;
+  height: auto !important;
+  box-sizing: border-box !important;
 }
 
 .tiptap-image-resizable:hover {
@@ -756,18 +782,24 @@ h1, h2, h3, h4, h5, h6 {
   display: inline-block !important;
   vertical-align: middle;
   margin: 0 0.5rem;
-  max-width: 200px;
+  max-width: 200px !important;
   min-width: 50px;
   min-height: 50px;
+  width: auto !important;
+  height: auto !important;
+  box-sizing: border-box !important;
 }
 
 .ProseMirror img.tiptap-image-resizable.block {
   display: block !important;
   margin: 1rem auto;
   text-align: center;
-  max-width: 100%;
+  max-width: 100% !important;
   min-width: 50px;
   min-height: 50px;
+  width: auto !important;
+  height: auto !important;
+  box-sizing: border-box !important;
 }
 
 /* Default inline behavior for new images */
@@ -775,9 +807,12 @@ h1, h2, h3, h4, h5, h6 {
   display: inline-block !important;
   vertical-align: middle;
   margin: 0 0.5rem;
-  max-width: 200px;
+  max-width: 200px !important;
   min-width: 50px;
   min-height: 50px;
+  width: auto !important;
+  height: auto !important;
+  box-sizing: border-box !important;
 }
 
 /* Inline görsel için resize handle'ları gizle (çünkü ortalama butonu yok) */

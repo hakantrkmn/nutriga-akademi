@@ -11,13 +11,9 @@ import {
   Button
 } from "@chakra-ui/react";
 import Link from "next/link";
-import { FiClock, FiUser, FiArrowLeft } from "react-icons/fi";
-import { BlogPost } from "@/data/dummyBlogData";
+import { FiUser, FiArrowLeft } from "react-icons/fi";
+import { BlogDetailContentProps } from "@/types";
 import TipTapWrapper from "@/components/common/TipTapWrapper";
-
-interface BlogDetailContentProps {
-  post: BlogPost;
-}
 
 export default function BlogDetailContent({ post }: BlogDetailContentProps) {
   return (
@@ -64,13 +60,6 @@ export default function BlogDetailContent({ post }: BlogDetailContentProps) {
                     <FiUser />
                   </Icon>
                   <Text>{post.author}</Text>
-                </HStack>
-                
-                <HStack gap={2}>
-                  <Icon boxSize={4}>
-                    <FiClock />
-                  </Icon>
-                  <Text>{post.reading_time} dk okuma</Text>
                 </HStack>
               </HStack>
               

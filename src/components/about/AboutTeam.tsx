@@ -1,3 +1,4 @@
+import { COMPANY_NAME } from "@/constants";
 import {
   Box,
   Container,
@@ -74,7 +75,7 @@ export default function AboutTeam() {
                 size="xl" 
                 color="gray.800"
               >
-                Rakamlarla NutriHome Akademi
+                Rakamlarla {COMPANY_NAME}
               </Heading>
               <Text 
                 fontSize="lg" 
@@ -148,7 +149,7 @@ export default function AboutTeam() {
                 size="lg" 
                 color="gray.800"
               >
-                Neden NutriHome Akademi?
+                Neden {COMPANY_NAME}?
               </Heading>
               <Text 
                 fontSize="md" 

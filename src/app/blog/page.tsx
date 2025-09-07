@@ -1,4 +1,4 @@
-import BlogContent from "./components/BlogContent";
+import BlogContent from "../../components/blog/BlogContent";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {

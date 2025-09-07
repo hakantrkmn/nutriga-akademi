@@ -1,15 +1,4 @@
-export interface BlogPost {
-  id: string;
-  title: string;
-  content: string | object; // HTML string veya JSONB format (TipTap JSON)
-  image_url: string;
-  slug: string;
-  category: string;
-  excerpt: string;
-  author: string;
-  created_at: string;
-  updated_at: string;
-}
+import { BlogPost } from "@/types";
 
 export const blogCategories = [
   "Tümü",

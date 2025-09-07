@@ -1,20 +1,4 @@
-export interface Egitim {
-  id: string;
-  title: string;
-  description: string;
-  content: string | object; // HTML string veya JSONB format (TipTap JSON)
-  image_url: string;
-  slug: string;
-  price: number;
-  sales_count: number;
-  created_at: string;
-  updated_at: string;
-  // Ekstra alanlar (UI için gerekli)
-  duration?: string;
-  level?: string;
-  instructor?: string;
-  category?: string;
-}
+import { Egitim } from "@/types";
 
 export const egitimCategories = [
   "Tümü",

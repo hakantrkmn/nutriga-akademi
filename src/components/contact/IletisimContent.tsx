@@ -29,7 +29,7 @@ export default function IletisimContent() {
             maxW="600px"
             lineHeight="tall"
           >
-            Beslenme eğitimlerimiz ve hiznetlerimiz hakkında merak ettikleriniz için 
+            Beslenme eğitimlerimiz ve hizmetlerimiz hakkında merak ettikleriniz için 
             bizimle iletişime geçin. Size yardımcı olmaktan mutluluk duyarız.
           </Text>
         </VStack>

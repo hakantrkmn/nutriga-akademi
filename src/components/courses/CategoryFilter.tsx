@@ -64,7 +64,6 @@ export default function CategoryFilter({
             <NativeSelectField
               value={selectedLevel}
               onChange={(e) => onLevelChange(e.target.value)}
-              placeholder="Seviye Seçin"
               borderColor="green.500"
               _focus={{
                 borderColor: "green.600",

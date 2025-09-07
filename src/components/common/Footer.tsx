@@ -16,6 +16,7 @@ import {
   FaLinkedin, 
   FaYoutube 
 } from "react-icons/fa";
+import { COMPANY_ADDRESS, COMPANY_EMAIL, COMPANY_FACEBOOK_URL, COMPANY_INSTAGRAM_URL, COMPANY_LINKEDIN_URL, COMPANY_NAME, COMPANY_PHONE, COMPANY_TWITTER_URL, COMPANY_WORK_HOURS, COMPANY_YOUTUBE_URL } from "@/constants";
 
 const quickLinks = [
   { name: "Ana Sayfa", href: "/" },
@@ -30,31 +31,31 @@ const quickLinks = [
 const socialLinks = [
   {
     name: "Facebook",
-    href: "https://facebook.com/nutrihome",
+    href: COMPANY_FACEBOOK_URL,
     icon: FaFacebook,
     color: "#1877F2"
   },
   {
     name: "Twitter", 
-    href: "https://twitter.com/nutrihome",
+      href: COMPANY_TWITTER_URL,
     icon: FaTwitter,
     color: "#1DA1F2"
   },
   {
     name: "Instagram",
-    href: "https://instagram.com/nutrihome",
+    href: COMPANY_INSTAGRAM_URL,
     icon: FaInstagram,
     color: "#E4405F"
   },
   {
     name: "LinkedIn",
-    href: "https://linkedin.com/company/nutrihome",
+    href: COMPANY_LINKEDIN_URL,
     icon: FaLinkedin,
     color: "#0A66C2"
   },
   {
     name: "YouTube",
-    href: "https://youtube.com/nutrihome",
+    href: COMPANY_YOUTUBE_URL,
     icon: FaYoutube,
     color: "#FF0000"
   },
@@ -78,7 +79,7 @@ export default function Footer() {
                 _hover={{ color: "green.300" }}
                 transition="color 0.2s ease"
               >
-                NutriHome Akademi
+                {COMPANY_NAME}
               </Text>
             </Link>
             
@@ -128,22 +129,22 @@ export default function Footer() {
             <VStack align="start" gap={3} fontSize="sm" color="gray.300">
               <Text>
                 <Text as="span" fontWeight="semibold" color="white">Adres:</Text><br />
-                İstanbul, Türkiye
+                {COMPANY_ADDRESS}
               </Text>
               
               <Text>
                 <Text as="span" fontWeight="semibold" color="white">Telefon:</Text><br />
-                +90 (212) 555 0123
+                {COMPANY_PHONE}
               </Text>
               
               <Text>
                 <Text as="span" fontWeight="semibold" color="white">E-posta:</Text><br />
-                info@nutrihome.com
+                  {COMPANY_EMAIL}
               </Text>
               
               <Text>
                 <Text as="span" fontWeight="semibold" color="white">Çalışma Saatleri:</Text><br />
-                Pazartesi - Cuma: 09:00 - 18:00
+                {COMPANY_WORK_HOURS}
               </Text>
             </VStack>
           </VStack>

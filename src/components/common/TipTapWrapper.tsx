@@ -57,8 +57,23 @@ const convertImageResizeToImage = (node: Record<string, unknown>): Record<string
 
 // Ana wrapper fonksiyonu
 const processContent = (content: string | object): string => {
-  // Eğer string ise, zaten HTML formatında (React Quill'den gelen)
+  // Eğer string ise, JSON string mi yoksa HTML string mi kontrol et
   if (typeof content === "string") {
+    // JSON string olup olmadığını kontrol et
+    if (content.startsWith('{') || content.startsWith('[')) {
+      try {
+        const parsedContent = JSON.parse(content);
+        // imageResize node'larını image node'larına dönüştür
+        const convertedContent = convertImageResizeToImage(parsedContent as Record<string, unknown>);
+        
+        // TipTap'ın resmi generateHTML fonksiyonunu kullan
+        return generateHTML(convertedContent, extensions);
+      } catch (error) {
+        console.error('JSON string parse error:', error);
+        return '<p>İçerik yüklenirken hata oluştu.</p>';
+      }
+    }
+    // HTML string ise direkt döndür
     return content;
   }
 

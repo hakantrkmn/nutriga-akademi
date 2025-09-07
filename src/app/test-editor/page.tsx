@@ -140,11 +140,11 @@ export default function TestEditorPage() {
 
   return (
     <Container maxW="full" p={0} h="100vh">
-      <VStack h="100vh" spacing={0}>
+      <VStack h="100vh" gap={0}>
         {/* Header */}
         <Box w="full" bg="gray.50" p={4} borderBottom="1px" borderColor="gray.200">
           <HStack justify="space-between" align="center">
-            <VStack align="start" spacing={1}>
+            <VStack align="start" gap={1}>
               <Heading size="lg" color="gray.800">
                 TipTap Editör Test Sayfası
               </Heading>
@@ -152,7 +152,7 @@ export default function TestEditorPage() {
                 Tüm editör özelliklerini test edebilirsiniz
               </Text>
             </VStack>
-            <HStack spacing={3}>
+            <HStack gap={3}>
               <Button
                 onClick={handleLoadSample}
                 colorScheme="blue"
@@ -204,7 +204,7 @@ export default function TestEditorPage() {
               boxShadow: 'xl'
             }}
             transition="all 0.2s"
-            isDisabled={!content}
+            disabled={!content}
           >
             💾 Kaydet
           </Button>
@@ -213,7 +213,7 @@ export default function TestEditorPage() {
         {/* Footer - Content Preview */}
         {savedContent && (
           <Box w="full" bg="gray.100" p={4} borderTop="1px" borderColor="gray.200" maxH="200px" overflow="auto">
-            <VStack align="start" spacing={2}>
+            <VStack align="start" gap={2}>
               <Text fontWeight="bold" color="gray.700">
                 Kaydedilen İçerik (JSON):
               </Text>

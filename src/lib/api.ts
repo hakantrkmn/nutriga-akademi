@@ -16,6 +16,9 @@ export interface EgitimData {
   slug: string
   price?: number
   category?: string
+  level?: string
+  duration?: string
+  instructor?: string
   salesCount?: number
   createdAt?: string
   updatedAt?: string

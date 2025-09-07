@@ -21,7 +21,7 @@ export async function GET() {
       console.error('Kullanıcılar listelenirken hata:', error)
     }
 
-    const userCount = users?.length || 0
+    const userCount = users?.users.length || 0
 
     // Toplam satış sayısını hesapla (cart_items tablosundan)
     const totalSales = await prisma.cartItem.count()

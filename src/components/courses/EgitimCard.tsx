@@ -12,14 +12,13 @@ import {
 import Link from "next/link";
 import Image from "next/image";
 import { FiClock, FiUser, FiShoppingCart } from "react-icons/fi";
-import { Egitim } from "@/data/dummyEgitimData";
+import { EgitimCardProps } from "@/types";
 
-interface EgitimCardProps {
-  egitim: Egitim;
-}
+
 
 export default function EgitimCard({ egitim }: EgitimCardProps) {
   return (
+    <Link href={`/egitimler/${egitim.slug}`}>
     <Card.Root
       bg="white"
       borderRadius="12px"
@@ -139,7 +138,6 @@ export default function EgitimCard({ egitim }: EgitimCardProps) {
               </VStack>
               
               <VStack gap={2}>
-                <Link href={`/egitimler/${egitim.slug}`}>
                   <Button
                     colorScheme="green"
                     size="sm"
@@ -148,7 +146,6 @@ export default function EgitimCard({ egitim }: EgitimCardProps) {
                   >
                     Detayları Gör
                   </Button>
-                </Link>
                 
                 <Button
                   colorScheme="orange"
@@ -168,5 +165,6 @@ export default function EgitimCard({ egitim }: EgitimCardProps) {
         </VStack>
       </Card.Body>
     </Card.Root>
+    </Link>
   );
 }

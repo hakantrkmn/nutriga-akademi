@@ -5,7 +5,6 @@ import {
   Box,
   Card,
   VStack,
-  HStack,
   Heading,
   Text,
   Input,
@@ -48,7 +47,7 @@ export default function AdminLogin() {
           await supabase.auth.signOut()
         }
       }
-    } catch (err) {
+    } catch  {
       setError('Giriş yapılırken bir hata oluştu.')
     } finally {
       setLoading(false)

@@ -13,6 +13,7 @@ interface AdminLayoutProps {
   children: React.ReactNode
 }
 
+
 export default function AdminLayout({ children }: AdminLayoutProps) {
   const router = useRouter()
   const pathname = usePathname()
@@ -20,7 +21,6 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
   const [isAuthenticated, setIsAuthenticated] = useState(false)
   
   const bgColor = 'gray.50'
-  const contentBg = 'white'
   const textColor = 'gray.900'
 
   const checkAuth = useCallback(async () => {
@@ -139,24 +139,9 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
   }
 
   return (
-    <Box minH="100vh" bg={bgColor} className="admin-layout">
+    <>
       <AdminHeader />
-      
-      {/* Main Content */}
-      <Box
-        p={6}
-        overflow="auto"
-      >
-        <Box
-          bg={contentBg}
-          borderRadius="lg"
-          boxShadow="sm"
-          p={6}
-          minH="calc(100vh - 140px)"
-        >
-          {children}
-        </Box>
-      </Box>
-    </Box>
+      {children}
+    </>
   )
 }

@@ -1,4 +1,4 @@
-import VisionContent from "./components/VisionContent";
+import VisionContent from "../../components/vision/VisionContent";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {

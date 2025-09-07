@@ -21,6 +21,7 @@ import {
   FaLinkedin,
   FaYoutube,
 } from "react-icons/fa";
+import { COMPANY_ADDRESS, COMPANY_EMAIL, COMPANY_PHONE, COMPANY_WORK_HOURS, COMPANY_WORK_HOURS_WEEKEND, COMPANY_FACEBOOK_URL, COMPANY_TWITTER_URL, COMPANY_INSTAGRAM_URL, COMPANY_LINKEDIN_URL, COMPANY_YOUTUBE_URL } from "@/constants";
 
 interface ContactItemProps {
   icon: React.ElementType;
@@ -88,29 +89,29 @@ export default function ContactInfo() {
           <ContactItem
             icon={HiLocationMarker}
             title="Adres"
-            content="İstanbul, Türkiye"
+            content={COMPANY_ADDRESS}
             subtitle="Merkez ofis lokasyonu"
           />
 
           <ContactItem
             icon={HiPhone}
             title="Telefon"
-            content="+90 (212) 555 0123"
+            content={COMPANY_PHONE}
             subtitle="Pazartesi - Cuma, 09:00 - 18:00"
           />
 
           <ContactItem
             icon={HiMail}
             title="E-posta"
-            content="info@nutrihome.com"
+            content={COMPANY_EMAIL}
             subtitle="24 saat içinde yanıtlıyoruz"
           />
 
           <ContactItem
             icon={HiClock}
             title="Çalışma Saatleri"
-            content="Pazartesi - Cuma: 09:00 - 18:00"
-            subtitle="Cumartesi: 10:00 - 16:00"
+            content={COMPANY_WORK_HOURS}
+            subtitle={COMPANY_WORK_HOURS_WEEKEND}
           />
         </VStack>
 
@@ -133,11 +134,11 @@ export default function ContactInfo() {
           
           <HStack gap={4}>
             {[
-              { icon: FaFacebook, color: "#1877F2", label: "Facebook" },
-              { icon: FaTwitter, color: "#1DA1F2", label: "Twitter" },
-              { icon: FaInstagram, color: "#E4405F", label: "Instagram" },
-              { icon: FaLinkedin, color: "#0A66C2", label: "LinkedIn" },
-              { icon: FaYoutube, color: "#FF0000", label: "YouTube" },
+              { icon: FaFacebook, color: "#1877F2", label: "Facebook", href: COMPANY_FACEBOOK_URL },
+              { icon: FaTwitter, color: "#1DA1F2", label: "Twitter", href: COMPANY_TWITTER_URL },
+              { icon: FaInstagram, color: "#E4405F", label: "Instagram", href: COMPANY_INSTAGRAM_URL },
+              { icon: FaLinkedin, color: "#0A66C2", label: "LinkedIn", href: COMPANY_LINKEDIN_URL },
+              { icon: FaYoutube, color: "#FF0000", label: "YouTube", href: COMPANY_YOUTUBE_URL },
             ].map((social, index) => (
               <Box
                 key={index}
@@ -148,6 +149,7 @@ export default function ContactInfo() {
                 borderRadius="12px"
                 display="flex"
                 alignItems="center"
+                onClick={() => window.open(social.href, "_blank")}
                 justifyContent="center"
                 border="1px solid"
                 borderColor="gray.200"
