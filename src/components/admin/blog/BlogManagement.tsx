@@ -1,82 +1,82 @@
-'use client'
+"use client";
 
-import { useState, useEffect } from 'react'
-import { useRouter } from 'next/navigation'
+import { blogApi } from "@/lib/api";
+import { BlogPost } from "@/types";
 import {
+  Badge,
   Box,
-  VStack,
-  HStack,
-  Heading,
-  Text,
   Button,
   Card,
-  Table,
-  Icon,
-  Badge,
-  Spinner,
   Center,
-} from '@chakra-ui/react'
-import { FiPlus, FiEdit, FiTrash2 } from 'react-icons/fi'
-import { blogApi } from '@/lib/api'
-import { BlogPost } from '@/types'
+  HStack,
+  Heading,
+  Icon,
+  Spinner,
+  Table,
+  Text,
+  VStack,
+} from "@chakra-ui/react";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+import { FiEdit, FiPlus, FiTrash2 } from "react-icons/fi";
 export default function BlogManagement() {
-  const router = useRouter()
-  const [blogPosts, setBlogPosts] = useState<BlogPost[]>([])
-  const [loading, setLoading] = useState(true)
+  const router = useRouter();
+  const [blogPosts, setBlogPosts] = useState<BlogPost[]>([]);
+  const [loading, setLoading] = useState(true);
 
   // Blog yazılarını yükle
   const loadBlogPosts = async () => {
     try {
-      setLoading(true)
-      const response = await blogApi.getAll()
-      
+      setLoading(true);
+      const response = await blogApi.getAll();
+
       if (response.success && response.data) {
-        setBlogPosts(response.data)
+        setBlogPosts(response.data);
       } else {
-        console.error('Blog yazıları yüklenemedi:', response.error)
+        console.error("Blog yazıları yüklenemedi:", response.error);
       }
     } catch (error) {
-      console.error('Blog yazıları yüklenirken hata:', error)
+      console.error("Blog yazıları yüklenirken hata:", error);
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
-  }
+  };
 
   useEffect(() => {
-    loadBlogPosts()
-  }, [])
+    loadBlogPosts();
+  }, []);
 
   // Yeni blog yazısı ekle
   const handleAddPost = () => {
-    router.push('/admin/blog/yeni')
-  }
+    router.push("/admin/blog/yeni");
+  };
 
   // Blog yazısı düzenle
   const handleEditPost = (post: BlogPost) => {
     if (post.id) {
-      router.push(`/admin/blog/${post.id}/duzenle`)
+      router.push(`/admin/blog/yeni/${post.id}`);
     }
-  }
+  };
 
   // Blog yazısı sil
   const handleDeletePost = async (id: string) => {
-    if (!confirm('Bu blog yazısını silmek istediğinizden emin misiniz?')) {
-      return
+    if (!confirm("Bu blog yazısını silmek istediğinizden emin misiniz?")) {
+      return;
     }
 
     try {
-      const response = await blogApi.delete(id)
-      
+      const response = await blogApi.delete(id);
+
       if (response.success) {
-        await loadBlogPosts() // Listeyi yenile
-        console.log('Blog yazısı başarıyla silindi')
+        await loadBlogPosts(); // Listeyi yenile
+        console.log("Blog yazısı başarıyla silindi");
       } else {
-        console.error('Blog yazısı silinemedi')
+        console.error("Blog yazısı silinemedi");
       }
     } catch (error) {
-      console.error('Blog yazısı silinirken hata:', error)
+      console.error("Blog yazısı silinirken hata:", error);
     }
-  }
+  };
 
   if (loading) {
     return (
@@ -92,10 +92,7 @@ export default function BlogManagement() {
                 Blog yazılarınızı ekleyin, düzenleyin ve yönetin
               </Text>
             </Box>
-            <Button
-              colorScheme="green"
-              onClick={handleAddPost}
-            >
+            <Button colorScheme="green" onClick={handleAddPost}>
               <Icon as={FiPlus} mr={2} />
               Yeni Blog Yazısı
             </Button>
@@ -120,7 +117,7 @@ export default function BlogManagement() {
           </Card.Root>
         </VStack>
       </Box>
-    )
+    );
   }
 
   return (
@@ -136,33 +133,30 @@ export default function BlogManagement() {
               Blog yazılarınızı ekleyin, düzenleyin ve yönetin
             </Text>
           </Box>
-          <Button
-            colorScheme="green"
-            onClick={handleAddPost}
-          >
+          <Button colorScheme="green" onClick={handleAddPost}>
             <Icon as={FiPlus} mr={2} />
             Yeni Blog Yazısı
           </Button>
         </HStack>
 
         {/* Blog Yazıları Tablosu */}
-        <Card.Root 
-          bg="white" 
-          borderRadius="lg" 
-          boxShadow="sm" 
+        <Card.Root
+          bg="white"
+          borderRadius="lg"
+          boxShadow="sm"
           className="admin-table-container"
-          style={{ backgroundColor: 'white !important' }}
+          style={{ backgroundColor: "white !important" }}
         >
-          <Card.Body p={0} style={{ backgroundColor: 'white !important' }}>
-            <Table.Root 
-              size="sm" 
+          <Card.Body p={0} style={{ backgroundColor: "white !important" }}>
+            <Table.Root
+              size="sm"
               className="admin-table"
-              style={{ backgroundColor: 'white !important' }}
+              style={{ backgroundColor: "white !important" }}
             >
               <Table.Header>
                 <Table.Row bg="gray.50" className="admin-table-header-row">
-                  <Table.ColumnHeader 
-                    color="gray.700" 
+                  <Table.ColumnHeader
+                    color="gray.700"
                     fontWeight="semibold"
                     fontSize="sm"
                     py={4}
@@ -170,8 +164,8 @@ export default function BlogManagement() {
                   >
                     Başlık
                   </Table.ColumnHeader>
-                  <Table.ColumnHeader 
-                    color="gray.700" 
+                  <Table.ColumnHeader
+                    color="gray.700"
                     fontWeight="semibold"
                     fontSize="sm"
                     py={4}
@@ -179,8 +173,8 @@ export default function BlogManagement() {
                   >
                     Kategori
                   </Table.ColumnHeader>
-                  <Table.ColumnHeader 
-                    color="gray.700" 
+                  <Table.ColumnHeader
+                    color="gray.700"
                     fontWeight="semibold"
                     fontSize="sm"
                     py={4}
@@ -188,8 +182,8 @@ export default function BlogManagement() {
                   >
                     Yazar
                   </Table.ColumnHeader>
-                  <Table.ColumnHeader 
-                    color="gray.700" 
+                  <Table.ColumnHeader
+                    color="gray.700"
                     fontWeight="semibold"
                     fontSize="sm"
                     py={4}
@@ -197,8 +191,8 @@ export default function BlogManagement() {
                   >
                     Özet
                   </Table.ColumnHeader>
-                  <Table.ColumnHeader 
-                    color="gray.700" 
+                  <Table.ColumnHeader
+                    color="gray.700"
                     fontWeight="semibold"
                     fontSize="sm"
                     py={4}
@@ -206,8 +200,8 @@ export default function BlogManagement() {
                   >
                     Tarih
                   </Table.ColumnHeader>
-                  <Table.ColumnHeader 
-                    color="gray.700" 
+                  <Table.ColumnHeader
+                    color="gray.700"
                     fontWeight="semibold"
                     fontSize="sm"
                     py={4}
@@ -218,7 +212,7 @@ export default function BlogManagement() {
                   </Table.ColumnHeader>
                 </Table.Row>
               </Table.Header>
-              <Table.Body>
+              <Table.Body backgroundColor={"white !important"}>
                 {blogPosts.length === 0 ? (
                   <Table.Row>
                     <Table.Cell colSpan={6} textAlign="center" py={12}>
@@ -227,20 +221,30 @@ export default function BlogManagement() {
                           Henüz blog yazısı eklenmemiş
                         </Text>
                         <Text color="gray.400" fontSize="sm">
-                          İlk blog yazınızı eklemek için &quot;Yeni Blog Yazısı&quot; butonuna tıklayın
+                          İlk blog yazınızı eklemek için &quot;Yeni Blog
+                          Yazısı&quot; butonuna tıklayın
                         </Text>
                       </VStack>
                     </Table.Cell>
                   </Table.Row>
                 ) : (
                   blogPosts.map((post, index) => (
-                    <Table.Row 
+                    <Table.Row
                       key={post.id}
                       bg={index % 2 === 0 ? "white" : "gray.25"}
                       _hover={{ bg: "gray.50" }}
-                      style={{ backgroundColor: index % 2 === 0 ? 'white !important' : '#fafafa !important' }}
+                      style={{
+                        backgroundColor:
+                          index % 2 === 0
+                            ? "white !important"
+                            : "#fafafa !important",
+                      }}
                     >
-                      <Table.Cell py={4} px={6} style={{ backgroundColor: 'transparent !important' }}>
+                      <Table.Cell
+                        py={4}
+                        px={6}
+                        style={{ backgroundColor: "transparent !important" }}
+                      >
                         <VStack align="start" gap={1}>
                           <Text fontWeight="medium" color="gray.900">
                             {post.title}
@@ -250,7 +254,11 @@ export default function BlogManagement() {
                           </Text>
                         </VStack>
                       </Table.Cell>
-                      <Table.Cell py={4} px={6} style={{ backgroundColor: 'transparent !important' }}>
+                      <Table.Cell
+                        py={4}
+                        px={6}
+                        style={{ backgroundColor: "transparent !important" }}
+                      >
                         {post.category ? (
                           <Badge colorScheme="purple" variant="subtle">
                             {post.category}
@@ -259,22 +267,43 @@ export default function BlogManagement() {
                           <Text color="gray.400">-</Text>
                         )}
                       </Table.Cell>
-                      <Table.Cell py={4} px={6} style={{ backgroundColor: 'transparent !important' }}>
+                      <Table.Cell
+                        py={4}
+                        px={6}
+                        style={{ backgroundColor: "transparent !important" }}
+                      >
                         <Text fontSize="sm" color="gray.700">
-                          {post.author || '-'}
+                          {post.author || "-"}
                         </Text>
                       </Table.Cell>
-                      <Table.Cell py={4} px={6} style={{ backgroundColor: 'transparent !important' }}>
+                      <Table.Cell
+                        py={4}
+                        px={6}
+                        style={{ backgroundColor: "transparent !important" }}
+                      >
                         <Text fontSize="sm" color="gray.600" maxW="200px">
-                          {post.excerpt || '-'}
+                          {post.excerpt || "-"}
                         </Text>
                       </Table.Cell>
-                      <Table.Cell py={4} px={6} style={{ backgroundColor: 'transparent !important' }}>
+                      <Table.Cell
+                        py={4}
+                        px={6}
+                        style={{ backgroundColor: "transparent !important" }}
+                      >
                         <Text fontSize="sm" color="gray.500">
-                          {post.createdAt ? new Date(post.createdAt).toLocaleDateString('tr-TR') : '-'}
+                          {post.createdAt
+                            ? new Date(post.createdAt).toLocaleDateString(
+                                "tr-TR"
+                              )
+                            : "-"}
                         </Text>
                       </Table.Cell>
-                      <Table.Cell py={4} px={6} textAlign="center" style={{ backgroundColor: 'transparent !important' }}>
+                      <Table.Cell
+                        py={4}
+                        px={6}
+                        textAlign="center"
+                        style={{ backgroundColor: "transparent !important" }}
+                      >
                         <HStack gap={2} justify="center">
                           <Button
                             size="sm"
@@ -303,5 +332,5 @@ export default function BlogManagement() {
         </Card.Root>
       </VStack>
     </Box>
-  )
+  );
 }

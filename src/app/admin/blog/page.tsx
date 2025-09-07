@@ -1,4 +1,4 @@
-import BlogManagement from './components/BlogManagement'
+import BlogManagement from '@/components/admin/blog/BlogManagement'
 
 export default function BlogPage() {
   return <BlogManagement />
