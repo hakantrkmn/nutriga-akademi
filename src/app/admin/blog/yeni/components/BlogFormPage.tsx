@@ -22,13 +22,14 @@ import {
   FiArrowLeft, 
   FiSave
 } from 'react-icons/fi'
-import { blogApi, BlogPostData } from '@/lib/api'
+import { blogApi } from '@/lib/api'
+import { BlogPost } from '@/types'
 import TipTapEditor from '@/components/admin/TipTapEditor'
 
 export default function BlogFormPage({ blogId }: { blogId?: string }) {
   const router = useRouter()
   const [loading, setLoading] = useState(false)
-  const [, setInitialData] = useState<BlogPostData | null>(null)
+  const [, setInitialData] = useState<BlogPost | null>(null)
   const [loadingData, setLoadingData] = useState(!!blogId)
   
   // Form state
@@ -105,7 +106,7 @@ export default function BlogFormPage({ blogId }: { blogId?: string }) {
         response = await blogApi.update(blogId, data)
       } else {
         // Yeni oluştur
-        response = await blogApi.create(data as Omit<BlogPostData, 'id' | 'createdAt' | 'updatedAt'>)
+        response = await blogApi.create(data as Omit<BlogPost, 'id' | 'createdAt' | 'updatedAt'>)
       }
 
       if (response.success) {

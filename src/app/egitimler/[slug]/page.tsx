@@ -5,13 +5,7 @@ import { EgitimDetailPageProps } from "@/types";
 import { COMPANY_NAME } from "@/constants";
 import { prisma } from "@/lib/prisma";
 import { convertEgitimToDecimal } from "@/utils";
-export async function generateMetadata({ params, egitim: egitimData }: EgitimDetailPageProps): Promise<Metadata> {
-  if (egitimData) {
-    return {
-      title: `${egitimData.title} | ` + COMPANY_NAME,
-      description: egitimData.description,
-    };
-  }
+export async function generateMetadata({ params }: EgitimDetailPageProps): Promise<Metadata> {
   const { slug } = await params;
   const egitim = await prisma.egitim.findUnique({
     where: {
@@ -31,11 +25,7 @@ export async function generateMetadata({ params, egitim: egitimData }: EgitimDet
   };
 }
 
-export default async function EgitimDetailPage({ params, egitim: egitimData }: EgitimDetailPageProps) {
-  if (egitimData) {
-    return <EgitimDetailContent egitim={egitimData} />;
-  }
-
+export default async function EgitimDetailPage({ params }: EgitimDetailPageProps) {
   const { slug } = await params;
   const egitim = await prisma.egitim.findUnique({
     where: {

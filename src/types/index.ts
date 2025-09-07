@@ -27,7 +27,6 @@ export type { BlogPost };
     params: Promise<{
       slug: string;
     }>;
-    egitim: Egitim;
   }
 
   export interface EgitimDetailContentProps {
