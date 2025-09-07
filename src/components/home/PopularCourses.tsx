@@ -1,20 +1,20 @@
 "use client";
 
+import EgitimCard from "@/components/courses/CoursesCard";
+import { Egitim } from "@/types";
 import {
+  Badge,
   Box,
+  Button,
   Container,
   Heading,
-  Text,
-  Button,
-  VStack,
   HStack,
   SimpleGrid,
-  Badge,
+  Text,
   useBreakpointValue,
+  VStack,
 } from "@chakra-ui/react";
 import Link from "next/link";
-import EgitimCard from "@/components/courses/EgitimCard";
-import { Egitim } from "@/types";
 
 interface PopularEgitimlerProps {
   egitimler: Egitim[];
@@ -43,7 +43,7 @@ export default function PopularEgitimler({ egitimler }: PopularEgitimlerProps) {
             >
               Popüler Eğitimler
             </Badge>
-            
+
             <Heading
               as="h2"
               size={{ base: "xl", md: "2xl" }}
@@ -55,14 +55,14 @@ export default function PopularEgitimler({ egitimler }: PopularEgitimlerProps) {
                 Beslenme Eğitimleri
               </Text>
             </Heading>
-            
+
             <Text
               fontSize={{ base: "md", md: "lg" }}
               color="gray.600"
               lineHeight="1.6"
             >
-              Uzman diyetisyenlerimiz tarafından hazırlanan, en güncel bilgilerle
-              donatılmış eğitimlerimizi keşfedin.
+              Uzman diyetisyenlerimiz tarafından hazırlanan, en güncel
+              bilgilerle donatılmış eğitimlerimizi keşfedin.
             </Text>
           </VStack>
 
@@ -118,11 +118,7 @@ export default function PopularEgitimler({ egitimler }: PopularEgitimlerProps) {
             p={{ base: 6, md: 8 }}
             textAlign="center"
           >
-            <HStack
-              gap={{ base: 6, md: 12 }}
-              justify="center"
-              flexWrap="wrap"
-            >
+            <HStack gap={{ base: 6, md: 12 }} justify="center" flexWrap="wrap">
               <VStack gap={2}>
                 <Text
                   fontSize={{ base: "2xl", md: "3xl" }}
@@ -135,20 +131,24 @@ export default function PopularEgitimler({ egitimler }: PopularEgitimlerProps) {
                   Toplam Eğitim
                 </Text>
               </VStack>
-              
+
               <VStack gap={2}>
                 <Text
                   fontSize={{ base: "2xl", md: "3xl" }}
                   fontWeight="bold"
                   color="orange.500"
                 >
-                  {egitimler.reduce((sum, egitim) => sum + (egitim.salesCount || 0), 0)}+
+                  {egitimler.reduce(
+                    (sum, egitim) => sum + (egitim.salesCount || 0),
+                    0
+                  )}
+                  +
                 </Text>
                 <Text fontSize="sm" color="gray.600" fontWeight="medium">
                   Satılan Eğitim
                 </Text>
               </VStack>
-              
+
               <VStack gap={2}>
                 <Text
                   fontSize={{ base: "2xl", md: "3xl" }}

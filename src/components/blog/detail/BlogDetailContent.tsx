@@ -2,9 +2,9 @@
 
 import { BlogDetailContentProps } from "@/types";
 import { Box, Container, VStack } from "@chakra-ui/react";
-import BlogDetailContentTipTap from "./BlogDetailContentTipTap";
 import BlogDetailFooter from "./BlogDetailFooter";
 import BlogDetailHeader from "./BlogDetailHeader";
+import BlogDetailContentTipTap from "./BlogDetailTipTapSection";
 
 export default function BlogDetailContent({ post }: BlogDetailContentProps) {
   return (

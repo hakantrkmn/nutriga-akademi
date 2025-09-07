@@ -1,8 +1,8 @@
 "use client";
 
-import EgitimContent from "@/components/courses/detail/egitimContent";
-import EgitimDetailHero from "@/components/courses/detail/egitimDetailHero";
-import EgitimPrice from "@/components/courses/detail/egitimPrice";
+import EgitimDetailHero from "@/components/courses/detail/CoursesDetailHero";
+import EgitimPrice from "@/components/courses/detail/CoursesPriceSection";
+import EgitimContent from "@/components/courses/detail/CoursesTiptapSection";
 import { egitimlerApi } from "@/lib/api";
 import { Egitim } from "@/types";
 import { generateSlug } from "@/utils";

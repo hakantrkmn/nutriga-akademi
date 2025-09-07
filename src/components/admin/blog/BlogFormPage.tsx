@@ -1,8 +1,8 @@
 "use client";
 
 import BlogInfoEdit from "@/components/admin/blog/BlogInfoEdit";
-import BlogDetailContentTipTap from "@/components/blog/BlogDetailContentTipTap";
-import BlogDetailHeader from "@/components/blog/BlogDetailHeader";
+import BlogDetailHeader from "@/components/blog/detail/BlogDetailHeader";
+import BlogDetailContentTipTap from "@/components/blog/detail/BlogDetailTipTapSection";
 import { blogApi } from "@/lib/api";
 import { BlogPost } from "@/types";
 import {

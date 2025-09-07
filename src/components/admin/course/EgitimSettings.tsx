@@ -1,28 +1,26 @@
-'use client'
+"use client";
 
-import { useState } from 'react'
+import { Egitim } from "@/types";
 import {
   Box,
-  VStack,
-  HStack,
-  Heading,
-  Text,
-  Input,
   Button,
-  Image,
-  NativeSelectRoot,
-  NativeSelectField,
   Card,
-} from '@chakra-ui/react'
-import { Egitim } from '@/types'
+  Heading,
+  Image,
+  Input,
+  NativeSelectField,
+  NativeSelectRoot,
+  Text,
+  VStack,
+} from "@chakra-ui/react";
 
 interface EgitimSettingsProps {
-  formData: Egitim
-  setFormData: (formData: Egitim) => void
-  generateSlug: (title: string) => string
-  handleImageUpload: (event: React.ChangeEvent<HTMLInputElement>) => void
-  uploading: boolean
-  uploadedImage: string
+  formData: Egitim;
+  setFormData: (formData: Egitim) => void;
+  generateSlug: (title: string) => string;
+  handleImageUpload: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  uploading: boolean;
+  uploadedImage: string;
 }
 
 export default function EgitimSettings({
@@ -31,23 +29,28 @@ export default function EgitimSettings({
   generateSlug,
   handleImageUpload,
   uploading,
-  uploadedImage
+  uploadedImage,
 }: EgitimSettingsProps) {
   return (
-    <Card.Root 
-      w="full" 
-      shadow="sm" 
-      borderRadius="12px" 
-      bg="white" 
-      border="1px solid" 
+    <Card.Root
+      w="full"
+      shadow="sm"
+      borderRadius="12px"
+      bg="white"
+      border="1px solid"
       borderColor="gray.200"
     >
       <Card.Body p={6}>
         <VStack gap={4} align="stretch">
-          <Heading as="h3" size="lg" color="gray.900" fontFamily="Poppins, sans-serif">
+          <Heading
+            as="h3"
+            size="lg"
+            color="gray.900"
+            fontFamily="Poppins, sans-serif"
+          >
             Eğitim Ayarları
           </Heading>
-          
+
           <Box>
             <Text fontSize="sm" fontWeight="semibold" color="gray.700" mb={2}>
               Eğitim Başlığı
@@ -55,12 +58,12 @@ export default function EgitimSettings({
             <Input
               value={formData.title}
               onChange={(e) => {
-                const title = e.target.value
+                const title = e.target.value;
                 setFormData({
                   ...formData,
                   title,
-                  slug: generateSlug(title)
-                })
+                  slug: generateSlug(title),
+                });
               }}
               placeholder="Eğitim başlığını girin..."
               size="md"
@@ -71,7 +74,7 @@ export default function EgitimSettings({
               _placeholder={{ color: "gray.500" }}
               _focus={{
                 borderColor: "green.500",
-                boxShadow: "0 0 0 1px var(--primary)"
+                boxShadow: "0 0 0 1px var(--primary)",
               }}
             />
           </Box>
@@ -81,8 +84,10 @@ export default function EgitimSettings({
               Açıklama
             </Text>
             <Input
-              value={formData.description || ''}
-              onChange={(e) => setFormData({ ...formData, description: e.target.value })}
+              value={formData.description || ""}
+              onChange={(e) =>
+                setFormData({ ...formData, description: e.target.value })
+              }
               placeholder="Eğitim açıklamasını girin..."
               size="md"
               borderRadius="8px"
@@ -92,11 +97,11 @@ export default function EgitimSettings({
               _placeholder={{ color: "gray.500" }}
               _focus={{
                 borderColor: "green.500",
-                boxShadow: "0 0 0 1px var(--primary)"
+                boxShadow: "0 0 0 1px var(--primary)",
               }}
             />
           </Box>
-          
+
           <Box>
             <Text fontSize="sm" fontWeight="semibold" color="gray.700" mb={2}>
               Fiyat (₺)
@@ -104,8 +109,13 @@ export default function EgitimSettings({
             <Input
               type="number"
               step="0.01"
-              value={formData.price || ''}
-              onChange={(e) => setFormData({ ...formData, price: parseFloat(e.target.value) || 0 })}
+              value={formData.price || ""}
+              onChange={(e) =>
+                setFormData({
+                  ...formData,
+                  price: parseFloat(e.target.value) || 0,
+                })
+              }
               placeholder="299"
               size="md"
               borderRadius="8px"
@@ -115,7 +125,7 @@ export default function EgitimSettings({
               _placeholder={{ color: "gray.500" }}
               _focus={{
                 borderColor: "green.500",
-                boxShadow: "0 0 0 1px var(--primary)"
+                boxShadow: "0 0 0 1px var(--primary)",
               }}
             />
           </Box>
@@ -126,26 +136,75 @@ export default function EgitimSettings({
             </Text>
             <NativeSelectRoot size="md">
               <NativeSelectField
-                value={formData.category || ''}
-                onChange={(e: React.ChangeEvent<HTMLSelectElement>) => setFormData({ ...formData, category: e.target.value })}
+                value={formData.category || ""}
+                onChange={(e: React.ChangeEvent<HTMLSelectElement>) =>
+                  setFormData({ ...formData, category: e.target.value })
+                }
                 borderRadius="8px"
                 borderColor="gray.200"
                 bg="white"
                 color="gray.800"
                 _focus={{
                   borderColor: "green.500",
-                  boxShadow: "0 0 0 1px var(--primary)"
+                  boxShadow: "0 0 0 1px var(--primary)",
                 }}
                 className="custom-select"
               >
-                <option value="" style={{ color: '#9CA3AF', backgroundColor: 'white' }}>Kategori seçin...</option>
-                <option value="Temel Beslenme" className="custom-option" style={{ color: '#1F2937', backgroundColor: 'white' }}>Temel Beslenme</option>
-                <option value="Klinik Beslenme" className="custom-option" style={{ color: '#1F2937', backgroundColor: 'white' }}>Klinik Beslenme</option>
-                <option value="Sporcu Beslenmesi" className="custom-option" style={{ color: '#1F2937', backgroundColor: 'white' }}>Sporcu Beslenmesi</option>
-                <option value="Pediatrik Beslenme" className="custom-option" style={{ color: '#1F2937', backgroundColor: 'white' }}>Pediatrik Beslenme</option>
-                <option value="Geriatrik Beslenme" className="custom-option" style={{ color: '#1F2937', backgroundColor: 'white' }}>Geriatrik Beslenme</option>
-                <option value="Beslenme Danışmanlığı" className="custom-option" style={{ color: '#1F2937', backgroundColor: 'white' }}>Beslenme Danışmanlığı</option>
-                <option value="Fonksiyonel Beslenme" className="custom-option" style={{ color: '#1F2937', backgroundColor: 'white' }}>Fonksiyonel Beslenme</option>
+                <option
+                  value=""
+                  style={{ color: "#9CA3AF", backgroundColor: "white" }}
+                >
+                  Kategori seçin...
+                </option>
+                <option
+                  value="Temel Beslenme"
+                  className="custom-option"
+                  style={{ color: "#1F2937", backgroundColor: "white" }}
+                >
+                  Temel Beslenme
+                </option>
+                <option
+                  value="Klinik Beslenme"
+                  className="custom-option"
+                  style={{ color: "#1F2937", backgroundColor: "white" }}
+                >
+                  Klinik Beslenme
+                </option>
+                <option
+                  value="Sporcu Beslenmesi"
+                  className="custom-option"
+                  style={{ color: "#1F2937", backgroundColor: "white" }}
+                >
+                  Sporcu Beslenmesi
+                </option>
+                <option
+                  value="Pediatrik Beslenme"
+                  className="custom-option"
+                  style={{ color: "#1F2937", backgroundColor: "white" }}
+                >
+                  Pediatrik Beslenme
+                </option>
+                <option
+                  value="Geriatrik Beslenme"
+                  className="custom-option"
+                  style={{ color: "#1F2937", backgroundColor: "white" }}
+                >
+                  Geriatrik Beslenme
+                </option>
+                <option
+                  value="Beslenme Danışmanlığı"
+                  className="custom-option"
+                  style={{ color: "#1F2937", backgroundColor: "white" }}
+                >
+                  Beslenme Danışmanlığı
+                </option>
+                <option
+                  value="Fonksiyonel Beslenme"
+                  className="custom-option"
+                  style={{ color: "#1F2937", backgroundColor: "white" }}
+                >
+                  Fonksiyonel Beslenme
+                </option>
               </NativeSelectField>
             </NativeSelectRoot>
           </Box>
@@ -156,23 +215,54 @@ export default function EgitimSettings({
             </Text>
             <NativeSelectRoot size="md">
               <NativeSelectField
-                value={formData.level || ''}
-                onChange={(e: React.ChangeEvent<HTMLSelectElement>) => setFormData({ ...formData, level: e.target.value })}
+                value={formData.level || ""}
+                onChange={(e: React.ChangeEvent<HTMLSelectElement>) =>
+                  setFormData({ ...formData, level: e.target.value })
+                }
                 borderRadius="8px"
                 borderColor="gray.200"
                 bg="white"
                 color="gray.800"
                 _focus={{
                   borderColor: "green.500",
-                  boxShadow: "0 0 0 1px var(--primary)"
+                  boxShadow: "0 0 0 1px var(--primary)",
                 }}
                 className="custom-select"
               >
-                <option value="" style={{ color: '#9CA3AF', backgroundColor: 'white' }}>Seviye seçin...</option>
-                <option value="Başlangıç" className="custom-option" style={{ color: '#1F2937', backgroundColor: 'white' }}>Başlangıç</option>
-                <option value="Orta" className="custom-option" style={{ color: '#1F2937', backgroundColor: 'white' }}>Orta</option>
-                <option value="İleri" className="custom-option" style={{ color: '#1F2937', backgroundColor: 'white' }}>İleri</option>
-                <option value="Uzman" className="custom-option" style={{ color: '#1F2937', backgroundColor: 'white' }}>Uzman</option>
+                <option
+                  value=""
+                  style={{ color: "#9CA3AF", backgroundColor: "white" }}
+                >
+                  Seviye seçin...
+                </option>
+                <option
+                  value="Başlangıç"
+                  className="custom-option"
+                  style={{ color: "#1F2937", backgroundColor: "white" }}
+                >
+                  Başlangıç
+                </option>
+                <option
+                  value="Orta"
+                  className="custom-option"
+                  style={{ color: "#1F2937", backgroundColor: "white" }}
+                >
+                  Orta
+                </option>
+                <option
+                  value="İleri"
+                  className="custom-option"
+                  style={{ color: "#1F2937", backgroundColor: "white" }}
+                >
+                  İleri
+                </option>
+                <option
+                  value="Uzman"
+                  className="custom-option"
+                  style={{ color: "#1F2937", backgroundColor: "white" }}
+                >
+                  Uzman
+                </option>
               </NativeSelectField>
             </NativeSelectRoot>
           </Box>
@@ -182,8 +272,10 @@ export default function EgitimSettings({
               Eğitmen
             </Text>
             <Input
-              value={formData.instructor || ''}
-              onChange={(e) => setFormData({ ...formData, instructor: e.target.value })}
+              value={formData.instructor || ""}
+              onChange={(e) =>
+                setFormData({ ...formData, instructor: e.target.value })
+              }
               placeholder="Dr. Ahmet Yılmaz"
               size="md"
               borderRadius="8px"
@@ -193,7 +285,7 @@ export default function EgitimSettings({
               _placeholder={{ color: "gray.500" }}
               _focus={{
                 borderColor: "green.500",
-                boxShadow: "0 0 0 1px var(--primary)"
+                boxShadow: "0 0 0 1px var(--primary)",
               }}
             />
           </Box>
@@ -203,8 +295,10 @@ export default function EgitimSettings({
               Slug
             </Text>
             <Input
-              value={formData.slug || ''}
-              onChange={(e) => setFormData({ ...formData, slug: e.target.value })}
+              value={formData.slug || ""}
+              onChange={(e) =>
+                setFormData({ ...formData, slug: e.target.value })
+              }
               placeholder="egitim-slug"
               size="md"
               borderRadius="8px"
@@ -214,7 +308,7 @@ export default function EgitimSettings({
               _placeholder={{ color: "gray.500" }}
               _focus={{
                 borderColor: "green.500",
-                boxShadow: "0 0 0 1px var(--primary)"
+                boxShadow: "0 0 0 1px var(--primary)",
               }}
             />
           </Box>
@@ -228,7 +322,7 @@ export default function EgitimSettings({
                 type="file"
                 accept="image/*"
                 onChange={handleImageUpload}
-                style={{ display: 'none' }}
+                style={{ display: "none" }}
                 id="image-upload"
               />
               <Button
@@ -239,13 +333,13 @@ export default function EgitimSettings({
                 loading={uploading}
                 loadingText="Yükleniyor..."
                 cursor="pointer"
-                onClick={() => document.getElementById('image-upload')?.click()}
+                onClick={() => document.getElementById("image-upload")?.click()}
                 _hover={{
                   borderColor: "green.500",
-                  color: "green.600"
+                  color: "green.600",
                 }}
               >
-                {uploadedImage ? 'Görseli Değiştir' : 'Görsel Yükle'}
+                {uploadedImage ? "Görseli Değiştir" : "Görsel Yükle"}
               </Button>
               {uploadedImage && (
                 <Box>
@@ -270,5 +364,5 @@ export default function EgitimSettings({
         </VStack>
       </Card.Body>
     </Card.Root>
-  )
+  );
 }

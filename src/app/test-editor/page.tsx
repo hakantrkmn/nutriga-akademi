@@ -1,148 +1,170 @@
-'use client'
+"use client";
 
-import { useState } from 'react'
-import { Box, VStack, HStack, Button, Text, Heading, Container } from '@chakra-ui/react'
-import TipTapEditor from '@/components/admin/TipTapEditor'
+import TipTapEditor from "@/components/admin/TipTapEditor";
+import {
+  Box,
+  Button,
+  Container,
+  Heading,
+  HStack,
+  Text,
+  VStack,
+} from "@chakra-ui/react";
+import { useState } from "react";
 
 export default function TestEditorPage() {
-  const [content, setContent] = useState<object | null>(null)
-  const [savedContent, setSavedContent] = useState<object | null>(null)
+  const [content, setContent] = useState<object | null>(null);
+  const [savedContent, setSavedContent] = useState<object | null>(null);
 
   const handleSave = () => {
     if (!content) {
-      alert('Kaydedilecek içerik bulunamadı!')
-      return
+      alert("Kaydedilecek içerik bulunamadı!");
+      return;
     }
 
-    setSavedContent(content)
-    
+    setSavedContent(content);
+
     // JSON dosyası olarak indir
-    const dataStr = JSON.stringify(content, null, 2)
-    const dataBlob = new Blob([dataStr], { type: 'application/json' })
-    const url = URL.createObjectURL(dataBlob)
-    
-    const link = document.createElement('a')
-    link.href = url
-    link.download = `tiptap-content-${new Date().toISOString().slice(0, 19).replace(/:/g, '-')}.json`
-    document.body.appendChild(link)
-    link.click()
-    document.body.removeChild(link)
-    URL.revokeObjectURL(url)
-    
-    console.log('Saved content:', content)
-  }
+    const dataStr = JSON.stringify(content, null, 2);
+    const dataBlob = new Blob([dataStr], { type: "application/json" });
+    const url = URL.createObjectURL(dataBlob);
+
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = `tiptap-content-${new Date()
+      .toISOString()
+      .slice(0, 19)
+      .replace(/:/g, "-")}.json`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+
+    console.log("Saved content:", content);
+  };
 
   const handleClear = () => {
-    setContent(null)
-    setSavedContent(null)
-  }
+    setContent(null);
+    setSavedContent(null);
+  };
 
   const handleLoadSample = () => {
     const sampleContent = {
-      type: 'doc',
+      type: "doc",
       content: [
         {
-          type: 'heading',
+          type: "heading",
           attrs: { level: 1 },
-          content: [{ type: 'text', text: 'TipTap Editör Test Sayfası' }]
+          content: [{ type: "text", text: "TipTap Editör Test Sayfası" }],
         },
         {
-          type: 'paragraph',
+          type: "paragraph",
           content: [
-            { type: 'text', text: 'Bu bir ' },
-            { type: 'text', marks: [{ type: 'bold' }], text: 'kalın' },
-            { type: 'text', text: ' ve ' },
-            { type: 'text', marks: [{ type: 'italic' }], text: 'italik' },
-            { type: 'text', text: ' metin örneğidir.' }
-          ]
+            { type: "text", text: "Bu bir " },
+            { type: "text", marks: [{ type: "bold" }], text: "kalın" },
+            { type: "text", text: " ve " },
+            { type: "text", marks: [{ type: "italic" }], text: "italik" },
+            { type: "text", text: " metin örneğidir." },
+          ],
         },
         {
-          type: 'heading',
+          type: "heading",
           attrs: { level: 2 },
-          content: [{ type: 'text', text: 'Özellikler' }]
+          content: [{ type: "text", text: "Özellikler" }],
         },
         {
-          type: 'bulletList',
+          type: "bulletList",
           content: [
             {
-              type: 'listItem',
+              type: "listItem",
               content: [
                 {
-                  type: 'paragraph',
-                  content: [{ type: 'text', text: 'Görsel yükleme ve boyutlandırma' }]
-                }
-              ]
+                  type: "paragraph",
+                  content: [
+                    { type: "text", text: "Görsel yükleme ve boyutlandırma" },
+                  ],
+                },
+              ],
             },
             {
-              type: 'listItem',
+              type: "listItem",
               content: [
                 {
-                  type: 'paragraph',
-                  content: [{ type: 'text', text: 'Tablo ekleme' }]
-                }
-              ]
+                  type: "paragraph",
+                  content: [{ type: "text", text: "Tablo ekleme" }],
+                },
+              ],
             },
             {
-              type: 'listItem',
+              type: "listItem",
               content: [
                 {
-                  type: 'paragraph',
-                  content: [{ type: 'text', text: 'Kod blokları' }]
-                }
-              ]
+                  type: "paragraph",
+                  content: [{ type: "text", text: "Kod blokları" }],
+                },
+              ],
             },
             {
-              type: 'listItem',
+              type: "listItem",
               content: [
                 {
-                  type: 'paragraph',
-                  content: [{ type: 'text', text: 'Link ekleme' }]
-                }
-              ]
-            }
-          ]
+                  type: "paragraph",
+                  content: [{ type: "text", text: "Link ekleme" }],
+                },
+              ],
+            },
+          ],
         },
         {
-          type: 'heading',
+          type: "heading",
           attrs: { level: 3 },
-          content: [{ type: 'text', text: 'Kod Örneği' }]
+          content: [{ type: "text", text: "Kod Örneği" }],
         },
         {
-          type: 'codeBlock',
-          attrs: { language: 'javascript' },
+          type: "codeBlock",
+          attrs: { language: "javascript" },
           content: [
             {
-              type: 'text',
-              text: 'const editor = useEditor({\n  extensions: [StarterKit],\n  content: \'<p>Hello World!</p>\',\n})'
-            }
-          ]
+              type: "text",
+              text: "const editor = useEditor({\n  extensions: [StarterKit],\n  content: '<p>Hello World!</p>',\n})",
+            },
+          ],
         },
         {
-          type: 'heading',
+          type: "heading",
           attrs: { level: 3 },
-          content: [{ type: 'text', text: 'Alıntı' }]
+          content: [{ type: "text", text: "Alıntı" }],
         },
         {
-          type: 'blockquote',
+          type: "blockquote",
           content: [
             {
-              type: 'paragraph',
+              type: "paragraph",
               content: [
-                { type: 'text', text: 'TipTap, modern web uygulamaları için güçlü bir rich text editörüdür.' }
-              ]
-            }
-          ]
-        }
-      ]
-    }
-    setContent(sampleContent)
-  }
+                {
+                  type: "text",
+                  text: "TipTap, modern web uygulamaları için güçlü bir rich text editörüdür.",
+                },
+              ],
+            },
+          ],
+        },
+      ],
+    };
+    setContent(sampleContent);
+  };
 
   return (
     <Container maxW="full" p={0} h="100vh">
       <VStack h="100vh" gap={0}>
         {/* Header */}
-        <Box w="full" bg="gray.50" p={4} borderBottom="1px" borderColor="gray.200">
+        <Box
+          w="full"
+          bg="gray.50"
+          p={4}
+          borderBottom="1px"
+          borderColor="gray.200"
+        >
           <HStack justify="space-between" align="center">
             <VStack align="start" gap={1}>
               <Heading size="lg" color="gray.800">
@@ -161,11 +183,7 @@ export default function TestEditorPage() {
               >
                 Örnek İçerik Yükle
               </Button>
-              <Button
-                onClick={handleSave}
-                colorScheme="green"
-                size="sm"
-              >
+              <Button onClick={handleSave} colorScheme="green" size="sm">
                 Kaydet
               </Button>
               <Button
@@ -187,7 +205,7 @@ export default function TestEditorPage() {
             onChange={setContent}
             placeholder="Buraya yazmaya başlayın... Tüm editör özelliklerini test edebilirsiniz!"
           />
-          
+
           {/* Floating Save Button - Sağ alt köşe */}
           <Button
             onClick={handleSave}
@@ -200,8 +218,8 @@ export default function TestEditorPage() {
             boxShadow="lg"
             zIndex={1000}
             _hover={{
-              transform: 'scale(1.05)',
-              boxShadow: 'xl'
+              transform: "scale(1.05)",
+              boxShadow: "xl",
             }}
             transition="all 0.2s"
             disabled={!content}
@@ -212,7 +230,15 @@ export default function TestEditorPage() {
 
         {/* Footer - Content Preview */}
         {savedContent && (
-          <Box w="full" bg="gray.100" p={4} borderTop="1px" borderColor="gray.200" maxH="200px" overflow="auto">
+          <Box
+            w="full"
+            bg="gray.100"
+            p={4}
+            borderTop="1px"
+            borderColor="gray.200"
+            maxH="200px"
+            overflow="auto"
+          >
             <VStack align="start" gap={2}>
               <Text fontWeight="bold" color="gray.700">
                 Kaydedilen İçerik (JSON):
@@ -235,5 +261,5 @@ export default function TestEditorPage() {
         )}
       </VStack>
     </Container>
-  )
+  );
 }

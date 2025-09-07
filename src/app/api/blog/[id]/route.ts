@@ -1,5 +1,5 @@
-import { NextRequest, NextResponse } from 'next/server'
-import { prisma } from '@/lib/prisma'
+import { prisma } from "@/lib/prisma";
+import { NextRequest, NextResponse } from "next/server";
 
 // GET - Tek blog yazısı getir
 export async function GET(
@@ -7,29 +7,29 @@ export async function GET(
   { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const { id } = await params
+    const { id } = await params;
 
     const blogPost = await prisma.blogPost.findUnique({
-      where: { id }
-    })
+      where: { id },
+    });
 
     if (!blogPost) {
       return NextResponse.json(
-        { success: false, error: 'Blog yazısı bulunamadı' },
+        { success: false, error: "Blog yazısı bulunamadı" },
         { status: 404 }
-      )
+      );
     }
 
     return NextResponse.json({
       success: true,
-      data: blogPost
-    })
+      data: blogPost,
+    });
   } catch (error) {
-    console.error('Blog yazısı getirilirken hata:', error)
+    console.error("Blog yazısı getirilirken hata:", error);
     return NextResponse.json(
-      { success: false, error: 'Blog yazısı getirilemedi' },
+      { success: false, error: "Blog yazısı getirilemedi" },
       { status: 500 }
-    )
+    );
   }
 }
 
@@ -39,33 +39,33 @@ export async function PUT(
   { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const { id } = await params
-    const body = await request.json()
-    const { title, content, imageUrl, slug, category, excerpt, author } = body
+    const { id } = await params;
+    const body = await request.json();
+    const { title, content, imageUrl, slug, category, excerpt, author } = body;
 
     // Blog yazısının var olup olmadığını kontrol et
     const existingPost = await prisma.blogPost.findUnique({
-      where: { id }
-    })
+      where: { id },
+    });
 
     if (!existingPost) {
       return NextResponse.json(
-        { success: false, error: 'Blog yazısı bulunamadı' },
+        { success: false, error: "Blog yazısı bulunamadı" },
         { status: 404 }
-      )
+      );
     }
 
     // Slug'un benzersiz olduğunu kontrol et (kendi slug'u hariç)
     if (slug && slug !== existingPost.slug) {
       const slugExists = await prisma.blogPost.findUnique({
-        where: { slug }
-      })
+        where: { slug },
+      });
 
       if (slugExists) {
         return NextResponse.json(
-          { success: false, error: 'Bu slug zaten kullanılıyor' },
+          { success: false, error: "Bu slug zaten kullanılıyor" },
           { status: 400 }
-        )
+        );
       }
     }
 
@@ -79,21 +79,21 @@ export async function PUT(
         ...(category !== undefined && { category }),
         ...(excerpt !== undefined && { excerpt }),
         ...(author !== undefined && { author }),
-        updatedAt: new Date()
-      }
-    })
+        updatedAt: new Date(),
+      },
+    });
 
     return NextResponse.json({
       success: true,
       data: guncellenenBlogPost,
-      message: 'Blog yazısı başarıyla güncellendi'
-    })
+      message: "Blog yazısı başarıyla güncellendi",
+    });
   } catch (error) {
-    console.error('Blog yazısı güncellenirken hata:', error)
+    console.error("Blog yazısı güncellenirken hata:", error);
     return NextResponse.json(
-      { success: false, error: 'Blog yazısı güncellenemedi' },
+      { success: false, error: "Blog yazısı güncellenemedi" },
       { status: 500 }
-    )
+    );
   }
 }
 
@@ -103,33 +103,33 @@ export async function DELETE(
   { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const { id } = await params
+    const { id } = await params;
 
     // Blog yazısının var olup olmadığını kontrol et
     const existingPost = await prisma.blogPost.findUnique({
-      where: { id }
-    })
+      where: { id },
+    });
 
     if (!existingPost) {
       return NextResponse.json(
-        { success: false, error: 'Blog yazısı bulunamadı' },
+        { success: false, error: "Blog yazısı bulunamadı" },
         { status: 404 }
-      )
+      );
     }
 
     await prisma.blogPost.delete({
-      where: { id }
-    })
+      where: { id },
+    });
 
     return NextResponse.json({
       success: true,
-      message: 'Blog yazısı başarıyla silindi'
-    })
+      message: "Blog yazısı başarıyla silindi",
+    });
   } catch (error) {
-    console.error('Blog yazısı silinirken hata:', error)
+    console.error("Blog yazısı silinirken hata:", error);
     return NextResponse.json(
-      { success: false, error: 'Blog yazısı silinemedi' },
+      { success: false, error: "Blog yazısı silinemedi" },
       { status: 500 }
-    )
+    );
   }
 }

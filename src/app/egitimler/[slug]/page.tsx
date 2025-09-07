@@ -1,36 +1,40 @@
-import { notFound } from "next/navigation";
-import EgitimDetailContent from "@/components/courses/detail/EgitimDetailContent";
-import type { Metadata } from "next";
-import { EgitimDetailPageProps } from "@/types";
+import EgitimDetailContent from "@/components/courses/detail/CoursesDetailContent";
 import { COMPANY_NAME } from "@/constants";
 import { prisma } from "@/lib/prisma";
+import { EgitimDetailPageProps } from "@/types";
 import { convertEgitimToDecimal } from "@/utils";
-export async function generateMetadata({ params }: EgitimDetailPageProps): Promise<Metadata> {
+import type { Metadata } from "next";
+import { notFound } from "next/navigation";
+export async function generateMetadata({
+  params,
+}: EgitimDetailPageProps): Promise<Metadata> {
   const { slug } = await params;
   const egitim = await prisma.egitim.findUnique({
     where: {
-      slug: slug
-    }
+      slug: slug,
+    },
   });
 
   if (!egitim) {
     return {
-      title: "Eğitim bulunamadı | " + COMPANY_NAME
+      title: "Eğitim bulunamadı | " + COMPANY_NAME,
     };
   }
 
   return {
-    title: `${egitim?.title || ''} | ` + COMPANY_NAME,
+    title: `${egitim?.title || ""} | ` + COMPANY_NAME,
     description: egitim.description,
   };
 }
 
-export default async function EgitimDetailPage({ params }: EgitimDetailPageProps) {
+export default async function EgitimDetailPage({
+  params,
+}: EgitimDetailPageProps) {
   const { slug } = await params;
   const egitim = await prisma.egitim.findUnique({
     where: {
-      slug: slug
-    }
+      slug: slug,
+    },
   });
 
   if (!egitim) {

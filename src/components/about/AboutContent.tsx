@@ -1,6 +1,6 @@
 import AboutHero from "./AboutHero";
-import AboutValues from "./AboutValues";
 import AboutTeam from "./AboutTeam";
+import AboutValues from "./AboutVaues";
 
 export default function AboutContent() {
   return (

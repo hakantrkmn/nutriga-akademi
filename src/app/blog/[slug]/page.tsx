@@ -1,7 +1,7 @@
-import { notFound } from "next/navigation";
-import BlogDetailContent from "@/components/blog/BlogDetailContent";
+import BlogDetailContent from "@/components/blog/detail/BlogDetailContent";
 import { dummyBlogPosts } from "@/data/dummyBlogData";
 import type { Metadata } from "next";
+import { notFound } from "next/navigation";
 
 interface BlogDetailPageProps {
   params: Promise<{
@@ -9,13 +9,15 @@ interface BlogDetailPageProps {
   }>;
 }
 
-export async function generateMetadata({ params }: BlogDetailPageProps): Promise<Metadata> {
+export async function generateMetadata({
+  params,
+}: BlogDetailPageProps): Promise<Metadata> {
   const { slug } = await params;
-  const post = dummyBlogPosts.find(p => p.slug === slug);
-  
+  const post = dummyBlogPosts.find((p) => p.slug === slug);
+
   if (!post) {
     return {
-      title: "Blog yazısı bulunamadı | NutriHome Akademi"
+      title: "Blog yazısı bulunamadı | NutriHome Akademi",
     };
   }
 
@@ -27,7 +29,7 @@ export async function generateMetadata({ params }: BlogDetailPageProps): Promise
 
 export default async function BlogDetailPage({ params }: BlogDetailPageProps) {
   const { slug } = await params;
-  const post = dummyBlogPosts.find(p => p.slug === slug);
+  const post = dummyBlogPosts.find((p) => p.slug === slug);
 
   if (!post) {
     notFound();

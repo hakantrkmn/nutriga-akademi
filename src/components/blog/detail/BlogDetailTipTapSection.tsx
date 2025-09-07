@@ -2,10 +2,13 @@
 import { BlogPost } from "@/types";
 import dynamic from "next/dynamic";
 
-const TipTapWrapper = dynamic(() => import("../common/TipTapWrapper"), {
-  ssr: false,
-});
-const TipTapEditor = dynamic(() => import("../admin/TipTapEditor"), {
+const TipTapWrapper = dynamic(
+  () => import("@/components/common/TipTapWrapper"),
+  {
+    ssr: false,
+  }
+);
+const TipTapEditor = dynamic(() => import("@/components/admin/TipTapEditor"), {
   ssr: false,
 });
 interface BlogDetailContentTipTapProps {

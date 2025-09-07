@@ -1,22 +1,33 @@
 import {
+  COMPANY_ADDRESS,
+  COMPANY_EMAIL,
+  COMPANY_FACEBOOK_URL,
+  COMPANY_INSTAGRAM_URL,
+  COMPANY_LINKEDIN_URL,
+  COMPANY_NAME,
+  COMPANY_PHONE,
+  COMPANY_TWITTER_URL,
+  COMPANY_WORK_HOURS,
+  COMPANY_YOUTUBE_URL,
+} from "@/constants";
+import {
   Box,
   Container,
-  SimpleGrid,
-  VStack,
   HStack,
   Heading,
-  Text,
   Icon,
+  SimpleGrid,
+  Text,
+  VStack,
 } from "@chakra-ui/react";
 import Link from "next/link";
-import { 
-  FaFacebook, 
-  FaTwitter, 
-  FaInstagram, 
-  FaLinkedin, 
-  FaYoutube 
+import {
+  FaFacebook,
+  FaInstagram,
+  FaLinkedin,
+  FaTwitter,
+  FaYoutube,
 } from "react-icons/fa";
-import { COMPANY_ADDRESS, COMPANY_EMAIL, COMPANY_FACEBOOK_URL, COMPANY_INSTAGRAM_URL, COMPANY_LINKEDIN_URL, COMPANY_NAME, COMPANY_PHONE, COMPANY_TWITTER_URL, COMPANY_WORK_HOURS, COMPANY_YOUTUBE_URL } from "@/constants";
 
 const quickLinks = [
   { name: "Ana Sayfa", href: "/" },
@@ -33,31 +44,31 @@ const socialLinks = [
     name: "Facebook",
     href: COMPANY_FACEBOOK_URL,
     icon: FaFacebook,
-    color: "#1877F2"
+    color: "#1877F2",
   },
   {
-    name: "Twitter", 
-      href: COMPANY_TWITTER_URL,
+    name: "Twitter",
+    href: COMPANY_TWITTER_URL,
     icon: FaTwitter,
-    color: "#1DA1F2"
+    color: "#1DA1F2",
   },
   {
     name: "Instagram",
     href: COMPANY_INSTAGRAM_URL,
     icon: FaInstagram,
-    color: "#E4405F"
+    color: "#E4405F",
   },
   {
     name: "LinkedIn",
     href: COMPANY_LINKEDIN_URL,
     icon: FaLinkedin,
-    color: "#0A66C2"
+    color: "#0A66C2",
   },
   {
     name: "YouTube",
     href: COMPANY_YOUTUBE_URL,
     icon: FaYoutube,
-    color: "#FF0000"
+    color: "#FF0000",
   },
 ];
 
@@ -82,15 +93,10 @@ export default function Footer() {
                 {COMPANY_NAME}
               </Text>
             </Link>
-            
-            <Text 
-              fontSize="sm" 
-              color="gray.300" 
-              lineHeight="tall"
-              maxW="280px"
-            >
-              Beslenme alanında en güncel ve kaliteli eğitimlerle diyetisyenlerin 
-              mesleki gelişimine katkı sağlayan öncü akademi.
+
+            <Text fontSize="sm" color="gray.300" lineHeight="tall" maxW="280px">
+              Beslenme alanında en güncel ve kaliteli eğitimlerle
+              diyetisyenlerin mesleki gelişimine katkı sağlayan öncü akademi.
             </Text>
           </VStack>
 
@@ -99,16 +105,16 @@ export default function Footer() {
             <Heading as="h4" size="md" color="white">
               Hızlı Linkler
             </Heading>
-            
+
             <VStack align="start" gap={2}>
               {quickLinks.map((link, index) => (
                 <Link key={index} href={link.href}>
                   <Text
                     fontSize="sm"
                     color="gray.300"
-                    _hover={{ 
+                    _hover={{
                       color: "green.400",
-                      textDecoration: "underline" 
+                      textDecoration: "underline",
                     }}
                     cursor="pointer"
                     transition="all 0.2s ease"
@@ -125,25 +131,37 @@ export default function Footer() {
             <Heading as="h4" size="md" color="white">
               İletişim
             </Heading>
-            
+
             <VStack align="start" gap={3} fontSize="sm" color="gray.300">
               <Text>
-                <Text as="span" fontWeight="semibold" color="white">Adres:</Text><br />
+                <Text as="span" fontWeight="semibold" color="white">
+                  Adres:
+                </Text>
+                <br />
                 {COMPANY_ADDRESS}
               </Text>
-              
+
               <Text>
-                <Text as="span" fontWeight="semibold" color="white">Telefon:</Text><br />
+                <Text as="span" fontWeight="semibold" color="white">
+                  Telefon:
+                </Text>
+                <br />
                 {COMPANY_PHONE}
               </Text>
-              
+
               <Text>
-                <Text as="span" fontWeight="semibold" color="white">E-posta:</Text><br />
-                  {COMPANY_EMAIL}
+                <Text as="span" fontWeight="semibold" color="white">
+                  E-posta:
+                </Text>
+                <br />
+                {COMPANY_EMAIL}
               </Text>
-              
+
               <Text>
-                <Text as="span" fontWeight="semibold" color="white">Çalışma Saatleri:</Text><br />
+                <Text as="span" fontWeight="semibold" color="white">
+                  Çalışma Saatleri:
+                </Text>
+                <br />
                 {COMPANY_WORK_HOURS}
               </Text>
             </VStack>
@@ -154,11 +172,11 @@ export default function Footer() {
             <Heading as="h4" size="md" color="white">
               Takip Edin
             </Heading>
-            
+
             <Text fontSize="sm" color="gray.300" lineHeight="tall">
               Güncel içerikler ve eğitim duyuruları için bizi takip edin!
             </Text>
-            
+
             <HStack gap={3} flexWrap="wrap">
               {socialLinks.map((social, index) => (
                 <a
@@ -181,7 +199,7 @@ export default function Footer() {
                       bg: "gray.600",
                       color: social.color,
                       transform: "translateY(-2px)",
-                      shadow: "md"
+                      shadow: "md",
                     }}
                     transition="all 0.2s ease"
                   >
@@ -196,23 +214,18 @@ export default function Footer() {
         </SimpleGrid>
 
         {/* Alt Çizgi ve Copyright */}
-        <Box 
-          mt={12} 
-          pt={8} 
-          borderTop="1px solid" 
-          borderColor="gray.600"
-        >
+        <Box mt={12} pt={8} borderTop="1px solid" borderColor="gray.600">
           <VStack gap={4} textAlign="center">
-            <HStack 
-              justify="center" 
-              gap={6} 
+            <HStack
+              justify="center"
+              gap={6}
               flexWrap="wrap"
-              fontSize="sm" 
+              fontSize="sm"
               color="gray.400"
             >
               <Link href="/gizlilik-politikasi">
-                <Text 
-                  _hover={{ color: "green.400" }} 
+                <Text
+                  _hover={{ color: "green.400" }}
                   cursor="pointer"
                   transition="color 0.2s ease"
                 >
@@ -220,8 +233,8 @@ export default function Footer() {
                 </Text>
               </Link>
               <Link href="/kullanim-kosullari">
-                <Text 
-                  _hover={{ color: "green.400" }} 
+                <Text
+                  _hover={{ color: "green.400" }}
                   cursor="pointer"
                   transition="color 0.2s ease"
                 >
@@ -229,8 +242,8 @@ export default function Footer() {
                 </Text>
               </Link>
               <Link href="/cerez-politikasi">
-                <Text 
-                  _hover={{ color: "green.400" }} 
+                <Text
+                  _hover={{ color: "green.400" }}
                   cursor="pointer"
                   transition="color 0.2s ease"
                 >
@@ -238,7 +251,7 @@ export default function Footer() {
                 </Text>
               </Link>
             </HStack>
-            
+
             <Text fontSize="sm" color="gray.400">
               © {currentYear} NutriHome Akademi. Tüm hakları saklıdır.
             </Text>

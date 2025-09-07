@@ -1,14 +1,14 @@
 "use client";
 
+import { COURSE_CATEGORIES, COURSE_LEVELS } from "@/constants";
 import {
-  HStack,
   Button,
   Container,
-  VStack,
+  HStack,
   NativeSelectField,
-  NativeSelectRoot
+  NativeSelectRoot,
+  VStack,
 } from "@chakra-ui/react";
-import { COURSE_CATEGORIES, COURSE_LEVELS } from "@/constants";
 
 interface CategoryFilterProps {
   selectedCategory: string;
@@ -17,21 +17,16 @@ interface CategoryFilterProps {
   onLevelChange: (level: string) => void;
 }
 
-export default function CategoryFilter({ 
-  selectedCategory, 
+export default function CategoryFilter({
+  selectedCategory,
   selectedLevel,
   onCategoryChange,
-  onLevelChange 
+  onLevelChange,
 }: CategoryFilterProps) {
   return (
     <Container maxW="1200px" px={{ base: 4, md: 6 }} py={8}>
       <VStack gap={6} align="center">
-        <HStack
-          gap={3}
-          flexWrap="wrap"
-          justify="center"
-          align="center"
-        >
+        <HStack gap={3} flexWrap="wrap" justify="center" align="center">
           {COURSE_CATEGORIES.map((category) => (
             <Button
               key={category}
@@ -50,7 +45,7 @@ export default function CategoryFilter({
                 transform: "translateY(-2px)",
                 shadow: "md",
                 bg: selectedCategory === category ? "green.600" : "green.50",
-                color: selectedCategory === category ? "white" : "green.700"
+                color: selectedCategory === category ? "white" : "green.700",
               }}
               transition="all 0.2s ease"
             >
@@ -67,7 +62,7 @@ export default function CategoryFilter({
               borderColor="green.500"
               _focus={{
                 borderColor: "green.600",
-                boxShadow: "0 0 0 1px var(--chakra-colors-green-600)"
+                boxShadow: "0 0 0 1px var(--chakra-colors-green-600)",
               }}
             >
               <option value="">Seviye Seçin</option>

@@ -1,11 +1,11 @@
 "use client";
 
-import { useState, useMemo } from "react";
-import { VStack } from "@chakra-ui/react";
-import EgitimlerHero from "./EgitimlerHero";
-import CategoryFilter from "./CategoryFilter";
-import EgitimlerGrid from "./EgitimlerGrid";
 import { dummyEgitimler } from "@/data/dummyEgitimData";
+import { VStack } from "@chakra-ui/react";
+import { useMemo, useState } from "react";
+import CategoryFilter from "./CoursesCategoryFilter";
+import EgitimlerGrid from "./CoursesGrid";
+import EgitimlerHero from "./CoursesHero";
 
 export default function EgitimlerContent() {
   const [selectedCategory, setSelectedCategory] = useState("Tümü");
@@ -13,15 +13,17 @@ export default function EgitimlerContent() {
 
   const filteredEgitimler = useMemo(() => {
     let filtered = dummyEgitimler;
-    
+
     if (selectedCategory !== "Tümü") {
-      filtered = filtered.filter(egitim => egitim.category === selectedCategory);
+      filtered = filtered.filter(
+        (egitim) => egitim.category === selectedCategory
+      );
     }
-    
+
     if (selectedLevel) {
-      filtered = filtered.filter(egitim => egitim.level === selectedLevel);
+      filtered = filtered.filter((egitim) => egitim.level === selectedLevel);
     }
-    
+
     return filtered;
   }, [selectedCategory, selectedLevel]);
 
@@ -36,7 +38,7 @@ export default function EgitimlerContent() {
   return (
     <VStack gap={0} w="full">
       <EgitimlerHero />
-      <CategoryFilter 
+      <CategoryFilter
         selectedCategory={selectedCategory}
         selectedLevel={selectedLevel}
         onCategoryChange={handleCategoryChange}

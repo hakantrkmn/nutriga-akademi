@@ -1,7 +1,7 @@
+import { Provider } from "@/components/ui/provider";
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import { Provider } from "@/components/ui/provider";
 
 import ConditionalLayout from "./conditionalLayout";
 const geistSans = Geist({
@@ -30,9 +30,7 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <Provider>
-            <ConditionalLayout>
-                {children}
-            </ConditionalLayout>
+          <ConditionalLayout>{children}</ConditionalLayout>
         </Provider>
       </body>
     </html>

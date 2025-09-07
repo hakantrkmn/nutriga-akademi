@@ -1,212 +1,215 @@
-import { Egitim } from "@/types";
 import { COURSE_CATEGORIES, COURSE_LEVELS } from "@/constants";
-import { Prisma } from '@prisma/client' // ✅ Prisma Decimal'ini import edin
+import { Egitim } from "@/types";
 
 export const dummyEgitimler: Egitim[] = [
   {
     id: "1",
     title: "Temel Beslenme İlkeleri ve Makro Besinler",
-    description: "Beslenmenin temel prensiplerini, makro besinlerin vücuttaki rollerini ve dengeli beslenme planlamasını kapsamlı olarak öğrenin.",
+    description:
+      "Beslenmenin temel prensiplerini, makro besinlerin vücuttaki rollerini ve dengeli beslenme planlamasını kapsamlı olarak öğrenin.",
     content: {
-      "type": "doc",
-      "content": [
+      type: "doc",
+      content: [
         {
-          "type": "heading",
-          "attrs": {
-            "textAlign": null,
-            "level": 1
+          type: "heading",
+          attrs: {
+            textAlign: null,
+            level: 1,
           },
-          "content": [
+          content: [
             {
-              "type": "text",
-              "text": "çok önemli bir konu"
-            }
-          ]
+              type: "text",
+              text: "çok önemli bir konu",
+            },
+          ],
         },
         {
-          "type": "paragraph",
-          "attrs": {
-            "textAlign": null
+          type: "paragraph",
+          attrs: {
+            textAlign: null,
           },
-          "content": [
+          content: [
             {
-              "type": "imageResize",
-              "attrs": {
-                "src": "/uploads/1757182098651-IMG_9899.png",
-                "alt": null,
-                "title": null,
-                "width": "160",
-                "height": null,
-                "containerStyle": "position: relative; width: 160px; height: auto; cursor: pointer; display: inline-block;",
-                "wrapperStyle": "display: inline-block; float: left; padding-right: 8px;"
-              }
-            }
-          ]
+              type: "imageResize",
+              attrs: {
+                src: "/uploads/1757182098651-IMG_9899.png",
+                alt: null,
+                title: null,
+                width: "160",
+                height: null,
+                containerStyle:
+                  "position: relative; width: 160px; height: auto; cursor: pointer; display: inline-block;",
+                wrapperStyle:
+                  "display: inline-block; float: left; padding-right: 8px;",
+              },
+            },
+          ],
         },
         {
-          "type": "paragraph",
-          "attrs": {
-            "textAlign": null
-          }
-        },
-        {
-          "type": "paragraph",
-          "attrs": {
-            "textAlign": null
-          }
-        },
-        {
-          "type": "paragraph",
-          "attrs": {
-            "textAlign": null
-          }
-        },
-        {
-          "type": "paragraph",
-          "attrs": {
-            "textAlign": null
-          }
-        },
-        {
-          "type": "paragraph",
-          "attrs": {
-            "textAlign": null
-          }
-        },
-        {
-          "type": "paragraph",
-          "attrs": {
-            "textAlign": null
-          }
-        },
-        {
-          "type": "paragraph",
-          "attrs": {
-            "textAlign": null
-          }
-        },
-        {
-          "type": "paragraph",
-          "attrs": {
-            "textAlign": null
-          }
-        },
-        {
-          "type": "paragraph",
-          "attrs": {
-            "textAlign": null
+          type: "paragraph",
+          attrs: {
+            textAlign: null,
           },
-          "content": [
+        },
+        {
+          type: "paragraph",
+          attrs: {
+            textAlign: null,
+          },
+        },
+        {
+          type: "paragraph",
+          attrs: {
+            textAlign: null,
+          },
+        },
+        {
+          type: "paragraph",
+          attrs: {
+            textAlign: null,
+          },
+        },
+        {
+          type: "paragraph",
+          attrs: {
+            textAlign: null,
+          },
+        },
+        {
+          type: "paragraph",
+          attrs: {
+            textAlign: null,
+          },
+        },
+        {
+          type: "paragraph",
+          attrs: {
+            textAlign: null,
+          },
+        },
+        {
+          type: "paragraph",
+          attrs: {
+            textAlign: null,
+          },
+        },
+        {
+          type: "paragraph",
+          attrs: {
+            textAlign: null,
+          },
+          content: [
             {
-              "type": "text",
-              "marks": [
+              type: "text",
+              marks: [
                 {
-                  "type": "textStyle",
-                  "attrs": {
-                    "color": "#999999"
-                  }
-                }
+                  type: "textStyle",
+                  attrs: {
+                    color: "#999999",
+                  },
+                },
               ],
-              "text": "bak şu işe yaw."
+              text: "bak şu işe yaw.",
             },
             {
-              "type": "text",
-              "marks": [
+              type: "text",
+              marks: [
                 {
-                  "type": "textStyle",
-                  "attrs": {
-                    "color": "#999999"
-                  }
+                  type: "textStyle",
+                  attrs: {
+                    color: "#999999",
+                  },
                 },
                 {
-                  "type": "bold"
-                }
+                  type: "bold",
+                },
               ],
-              "text": "kalın yazıoz"
+              text: "kalın yazıoz",
             },
             {
-              "type": "text",
-              "marks": [
+              type: "text",
+              marks: [
                 {
-                  "type": "textStyle",
-                  "attrs": {
-                    "color": "#999999"
-                  }
+                  type: "textStyle",
+                  attrs: {
+                    color: "#999999",
+                  },
                 },
                 {
-                  "type": "bold"
+                  type: "bold",
                 },
                 {
-                  "type": "italic"
-                }
+                  type: "italic",
+                },
               ],
-              "text": "italik"
+              text: "italik",
             },
             {
-              "type": "text",
-              "marks": [
+              type: "text",
+              marks: [
                 {
-                  "type": "textStyle",
-                  "attrs": {
-                    "color": "#999999"
-                  }
+                  type: "textStyle",
+                  attrs: {
+                    color: "#999999",
+                  },
                 },
                 {
-                  "type": "bold"
+                  type: "bold",
                 },
                 {
-                  "type": "italic"
+                  type: "italic",
                 },
                 {
-                  "type": "underline"
-                }
+                  type: "underline",
+                },
               ],
-              "text": "altçizgiliz "
+              text: "altçizgiliz ",
             },
             {
-              "type": "text",
-              "marks": [
+              type: "text",
+              marks: [
                 {
-                  "type": "textStyle",
-                  "attrs": {
-                    "color": "#999999"
-                  }
+                  type: "textStyle",
+                  attrs: {
+                    color: "#999999",
+                  },
                 },
                 {
-                  "type": "bold"
+                  type: "bold",
                 },
                 {
-                  "type": "italic"
+                  type: "italic",
                 },
                 {
-                  "type": "underline"
+                  type: "underline",
                 },
                 {
-                  "type": "highlight",
-                  "attrs": {
-                    "color": null
-                  }
-                }
+                  type: "highlight",
+                  attrs: {
+                    color: null,
+                  },
+                },
               ],
-              "text": "asdasd"
+              text: "asdasd",
             },
             {
-              "type": "text",
-              "marks": [
+              type: "text",
+              marks: [
                 {
-                  "type": "textStyle",
-                  "attrs": {
-                    "color": "#999999"
-                  }
-                }
+                  type: "textStyle",
+                  attrs: {
+                    color: "#999999",
+                  },
+                },
               ],
-              "text": "ad"
-            }
-          ]
-        }
-      ]
+              text: "ad",
+            },
+          ],
+        },
+      ],
     },
-    imageUrl: "https://images.unsplash.com/photo-1490645935967-10de6ba17061?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+    imageUrl:
+      "https://images.unsplash.com/photo-1490645935967-10de6ba17061?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
     slug: "temel-beslenme-ilkeleri-ve-makro-besinler",
     price: 299,
     salesCount: 156,
@@ -214,16 +217,17 @@ export const dummyEgitimler: Egitim[] = [
     instructor: "Prof. Dr. Ayşe Beslenme",
     category: COURSE_CATEGORIES[1],
     createdAt: new Date("2024-01-01"),
-    updatedAt: new Date("2024-01-15")
+    updatedAt: new Date("2024-01-15"),
   },
   {
     id: "2",
     title: "Klinik Beslenme ve Hastalık Yönetimi",
-    description: "Diabetes, hipertansiyon, obezite gibi kronik hastalıklarda beslenme müdahalelerini ve tedavi protokollerini öğrenin.",
+    description:
+      "Diabetes, hipertansiyon, obezite gibi kronik hastalıklarda beslenme müdahalelerini ve tedavi protokollerini öğrenin.",
     content: `
       <h2>Klinik Beslenme Eğitimi</h2>
       <p>Kronik hastalıkların yönetiminde beslenmenin kritik rolünü ve kanıta dayalı müdahale stratejilerini kapsamlı olarak ele alacağız.</p>
-      
+
       <h3>1. Diabetes Mellitus ve Beslenme</h3>
       <ul>
         <li>Tip 1 ve Tip 2 diabetes arasındaki farklar</li>
@@ -250,7 +254,8 @@ export const dummyEgitimler: Egitim[] = [
 
       <p><strong>Sertifikasyon:</strong> Bu eğitimi başarıyla tamamlayanlar, klinik beslenme uzmanlık sertifikası alacaklardır.</p>
     `,
-    imageUrl: "https://images.unsplash.com/photo-1559757148-5c350d0d3c56?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+    imageUrl:
+      "https://images.unsplash.com/photo-1559757148-5c350d0d3c56?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
     slug: "klinik-beslenme-ve-hastalik-yonetimi",
     price: 599,
     salesCount: 89,
@@ -258,16 +263,17 @@ export const dummyEgitimler: Egitim[] = [
     instructor: "Doç. Dr. Mehmet Klinik",
     category: COURSE_CATEGORIES[2],
     createdAt: new Date("2024-01-03"),
-    updatedAt: new Date("2024-01-20")
+    updatedAt: new Date("2024-01-20"),
   },
   {
     id: "3",
     title: "Sporcu Beslenmesi ve Performans Optimizasyonu",
-    description: "Spor dallarına özgü beslenme stratejileri, supplementasyon ve performans artırıcı beslenme protokollerini öğrenin.",
+    description:
+      "Spor dallarına özgü beslenme stratejileri, supplementasyon ve performans artırıcı beslenme protokollerini öğrenin.",
     content: `
       <h2>Sporcu Beslenmesi Uzmanlığı</h2>
       <p>Farklı spor dalları için beslenme stratejileri geliştirmeyi ve sporcu performansını optimize etmeyi öğreneceksiniz.</p>
-      
+
       <h3>1. Spor Fizyolojisi ve Beslenme</h3>
       <ul>
         <li>Enerji sistemleri ve metabolizma</li>
@@ -294,7 +300,8 @@ export const dummyEgitimler: Egitim[] = [
 
       <p><strong>Bonus:</strong> Gerçek sporcu vaka analizleri ve beslenme planı örnekleri dahildir.</p>
     `,
-    imageUrl: "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+    imageUrl:
+      "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
     slug: "sporcu-beslenmesi-ve-performans-optimizasyonu",
     price: 449,
     salesCount: 134,
@@ -302,16 +309,17 @@ export const dummyEgitimler: Egitim[] = [
     instructor: "Dr. Ahmet Spor",
     category: COURSE_CATEGORIES[3],
     createdAt: new Date("2024-01-05"),
-    updatedAt: new Date("2024-01-18")
+    updatedAt: new Date("2024-01-18"),
   },
   {
     id: "4",
     title: "Çocuk ve Adölesan Beslenmesi",
-    description: "0-18 yaş arası çocuklarda büyüme dönemlerine özel beslenme, mama geçişi ve beslenme sorunları yönetimini öğrenin.",
+    description:
+      "0-18 yaş arası çocuklarda büyüme dönemlerine özel beslenme, mama geçişi ve beslenme sorunları yönetimini öğrenin.",
     content: `
       <h2>Pediatrik Beslenme Uzmanlaşması</h2>
       <p>Çocukluk döneminin kritik beslenme ihtiyaçlarını ve gelişimsel özelliklerini kapsamlı olarak ele alacağız.</p>
-      
+
       <h3>1. Bebek Beslenmesi (0-12 ay)</h3>
       <ul>
         <li>Anne sütü ve formüla beslenme</li>
@@ -343,7 +351,8 @@ export const dummyEgitimler: Egitim[] = [
         <li>Otizm spektrum bozukluğunda beslenme</li>
       </ul>
     `,
-    imageUrl: "https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+    imageUrl:
+      "https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
     slug: "cocuk-ve-adolesan-beslenmesi",
     price: 399,
     salesCount: 78,
@@ -351,16 +360,17 @@ export const dummyEgitimler: Egitim[] = [
     instructor: "Dr. Zeynep Pediatri",
     category: COURSE_CATEGORIES[4],
     createdAt: new Date("2024-01-08"),
-    updatedAt: new Date("2024-01-22")
+    updatedAt: new Date("2024-01-22"),
   },
   {
     id: "5",
     title: "Yaşlı Beslenmesi ve Geriatrik Yaklaşımlar",
-    description: "65 yaş üstü bireylerde yaşa bağlı fizyolojik değişiklikler, beslenme sorunları ve özel bakım gereksinimleri.",
+    description:
+      "65 yaş üstü bireylerde yaşa bağlı fizyolojik değişiklikler, beslenme sorunları ve özel bakım gereksinimleri.",
     content: `
       <h2>Geriatrik Beslenme Uzmanlığı</h2>
       <p>Yaşlılık döneminin unique beslenme challenges'larını ve evidence-based çözüm yaklaşımlarını öğreneceksiniz.</p>
-      
+
       <h3>1. Yaşlanma ve Fizyolojik Değişiklikler</h3>
       <ul>
         <li>Metabolizma yavaşlaması ve enerji ihtiyaçları</li>
@@ -388,7 +398,8 @@ export const dummyEgitimler: Egitim[] = [
       <h3>Pratik Uygulamalar</h3>
       <p>Yaşlı bakımevleri için menü planlama, texture modified foods, ve aile eğitimi konularını kapsar.</p>
     `,
-    imageUrl: "https://images.unsplash.com/photo-1559757175-0eb30cd8c063?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+    imageUrl:
+      "https://images.unsplash.com/photo-1559757175-0eb30cd8c063?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
     slug: "yasli-beslenmesi-ve-geriatrik-yaklasimlar",
     price: 349,
     salesCount: 45,
@@ -396,16 +407,17 @@ export const dummyEgitimler: Egitim[] = [
     instructor: "Prof. Dr. Aylin Geriatri",
     category: COURSE_CATEGORIES[5],
     createdAt: new Date("2024-01-10"),
-    updatedAt: new Date("2024-01-25")
+    updatedAt: new Date("2024-01-25"),
   },
   {
     id: "6",
     title: "Beslenme Danışmanlığı ve Müvekkil İletişimi",
-    description: "Etkili danışmanlık teknikleri, motivasyonel görüşme, davranış değişikliği ve uzun vadeli başarı stratejileri.",
+    description:
+      "Etkili danışmanlık teknikleri, motivasyonel görüşme, davranış değişikliği ve uzun vadeli başarı stratejileri.",
     content: `
       <h2>Profesyonel Beslenme Danışmanlığı</h2>
       <p>Danışanlarınızla etkili iletişim kurma, motivasyon sağlama ve sürdürülebilir davranış değişikliği yaratma becerilerini geliştirin.</p>
-      
+
       <h3>1. İletişim Becerileri</h3>
       <ul>
         <li>Aktif dinleme teknikleri</li>
@@ -440,7 +452,8 @@ export const dummyEgitimler: Egitim[] = [
 
       <p><strong>Özel Bonus:</strong> Gerçek danışmanlık seansı örnekleri ve rol play egzersizleri.</p>
     `,
-    imageUrl: "https://images.unsplash.com/photo-1559757175-0eb30cd8c063?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+    imageUrl:
+      "https://images.unsplash.com/photo-1559757175-0eb30cd8c063?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
     slug: "beslenme-danismanligi-ve-muvekkil-iletisimi",
     price: 549,
     salesCount: 92,
@@ -448,131 +461,133 @@ export const dummyEgitimler: Egitim[] = [
     instructor: "Dr. Fatma İletişim",
     category: COURSE_CATEGORIES[6],
     createdAt: new Date("2024-01-12"),
-    updatedAt: new Date("2024-01-28")
+    updatedAt: new Date("2024-01-28"),
   },
   {
     id: "8",
     title: "Test Eğitimi - Görsel ve İçerik Testi",
-    description: "TipTap editor ile oluşturulan içerik test eğitimi. Görseller, başlıklar ve linkler içerir.",
+    description:
+      "TipTap editor ile oluşturulan içerik test eğitimi. Görseller, başlıklar ve linkler içerir.",
     content: {
-      "type": "doc",
-      "content": [
+      type: "doc",
+      content: [
         {
-          "type": "paragraph",
-          "attrs": {
-            "textAlign": null
+          type: "paragraph",
+          attrs: {
+            textAlign: null,
           },
-          "content": [
+          content: [
             {
-              "type": "image",
-              "attrs": {
-                "src": "/uploads/1757183684311-instagram_post_image.jpg",
-                "alt": "",
-                "title": "",
-                "width": 197,
-                "height": 197,
+              type: "image",
+              attrs: {
+                src: "/uploads/1757183684311-instagram_post_image.jpg",
+                alt: "",
+                title: "",
+                width: 197,
+                height: 197,
                 "data-keep-ratio": true,
-                "className": "",
-                "caption": ""
-              }
+                className: "",
+                caption: "",
+              },
             },
             {
-              "type": "image",
-              "attrs": {
-                "src": "/uploads/1757183576468-instagram_post_image (1).jpg",
-                "alt": "",
-                "title": "",
-                "width": 176,
-                "height": 176,
+              type: "image",
+              attrs: {
+                src: "/uploads/1757183576468-instagram_post_image (1).jpg",
+                alt: "",
+                title: "",
+                width: 176,
+                height: 176,
                 "data-keep-ratio": true,
-                "className": "",
-                "caption": ""
-              }
-            }
-          ]
+                className: "",
+                caption: "",
+              },
+            },
+          ],
         },
         {
-          "type": "heading",
-          "attrs": {
-            "textAlign": null,
-            "level": 1
+          type: "heading",
+          attrs: {
+            textAlign: null,
+            level: 1,
           },
-          "content": [
+          content: [
             {
-              "type": "text",
-              "text": "Test Başlığı"
-            }
-          ]
+              type: "text",
+              text: "Test Başlığı",
+            },
+          ],
         },
         {
-          "type": "paragraph",
-          "attrs": {
-            "textAlign": null
-          }
-        },
-        {
-          "type": "paragraph",
-          "attrs": {
-            "textAlign": null
-          }
-        },
-        {
-          "type": "paragraph",
-          "attrs": {
-            "textAlign": null
+          type: "paragraph",
+          attrs: {
+            textAlign: null,
           },
-          "content": [
+        },
+        {
+          type: "paragraph",
+          attrs: {
+            textAlign: null,
+          },
+        },
+        {
+          type: "paragraph",
+          attrs: {
+            textAlign: null,
+          },
+          content: [
             {
-              "type": "text",
-              "marks": [
+              type: "text",
+              marks: [
                 {
-                  "type": "link",
-                  "attrs": {
-                    "href": "http://localhost:3000/admin/egitimler/yeni",
-                    "target": "_blank",
-                    "rel": "noopener noreferrer nofollow",
-                    "class": "tiptap-link"
-                  }
-                }
+                  type: "link",
+                  attrs: {
+                    href: "http://localhost:3000/admin/egitimler/yeni",
+                    target: "_blank",
+                    rel: "noopener noreferrer nofollow",
+                    class: "tiptap-link",
+                  },
+                },
               ],
-              "text": "http://localhost:3000/admin/egitimler/yeni"
-            }
-          ]
+              text: "http://localhost:3000/admin/egitimler/yeni",
+            },
+          ],
         },
         {
-          "type": "heading",
-          "attrs": {
-            "textAlign": null,
-            "level": 2
+          type: "heading",
+          attrs: {
+            textAlign: null,
+            level: 2,
           },
-          "content": [
+          content: [
             {
-              "type": "text",
-              "text": "Alt Başlık"
-            }
-          ]
+              type: "text",
+              text: "Alt Başlık",
+            },
+          ],
         },
         {
-          "type": "paragraph",
-          "attrs": {
-            "textAlign": null
+          type: "paragraph",
+          attrs: {
+            textAlign: null,
           },
-          "content": [
+          content: [
             {
-              "type": "text",
-              "text": "Test paragrafı içeriği"
-            }
-          ]
+              type: "text",
+              text: "Test paragrafı içeriği",
+            },
+          ],
         },
         {
-          "type": "paragraph",
-          "attrs": {
-            "textAlign": null
-          }
-        }
-      ]
+          type: "paragraph",
+          attrs: {
+            textAlign: null,
+          },
+        },
+      ],
     },
-    imageUrl: "https://images.unsplash.com/photo-1559757175-0eb30cd8c063?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+    imageUrl:
+      "https://images.unsplash.com/photo-1559757175-0eb30cd8c063?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
     slug: "test-egitimi-gorsel-ve-icerik-testi",
     price: 299,
     salesCount: 0,
@@ -580,6 +595,6 @@ export const dummyEgitimler: Egitim[] = [
     instructor: "Test Eğitmeni",
     category: COURSE_CATEGORIES[1],
     createdAt: new Date("2025-09-06"),
-    updatedAt: new Date("2025-09-06")
-  }
+    updatedAt: new Date("2025-09-06"),
+  },
 ];

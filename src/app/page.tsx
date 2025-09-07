@@ -1,20 +1,16 @@
-import Hero from "@/components/home/Hero";
-import PopularEgitimler from "@/components/home/PopularEgitimler";
 import BlogSection from "@/components/home/BlogSection";
-import {prisma} from "@/lib/prisma";
+import Hero from "@/components/home/HomeHero";
+import PopularEgitimler from "@/components/home/PopularCourses";
+import { getBlogPosts, getCourses } from "@/lib/redis";
 export default async function Home() {
-  const egitimler = await prisma.egitim.findMany();
-  const convertedEgitimler = egitimler.map(egitim => {
-    return {
-      ...egitim,
-      price: parseFloat(egitim.price?.toString() || "0")
-    }
-  });
+  const fetchedBlogPosts = await getBlogPosts();
+  const fetchedCourses = await getCourses();
+
   return (
     <>
       <Hero />
-      <PopularEgitimler egitimler={convertedEgitimler} />
-      <BlogSection />
+      <PopularEgitimler egitimler={fetchedCourses} />
+      <BlogSection posts={fetchedBlogPosts} />
     </>
   );
 }

@@ -1,28 +1,33 @@
 "use client";
 
+import BlogCard from "@/components/blog/BlogCard";
+import { BlogPost } from "@/types";
 import {
+  Badge,
   Box,
+  Button,
   Container,
   Heading,
-  Text,
-  Button,
-  VStack,
   HStack,
-  SimpleGrid,
-  Badge,
   Input,
+  SimpleGrid,
+  Text,
   useBreakpointValue,
+  VStack,
 } from "@chakra-ui/react";
 import Link from "next/link";
-import { dummyBlogPosts } from "@/data/dummyBlogData";
-import BlogCard from "@/components/blog/BlogCard";
-
-export default function BlogSection() {
+interface BlogSectionProps {
+  posts: BlogPost[];
+}
+export default function BlogSection({ posts }: BlogSectionProps) {
   const columns = useBreakpointValue({ base: 1, md: 2, lg: 3 });
 
   // En son blog yazılarını al (createdAt'e göre sırala)
-  const latestBlogPosts = dummyBlogPosts
-    .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
+  const latestBlogPosts = posts
+    .sort(
+      (a, b) =>
+        new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+    )
     .slice(0, 6);
 
   return (
@@ -41,7 +46,7 @@ export default function BlogSection() {
             >
               Son Blog Yazıları
             </Badge>
-            
+
             <Heading
               as="h2"
               size={{ base: "xl", md: "2xl" }}
@@ -53,14 +58,14 @@ export default function BlogSection() {
                 Blog Yazıları
               </Text>
             </Heading>
-            
+
             <Text
               fontSize={{ base: "md", md: "lg" }}
               color="gray.600"
               lineHeight="1.6"
             >
-              Uzman diyetisyenlerimizden güncel beslenme önerileri, sağlık ipuçları
-              ve beslenme bilimindeki son gelişmeleri keşfedin.
+              Uzman diyetisyenlerimizden güncel beslenme önerileri, sağlık
+              ipuçları ve beslenme bilimindeki son gelişmeleri keşfedin.
             </Text>
           </VStack>
 
@@ -121,17 +126,13 @@ export default function BlogSection() {
           >
             <VStack gap={6} textAlign="center">
               <VStack gap={3}>
-                <Heading
-                  as="h3"
-                  size="lg"
-                  color="gray.800"
-                  fontWeight="bold"
-                >
+                <Heading as="h3" size="lg" color="gray.800" fontWeight="bold">
                   📧 Blog Güncellemeleri
                 </Heading>
                 <Text color="gray.600" fontSize="md">
-                  Yeni blog yazılarımızdan haberdar olmak için e-posta listemize katılın.
-                  Haftalık beslenme ipuçları ve özel içerikler sizi bekliyor!
+                  Yeni blog yazılarımızdan haberdar olmak için e-posta listemize
+                  katılın. Haftalık beslenme ipuçları ve özel içerikler sizi
+                  bekliyor!
                 </Text>
               </VStack>
 
@@ -177,7 +178,8 @@ export default function BlogSection() {
               </HStack>
 
               <Text fontSize="xs" color="gray.500">
-                Spam göndermiyoruz. İstediğiniz zaman abonelikten çıkabilirsiniz.
+                Spam göndermiyoruz. İstediğiniz zaman abonelikten
+                çıkabilirsiniz.
               </Text>
             </VStack>
           </Box>

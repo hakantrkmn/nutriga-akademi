@@ -1,58 +1,58 @@
-'use client'
+"use client";
 
-import { useState } from 'react'
+import { supabase } from "@/lib/supabase";
 import {
+  Alert,
   Box,
-  Card,
-  VStack,
-  Heading,
-  Text,
-  Input,
   Button,
-  Alert
-} from '@chakra-ui/react'
-import { supabase } from '@/lib/supabase'
-import { useRouter } from 'next/navigation'
+  Card,
+  Heading,
+  Input,
+  Text,
+  VStack,
+} from "@chakra-ui/react";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
 
 export default function AdminLogin() {
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-  const [loading, setLoading] = useState(false)
-  const [error, setError] = useState('')
-  const router = useRouter()
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+  const router = useRouter();
 
   const handleLogin = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setLoading(true)
-    setError('')
+    e.preventDefault();
+    setLoading(true);
+    setError("");
 
     try {
       const { data, error } = await supabase.auth.signInWithPassword({
         email,
-        password
-      })
+        password,
+      });
 
       if (error) {
-        setError(error.message)
-        return
+        setError(error.message);
+        return;
       }
 
       if (data.user) {
         // Admin email kontrolü
         if (data.user.email === process.env.NEXT_PUBLIC_ADMIN_EMAIL) {
           // Dashboard'a yönlendir - layout otomatik yönlendirecek
-          router.push('/admin/dashboard')
+          router.push("/admin/dashboard");
         } else {
-          setError('Bu email adresi admin yetkisine sahip değil.')
-          await supabase.auth.signOut()
+          setError("Bu email adresi admin yetkisine sahip değil.");
+          await supabase.auth.signOut();
         }
       }
-    } catch  {
-      setError('Giriş yapılırken bir hata oluştu.')
+    } catch {
+      setError("Giriş yapılırken bir hata oluştu.");
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
-  }
+  };
 
   return (
     <Box
@@ -69,9 +69,7 @@ export default function AdminLogin() {
             <Heading size="xl" color="green.600">
               Admin Girişi
             </Heading>
-            <Text color="gray.600">
-              NutriHome Akademi Admin Paneli
-            </Text>
+            <Text color="gray.600">NutriHome Akademi Admin Paneli</Text>
           </VStack>
 
           {error && (
@@ -124,7 +122,7 @@ export default function AdminLogin() {
                 loading={loading}
                 loadingText="Giriş yapılıyor..."
                 _hover={{
-                  bg: "green.600"
+                  bg: "green.600",
                 }}
               >
                 Giriş Yap
@@ -138,5 +136,5 @@ export default function AdminLogin() {
         </VStack>
       </Card.Root>
     </Box>
-  )
+  );
 }

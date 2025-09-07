@@ -1,85 +1,116 @@
-'use client'
+"use client";
 
-import { useEditor, EditorContent, Content, generateHTML } from '@tiptap/react'
-import { useState, useRef, useEffect } from 'react'
-import { BubbleMenu } from '@tiptap/extension-bubble-menu'
-import StarterKit from '@tiptap/starter-kit'
-import Image from '@tiptap/extension-image'
-import Link from '@tiptap/extension-link'
-import Placeholder from '@tiptap/extension-placeholder'
-import Heading from '@tiptap/extension-heading'
-import { Table } from '@tiptap/extension-table'
-import { TableRow } from '@tiptap/extension-table-row'
-import { TableCell } from '@tiptap/extension-table-cell'
-import { TableHeader } from '@tiptap/extension-table-header'
-import CodeBlockLowlight from '@tiptap/extension-code-block-lowlight'
-import { createLowlight } from 'lowlight'
-import { ResizableImage } from 'tiptap-extension-resizable-image'
-import 'tiptap-extension-resizable-image/styles.css'
-import Highlight from '@tiptap/extension-highlight'
-import TextAlign from '@tiptap/extension-text-align'
-import Underline from '@tiptap/extension-underline'
-import { TextStyle } from '@tiptap/extension-text-style'
-import Color from '@tiptap/extension-color'
-import CharacterCount from '@tiptap/extension-character-count'
-import {
-  Box,
-  VStack,
-  HStack,
-  Icon,
-  Separator,
-  Text
-} from '@chakra-ui/react'
-import { getHTMLContent } from '@/utils'
+import { getHTMLContent } from "@/utils";
+import { Box, HStack, Icon, Separator, Text, VStack } from "@chakra-ui/react";
+import { BubbleMenu } from "@tiptap/extension-bubble-menu";
+import CharacterCount from "@tiptap/extension-character-count";
+import CodeBlockLowlight from "@tiptap/extension-code-block-lowlight";
+import Color from "@tiptap/extension-color";
+import Heading from "@tiptap/extension-heading";
+import Highlight from "@tiptap/extension-highlight";
+import Image from "@tiptap/extension-image";
+import Link from "@tiptap/extension-link";
+import Placeholder from "@tiptap/extension-placeholder";
+import { Table } from "@tiptap/extension-table";
+import { TableCell } from "@tiptap/extension-table-cell";
+import { TableHeader } from "@tiptap/extension-table-header";
+import { TableRow } from "@tiptap/extension-table-row";
+import TextAlign from "@tiptap/extension-text-align";
+import { TextStyle } from "@tiptap/extension-text-style";
+import Underline from "@tiptap/extension-underline";
+import { EditorContent, useEditor } from "@tiptap/react";
+import StarterKit from "@tiptap/starter-kit";
+import { createLowlight } from "lowlight";
+import { useEffect, useRef, useState } from "react";
+import { ResizableImage } from "tiptap-extension-resizable-image";
+import "tiptap-extension-resizable-image/styles.css";
 interface TipTapEditorProps {
-  content?: object  | null
-  onChange?: (content: object) => void
-  placeholder?: string
-  readOnly?: boolean
+  content?: object | null;
+  onChange?: (content: object) => void;
+  placeholder?: string;
+  readOnly?: boolean;
 }
 
-export default function TipTapEditor({ 
-  content, 
-  onChange, 
+export default function TipTapEditor({
+  content,
+  onChange,
   placeholder = "İçeriğinizi buraya yazın...",
-  readOnly = false 
+  readOnly = false,
 }: TipTapEditorProps) {
-  console.log('content', typeof content)
+  console.log("content", typeof content);
 
-  const [, forceUpdate] = useState({})
-  const [showColorPalette, setShowColorPalette] = useState(false)
-  const colorPaletteRef = useRef<HTMLDivElement>(null)
-  const editorBg = 'white'
-  const borderColor = 'gray.200'
-  const textColor = 'gray.900'
+  const [, forceUpdate] = useState({});
+  const [showColorPalette, setShowColorPalette] = useState(false);
+  const colorPaletteRef = useRef<HTMLDivElement>(null);
+  const editorBg = "white";
+  const borderColor = "gray.200";
+  const textColor = "gray.900";
 
   // Renk paleti
   const colors = [
-    '#000000', '#333333', '#666666', '#999999', '#CCCCCC', '#FFFFFF',
-    '#FF0000', '#FF6600', '#FFCC00', '#00FF00', '#0066FF', '#6600FF',
-    '#FF0066', '#FF3366', '#FF6699', '#FF99CC', '#FFCCFF', '#CC99FF',
-    '#9966FF', '#6633FF', '#3300FF', '#0033FF', '#0066CC', '#0099FF',
-    '#00CCFF', '#00FFFF', '#00FFCC', '#00FF99', '#00FF66', '#00FF33',
-    '#66FF00', '#99FF00', '#CCFF00', '#FFFF00', '#FF9900', '#FF3300',
-    '#CC0000', '#990000', '#660000', '#330000', '#8B4513', '#FF1493'
-  ]
+    "#000000",
+    "#333333",
+    "#666666",
+    "#999999",
+    "#CCCCCC",
+    "#FFFFFF",
+    "#FF0000",
+    "#FF6600",
+    "#FFCC00",
+    "#00FF00",
+    "#0066FF",
+    "#6600FF",
+    "#FF0066",
+    "#FF3366",
+    "#FF6699",
+    "#FF99CC",
+    "#FFCCFF",
+    "#CC99FF",
+    "#9966FF",
+    "#6633FF",
+    "#3300FF",
+    "#0033FF",
+    "#0066CC",
+    "#0099FF",
+    "#00CCFF",
+    "#00FFFF",
+    "#00FFCC",
+    "#00FF99",
+    "#00FF66",
+    "#00FF33",
+    "#66FF00",
+    "#99FF00",
+    "#CCFF00",
+    "#FFFF00",
+    "#FF9900",
+    "#FF3300",
+    "#CC0000",
+    "#990000",
+    "#660000",
+    "#330000",
+    "#8B4513",
+    "#FF1493",
+  ];
 
   // Click outside handler
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (colorPaletteRef.current && !colorPaletteRef.current.contains(event.target as Node)) {
-        setShowColorPalette(false)
+      if (
+        colorPaletteRef.current &&
+        !colorPaletteRef.current.contains(event.target as Node)
+      ) {
+        setShowColorPalette(false);
       }
-    }
+    };
 
     if (showColorPalette) {
-      document.addEventListener('mousedown', handleClickOutside)
+      document.addEventListener("mousedown", handleClickOutside);
     }
 
     return () => {
-      document.removeEventListener('mousedown', handleClickOutside)
-    }
-  }, [showColorPalette])
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [showColorPalette]);
 
   const editor = useEditor({
     extensions: [
@@ -91,7 +122,7 @@ export default function TipTapEditor({
       }),
       Image.configure({
         HTMLAttributes: {
-          class: 'tiptap-image',
+          class: "tiptap-image",
         },
       }),
       ResizableImage.configure({
@@ -99,13 +130,13 @@ export default function TipTapEditor({
         defaultWidth: 200,
         defaultHeight: 200,
         HTMLAttributes: {
-          class: 'tiptap-image-resizable',
+          class: "tiptap-image-resizable",
         },
       }),
       Link.configure({
         openOnClick: false,
         HTMLAttributes: {
-          class: 'tiptap-link',
+          class: "tiptap-link",
         },
       }),
       Table.configure({
@@ -121,12 +152,12 @@ export default function TipTapEditor({
         multicolor: true,
       }),
       TextAlign.configure({
-        types: ['heading', 'paragraph'],
+        types: ["heading", "paragraph"],
       }),
       Underline,
       TextStyle,
       Color.configure({
-        types: ['textStyle'],
+        types: ["textStyle"],
       }),
       CharacterCount,
       BubbleMenu,
@@ -134,103 +165,116 @@ export default function TipTapEditor({
         placeholder,
       }),
     ],
-    content: getHTMLContent(content) || '',
+    content: getHTMLContent(content) || "",
     editable: !readOnly,
     immediatelyRender: false, // SSR hydration mismatch'ini önler
     onUpdate: ({ editor }) => {
       if (onChange) {
-        onChange(editor.getJSON())
+        onChange(editor.getJSON());
       }
-      forceUpdate({}) // Force re-render for button states
+      forceUpdate({}); // Force re-render for button states
     },
     onSelectionUpdate: () => {
-      forceUpdate({}) // Force re-render for button states
+      forceUpdate({}); // Force re-render for button states
     },
-  })
+  });
 
   if (!editor) {
-    return null
+    return null;
   }
 
   // Image upload handler
   const handleImageUpload = async () => {
     // File input oluştur
-    const input = document.createElement('input')
-    input.type = 'file'
-    input.accept = 'image/*'
-    input.multiple = false
+    const input = document.createElement("input");
+    input.type = "file";
+    input.accept = "image/*";
+    input.multiple = false;
 
     input.onchange = async (event) => {
-      const file = (event.target as HTMLInputElement).files?.[0]
-      if (!file) return
+      const file = (event.target as HTMLInputElement).files?.[0];
+      if (!file) return;
 
       // Dosya boyutunu kontrol et (10MB limit)
       if (file.size > 10 * 1024 * 1024) {
-        alert('Dosya boyutu 10MB\'dan küçük olmalıdır')
-        return
+        alert("Dosya boyutu 10MB'dan küçük olmalıdır");
+        return;
       }
 
       // Dosya türünü kontrol et
-      const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif', 'image/webp', 'image/svg+xml']
+      const allowedTypes = [
+        "image/jpeg",
+        "image/jpg",
+        "image/png",
+        "image/gif",
+        "image/webp",
+        "image/svg+xml",
+      ];
       if (!allowedTypes.includes(file.type)) {
-        alert('Sadece JPG, PNG, GIF, WebP ve SVG dosyaları yüklenebilir')
-        return
+        alert("Sadece JPG, PNG, GIF, WebP ve SVG dosyaları yüklenebilir");
+        return;
       }
 
       try {
         // FormData oluştur
-        const formData = new FormData()
-        formData.append('file', file)
+        const formData = new FormData();
+        formData.append("file", file);
 
         // Upload API'sine gönder
-        const response = await fetch('/api/upload', {
-          method: 'POST',
+        const response = await fetch("/api/upload", {
+          method: "POST",
           body: formData,
-        })
+        });
 
-        const result = await response.json()
+        const result = await response.json();
 
         if (result.success) {
           // Başarılı upload - görseli editor'e inline olarak ekle
-          editor.chain().focus().setImage({ 
-            src: result.url
-          }).run()
+          editor
+            .chain()
+            .focus()
+            .setImage({
+              src: result.url,
+            })
+            .run();
         } else {
-          alert(`Upload hatası: ${result.error}`)
+          alert(`Upload hatası: ${result.error}`);
         }
       } catch (error) {
-        console.error('Upload hatası:', error)
-        alert('Dosya yüklenirken bir hata oluştu')
+        console.error("Upload hatası:", error);
+        alert("Dosya yüklenirken bir hata oluştu");
       }
-    }
+    };
 
     // File input'u tetikle
-    input.click()
-  }
+    input.click();
+  };
 
   // Renk seçme fonksiyonu
   const handleColorSelect = (color: string) => {
-    editor?.chain().focus().setColor(color).run()
-    setShowColorPalette(false)
-  }
+    editor?.chain().focus().setColor(color).run();
+    setShowColorPalette(false);
+  };
 
-  const ToolbarButton = ({ 
-    onClick, 
-    isActive = false, 
-    icon, 
+  const ToolbarButton = ({
+    onClick,
+    isActive = false,
+    icon,
     title,
     disabled = false,
-    text
-  }: { 
-    onClick: () => void
-    isActive?: boolean
-    icon?: React.ComponentType
-    title: string
-    disabled?: boolean
-    text?: string
+    text,
+  }: {
+    onClick: () => void;
+    isActive?: boolean;
+    icon?: React.ComponentType;
+    title: string;
+    disabled?: boolean;
+    text?: string;
   }) => (
     <button
-      className={`toolbar-btn ${isActive ? 'active' : ''} ${disabled ? 'disabled' : ''}`}
+      className={`toolbar-btn ${isActive ? "active" : ""} ${
+        disabled ? "disabled" : ""
+      }`}
       onClick={onClick}
       title={title}
       disabled={disabled}
@@ -238,7 +282,7 @@ export default function TipTapEditor({
       {icon && <Icon as={icon} />}
       {text && <span className="btn-text">{text}</span>}
     </button>
-  )
+  );
 
   return (
     <Box
@@ -265,31 +309,37 @@ export default function TipTapEditor({
               title="İleri Al (Ctrl+Y)"
               disabled={!editor.can().redo()}
             />
-            
+
             <Separator orientation="vertical" h="20px" />
-            
+
             {/* Text Style Buttons */}
             <ToolbarButton
               onClick={() => editor.chain().focus().setParagraph().run()}
-              isActive={editor.isActive('paragraph')}
+              isActive={editor.isActive("paragraph")}
               text="P"
               title="Paragraf"
             />
             <ToolbarButton
-              onClick={() => editor.chain().focus().toggleHeading({ level: 1 }).run()}
-              isActive={editor.isActive('heading', { level: 1 })}
+              onClick={() =>
+                editor.chain().focus().toggleHeading({ level: 1 }).run()
+              }
+              isActive={editor.isActive("heading", { level: 1 })}
               text="H1"
               title="Başlık 1"
             />
             <ToolbarButton
-              onClick={() => editor.chain().focus().toggleHeading({ level: 2 }).run()}
-              isActive={editor.isActive('heading', { level: 2 })}
+              onClick={() =>
+                editor.chain().focus().toggleHeading({ level: 2 }).run()
+              }
+              isActive={editor.isActive("heading", { level: 2 })}
               text="H2"
               title="Başlık 2"
             />
             <ToolbarButton
-              onClick={() => editor.chain().focus().toggleHeading({ level: 3 }).run()}
-              isActive={editor.isActive('heading', { level: 3 })}
+              onClick={() =>
+                editor.chain().focus().toggleHeading({ level: 3 }).run()
+              }
+              isActive={editor.isActive("heading", { level: 3 })}
               text="H3"
               title="Başlık 3"
             />
@@ -299,25 +349,25 @@ export default function TipTapEditor({
             {/* Text Formatting */}
             <ToolbarButton
               onClick={() => editor.chain().focus().toggleBold().run()}
-              isActive={editor.isActive('bold')}
+              isActive={editor.isActive("bold")}
               text="B"
               title="Kalın"
             />
             <ToolbarButton
               onClick={() => editor.chain().focus().toggleItalic().run()}
-              isActive={editor.isActive('italic')}
+              isActive={editor.isActive("italic")}
               text="I"
               title="İtalik"
             />
             <ToolbarButton
               onClick={() => editor.chain().focus().toggleUnderline().run()}
-              isActive={editor.isActive('underline')}
+              isActive={editor.isActive("underline")}
               text="U"
               title="Alt Çizgi"
             />
             <ToolbarButton
               onClick={() => editor.chain().focus().toggleHighlight().run()}
-              isActive={editor.isActive('highlight')}
+              isActive={editor.isActive("highlight")}
               text="🖍️"
               title="Vurgulama"
             />
@@ -327,7 +377,7 @@ export default function TipTapEditor({
                 text="🎨"
                 title="Metin Rengi"
               />
-              
+
               {/* Renk Paleti */}
               {showColorPalette && (
                 <Box
@@ -345,8 +395,14 @@ export default function TipTapEditor({
                   zIndex={1000}
                   minW="200px"
                 >
-                  <Text fontSize="sm" fontWeight="bold" mb={2}>Renk Seçin:</Text>
-                  <Box display="grid" gridTemplateColumns="repeat(6, 1fr)" gap={1}>
+                  <Text fontSize="sm" fontWeight="bold" mb={2}>
+                    Renk Seçin:
+                  </Text>
+                  <Box
+                    display="grid"
+                    gridTemplateColumns="repeat(6, 1fr)"
+                    gap={1}
+                  >
                     {colors.map((color) => (
                       <Box
                         key={color}
@@ -354,10 +410,12 @@ export default function TipTapEditor({
                         h="24px"
                         bg={color}
                         border="1px solid"
-                        borderColor={color === '#FFFFFF' ? 'gray.300' : 'transparent'}
+                        borderColor={
+                          color === "#FFFFFF" ? "gray.300" : "transparent"
+                        }
                         borderRadius="sm"
                         cursor="pointer"
-                        _hover={{ transform: 'scale(1.1)' }}
+                        _hover={{ transform: "scale(1.1)" }}
                         transition="transform 0.1s"
                         onClick={() => handleColorSelect(color)}
                         title={color}
@@ -369,7 +427,7 @@ export default function TipTapEditor({
             </Box>
             <ToolbarButton
               onClick={() => editor.chain().focus().toggleCode().run()}
-              isActive={editor.isActive('code')}
+              isActive={editor.isActive("code")}
               text="</>"
               title="Kod"
             />
@@ -379,13 +437,13 @@ export default function TipTapEditor({
             {/* Lists */}
             <ToolbarButton
               onClick={() => editor.chain().focus().toggleBulletList().run()}
-              isActive={editor.isActive('bulletList')}
+              isActive={editor.isActive("bulletList")}
               text="•"
               title="Madde İşareti Listesi"
             />
             <ToolbarButton
               onClick={() => editor.chain().focus().toggleOrderedList().run()}
-              isActive={editor.isActive('orderedList')}
+              isActive={editor.isActive("orderedList")}
               text="1."
               title="Numaralı Liste"
             />
@@ -395,13 +453,13 @@ export default function TipTapEditor({
             {/* Block Elements */}
             <ToolbarButton
               onClick={() => editor.chain().focus().toggleBlockquote().run()}
-              isActive={editor.isActive('blockquote')}
+              isActive={editor.isActive("blockquote")}
               text="❝"
               title="Alıntı Bloğu"
             />
             <ToolbarButton
               onClick={() => editor.chain().focus().toggleCodeBlock().run()}
-              isActive={editor.isActive('codeBlock')}
+              isActive={editor.isActive("codeBlock")}
               text="{}"
               title="Kod Bloğu"
             />
@@ -410,26 +468,30 @@ export default function TipTapEditor({
 
             {/* Text Alignment */}
             <ToolbarButton
-              onClick={() => editor.chain().focus().setTextAlign('left').run()}
-              isActive={editor.isActive({ textAlign: 'left' })}
+              onClick={() => editor.chain().focus().setTextAlign("left").run()}
+              isActive={editor.isActive({ textAlign: "left" })}
               text="≡"
               title="Sol Hizalama"
             />
             <ToolbarButton
-              onClick={() => editor.chain().focus().setTextAlign('center').run()}
-              isActive={editor.isActive({ textAlign: 'center' })}
+              onClick={() =>
+                editor.chain().focus().setTextAlign("center").run()
+              }
+              isActive={editor.isActive({ textAlign: "center" })}
               text="≡"
               title="Orta Hizalama"
             />
             <ToolbarButton
-              onClick={() => editor.chain().focus().setTextAlign('right').run()}
-              isActive={editor.isActive({ textAlign: 'right' })}
+              onClick={() => editor.chain().focus().setTextAlign("right").run()}
+              isActive={editor.isActive({ textAlign: "right" })}
               text="≡"
               title="Sağ Hizalama"
             />
             <ToolbarButton
-              onClick={() => editor.chain().focus().setTextAlign('justify').run()}
-              isActive={editor.isActive({ textAlign: 'justify' })}
+              onClick={() =>
+                editor.chain().focus().setTextAlign("justify").run()
+              }
+              isActive={editor.isActive({ textAlign: "justify" })}
               text="≡"
               title="İki Yana Hizalama"
             />
@@ -438,7 +500,13 @@ export default function TipTapEditor({
 
             {/* Table */}
             <ToolbarButton
-              onClick={() => editor.chain().focus().insertTable({ rows: 3, cols: 3, withHeaderRow: true }).run()}
+              onClick={() =>
+                editor
+                  .chain()
+                  .focus()
+                  .insertTable({ rows: 3, cols: 3, withHeaderRow: true })
+                  .run()
+              }
               text="⊞"
               title="Tablo Ekle"
             />
@@ -448,12 +516,12 @@ export default function TipTapEditor({
             {/* Links and Images */}
             <ToolbarButton
               onClick={() => {
-                const url = window.prompt('Link URL:')
+                const url = window.prompt("Link URL:");
                 if (url) {
-                  editor.chain().focus().setLink({ href: url }).run()
+                  editor.chain().focus().setLink({ href: url }).run();
                 }
               }}
-              isActive={editor.isActive('link')}
+              isActive={editor.isActive("link")}
               text="🔗"
               title="Link Ekle"
             />
@@ -462,35 +530,46 @@ export default function TipTapEditor({
               text="🖼️"
               title="Görsel Ekle"
             />
-            
+
             {/* Image Inline/Block Toggle - yeni paket için güncellendi */}
             <Separator orientation="vertical" h="20px" />
             <ToolbarButton
               onClick={() => {
                 // Yeni pakette görsel seçimini kontrol et
-                const { selection } = editor.state
-                const { from } = selection
-                
+                const { selection } = editor.state;
+                const { from } = selection;
+
                 // Cursor pozisyonundaki node'u kontrol et
-                const nodeAtPos = editor.state.doc.nodeAt(from)
-                
-                if (nodeAtPos && (nodeAtPos.type.name === 'image' || nodeAtPos.type.name === 'resizableImage')) {
+                const nodeAtPos = editor.state.doc.nodeAt(from);
+
+                if (
+                  nodeAtPos &&
+                  (nodeAtPos.type.name === "image" ||
+                    nodeAtPos.type.name === "resizableImage")
+                ) {
                   // Yeni pakette inline/block geçişi farklı şekilde çalışır
                   // CSS class'ları ile kontrol edilir
-                  const currentClass = nodeAtPos.attrs.class || ''
-                  const isCurrentlyInline = currentClass.includes('inline')
-                  
-                  
+                  const currentClass = nodeAtPos.attrs.class || "";
+                  const isCurrentlyInline = currentClass.includes("inline");
+
                   if (isCurrentlyInline) {
                     // Block yap
-                    editor.chain().focus().updateAttributes('image', {
-                      class: 'tiptap-image-resizable block'
-                    }).run()
+                    editor
+                      .chain()
+                      .focus()
+                      .updateAttributes("image", {
+                        class: "tiptap-image-resizable block",
+                      })
+                      .run();
                   } else {
                     // Inline yap
-                    editor.chain().focus().updateAttributes('image', {
-                      class: 'tiptap-image-resizable inline'
-                    }).run()
+                    editor
+                      .chain()
+                      .focus()
+                      .updateAttributes("image", {
+                        class: "tiptap-image-resizable inline",
+                      })
+                      .run();
                   }
                 } else {
                 }
@@ -499,15 +578,17 @@ export default function TipTapEditor({
               title="Görsel Modu Değiştir (Inline/Block)"
               disabled={(() => {
                 // Yeni pakette görsel seçimini kontrol et
-                const { selection } = editor.state
-                const { from } = selection
-                
-                // Cursor pozisyonundaki node'u kontrol et
-                const nodeAtPos = editor.state.doc.nodeAt(from)
-                
+                const { selection } = editor.state;
+                const { from } = selection;
 
-                
-                return !(nodeAtPos && (nodeAtPos.type.name === 'image' || nodeAtPos.type.name === 'resizableImage'))
+                // Cursor pozisyonundaki node'u kontrol et
+                const nodeAtPos = editor.state.doc.nodeAt(from);
+
+                return !(
+                  nodeAtPos &&
+                  (nodeAtPos.type.name === "image" ||
+                    nodeAtPos.type.name === "resizableImage")
+                );
               })()}
             />
           </HStack>
@@ -517,28 +598,28 @@ export default function TipTapEditor({
 
       {/* Editor Content */}
       <Box p={4} minH="300px" position="relative">
-        <EditorContent 
+        <EditorContent
           editor={editor}
           className="tiptap-editor-container"
           style={{
-            outline: 'none',
-            minHeight: '250px',
+            outline: "none",
+            minHeight: "250px",
             color: textColor,
-            maxWidth: '100%',
-            overflow: 'hidden'
+            maxWidth: "100%",
+            overflow: "hidden",
           }}
         />
-        
+
         {/* Character Count */}
         {!readOnly && editor && (
           <Box mt={2} textAlign="right">
             <Text fontSize="sm" color="gray.500">
-              {editor.storage.characterCount.characters()} karakter, {editor.storage.characterCount.words()} kelime
+              {editor.storage.characterCount.characters()} karakter,{" "}
+              {editor.storage.characterCount.words()} kelime
             </Text>
           </Box>
         )}
-        
       </Box>
     </Box>
-  )
+  );
 }

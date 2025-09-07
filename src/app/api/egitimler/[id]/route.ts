@@ -1,5 +1,5 @@
-import { NextRequest, NextResponse } from 'next/server'
-import { prisma } from '@/lib/prisma'
+import { prisma } from "@/lib/prisma";
+import { NextRequest, NextResponse } from "next/server";
 
 // GET - Tek eğitim getir
 export async function GET(
@@ -7,29 +7,29 @@ export async function GET(
   { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const { id } = await params
+    const { id } = await params;
 
     const egitim = await prisma.egitim.findUnique({
-      where: { id }
-    })
+      where: { id },
+    });
 
     if (!egitim) {
       return NextResponse.json(
-        { success: false, error: 'Eğitim bulunamadı' },
+        { success: false, error: "Eğitim bulunamadı" },
         { status: 404 }
-      )
+      );
     }
 
     return NextResponse.json({
       success: true,
-      data: egitim
-    })
+      data: egitim,
+    });
   } catch (error) {
-    console.error('Eğitim getirilirken hata:', error)
+    console.error("Eğitim getirilirken hata:", error);
     return NextResponse.json(
-      { success: false, error: 'Eğitim getirilemedi' },
+      { success: false, error: "Eğitim getirilemedi" },
       { status: 500 }
-    )
+    );
   }
 }
 
@@ -39,33 +39,43 @@ export async function PUT(
   { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const { id } = await params
-    const body = await request.json()
-    const { title, description, content, imageUrl, slug, price, category, level, instructor } = body
-    
+    const { id } = await params;
+    const body = await request.json();
+    const {
+      title,
+      description,
+      content,
+      imageUrl,
+      slug,
+      price,
+      category,
+      level,
+      instructor,
+    } = body;
+
     // Eğitimin var olup olmadığını kontrol et
     const existingEgitim = await prisma.egitim.findUnique({
-      where: { id }
-    })
+      where: { id },
+    });
 
     if (!existingEgitim) {
       return NextResponse.json(
-        { success: false, error: 'Eğitim bulunamadı' },
+        { success: false, error: "Eğitim bulunamadı" },
         { status: 404 }
-      )
+      );
     }
 
     // Slug'un benzersiz olduğunu kontrol et (kendi slug'u hariç)
     if (slug && slug !== existingEgitim.slug) {
       const slugExists = await prisma.egitim.findUnique({
-        where: { slug }
-      })
+        where: { slug },
+      });
 
       if (slugExists) {
         return NextResponse.json(
-          { success: false, error: 'Bu slug zaten kullanılıyor' },
+          { success: false, error: "Bu slug zaten kullanılıyor" },
           { status: 400 }
-        )
+        );
       }
     }
 
@@ -81,21 +91,21 @@ export async function PUT(
         ...(category !== undefined && { category }),
         ...(level !== undefined && { level }),
         ...(instructor !== undefined && { instructor }),
-        updatedAt: new Date()
-      }
-    })
+        updatedAt: new Date(),
+      },
+    });
 
     return NextResponse.json({
       success: true,
       data: guncellenenEgitim,
-      message: 'Eğitim başarıyla güncellendi'
-    })
+      message: "Eğitim başarıyla güncellendi",
+    });
   } catch (error) {
-    console.error('Eğitim güncellenirken hata:', error)
+    console.error("Eğitim güncellenirken hata:", error);
     return NextResponse.json(
-      { success: false, error: 'Eğitim güncellenemedi' },
+      { success: false, error: "Eğitim güncellenemedi" },
       { status: 500 }
-    )
+    );
   }
 }
 
@@ -105,33 +115,33 @@ export async function DELETE(
   { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const { id } = await params
+    const { id } = await params;
 
     // Eğitimin var olup olmadığını kontrol et
     const existingEgitim = await prisma.egitim.findUnique({
-      where: { id }
-    })
+      where: { id },
+    });
 
     if (!existingEgitim) {
       return NextResponse.json(
-        { success: false, error: 'Eğitim bulunamadı' },
+        { success: false, error: "Eğitim bulunamadı" },
         { status: 404 }
-      )
+      );
     }
 
     await prisma.egitim.delete({
-      where: { id }
-    })
+      where: { id },
+    });
 
     return NextResponse.json({
       success: true,
-      message: 'Eğitim başarıyla silindi'
-    })
+      message: "Eğitim başarıyla silindi",
+    });
   } catch (error) {
-    console.error('Eğitim silinirken hata:', error)
+    console.error("Eğitim silinirken hata:", error);
     return NextResponse.json(
-      { success: false, error: 'Eğitim silinemedi' },
+      { success: false, error: "Eğitim silinemedi" },
       { status: 500 }
-    )
+    );
   }
 }

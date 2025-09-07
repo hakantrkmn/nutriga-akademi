@@ -1,12 +1,12 @@
-import EgitimFormPage from '@/components/admin/course/EgitimFormPage'
+import EgitimFormPage from "@/components/admin/course/EgitimFormPage";
 
 interface EgitimEditPageProps {
   params: Promise<{
-    id: string
-  }>
+    id: string;
+  }>;
 }
 
 export default async function EgitimEditPage({ params }: EgitimEditPageProps) {
-  const { id } = await params
-  return <EgitimFormPage egitimId={id} />
+  const { id } = await params;
+  return <EgitimFormPage egitimId={id} />;
 }
