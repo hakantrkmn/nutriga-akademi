@@ -2,23 +2,32 @@
 
 import { getHTMLContent } from "@/utils";
 import { Box, HStack, Icon, Separator, Text, VStack } from "@chakra-ui/react";
-import { BubbleMenu } from "@tiptap/extension-bubble-menu";
+import BubbleMenuExt from "@tiptap/extension-bubble-menu";
 import CharacterCount from "@tiptap/extension-character-count";
 import CodeBlockLowlight from "@tiptap/extension-code-block-lowlight";
 import Color from "@tiptap/extension-color";
+import FloatingMenuExt from "@tiptap/extension-floating-menu";
+import FontFamily from "@tiptap/extension-font-family";
 import Heading from "@tiptap/extension-heading";
 import Highlight from "@tiptap/extension-highlight";
 import Image from "@tiptap/extension-image";
 import Link from "@tiptap/extension-link";
+import Mention from "@tiptap/extension-mention";
 import Placeholder from "@tiptap/extension-placeholder";
+import Subscript from "@tiptap/extension-subscript";
+import Superscript from "@tiptap/extension-superscript";
 import { Table } from "@tiptap/extension-table";
 import { TableCell } from "@tiptap/extension-table-cell";
 import { TableHeader } from "@tiptap/extension-table-header";
 import { TableRow } from "@tiptap/extension-table-row";
+import TaskItem from "@tiptap/extension-task-item";
+import TaskList from "@tiptap/extension-task-list";
 import TextAlign from "@tiptap/extension-text-align";
 import { TextStyle } from "@tiptap/extension-text-style";
 import Underline from "@tiptap/extension-underline";
+import Youtube from "@tiptap/extension-youtube";
 import { EditorContent, useEditor } from "@tiptap/react";
+import { BubbleMenu, FloatingMenu } from "@tiptap/react/menus";
 import StarterKit from "@tiptap/starter-kit";
 import { createLowlight } from "lowlight";
 import { useEffect, useRef, useState } from "react";
@@ -159,8 +168,27 @@ export default function TipTapEditor({
       Color.configure({
         types: ["textStyle"],
       }),
+      FontFamily.configure({
+        types: ["textStyle"],
+      }),
+      Subscript,
+      Superscript,
+      TaskList,
+      TaskItem.configure({
+        nested: true,
+      }),
+      Youtube.configure({
+        controls: false,
+        nocookie: true,
+      }),
+      Mention.configure({
+        HTMLAttributes: {
+          class: "mention",
+        },
+      }),
       CharacterCount,
-      BubbleMenu,
+      BubbleMenuExt,
+      FloatingMenuExt,
       Placeholder.configure({
         placeholder,
       }),
@@ -571,7 +599,6 @@ export default function TipTapEditor({
                       })
                       .run();
                   }
-                } else {
                 }
               }}
               text="🔄"
@@ -609,6 +636,116 @@ export default function TipTapEditor({
             overflow: "hidden",
           }}
         />
+
+        {/* Bubble Menu - Seçim menüsü */}
+        {!readOnly && editor && (
+          <BubbleMenu editor={editor} className="bubble-menu">
+            <Box
+              bg="gray.900"
+              color="white"
+              p={2}
+              borderRadius="lg"
+              boxShadow="lg"
+              display="flex"
+              gap={1}
+            >
+              <ToolbarButton
+                onClick={() => editor.chain().focus().toggleBold().run()}
+                isActive={editor.isActive("bold")}
+                text="B"
+                title="Kalın"
+              />
+              <ToolbarButton
+                onClick={() => editor.chain().focus().toggleItalic().run()}
+                isActive={editor.isActive("italic")}
+                text="I"
+                title="İtalik"
+              />
+              <ToolbarButton
+                onClick={() => editor.chain().focus().toggleUnderline().run()}
+                isActive={editor.isActive("underline")}
+                text="U"
+                title="Alt Çizgi"
+              />
+              <Box w="1px" bg="gray.600" />
+              <ToolbarButton
+                onClick={() => {
+                  const url = window.prompt("Link URL:");
+                  if (url) {
+                    editor.chain().focus().setLink({ href: url }).run();
+                  }
+                }}
+                isActive={editor.isActive("link")}
+                text="🔗"
+                title="Link Ekle"
+              />
+              <ToolbarButton
+                onClick={() => editor.chain().focus().toggleHighlight().run()}
+                isActive={editor.isActive("highlight")}
+                text="🖍️"
+                title="Vurgulama"
+              />
+            </Box>
+          </BubbleMenu>
+        )}
+
+        {/* Floating Menu - Boş satır menüsü */}
+        {!readOnly && editor && (
+          <FloatingMenu editor={editor} className="floating-menu">
+            <Box
+              bg="white"
+              border="1px solid"
+              borderColor="gray.200"
+              borderRadius="lg"
+              boxShadow="lg"
+              p={2}
+              display="flex"
+              gap={1}
+            >
+              <ToolbarButton
+                onClick={() =>
+                  editor.chain().focus().toggleHeading({ level: 1 }).run()
+                }
+                text="H1"
+                title="Başlık 1"
+              />
+              <ToolbarButton
+                onClick={() =>
+                  editor.chain().focus().toggleHeading({ level: 2 }).run()
+                }
+                text="H2"
+                title="Başlık 2"
+              />
+              <ToolbarButton
+                onClick={() => editor.chain().focus().toggleBulletList().run()}
+                text="•"
+                title="Liste"
+              />
+              <Box w="1px" bg="gray.300" />
+              <ToolbarButton
+                onClick={() => editor.chain().focus().toggleBlockquote().run()}
+                text="❝"
+                title="Alıntı"
+              />
+              <ToolbarButton
+                onClick={() => handleImageUpload()}
+                text="🖼️"
+                title="Görsel"
+              />
+              <ToolbarButton
+                onClick={() =>
+                  editor
+                    .chain()
+                    .focus()
+                    .insertTable({ rows: 3, cols: 3, withHeaderRow: true })
+                    .run()
+                }
+                text="⊞"
+                title="Tablo"
+              />
+            </Box>
+          </FloatingMenu>
+        )}
 
         {/* Character Count */}
         {!readOnly && editor && (
