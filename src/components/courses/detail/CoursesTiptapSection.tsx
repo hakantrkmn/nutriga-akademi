@@ -17,18 +17,22 @@ export default function EgitimContent({
   setFormData,
 }: EgitimContentProps) {
   return (
-    <div className="w-full bg-white rounded-xl p-8 shadow-sm border border-gray-100">
+    <div className="w-full max-w-none bg-white rounded-xl p-8 shadow-sm border border-gray-100 overflow-hidden">
       {isEditing ? (
-        <TipTapEditor
-          content={egitim.content as object}
-          onChange={(content) => setFormData?.({ ...egitim, content })}
-          placeholder="Eğitim içeriğini buraya yazın..."
-        />
+        <div className="max-w-full overflow-hidden">
+          <TipTapEditor
+            content={egitim.content as object}
+            onChange={(content) => setFormData?.({ ...egitim, content })}
+            placeholder="Eğitim içeriğini buraya yazın..."
+          />
+        </div>
       ) : (
-        <TipTapWrapper
-          content={egitim.content as object}
-          className="egitim-content"
-        />
+        <div className="max-w-full overflow-hidden">
+          <TipTapWrapper
+            content={egitim.content as object}
+            className="egitim-content"
+          />
+        </div>
       )}
     </div>
   );

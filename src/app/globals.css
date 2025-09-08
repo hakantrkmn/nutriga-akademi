@@ -89,6 +89,8 @@
   max-width: 100% !important;
   overflow: hidden !important;
   box-sizing: border-box !important;
+  word-wrap: break-word !important;
+  overflow-wrap: break-word !important;
 }
 
 .tiptap-editor-container .ProseMirror {
@@ -306,69 +308,25 @@
   text-align: justify;
 }
 
-/* Prose liste stilleri - daha güçlü kurallar */
-.prose ul,
-div.prose ul,
-.max-w-none ul {
-  padding-left: 1.5rem !important;
-  margin-bottom: 1rem !important;
-  list-style-type: disc !important;
+/* Minimal liste stilleri - sadece gerekli olanlar */
+.ProseMirror ul,
+.prose ul {
   list-style: disc !important;
-}
-
-.prose ol,
-div.prose ol,
-.max-w-none ol {
   padding-left: 1.5rem !important;
   margin-bottom: 1rem !important;
-  list-style-type: decimal !important;
-  list-style: decimal !important;
 }
 
-.prose li,
-div.prose li,
-.max-w-none li {
-  margin-bottom: 0.25rem !important;
-  color: #212121 !important;
+.ProseMirror ol,
+.prose ol {
+  list-style: decimal !important;
+  padding-left: 1.5rem !important;
+  margin-bottom: 1rem !important;
+}
+
+.ProseMirror li,
+.prose li {
   display: list-item !important;
-  list-style: inherit !important;
-}
-
-.prose ul li,
-div.prose ul li,
-.max-w-none ul li {
-  list-style-type: disc !important;
-  list-style: disc !important;
-}
-
-.prose ol li,
-div.prose ol li,
-.max-w-none ol li {
-  list-style-type: decimal !important;
-  list-style: decimal !important;
-}
-
-/* En güçlü liste kuralları - Tailwind reset'i override etmek için */
-.max-w-none ul,
-.max-w-none ul li,
-div.max-w-none ul,
-div.max-w-none ul li {
-  list-style: disc !important;
-  list-style-type: disc !important;
-  list-style-position: outside !important;
-  padding-left: 1.5rem !important;
-  margin-left: 0 !important;
-}
-
-.max-w-none ol,
-.max-w-none ol li,
-div.max-w-none ol,
-div.max-w-none ol li {
-  list-style: decimal !important;
-  list-style-type: decimal !important;
-  list-style-position: outside !important;
-  padding-left: 1.5rem !important;
-  margin-left: 0 !important;
+  margin-bottom: 0.25rem !important;
 }
 
 /* Resizable Image Styles - Updated for tiptap-extension-resizable-image */

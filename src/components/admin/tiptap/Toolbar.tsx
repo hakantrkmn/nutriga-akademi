@@ -400,6 +400,42 @@ export const Toolbar = ({
             setShowColorPalette={setShowColorPalette}
           />
         </div>
+
+        <div className="w-px h-5 bg-gray-300" />
+
+        <ToolbarButton
+          onClick={() =>
+            editor.chain().focus().toggleTextStyle({ lineHeight: "1.2" }).run()
+          }
+          isActive={editor.isActive("textStyle", { lineHeight: "1.2" })}
+          title="Satır Aralığı 1.2"
+        >
+          📏1.2
+        </ToolbarButton>
+        <ToolbarButton
+          onClick={() =>
+            editor.chain().focus().toggleTextStyle({ lineHeight: "1.5" }).run()
+          }
+          isActive={editor.isActive("textStyle", { lineHeight: "1.5" })}
+          title="Satır Aralığı 1.5"
+        >
+          📏1.5
+        </ToolbarButton>
+        <ToolbarButton
+          onClick={() =>
+            editor.chain().focus().toggleTextStyle({ lineHeight: "2.0" }).run()
+          }
+          isActive={editor.isActive("textStyle", { lineHeight: "2.0" })}
+          title="Satır Aralığı 2.0"
+        >
+          📏2.0
+        </ToolbarButton>
+        <ToolbarButton
+          onClick={() => editor.chain().focus().unsetLineHeight().run()}
+          title="Satır Aralığını Sıfırla"
+        >
+          📏↺
+        </ToolbarButton>
       </div>
     </div>
   );

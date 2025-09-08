@@ -21,7 +21,7 @@ import { TableRow } from "@tiptap/extension-table-row";
 import TaskItem from "@tiptap/extension-task-item";
 import TaskList from "@tiptap/extension-task-list";
 import TextAlign from "@tiptap/extension-text-align";
-import { TextStyle } from "@tiptap/extension-text-style";
+import { LineHeight, TextStyle } from "@tiptap/extension-text-style";
 import Underline from "@tiptap/extension-underline";
 import Youtube from "@tiptap/extension-youtube";
 import StarterKit from "@tiptap/starter-kit";
@@ -54,6 +54,7 @@ export const getEditorExtensions = (placeholder: string) => [
   Color.configure({ types: ["textStyle"] }),
   FontFamily.configure({ types: ["textStyle"] }),
   FontSize.configure({ types: ["textStyle"] }),
+  LineHeight,
   Subscript,
   Superscript,
   TaskList,
