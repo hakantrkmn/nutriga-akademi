@@ -10,6 +10,7 @@ import {
   Textarea,
 } from "@chakra-ui/react";
 import { useState } from "react";
+import { toaster } from "@/components/ui/toaster";
 
 export default function ContactForm() {
   const [formData, setFormData] = useState({
@@ -24,15 +25,20 @@ export default function ContactForm() {
     e.preventDefault();
     setIsSubmitting(true);
     
-    // Simulated form submission
-    await new Promise(resolve => setTimeout(resolve, 1000));
-    
-    // Reset form
-    setFormData({ name: "", email: "", message: "" });
-    setIsSubmitting(false);
-    
-    // Show success message (you can add toast later)
-    alert("Mesajınız başarıyla gönderildi!");
+    try {
+      // Simulated form submission
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      
+      // Reset form
+      setFormData({ name: "", email: "", message: "" });
+      
+      toaster.success("Mesajınız başarıyla gönderildi!");
+      
+    } catch (error) {
+      toaster.error("Mesaj gönderilirken bir hata oluştu. Lütfen tekrar deneyin.");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {

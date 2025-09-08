@@ -19,6 +19,7 @@ import {
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { FiEdit, FiPlus, FiTrash2 } from "react-icons/fi";
+import { toaster } from "@/components/ui/toaster";
 
 export default function EgitimlerManagement() {
   const router = useRouter();
@@ -34,9 +35,11 @@ export default function EgitimlerManagement() {
       if (response.success && response.data) {
         setEgitimler(response.data);
       } else {
+        toaster.error("Eğitimler yüklenemedi");
         console.error("Eğitimler yüklenemedi:", response.error);
       }
     } catch (error) {
+      toaster.error("Eğitimler yüklenirken bir hata oluştu");
       console.error("Eğitimler yüklenirken hata:", error);
     } finally {
       setLoading(false);
@@ -61,20 +64,18 @@ export default function EgitimlerManagement() {
 
   // Eğitim sil
   const handleDeleteEgitim = async (id: string) => {
-    if (!confirm("Bu eğitimi silmek istediğinizden emin misiniz?")) {
-      return;
-    }
-
     try {
       const response = await egitimlerApi.delete(id);
 
       if (response.success) {
         await loadEgitimler(); // Listeyi yenile
-        console.log("Eğitim başarıyla silindi");
+        toaster.success("Eğitim başarıyla silindi");
       } else {
+        toaster.error("Eğitim silinemedi");
         console.error("Eğitim silinemedi");
       }
     } catch (error) {
+      toaster.error("Eğitim silinirken bir hata oluştu");
       console.error("Eğitim silinirken hata:", error);
     }
   };

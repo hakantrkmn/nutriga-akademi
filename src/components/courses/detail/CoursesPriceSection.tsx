@@ -35,24 +35,12 @@ export default function EgitimPrice({ egitim }: EgitimPriceProps) {
     if (res.success) {
       setAdded(true);
       setTimeout(() => setAdded(false), 2000);
-      toaster.create({
-        title: "Sepete eklendi",
-        description: egitim.title,
-        type: "success",
-      });
+      toaster.success("Sepete eklendi");
     } else if (res.error) {
       if (res.error.toLowerCase().includes("giriş")) {
-        toaster.create({
-          title: "Giriş gerekli",
-          description: "Sepete eklemek için giriş yapın",
-          type: "info",
-        });
+        toaster.error("Giriş gerekli");
       } else {
-        toaster.create({
-          title: "Hata",
-          description: res.error,
-          type: "error",
-        });
+        toaster.error(res.error);
       }
     }
   };

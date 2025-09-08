@@ -1,5 +1,6 @@
 "use client";
 
+import { toaster } from "@/components/ui/toaster";
 import { createClient } from "@/lib/supabase/client";
 import {
   Box,
@@ -20,11 +21,9 @@ export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setError(null);
     setLoading(true);
     try {
       const { data, error } = await supabase.auth.signInWithPassword({
@@ -34,14 +33,16 @@ export default function LoginPage() {
       if (error) throw error;
 
       const userEmail = data.user?.email;
+      toaster.success("Başarıyla giriş yapıldı!");
       if (userEmail && userEmail === process.env.NEXT_PUBLIC_ADMIN_EMAIL) {
         router.replace("/admin/dashboard");
       } else {
         router.replace("/");
       }
     } catch (err: unknown) {
-      const message = err instanceof Error ? err.message : "Giriş yapılamadı";
-      setError(message);
+      const message =
+        err instanceof Error ? err.message : "Giriş işlemi sırasında bir hata oluştu.";
+      toaster.error(message);
     } finally {
       setLoading(false);
     }
@@ -66,7 +67,7 @@ export default function LoginPage() {
           boxShadow="sm"
         >
           <VStack gap={4} align="stretch">
-            <Field.Root required invalid={!!error}>
+            <Field.Root required>
               <Field.Label>E-posta</Field.Label>
               <Input
                 type="email"
@@ -75,7 +76,7 @@ export default function LoginPage() {
                 placeholder="ornek@mail.com"
               />
             </Field.Root>
-            <Field.Root required invalid={!!error}>
+            <Field.Root required>
               <Field.Label>Şifre</Field.Label>
               <Input
                 type="password"
@@ -83,7 +84,6 @@ export default function LoginPage() {
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="••••••••"
               />
-              {error && <Field.ErrorText>{error}</Field.ErrorText>}
             </Field.Root>
             <Button type="submit" colorScheme="green" loading={loading}>
               Giriş Yap

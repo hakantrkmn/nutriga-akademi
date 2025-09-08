@@ -48,6 +48,7 @@ import { createLowlight } from "lowlight";
 import React, { useEffect, useRef, useState } from "react";
 import { ResizableImage } from "tiptap-extension-resizable-image";
 import "tiptap-extension-resizable-image/styles.css";
+import { toaster } from "@/components/ui/toaster";
 
 interface TipTapEditorProps {
   content?: object | null;
@@ -147,16 +148,37 @@ export default function TipTapEditor({
     input.onchange = async (event) => {
       const file = (event.target as HTMLInputElement).files?.[0];
       if (!file) return;
-      if (file.size > 10 * 1024 * 1024) { alert("Dosya boyutu 10MB'dan küçük olmalıdır"); return; }
-      const allowedTypes = ["image/jpeg", "image/jpg", "image/png", "image/gif", "image/webp", "image/svg+xml"];
-      if (!allowedTypes.includes(file.type)) { alert("Sadece JPG, PNG, GIF, WebP ve SVG dosyaları yüklenebilir"); return; }
+      if (file.size > 10 * 1024 * 1024) {
+        toaster.error("Dosya boyutu 10MB'dan küçük olmalıdır");
+        return;
+      }
+      const allowedTypes = [
+        "image/jpeg",
+        "image/jpg",
+        "image/png",
+        "image/gif",
+        "image/webp",
+        "image/svg+xml",
+      ];
+      if (!allowedTypes.includes(file.type)) {
+        toaster.error("Sadece JPG, PNG, GIF, WebP ve SVG dosyaları yüklenebilir");
+        return;
+      }
       try {
         const formData = new FormData();
         formData.append("file", file);
         const response = await fetch("/api/upload", { method: "POST", body: formData });
         const result = await response.json();
-        if (result.success) { editor.chain().focus().setImage({ src: result.url }).run(); } else { alert(`Upload hatası: ${result.error}`); }
-      } catch (error) { console.error("Upload hatası:", error); alert("Dosya yüklenirken bir hata oluştu"); }
+        if (result.success) {
+          editor.chain().focus().setImage({ src: result.url }).run();
+          toaster.success("Görsel başarıyla yüklendi");
+        } else {
+          toaster.error(`Upload hatası: ${result.error}`);
+        }
+      } catch (error) {
+        console.error("Upload hatası:", error);
+        toaster.error("Dosya yüklenirken bir hata oluştu");
+      }
     };
     input.click();
   };

@@ -2,6 +2,7 @@
 
 import { cartApi, CartItemDTO } from "@/lib/api";
 // import { prisma } from "@/lib/prisma";
+import { toaster } from "@/components/ui/toaster";
 import { createClient } from "@/lib/supabase/client";
 import {
   Badge,
@@ -60,12 +61,22 @@ export default function CartPage() {
 
   const updateQty = async (id: string, qty: number) => {
     const res = await cartApi.updateQuantity(id, qty);
-    if (res.success) load();
+    if (res.success) {
+      load();
+      toaster.success("Sepet güncellendi");
+    } else {
+      toaster.error("Sepet güncellenirken bir hata oluştu");
+    }
   };
 
   const removeItem = async (id: string) => {
     const res = await cartApi.remove(id);
-    if (res.success) load();
+    if (res.success) {
+      load();
+      toaster.success("Ürün sepetten kaldırıldı");
+    } else {
+      toaster.error("Ürün kaldırılırken bir hata oluştu");
+    }
   };
 
   return (
@@ -214,14 +225,24 @@ export default function CartPage() {
                 disabled={items.length === 0}
                 onClick={async () => {
                   if (!isAuthenticated) {
+                    toaster.success("Satın almak için lütfen giriş yapın");
                     router.push("/auth/login");
                     return;
                   }
-                  const res = await fetch("/api/cart/checkout", {
-                    method: "POST",
-                  });
-                  const data = await res.json();
-                  console.log("CHECKOUT_RESULT", data);
+                  try {
+                    const res = await fetch("/api/cart/checkout", {
+                      method: "POST",
+                    });
+                    const data = await res.json();
+                    if (res.ok) {
+                      toaster.success("Satın alma başarılı!");
+                      router.push("/"); // Redirect to home or a success page
+                    } else {
+                      toaster.error(`Satın alma başarısız: ${data.error}`);
+                    }
+                  } catch (error) {
+                    toaster.error("Satın alma sırasında bir hata oluştu.");
+                  }
                 }}
               >
                 {isAuthenticated ? "Satın Almaya Geç" : "Giriş Yap ve Satın Al"}

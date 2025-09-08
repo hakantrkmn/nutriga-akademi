@@ -21,6 +21,7 @@ import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { FiArrowLeft, FiSave } from "react-icons/fi";
 import EgitimSettings from "./CourseSettings";
+import { toaster } from "@/components/ui/toaster";
 export default function EgitimFormPage({ egitimId }: { egitimId?: string }) {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
@@ -58,7 +59,7 @@ export default function EgitimFormPage({ egitimId }: { egitimId?: string }) {
 
     // Dosya boyutunu kontrol et (10MB limit)
     if (file.size > 10 * 1024 * 1024) {
-      alert("Dosya boyutu 10MB'dan küçük olmalıdır");
+      toaster.error("Dosya boyutu 10MB'dan küçük olmalıdır");
       return;
     }
 
@@ -72,7 +73,7 @@ export default function EgitimFormPage({ egitimId }: { egitimId?: string }) {
       "image/svg+xml",
     ];
     if (!allowedTypes.includes(file.type)) {
-      alert("Sadece JPG, PNG, GIF, WebP ve SVG dosyaları yüklenebilir");
+      toaster.error("Sadece JPG, PNG, GIF, WebP ve SVG dosyaları yüklenebilir");
       return;
     }
 
@@ -94,14 +95,14 @@ export default function EgitimFormPage({ egitimId }: { egitimId?: string }) {
       if (result.success) {
         const updatedFormData = { ...formData, imageUrl: result.url };
         setFormData(updatedFormData);
-        console.log("New imageUrl:", result.url); // ← Sadece yeni URL'yi göster
+        toaster.success("Görsel başarıyla yüklendi!");
         setUploadedImage(result.url);
       } else {
-        alert(`Upload hatası: ${result.error}`);
+        toaster.error(`Upload hatası: ${result.error}`);
       }
     } catch (error) {
       console.error("Upload hatası:", error);
-      alert("Dosya yüklenirken bir hata oluştu");
+      toaster.error("Dosya yüklenirken bir hata oluştu");
     } finally {
       setUploading(false);
     }
@@ -120,10 +121,12 @@ export default function EgitimFormPage({ egitimId }: { egitimId?: string }) {
             setFormData(response.data);
             setUploadedImage(response.data.imageUrl || null);
           } else {
+            toaster.error("Eğitim verileri yüklenemedi");
             console.error("Eğitim verileri yüklenemedi");
             router.push("/admin/egitimler");
           }
         } catch (error) {
+          toaster.error("Eğitim verileri yüklenirken bir hata oluştu.");
           console.error("Eğitim verileri yüklenirken hata:", error);
           router.push("/admin/egitimler");
         } finally {
@@ -158,14 +161,16 @@ export default function EgitimFormPage({ egitimId }: { egitimId?: string }) {
       }
 
       if (response.success) {
-        console.log(
+        toaster.success(
           isEditing.current ? "Eğitim güncellendi" : "Eğitim oluşturuldu"
         );
         router.push("/admin/egitimler");
       } else {
+        toaster.error(`İşlem başarısız: ${response.error}`);
         console.error("İşlem başarısız:", response.error);
       }
     } catch (error) {
+      toaster.error("Kaydetme hatası");
       console.error("Kaydetme hatası:", error);
     } finally {
       setLoading(false);
@@ -192,6 +197,8 @@ export default function EgitimFormPage({ egitimId }: { egitimId?: string }) {
     link.click();
     document.body.removeChild(link);
     URL.revokeObjectURL(url);
+
+    toaster.success("Eğitim JSON olarak başarıyla indirildi!");
   };
 
   // İptal

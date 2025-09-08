@@ -18,6 +18,7 @@ import {
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { FiArrowLeft, FiSave } from "react-icons/fi";
+import { toaster } from "@/components/ui/toaster";
 
 export default function BlogFormPage({ blogId }: { blogId?: string }) {
   const router = useRouter();
@@ -60,10 +61,12 @@ export default function BlogFormPage({ blogId }: { blogId?: string }) {
             setFormData(response.data);
             setUploadedImage(response.data.imageUrl || null);
           } else {
+            toaster.error("Blog verileri yüklenemedi");
             console.error("Blog verileri yüklenemedi");
             router.push("/admin/blog");
           }
         } catch (error) {
+          toaster.error("Blog verileri yüklenirken bir hata oluştu.");
           console.error("Blog verileri yüklenirken hata:", error);
           router.push("/admin/blog");
         } finally {
@@ -102,14 +105,16 @@ export default function BlogFormPage({ blogId }: { blogId?: string }) {
       }
 
       if (response.success) {
-        console.log(
+        toaster.success(
           isEditing ? "Blog yazısı güncellendi" : "Blog yazısı oluşturuldu"
         );
         router.push("/admin/blog");
       } else {
+        toaster.error(`İşlem başarısız: ${response.error}`);
         console.error("İşlem başarısız:", response.error);
       }
     } catch (error) {
+      toaster.error("Kaydetme hatası:");
       console.error("Kaydetme hatası:", error);
     } finally {
       setLoading(false);
@@ -125,7 +130,7 @@ export default function BlogFormPage({ blogId }: { blogId?: string }) {
 
     // Dosya boyutunu kontrol et (10MB limit)
     if (file.size > 10 * 1024 * 1024) {
-      alert("Dosya boyutu 10MB'dan küçük olmalıdır");
+      toaster.error("Dosya boyutu 10MB'dan küçük olmalıdır");
       return;
     }
 
@@ -139,7 +144,7 @@ export default function BlogFormPage({ blogId }: { blogId?: string }) {
       "image/svg+xml",
     ];
     if (!allowedTypes.includes(file.type)) {
-      alert("Sadece JPG, PNG, GIF, WebP ve SVG dosyaları yüklenebilir");
+      toaster.error("Sadece JPG, PNG, GIF, WebP ve SVG dosyaları yüklenebilir");
       return;
     }
 
@@ -161,14 +166,14 @@ export default function BlogFormPage({ blogId }: { blogId?: string }) {
       if (result.success) {
         const updatedFormData = { ...formData, imageUrl: result.url };
         setFormData(updatedFormData);
-        console.log("New imageUrl:", result.url); // ← Sadece yeni URL'yi göster
+        toaster.success("Görsel başarıyla yüklendi!");
         setUploadedImage(result.url);
       } else {
-        alert(`Upload hatası: ${result.error}`);
+        toaster.error(`Upload hatası: ${result.error}`);
       }
     } catch (error) {
       console.error("Upload hatası:", error);
-      alert("Dosya yüklenirken bir hata oluştu");
+      toaster.error("Dosya yüklenirken bir hata oluştu");
     } finally {
       setUploading(false);
     }

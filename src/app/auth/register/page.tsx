@@ -1,5 +1,6 @@
 "use client";
 
+import { toaster } from "@/components/ui/toaster";
 import { createClient } from "@/lib/supabase/client";
 import {
   Box,
@@ -21,13 +22,11 @@ export default function RegisterPage() {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setError(null);
     if (password !== confirmPassword) {
-      setError("Şifreler eşleşmiyor");
+      toaster.error("Şifreler eşleşmiyor");
       return;
     }
     setLoading(true);
@@ -37,10 +36,11 @@ export default function RegisterPage() {
         password,
       });
       if (error) throw error;
+      toaster.success("Kayıt başarılı! Lütfen giriş yapın.");
       router.replace("/auth/login");
     } catch (err: unknown) {
       const message = err instanceof Error ? err.message : "Kayıt başarısız";
-      setError(message);
+      toaster.error(message);
     } finally {
       setLoading(false);
     }
@@ -65,7 +65,7 @@ export default function RegisterPage() {
           boxShadow="sm"
         >
           <VStack gap={4} align="stretch">
-            <Field.Root required invalid={!!error}>
+            <Field.Root required>
               <Field.Label>E-posta</Field.Label>
               <Input
                 type="email"
@@ -74,7 +74,7 @@ export default function RegisterPage() {
                 placeholder="ornek@mail.com"
               />
             </Field.Root>
-            <Field.Root required invalid={!!error}>
+            <Field.Root required>
               <Field.Label>Şifre</Field.Label>
               <Input
                 type="password"
@@ -83,7 +83,7 @@ export default function RegisterPage() {
                 placeholder="••••••••"
               />
             </Field.Root>
-            <Field.Root required invalid={!!error}>
+            <Field.Root required>
               <Field.Label>Şifre (Tekrar)</Field.Label>
               <Input
                 type="password"
@@ -91,7 +91,6 @@ export default function RegisterPage() {
                 onChange={(e) => setConfirmPassword(e.target.value)}
                 placeholder="••••••••"
               />
-              {error && <Field.ErrorText>{error}</Field.ErrorText>}
             </Field.Root>
             <Button type="submit" colorScheme="green" loading={loading}>
               Kayıt Ol

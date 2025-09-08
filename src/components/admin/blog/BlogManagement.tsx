@@ -19,6 +19,7 @@ import {
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { FiEdit, FiPlus, FiTrash2 } from "react-icons/fi";
+import { toaster } from "@/components/ui/toaster";
 export default function BlogManagement() {
   const router = useRouter();
   const [blogPosts, setBlogPosts] = useState<BlogPost[]>([]);
@@ -33,9 +34,11 @@ export default function BlogManagement() {
       if (response.success && response.data) {
         setBlogPosts(response.data);
       } else {
+        toaster.error("Blog yazıları yüklenemedi");
         console.error("Blog yazıları yüklenemedi:", response.error);
       }
     } catch (error) {
+      toaster.error("Blog yazıları yüklenirken bir hata oluştu");
       console.error("Blog yazıları yüklenirken hata:", error);
     } finally {
       setLoading(false);
@@ -60,20 +63,18 @@ export default function BlogManagement() {
 
   // Blog yazısı sil
   const handleDeletePost = async (id: string) => {
-    if (!confirm("Bu blog yazısını silmek istediğinizden emin misiniz?")) {
-      return;
-    }
-
     try {
       const response = await blogApi.delete(id);
 
       if (response.success) {
         await loadBlogPosts(); // Listeyi yenile
-        console.log("Blog yazısı başarıyla silindi");
+        toaster.success("Blog yazısı başarıyla silindi");
       } else {
+        toaster.error("Blog yazısı silinemedi");
         console.error("Blog yazısı silinemedi");
       }
     } catch (error) {
+      toaster.error("Blog yazısı silinirken bir hata oluştu");
       console.error("Blog yazısı silinirken hata:", error);
     }
   };

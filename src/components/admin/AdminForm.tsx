@@ -15,6 +15,7 @@ import {
 } from '@chakra-ui/react'
 import { FiSave, FiX } from 'react-icons/fi'
 import TipTapEditor from './TipTapEditor'
+import { toaster } from '@/components/ui/toaster'
 
 interface AdminFormProps {
   type: 'egitim' | 'blog'
@@ -120,9 +121,10 @@ export default function AdminForm({
       }
 
       await onSave(dataToSave)
-      console.log(`${type === 'egitim' ? 'Eğitim' : 'Blog yazısı'} başarıyla kaydedildi.`)
+      toaster.success(`${type === 'egitim' ? 'Eğitim' : 'Blog yazısı'} başarıyla kaydedildi.`)
     } catch (error) {
-      console.error('Kaydetme işlemi başarısız oldu:', error)
+      toaster.error('Kaydetme işlemi başarısız oldu.')
+      console.error('Kaydetme hatası:', error)
     }
   }
 
