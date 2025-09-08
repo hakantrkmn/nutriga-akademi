@@ -1,21 +1,23 @@
 "use client";
 
-import { dummyBlogPosts } from "@/data/dummyBlogData";
+import { BlogPost } from "@/types";
 import { VStack } from "@chakra-ui/react";
 import { useMemo, useState } from "react";
 import CategoryFilter from "./BlogCategoryFilter";
 import BlogGrid from "./BlogGrid";
 import BlogHero from "./BlogHero";
 
-export default function BlogContent() {
+interface BlogContentProps {
+  posts: BlogPost[];
+}
+export default function BlogContent({ posts }: BlogContentProps) {
   const [selectedCategory, setSelectedCategory] = useState("Tümü");
-
   const filteredPosts = useMemo(() => {
     if (selectedCategory === "Tümü") {
-      return dummyBlogPosts;
+      return posts;
     }
-    return dummyBlogPosts.filter((post) => post.category === selectedCategory);
-  }, [selectedCategory]);
+    return posts.filter((post) => post.category === selectedCategory);
+  }, [selectedCategory, posts]);
 
   const handleCategoryChange = (category: string) => {
     setSelectedCategory(category);

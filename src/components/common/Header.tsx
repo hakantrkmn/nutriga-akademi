@@ -54,6 +54,8 @@ export default function Header() {
       setUserEmail(session?.user?.email ?? null);
     });
 
+    console.log("isAuthenticated", isAuthenticated);
+
     return () => {
       sub.subscription.unsubscribe();
     };
@@ -232,15 +234,17 @@ export default function Header() {
         {/* Desktop Cart & Auth Buttons */}
         {!isMobile && (
           <HStack gap={3}>
-            <Button
-              variant="ghost"
-              borderRadius="12px"
-              color="gray.700"
-              _hover={{ bg: "gray.50" }}
-              onClick={() => router.push("/cart")}
-            >
-              Sepet
-            </Button>
+            {isAuthenticated && (
+              <Button
+                variant="ghost"
+                borderRadius="12px"
+                color="gray.700"
+                _hover={{ bg: "gray.50" }}
+                onClick={() => router.push("/cart")}
+              >
+                Sepet
+              </Button>
+            )}
             {isAuthenticated ? (
               <>
                 <Text
@@ -316,20 +320,22 @@ export default function Header() {
 
                 <Box pt={6} w="full">
                   <VStack gap={3} w="full">
-                    <Button
-                      variant="ghost"
-                      w="full"
-                      justifyContent="start"
-                      borderRadius="12px"
-                      color="gray.700"
-                      _hover={{ bg: "gray.50" }}
-                      onClick={() => {
-                        onClose();
-                        router.push("/cart");
-                      }}
-                    >
-                      Sepet
-                    </Button>
+                    {isAuthenticated && (
+                      <Button
+                        variant="ghost"
+                        w="full"
+                        justifyContent="start"
+                        borderRadius="12px"
+                        color="gray.700"
+                        _hover={{ bg: "gray.50" }}
+                        onClick={() => {
+                          onClose();
+                          router.push("/cart");
+                        }}
+                      >
+                        Sepet
+                      </Button>
+                    )}
                     {isAuthenticated ? (
                       <>
                         <Text

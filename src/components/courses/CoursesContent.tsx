@@ -1,18 +1,21 @@
 "use client";
 
-import { dummyEgitimler } from "@/data/dummyEgitimData";
+import { Egitim } from "@/types";
 import { VStack } from "@chakra-ui/react";
 import { useMemo, useState } from "react";
 import CategoryFilter from "./CoursesCategoryFilter";
 import EgitimlerGrid from "./CoursesGrid";
 import EgitimlerHero from "./CoursesHero";
 
-export default function EgitimlerContent() {
+interface EgitimlerContentProps {
+  egitimler: Egitim[];
+}
+export default function EgitimlerContent({ egitimler }: EgitimlerContentProps) {
   const [selectedCategory, setSelectedCategory] = useState("Tümü");
   const [selectedLevel, setSelectedLevel] = useState("");
 
   const filteredEgitimler = useMemo(() => {
-    let filtered = dummyEgitimler;
+    let filtered = egitimler;
 
     if (selectedCategory !== "Tümü") {
       filtered = filtered.filter(
@@ -25,7 +28,7 @@ export default function EgitimlerContent() {
     }
 
     return filtered;
-  }, [selectedCategory, selectedLevel]);
+  }, [egitimler, selectedCategory, selectedLevel]);
 
   const handleCategoryChange = (category: string) => {
     setSelectedCategory(category);

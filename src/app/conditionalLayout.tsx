@@ -2,6 +2,7 @@
 
 import Footer from "@/components/common/Footer";
 import Header from "@/components/common/Header";
+import { Box } from "@chakra-ui/react";
 import { usePathname } from "next/navigation";
 
 interface ConditionalLayoutProps {
@@ -22,7 +23,7 @@ export default function ConditionalLayout({
   return (
     <>
       <Header />
-      {children}
+      <Box pt="80px">{children}</Box>
       <Footer />
     </>
   );
