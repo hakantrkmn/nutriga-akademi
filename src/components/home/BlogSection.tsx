@@ -1,26 +1,30 @@
 "use client";
 
 import BlogCard from "@/components/blog/BlogCard";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import { BlogPost } from "@/types";
-import {
-  Badge,
-  Box,
-  Button,
-  Container,
-  Heading,
-  HStack,
-  Input,
-  SimpleGrid,
-  Text,
-  useBreakpointValue,
-  VStack,
-} from "@chakra-ui/react";
 import Link from "next/link";
+import { useEffect, useState } from "react";
+
 interface BlogSectionProps {
   posts: BlogPost[];
 }
+
 export default function BlogSection({ posts }: BlogSectionProps) {
-  const columns = useBreakpointValue({ base: 1, md: 2, lg: 3 });
+  const [columns, setColumns] = useState(3);
+
+  useEffect(() => {
+    const checkColumns = () => {
+      if (window.innerWidth < 768) setColumns(1);
+      else if (window.innerWidth < 1024) setColumns(2);
+      else setColumns(3);
+    };
+    checkColumns();
+    window.addEventListener("resize", checkColumns);
+    return () => window.removeEventListener("resize", checkColumns);
+  }, []);
 
   // En son blog yazılarını al (createdAt'e göre sırala)
   const latestBlogPosts = posts
@@ -31,162 +35,74 @@ export default function BlogSection({ posts }: BlogSectionProps) {
     .slice(0, 6);
 
   return (
-    <Box py={{ base: 16, md: 20 }} bg="var(--background-alt)">
-      <Container maxW="container.xl">
-        <VStack gap={12} align="center">
+    <div className="py-16 md:py-20 bg-white">
+      <div className="max-w-7xl mx-auto px-4 md:px-6">
+        <div className="flex flex-col gap-12 items-center">
           {/* Section Header */}
-          <VStack gap={4} textAlign="center" maxW="600px">
-            <Badge
-              color="var(--primary)"
-              bg="rgba(var(--primary-rgb), 0.08)"
-              px={4}
-              py={2}
-              borderRadius="full"
-              fontSize="sm"
-              fontWeight="semibold"
-            >
-              Son Blog Yazıları
+          <div className="flex flex-col gap-4 text-center max-w-[600px]">
+            <Badge className="text-green-600 bg-green-50 px-4 py-2 rounded-full text-sm font-semibold w-fit mx-auto">
+              Blog
             </Badge>
 
-            <Heading
-              as="h2"
-              size={{ base: "xl", md: "2xl" }}
-              color="gray.800"
-              fontWeight="bold"
-            >
-              Beslenme ve Sağlık
-              <Text as="span" className="text-accent" display="block">
-                Blog Yazıları
-              </Text>
-            </Heading>
+            <h2 className="text-2xl md:text-3xl font-bold text-gray-800">
+              En Güncel
+              <span className="block text-green-600">Beslenme İçerikleri</span>
+            </h2>
 
-            <Text
-              fontSize={{ base: "md", md: "lg" }}
-              color="gray.600"
-              lineHeight="1.6"
-            >
-              Uzman diyetisyenlerimizden güncel beslenme önerileri, sağlık
-              ipuçları ve beslenme bilimindeki son gelişmeleri keşfedin.
-            </Text>
-          </VStack>
+            <p className="text-base md:text-lg text-gray-600 leading-relaxed">
+              Beslenme alanındaki son gelişmeler, uzman görüşleri ve pratik
+              öneriler için blog yazılarımızı takip edin.
+            </p>
+          </div>
 
           {/* Blog Grid */}
-          <SimpleGrid
-            columns={columns}
-            gap={{ base: 6, md: 8 }}
-            w="full"
-            maxW="1200px"
+          <div
+            className={`grid gap-6 md:gap-8 w-full max-w-6xl ${
+              columns === 1
+                ? "grid-cols-1"
+                : columns === 2
+                ? "grid-cols-1 md:grid-cols-2"
+                : "grid-cols-1 md:grid-cols-2 lg:grid-cols-3"
+            }`}
           >
             {latestBlogPosts.map((post) => (
               <BlogCard key={post.id} post={post} />
             ))}
-          </SimpleGrid>
-
-          {/* View All Button */}
-          <VStack gap={4}>
-            <Text color="gray.600" fontSize="md">
-              Tüm blog yazılarımızı okumak ister misiniz?
-            </Text>
-            <Link href="/blog">
-              <Button
-                size="lg"
-                variant="outline"
-                borderRadius="12px"
-                px={8}
-                py={6}
-                fontSize="md"
-                fontWeight="semibold"
-                borderWidth="2px"
-                _hover={{
-                  bg: "var(--primary)",
-                  color: "white",
-                  transform: "translateY(-2px)",
-                  boxShadow: "0 8px 25px rgba(var(--primary-rgb), 0.3)",
-                }}
-                _active={{
-                  transform: "translateY(0)",
-                }}
-                transition="all 0.3s ease"
-              >
-                Tüm Blog Yazılarını Görüntüle
-              </Button>
-            </Link>
-          </VStack>
+          </div>
 
           {/* Newsletter Section */}
-          <Box
-            w="full"
-            maxW="800px"
-            bg="white"
-            borderRadius="16px"
-            p={{ base: 6, md: 8 }}
-            shadow="lg"
-            border="1px solid"
-            borderColor="gray.200"
-          >
-            <VStack gap={6} textAlign="center">
-              <VStack gap={3}>
-                <Heading as="h3" size="lg" color="gray.800" fontWeight="bold">
-                  📧 Blog Güncellemeleri
-                </Heading>
-                <Text color="gray.600" fontSize="md">
-                  Yeni blog yazılarımızdan haberdar olmak için e-posta listemize
-                  katılın. Haftalık beslenme ipuçları ve özel içerikler sizi
-                  bekliyor!
-                </Text>
-              </VStack>
-
-              <HStack
-                gap={3}
-                w="full"
-                maxW="400px"
-                flexDirection={{ base: "column", sm: "row" }}
-              >
+          <div className="w-full max-w-2xl">
+            <div className="bg-gray-50 rounded-2xl p-8 text-center">
+              <h3 className="text-xl font-bold text-gray-800 mb-4">
+                Güncel İçeriklerden Haberdar Olun
+              </h3>
+              <p className="text-gray-600 mb-6">
+                Yeni blog yazıları ve eğitim duyuruları için e-posta listemize
+                katılın.
+              </p>
+              <div className="flex gap-3 max-w-md mx-auto">
                 <Input
                   type="email"
                   placeholder="E-posta adresiniz"
-                  w="full"
-                  p={3}
-                  border="2px solid"
-                  borderColor="gray.200"
-                  borderRadius="8px"
-                  fontSize="md"
-                  _focus={{
-                    outline: "none",
-                    borderColor: "var(--primary)",
-                  }}
-                  _placeholder={{
-                    color: "gray.400",
-                  }}
+                  className="flex-1 focus:border-green-500 focus:ring-1 focus:ring-green-500"
                 />
-                <Button
-                  bg="var(--primary)"
-                  color="white"
-                  size="md"
-                  px={6}
-                  borderRadius="8px"
-                  fontWeight="semibold"
-                  _hover={{
-                    bg: "var(--primary-hover)",
-                    transform: "translateY(-1px)",
-                  }}
-                  _active={{
-                    transform: "translateY(0)",
-                  }}
-                  transition="all 0.2s ease"
-                >
+                <Button className="bg-green-600 hover:bg-green-700 text-white px-6">
                   Abone Ol
                 </Button>
-              </HStack>
+              </div>
+            </div>
+          </div>
 
-              <Text fontSize="xs" color="gray.500">
-                Spam göndermiyoruz. İstediğiniz zaman abonelikten
-                çıkabilirsiniz.
-              </Text>
-            </VStack>
-          </Box>
-        </VStack>
-      </Container>
-    </Box>
+          {/* CTA Button */}
+          <div className="text-center">
+            <Link href="/blog">
+              <Button className="bg-green-600 hover:bg-green-700 text-white px-8 py-3 text-lg font-semibold rounded-xl hover:-translate-y-0.5 hover:shadow-lg transition-all">
+                Tüm Blog Yazılarını Gör
+              </Button>
+            </Link>
+          </div>
+        </div>
+      </div>
+    </div>
   );
 }

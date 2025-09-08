@@ -1,44 +1,32 @@
 "use client";
 
+import { Button } from "@/components/ui/button";
 import { blogCategories } from "@/data/dummyBlogData";
 import { CategoryFilterProps } from "@/types";
-import { Button, Container, HStack } from "@chakra-ui/react";
 
 export default function CategoryFilter({
   selectedCategory,
   onCategoryChange,
 }: CategoryFilterProps) {
   return (
-    <Container maxW="1200px" px={{ base: 4, md: 6 }} py={8}>
-      <HStack gap={3} flexWrap="wrap" justify="center" align="center">
+    <div className="max-w-6xl mx-auto px-4 md:px-6 py-8">
+      <div className="flex gap-3 flex-wrap justify-center items-center">
         {blogCategories.map((category) => (
           <Button
             key={category}
-            size="md"
-            variant={selectedCategory === category ? "solid" : "outline"}
-            bg={selectedCategory === category ? "var(--primary)" : "white"}
-            color={selectedCategory === category ? "white" : "var(--primary)"}
-            borderColor="var(--primary)"
+            size="sm"
+            variant={selectedCategory === category ? "default" : "outline"}
+            className={`rounded-full px-6 text-sm font-medium transition-all hover:-translate-y-0.5 hover:shadow-md ${
+              selectedCategory === category
+                ? "bg-green-600 hover:bg-green-700 text-white"
+                : "border-green-600 text-green-600 hover:bg-green-50"
+            }`}
             onClick={() => onCategoryChange(category)}
-            borderRadius="20px"
-            px={6}
-            fontSize="sm"
-            fontWeight="medium"
-            _hover={{
-              transform: "translateY(-2px)",
-              shadow: "md",
-              bg:
-                selectedCategory === category
-                  ? "var(--primary-hover)"
-                  : "rgba(var(--primary-rgb), 0.06)",
-              color: selectedCategory === category ? "white" : "var(--primary)",
-            }}
-            transition="all 0.2s ease"
           >
             {category}
           </Button>
         ))}
-      </HStack>
-    </Container>
+      </div>
+    </div>
   );
 }

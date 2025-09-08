@@ -1,71 +1,43 @@
+"use client";
+
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
 import { EgitimCTAProps } from "@/types";
-import {
-  Box,
-  Button,
-  Card,
-  HStack,
-  Heading,
-  Icon,
-  Text,
-  VStack,
-} from "@chakra-ui/react";
-import { FiAward, FiCheckCircle, FiUsers } from "react-icons/fi";
+import { Award, CheckCircle, Users } from "lucide-react";
 
 export default function EgitimCTA({ egitim }: EgitimCTAProps) {
   return (
-    <Box mt={{ base: 12, md: 20 }}>
-      <Card.Root
-        bg="linear-gradient(90deg, rgba(var(--primary-rgb), 0.06), rgba(var(--primary-rgb), 0.12))"
-        borderRadius="20px"
-        w="full"
-        border="1px solid"
-        borderColor="rgba(var(--primary-rgb), 0.2)"
-        shadow="lg"
-        _hover={{ shadow: "xl" }}
-        transition="all 0.3s ease"
+    <div className="mt-12 md:mt-20">
+      <Card
+        className="w-full border border-primary/20 shadow-lg hover:shadow-xl transition-all duration-300"
+        style={{
+          background:
+            "linear-gradient(90deg, rgba(var(--primary-rgb), 0.06), rgba(var(--primary-rgb), 0.12))",
+          borderRadius: "20px",
+        }}
       >
-        <Card.Body p={{ base: 10, md: 12 }}>
-          <VStack gap={6} textAlign="center" maxW="700px" mx="auto">
-            <VStack gap={3}>
-              <Icon as={FiAward} color="var(--primary)" boxSize={12} />
-              <Heading
-                as="h3"
-                size="xl"
-                color="var(--primary)"
-                fontFamily="Poppins, sans-serif"
-              >
+        <CardContent className="p-10 md:p-12">
+          <div className="flex flex-col gap-6 text-center max-w-2xl mx-auto">
+            {/* Header Section */}
+            <div className="flex flex-col gap-3">
+              <Award className="w-12 h-12 text-primary mx-auto" />
+              <h3 className="text-2xl font-semibold text-primary font-[Poppins,sans-serif]">
                 Kariyerinde Bir Sonraki Adımı At
-              </Heading>
-            </VStack>
+              </h3>
+            </div>
 
-            <Text
-              maxW="600px"
-              fontSize="lg"
-              color="gray.700"
-              lineHeight="tall"
-              fontFamily="Inter, sans-serif"
-            >
+            {/* Description */}
+            <p className="max-w-2xl text-lg text-gray-700 leading-relaxed font-[Inter,sans-serif]">
               Bu eğitim ile beslenme alanındaki bilginizi derinleştirin ve
               profesyonel kariyerinizde fark yaratın. Uzman eğitmenlerden
               öğrenin, sertifikanızı alın.
-            </Text>
+            </p>
 
-            <HStack gap={4} flexWrap="wrap" justify="center" pt={2}>
+            {/* Action Buttons */}
+            <div className="flex gap-4 flex-wrap justify-center pt-2">
               <Button
-                bg="var(--primary)"
-                color="white"
                 size="lg"
-                px={10}
-                py={7}
-                borderRadius="12px"
-                fontSize="md"
-                fontWeight="semibold"
-                _hover={{
-                  bg: "var(--primary-hover)",
-                  transform: "translateY(-2px)",
-                  shadow: "xl",
-                }}
-                transition="all 0.3s ease"
+                className="px-10 py-7 rounded-xl text-base font-semibold bg-primary hover:bg-primary/90 hover:-translate-y-0.5 hover:shadow-xl transition-all duration-300"
                 onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
               >
                 Hemen Başla - ₺{egitim.price?.toString()}
@@ -74,48 +46,30 @@ export default function EgitimCTA({ egitim }: EgitimCTAProps) {
               <Button
                 variant="outline"
                 size="lg"
-                px={8}
-                py={7}
-                borderRadius="12px"
-                fontSize="md"
-                fontWeight="semibold"
-                borderColor="var(--accent)"
-                color="var(--accent)"
-                _hover={{
-                  bg: "rgba(var(--accent-rgb), 0.08)",
-                  borderColor: "var(--accent)",
-                  transform: "translateY(-2px)",
-                }}
-                transition="all 0.3s ease"
+                className="px-8 py-7 rounded-xl text-base font-semibold border-accent text-accent hover:bg-accent/10 hover:-translate-y-0.5 transition-all duration-300"
               >
                 Detayları İncele
               </Button>
-            </HStack>
+            </div>
 
-            <HStack
-              gap={8}
-              pt={4}
-              fontSize="sm"
-              color="gray.600"
-              flexWrap="wrap"
-              justify="center"
-            >
-              <HStack gap={2}>
-                <Icon as={FiCheckCircle} color="var(--primary)" boxSize={4} />
-                <Text fontWeight="medium">7 gün iade garantisi</Text>
-              </HStack>
-              <HStack gap={2}>
-                <Icon as={FiUsers} color="var(--primary)" boxSize={4} />
-                <Text fontWeight="medium">Sınırsız erişim</Text>
-              </HStack>
-              <HStack gap={2}>
-                <Icon as={FiAward} color="var(--primary)" boxSize={4} />
-                <Text fontWeight="medium">Sertifika dahil</Text>
-              </HStack>
-            </HStack>
-          </VStack>
-        </Card.Body>
-      </Card.Root>
-    </Box>
+            {/* Features */}
+            <div className="flex gap-8 pt-4 text-sm text-gray-600 flex-wrap justify-center">
+              <div className="flex items-center gap-2">
+                <CheckCircle className="w-4 h-4 text-primary" />
+                <span className="font-medium">7 gün iade garantisi</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <Users className="w-4 h-4 text-primary" />
+                <span className="font-medium">Sınırsız erişim</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <Award className="w-4 h-4 text-primary" />
+                <span className="font-medium">Sertifika dahil</span>
+              </div>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+    </div>
   );
 }

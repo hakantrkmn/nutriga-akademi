@@ -1,14 +1,6 @@
 "use client";
 
 import {
-  Box,
-  VStack,
-  HStack,
-  Text,
-  Heading,
-  Icon,
-} from "@chakra-ui/react";
-import {
   HiLocationMarker,
   HiPhone,
   HiMail,
@@ -30,152 +22,117 @@ interface ContactItemProps {
   subtitle?: string;
 }
 
-const ContactItem = ({ icon: IconComponent, title, content, subtitle }: ContactItemProps) => (
-  <HStack align="start" gap={4}>
-    <Box
-      bg="green.50"
-      p={3}
-      borderRadius="12px"
-      color="green.500"
-    >
-      <Icon boxSize={6}>
-        <IconComponent />
-      </Icon>
-    </Box>
-    <VStack align="start" gap={1}>
-      <Text 
-        fontSize="sm" 
-        fontWeight="semibold" 
-        color="gray.800"
-        textTransform="uppercase"
-        letterSpacing="wide"
-      >
-        {title}
-      </Text>
-      <Text fontSize="md" color="gray.700" fontWeight="medium">
-        {content}
-      </Text>
-      {subtitle && (
-        <Text fontSize="sm" color="gray.500">
-          {subtitle}
-        </Text>
-      )}
-    </VStack>
-  </HStack>
-);
+function ContactItem({ icon: Icon, title, content, subtitle }: ContactItemProps) {
+  return (
+    <div className="flex items-start gap-4 p-6 bg-white rounded-xl shadow-sm border border-gray-100">
+      <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0">
+        <Icon className="w-6 h-6 text-green-600" />
+      </div>
+      <div className="flex-1">
+        <h3 className="text-lg font-semibold text-gray-900 mb-1">
+          {title}
+        </h3>
+        <p className="text-gray-600 leading-relaxed">
+          {content}
+        </p>
+        {subtitle && (
+          <p className="text-sm text-gray-500 mt-1">
+            {subtitle}
+          </p>
+        )}
+      </div>
+    </div>
+  );
+}
 
 export default function ContactInfo() {
+  const socialLinks = [
+    {
+      name: "Facebook",
+      url: COMPANY_FACEBOOK_URL,
+      icon: FaFacebook,
+      color: "#1877F2",
+    },
+    {
+      name: "Twitter",
+      url: COMPANY_TWITTER_URL,
+      icon: FaTwitter,
+      color: "#1DA1F2",
+    },
+    {
+      name: "Instagram",
+      url: COMPANY_INSTAGRAM_URL,
+      icon: FaInstagram,
+      color: "#E4405F",
+    },
+    {
+      name: "LinkedIn",
+      url: COMPANY_LINKEDIN_URL,
+      icon: FaLinkedin,
+      color: "#0A66C2",
+    },
+    {
+      name: "YouTube",
+      url: COMPANY_YOUTUBE_URL,
+      icon: FaYoutube,
+      color: "#FF0000",
+    },
+  ];
+
   return (
-    <Box maxW="500px" w="full">
-      <VStack gap={8} align="stretch">
-        {/* Header */}
-        <Box>
-          <Heading 
-            as="h2" 
-            size="lg" 
-            color="gray.800" 
-            mb={3}
-          >
-            İletişim Bilgileri
-          </Heading>
-          <Text color="gray.600" fontSize="md" lineHeight="tall">
-            Beslenme eğitimlerimiz ve hizmetlerimiz hakkında detaylı bilgi almak için 
-            bizimle iletişime geçebilirsiniz.
-          </Text>
-        </Box>
+    <div className="space-y-8">
+      <div className="text-center">
+        <h2 className="text-2xl font-bold text-gray-900 mb-2">
+          İletişim Bilgileri
+        </h2>
+        <p className="text-gray-600">
+          Size en uygun yöntemle bizimle iletişime geçin
+        </p>
+      </div>
 
-        {/* Contact Details */}
-        <VStack gap={6} align="stretch">
-          <ContactItem
-            icon={HiLocationMarker}
-            title="Adres"
-            content={COMPANY_ADDRESS}
-            subtitle="Merkez ofis lokasyonu"
-          />
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <ContactItem
+          icon={HiLocationMarker}
+          title="Adres"
+          content={COMPANY_ADDRESS}
+        />
+        <ContactItem
+          icon={HiPhone}
+          title="Telefon"
+          content={COMPANY_PHONE}
+        />
+        <ContactItem
+          icon={HiMail}
+          title="E-posta"
+          content={COMPANY_EMAIL}
+        />
+        <ContactItem
+          icon={HiClock}
+          title="Çalışma Saatleri"
+          content={COMPANY_WORK_HOURS}
+          subtitle={COMPANY_WORK_HOURS_WEEKEND}
+        />
+      </div>
 
-          <ContactItem
-            icon={HiPhone}
-            title="Telefon"
-            content={COMPANY_PHONE}
-            subtitle="Pazartesi - Cuma, 09:00 - 18:00"
-          />
-
-          <ContactItem
-            icon={HiMail}
-            title="E-posta"
-            content={COMPANY_EMAIL}
-            subtitle="24 saat içinde yanıtlıyoruz"
-          />
-
-          <ContactItem
-            icon={HiClock}
-            title="Çalışma Saatleri"
-            content={COMPANY_WORK_HOURS}
-            subtitle={COMPANY_WORK_HOURS_WEEKEND}
-          />
-        </VStack>
-
-        {/* Social Media */}
-        <Box 
-          pt={6} 
-          borderTop="1px solid" 
-          borderColor="gray.100"
-        >
-          <Text 
-            fontSize="sm" 
-            fontWeight="semibold" 
-            color="gray.800"
-            textTransform="uppercase"
-            letterSpacing="wide"
-            mb={4}
-          >
-            Sosyal Medya
-          </Text>
-          
-          <HStack gap={4}>
-            {[
-              { icon: FaFacebook, color: "#1877F2", label: "Facebook", href: COMPANY_FACEBOOK_URL },
-              { icon: FaTwitter, color: "#1DA1F2", label: "Twitter", href: COMPANY_TWITTER_URL },
-              { icon: FaInstagram, color: "#E4405F", label: "Instagram", href: COMPANY_INSTAGRAM_URL },
-              { icon: FaLinkedin, color: "#0A66C2", label: "LinkedIn", href: COMPANY_LINKEDIN_URL },
-              { icon: FaYoutube, color: "#FF0000", label: "YouTube", href: COMPANY_YOUTUBE_URL },
-            ].map((social, index) => (
-              <Box
-                key={index}
-                as="button"
-                w={12}
-                h={12}
-                bg="gray.50"
-                borderRadius="12px"
-                display="flex"
-                alignItems="center"
-                onClick={() => window.open(social.href, "_blank")}
-                justifyContent="center"
-                border="1px solid"
-                borderColor="gray.200"
-                color="gray.600"
-                _hover={{
-                  bg: "white",
-                  borderColor: social.color,
-                  color: social.color,
-                  transform: "translateY(-2px)",
-                  shadow: "md"
-                }}
-                transition="all 0.2s ease"
-                aria-label={`${social.label} sayfamızı ziyaret edin`}
-              >
-                <Icon boxSize={5}>
-                  <social.icon />
-                </Icon>
-              </Box>
-            ))}
-          </HStack>
-          
-          <Text fontSize="sm" color="gray.500" mt={3}>
-            Bizi takip edin ve güncel içeriklerimizden haberdar olun!
-          </Text>
-        </Box>
-      </VStack>
-    </Box>
+      <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
+        <h3 className="text-lg font-semibold text-gray-900 mb-4 text-center">
+          Sosyal Medyada Takip Edin
+        </h3>
+        <div className="flex justify-center gap-4">
+          {socialLinks.map((social) => (
+            <a
+              key={social.name}
+              href={social.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-12 h-12 bg-gray-100 rounded-full flex items-center justify-center hover:bg-gray-200 transition-colors"
+              aria-label={`${social.name} sayfamızı ziyaret edin`}
+            >
+              <social.icon className="w-6 h-6 text-gray-600" />
+            </a>
+          ))}
+        </div>
+      </div>
+    </div>
   );
 }

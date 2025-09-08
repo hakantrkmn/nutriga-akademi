@@ -1,26 +1,29 @@
 "use client";
 
 import EgitimCard from "@/components/courses/CoursesCard";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import { Egitim } from "@/types";
-import {
-  Badge,
-  Box,
-  Button,
-  Container,
-  Heading,
-  HStack,
-  SimpleGrid,
-  Text,
-  useBreakpointValue,
-  VStack,
-} from "@chakra-ui/react";
 import Link from "next/link";
+import { useEffect, useState } from "react";
 
 interface PopularEgitimlerProps {
   egitimler: Egitim[];
 }
+
 export default function PopularEgitimler({ egitimler }: PopularEgitimlerProps) {
-  const columns = useBreakpointValue({ base: 1, md: 2, lg: 3 });
+  const [columns, setColumns] = useState(3);
+
+  useEffect(() => {
+    const checkColumns = () => {
+      if (window.innerWidth < 768) setColumns(1);
+      else if (window.innerWidth < 1024) setColumns(2);
+      else setColumns(3);
+    };
+    checkColumns();
+    window.addEventListener("resize", checkColumns);
+    return () => window.removeEventListener("resize", checkColumns);
+  }, []);
 
   // En popüler eğitimleri al (sales_count'a göre sırala)
   const popularEgitimler = egitimler
@@ -28,145 +31,82 @@ export default function PopularEgitimler({ egitimler }: PopularEgitimlerProps) {
     .slice(0, 6);
 
   return (
-    <Box py={{ base: 16, md: 20 }} bg="var(--background-alt)">
-      <Container maxW="container.xl">
-        <VStack gap={12} align="center">
+    <div className="py-16 md:py-20 bg-gray-50">
+      <div className="max-w-7xl mx-auto px-4 md:px-6">
+        <div className="flex flex-col gap-12 items-center">
           {/* Section Header */}
-          <VStack gap={4} textAlign="center" maxW="600px">
-            <Badge
-              color="var(--primary)"
-              bg="rgba(var(--primary-rgb), 0.08)"
-              px={4}
-              py={2}
-              borderRadius="full"
-              fontSize="sm"
-              fontWeight="semibold"
-            >
+          <div className="flex flex-col gap-4 text-center max-w-[600px]">
+            <Badge className="text-green-600 bg-green-50 px-4 py-2 rounded-full text-sm font-semibold w-fit mx-auto">
               Popüler Eğitimler
             </Badge>
 
-            <Heading
-              as="h2"
-              size={{ base: "xl", md: "2xl" }}
-              color="gray.800"
-              fontWeight="bold"
-            >
+            <h2 className="text-2xl md:text-3xl font-bold text-gray-800">
               En Çok Tercih Edilen
-              <Text as="span" className="text-primary" display="block">
-                Beslenme Eğitimleri
-              </Text>
-            </Heading>
+              <span className="block text-green-600">Beslenme Eğitimleri</span>
+            </h2>
 
-            <Text
-              fontSize={{ base: "md", md: "lg" }}
-              color="gray.600"
-              lineHeight="1.6"
-            >
+            <p className="text-base md:text-lg text-gray-600 leading-relaxed">
               Uzman diyetisyenlerimiz tarafından hazırlanan, en güncel
               bilgilerle donatılmış eğitimlerimizi keşfedin.
-            </Text>
-          </VStack>
+            </p>
+          </div>
 
           {/* Eğitim Grid */}
-          <SimpleGrid
-            columns={columns}
-            gap={{ base: 6, md: 8 }}
-            w="full"
-            maxW="1200px"
+          <div
+            className={`grid gap-6 md:gap-8 w-full max-w-6xl ${
+              columns === 1
+                ? "grid-cols-1"
+                : columns === 2
+                ? "grid-cols-1 md:grid-cols-2"
+                : "grid-cols-1 md:grid-cols-2 lg:grid-cols-3"
+            }`}
           >
             {popularEgitimler.map((egitim) => (
               <EgitimCard key={egitim.id} egitim={egitim} />
             ))}
-          </SimpleGrid>
-
-          {/* View All Button */}
-          <VStack gap={4}>
-            <Text color="gray.600" fontSize="md">
-              Daha fazla eğitim görmek ister misiniz?
-            </Text>
-            <Link href="/egitimler">
-              <Button
-                size="lg"
-                variant="outline"
-                borderRadius="12px"
-                px={8}
-                py={6}
-                fontSize="md"
-                fontWeight="semibold"
-                borderWidth="2px"
-                _hover={{
-                  bg: "var(--primary)",
-                  color: "white",
-                  transform: "translateY(-2px)",
-                  boxShadow: "0 8px 25px rgba(var(--primary-rgb), 0.3)",
-                }}
-                _active={{
-                  transform: "translateY(0)",
-                }}
-                transition="all 0.3s ease"
-              >
-                Tüm Eğitimleri Görüntüle
-              </Button>
-            </Link>
-          </VStack>
+          </div>
 
           {/* Stats Section */}
-          <Box
-            w="full"
-            bg="white"
-            border="1px solid"
-            borderColor="gray.200"
-            borderRadius="16px"
-            p={{ base: 6, md: 8 }}
-            textAlign="center"
-          >
-            <HStack gap={{ base: 6, md: 12 }} justify="center" flexWrap="wrap">
-              <VStack gap={2}>
-                <Text
-                  fontSize={{ base: "2xl", md: "3xl" }}
-                  fontWeight="bold"
-                  className="text-primary"
-                >
-                  {egitimler.length}+
-                </Text>
-                <Text fontSize="sm" color="gray.600" fontWeight="medium">
-                  Toplam Eğitim
-                </Text>
-              </VStack>
+          <div className="w-full max-w-4xl">
+            <div className="bg-white rounded-2xl p-8 shadow-sm border border-gray-100">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
+                <div className="space-y-2">
+                  <div className="text-3xl font-bold text-green-600">
+                    {egitimler.length}+
+                  </div>
+                  <div className="text-sm text-gray-600 font-medium">
+                    Toplam Eğitim
+                  </div>
+                </div>
+                <div className="space-y-2">
+                  <div className="text-3xl font-bold text-green-600">
+                    {egitimler.reduce((sum, e) => sum + (e.salesCount || 0), 0)}
+                    +
+                  </div>
+                  <div className="text-sm text-gray-600 font-medium">
+                    Mutlu Öğrenci
+                  </div>
+                </div>
+                <div className="space-y-2">
+                  <div className="text-3xl font-bold text-green-600">4.9/5</div>
+                  <div className="text-sm text-gray-600 font-medium">
+                    Ortalama Puan
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
 
-              <VStack gap={2}>
-                <Text
-                  fontSize={{ base: "2xl", md: "3xl" }}
-                  fontWeight="bold"
-                  className="text-accent"
-                >
-                  {egitimler.reduce(
-                    (sum, egitim) => sum + (egitim.salesCount || 0),
-                    0
-                  )}
-                  +
-                </Text>
-                <Text fontSize="sm" color="gray.600" fontWeight="medium">
-                  Satılan Eğitim
-                </Text>
-              </VStack>
-
-              <VStack gap={2}>
-                <Text
-                  fontSize={{ base: "2xl", md: "3xl" }}
-                  fontWeight="bold"
-                  className="text-primary"
-                >
-                  4.9/5
-                </Text>
-                <Text fontSize="sm" color="gray.600" fontWeight="medium">
-                  Ortalama Puan
-                </Text>
-              </VStack>
-            </HStack>
-          </Box>
-        </VStack>
-      </Container>
-    </Box>
+          {/* CTA Button */}
+          <div className="text-center">
+            <Link href="/egitimler">
+              <Button className="bg-green-600 hover:bg-green-700 text-white px-8 py-3 text-lg font-semibold rounded-xl hover:-translate-y-0.5 hover:shadow-lg transition-all">
+                Tüm Eğitimleri Gör
+              </Button>
+            </Link>
+          </div>
+        </div>
+      </div>
+    </div>
   );
 }

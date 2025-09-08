@@ -1,14 +1,14 @@
 "use client";
 
-import { COURSE_CATEGORIES, COURSE_LEVELS } from "@/constants";
+import { Button } from "@/components/ui/button";
 import {
-  Button,
-  Container,
-  HStack,
-  NativeSelectField,
-  NativeSelectRoot,
-  VStack,
-} from "@chakra-ui/react";
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { COURSE_CATEGORIES, COURSE_LEVELS } from "@/constants";
 
 interface CategoryFilterProps {
   selectedCategory: string;
@@ -24,60 +24,41 @@ export default function CategoryFilter({
   onLevelChange,
 }: CategoryFilterProps) {
   return (
-    <Container maxW="1200px" px={{ base: 4, md: 6 }} py={8}>
-      <VStack gap={6} align="center">
-        <HStack gap={3} flexWrap="wrap" justify="center" align="center">
+    <div className="max-w-6xl mx-auto px-4 md:px-6 py-8">
+      <div className="flex flex-col gap-6 items-center">
+        <div className="flex gap-3 flex-wrap justify-center items-center">
           {COURSE_CATEGORIES.map((category) => (
             <Button
               key={category}
-              size="md"
-              variant={selectedCategory === category ? "solid" : "outline"}
-              bg={selectedCategory === category ? "var(--primary)" : "white"}
-              color={selectedCategory === category ? "white" : "var(--primary)"}
-              borderColor="var(--primary)"
+              size="sm"
+              variant={selectedCategory === category ? "default" : "outline"}
+              className={`rounded-full px-6 text-sm font-medium transition-all hover:-translate-y-0.5 hover:shadow-md ${
+                selectedCategory === category
+                  ? "bg-green-600 hover:bg-green-700 text-white"
+                  : "border-green-600 text-green-600 hover:bg-green-50"
+              }`}
               onClick={() => onCategoryChange(category)}
-              borderRadius="20px"
-              px={6}
-              fontSize="sm"
-              fontWeight="medium"
-              _hover={{
-                transform: "translateY(-2px)",
-                shadow: "md",
-                bg:
-                  selectedCategory === category
-                    ? "var(--primary-hover)"
-                    : "rgba(var(--primary-rgb), 0.06)",
-                color:
-                  selectedCategory === category ? "white" : "var(--primary)",
-              }}
-              transition="all 0.2s ease"
             >
               {category}
             </Button>
           ))}
-        </HStack>
+        </div>
 
-        <HStack gap={4} flexWrap="wrap" justify="center">
-          <NativeSelectRoot maxW="200px">
-            <NativeSelectField
-              value={selectedLevel}
-              onChange={(e) => onLevelChange(e.target.value)}
-              borderColor="var(--primary)"
-              _focus={{
-                borderColor: "var(--primary-hover)",
-                boxShadow: "0 0 0 1px var(--primary-hover)",
-              }}
-            >
-              <option value="">Seviye Seçin</option>
+        <div className="flex gap-4 items-center">
+          <Select value={selectedLevel} onValueChange={onLevelChange}>
+            <SelectTrigger className="w-48 focus:border-green-500 focus:ring-1 focus:ring-green-500">
+              <SelectValue placeholder="Seviye seçin..." />
+            </SelectTrigger>
+            <SelectContent>
               {COURSE_LEVELS.map((level) => (
-                <option key={level} value={level}>
-                  {level} Seviye
-                </option>
+                <SelectItem key={level} value={level}>
+                  {level}
+                </SelectItem>
               ))}
-            </NativeSelectField>
-          </NativeSelectRoot>
-        </HStack>
-      </VStack>
-    </Container>
+            </SelectContent>
+          </Select>
+        </div>
+      </div>
+    </div>
   );
 }

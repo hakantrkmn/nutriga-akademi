@@ -1,7 +1,6 @@
 "use client";
 
 import AdminHeader from "@/components/admin/AdminHeader";
-import { Box } from "@chakra-ui/react";
 import { usePathname } from "next/navigation";
 
 interface AdminLayoutProps {
@@ -11,28 +10,21 @@ interface AdminLayoutProps {
 export default function AdminLayout({ children }: AdminLayoutProps) {
   const pathname = usePathname();
 
-  const bgColor = "gray.50";
-
   // Login sayfası için özel layout
   if (pathname === "/admin") {
     return (
-      <Box
-        minH="100vh"
-        bg={bgColor}
-        display="flex"
-        alignItems="center"
-        justifyContent="center"
-        p={4}
-      >
-        {children}
-      </Box>
+      <div className="admin-layout site-theme-sage site-font-sage">
+        <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
+          {children}
+        </div>
+      </div>
     );
   }
 
   return (
-    <>
+    <div className="admin-layout site-theme-sage site-font-sage">
       <AdminHeader />
       {children}
-    </>
+    </div>
   );
 }

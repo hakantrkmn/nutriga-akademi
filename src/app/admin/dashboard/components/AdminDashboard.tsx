@@ -2,7 +2,6 @@
 
 import StatCard from "@/components/admin/StatCard";
 import { adminApi, AdminStats } from "@/lib/api";
-import { Box, Grid, GridItem, Heading, Text, VStack } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { FiBookOpen, FiFileText, FiTrendingUp, FiUsers } from "react-icons/fi";
 // AdminSidebar artık layout'ta kullanılıyor
@@ -68,40 +67,30 @@ export default function AdminDashboard() {
   ];
 
   return (
-    <Box maxW="7xl" mx="auto" px={{ base: 4, md: 6 }} py={{ base: 6, md: 8 }}>
-      <VStack gap={6} align="stretch">
+    <div className="max-w-7xl mx-auto px-4 md:px-6 py-6 md:py-8">
+      <div className="space-y-6">
         {/* Header */}
-        <Box>
-          <Heading size="xl" color="gray.900" mb={2}>
-            Dashboard
-          </Heading>
-          <Text color="gray.600">
+        <div>
+          <h1 className="text-3xl font-bold text-gray-900 mb-2">Dashboard</h1>
+          <p className="text-gray-600">
             NutriHome Akademi Admin Paneli - Genel Bakış
-          </Text>
-        </Box>
+          </p>
+        </div>
 
         {/* Stats Grid */}
-        <Grid
-          templateColumns={{
-            base: "1fr",
-            md: "repeat(2, 1fr)",
-            lg: "repeat(4, 1fr)",
-          }}
-          gap={6}
-        >
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {statCards.map((stat, index) => (
-            <GridItem key={index}>
-              <StatCard
-                title={stat.title}
-                value={stat.value}
-                icon={stat.icon}
-                color={stat.color}
-                loading={loading}
-              />
-            </GridItem>
+            <StatCard
+              key={index}
+              title={stat.title}
+              value={stat.value}
+              icon={stat.icon}
+              color={stat.color}
+              loading={loading}
+            />
           ))}
-        </Grid>
-      </VStack>
-    </Box>
+        </div>
+      </div>
+    </div>
   );
 }

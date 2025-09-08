@@ -3,22 +3,14 @@
 import BlogInfoEdit from "@/components/admin/blog/BlogInfoEdit";
 import BlogDetailHeader from "@/components/blog/detail/BlogDetailHeader";
 import BlogDetailContentTipTap from "@/components/blog/detail/BlogDetailTipTapSection";
+import { Button } from "@/components/ui/button";
+import { Card, CardHeader, CardTitle } from "@/components/ui/card";
+import { toaster } from "@/components/ui/toaster";
 import { blogApi } from "@/lib/api";
 import { BlogPost } from "@/types";
-import {
-  Box,
-  Button,
-  Container,
-  HStack,
-  Heading,
-  Icon,
-  Text,
-  VStack,
-} from "@chakra-ui/react";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { FiArrowLeft, FiSave } from "react-icons/fi";
-import { toaster } from "@/components/ui/toaster";
 
 export default function BlogFormPage({ blogId }: { blogId?: string }) {
   const router = useRouter();
@@ -186,75 +178,65 @@ export default function BlogFormPage({ blogId }: { blogId?: string }) {
 
   if (loadingData) {
     return (
-      <Container maxW="800px" p={6}>
-        <VStack gap={6} align="stretch">
-          <HStack justify="space-between" align="center">
-            <Box>
-              <Heading size="lg" color="gray.900">
+      <div className="max-w-4xl mx-auto p-6">
+        <div className="space-y-6">
+          <div className="flex justify-between items-center">
+            <div>
+              <h1 className="text-2xl font-bold text-gray-900">
                 Blog Yükleniyor...
-              </Heading>
-              <Text color="gray.600">
+              </h1>
+              <p className="text-gray-600">
                 Blog verileri yükleniyor, lütfen bekleyin
-              </Text>
-            </Box>
-          </HStack>
-        </VStack>
-      </Container>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
     );
   }
 
   return (
-    <Box bg="white" minH="100vh">
-      <Container maxW="800px" px={{ base: 4, md: 6 }} py={8}>
-        <VStack gap={8} align="start" w="full">
+    <div className="bg-white min-h-screen">
+      <div className="max-w-4xl mx-auto px-4 md:px-6 py-8">
+        <div className="space-y-8">
           {/* Header */}
-          <Box
-            p={6}
-            bg="white"
-            borderRadius="lg"
-            border="1px solid"
-            borderColor="gray.200"
-            shadow="sm"
-            w="full"
-          >
-            <HStack
-              justify="space-between"
-              align="center"
-              flexWrap={{ base: "wrap", md: "nowrap" }}
-              gap={4}
-            >
-              <Box>
-                <Heading size="lg" color="gray.900">
-                  {isEditing ? "Blog Yazısı Düzenle" : "Yeni Blog Yazısı Ekle"}
-                </Heading>
-                <Text color="gray.600">
-                  {isEditing
-                    ? "Blog yazısı bilgilerini düzenleyin"
-                    : "Yeni bir blog yazısı oluşturun"}
-                </Text>
-              </Box>
-              <HStack gap={3} flexShrink={0}>
-                <Button
-                  variant="outline"
-                  onClick={handleCancel}
-                  size={{ base: "sm", md: "md" }}
-                >
-                  <Icon as={FiArrowLeft} mr={2} />
-                  Geri Dön
-                </Button>
-                <Button
-                  colorScheme="green"
-                  onClick={handleSave}
-                  loading={loading}
-                  loadingText="Kaydediliyor..."
-                  size={{ base: "sm", md: "md" }}
-                >
-                  <Icon as={FiSave} mr={2} />
-                  {isEditing ? "Güncelle" : "Kaydet"}
-                </Button>
-              </HStack>
-            </HStack>
-          </Box>
+          <Card>
+            <CardHeader>
+              <div className="flex justify-between items-center flex-wrap gap-4">
+                <div>
+                  <CardTitle className="text-2xl text-gray-900">
+                    {isEditing
+                      ? "Blog Yazısı Düzenle"
+                      : "Yeni Blog Yazısı Ekle"}
+                  </CardTitle>
+                  <p className="text-gray-600 mt-1">
+                    {isEditing
+                      ? "Blog yazısı bilgilerini düzenleyin"
+                      : "Yeni bir blog yazısı oluşturun"}
+                  </p>
+                </div>
+                <div className="flex gap-3 flex-shrink-0">
+                  <Button variant="outline" onClick={handleCancel} size="sm">
+                    <FiArrowLeft className="mr-2 h-4 w-4" />
+                    Geri Dön
+                  </Button>
+                  <Button
+                    onClick={handleSave}
+                    disabled={loading}
+                    size="sm"
+                    className="bg-green-600 hover:bg-green-700"
+                  >
+                    <FiSave className="mr-2 h-4 w-4" />
+                    {loading
+                      ? "Kaydediliyor..."
+                      : isEditing
+                      ? "Güncelle"
+                      : "Kaydet"}
+                  </Button>
+                </div>
+              </div>
+            </CardHeader>
+          </Card>
 
           {/* Blog Bilgileri - Üstte */}
           <BlogInfoEdit
@@ -276,8 +258,8 @@ export default function BlogFormPage({ blogId }: { blogId?: string }) {
             setFormData={setFormData}
             formData={formData}
           />
-        </VStack>
-      </Container>
-    </Box>
+        </div>
+      </div>
+    </div>
   );
 }

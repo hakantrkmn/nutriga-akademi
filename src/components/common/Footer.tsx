@@ -10,16 +10,7 @@ import {
   COMPANY_WORK_HOURS,
   COMPANY_YOUTUBE_URL,
 } from "@/constants";
-import {
-  Box,
-  Container,
-  HStack,
-  Heading,
-  Icon,
-  SimpleGrid,
-  Text,
-  VStack,
-} from "@chakra-ui/react";
+// Chakra UI imports removed - using Tailwind CSS
 import Link from "next/link";
 import {
   FaFacebook,
@@ -76,108 +67,80 @@ export default function Footer() {
   const currentYear = new Date().getFullYear();
 
   return (
-    <Box as="footer" bg="gray.800" color="white" py={12}>
-      <Container maxW="1200px" px={{ base: 4, md: 6 }}>
-        <SimpleGrid columns={{ base: 1, md: 2, lg: 4 }} gap={8}>
+    <footer className="bg-gray-800 text-white py-12">
+      <div className="max-w-6xl mx-auto px-4 md:px-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {/* Logo ve Açıklama */}
-          <VStack align="start" gap={4}>
+          <div className="space-y-4">
             <Link href="/">
-              <Text
-                fontSize="2xl"
-                fontWeight="bold"
-                color="var(--accent)"
-                cursor="pointer"
-                _hover={{ color: "var(--primary)" }}
-                transition="color 0.2s ease"
-              >
+              <h2 className="text-2xl font-bold text-green-400 hover:text-green-500 cursor-pointer transition-colors">
                 {COMPANY_NAME}
-              </Text>
+              </h2>
             </Link>
 
-            <Text fontSize="sm" color="gray.300" lineHeight="tall" maxW="280px">
+            <p className="text-sm text-gray-300 leading-relaxed max-w-[280px]">
               Beslenme alanında en güncel ve kaliteli eğitimlerle
               diyetisyenlerin mesleki gelişimine katkı sağlayan öncü akademi.
-            </Text>
-          </VStack>
+            </p>
+          </div>
 
           {/* Hızlı Linkler */}
-          <VStack align="start" gap={4}>
-            <Heading as="h4" size="md" color="white">
-              Hızlı Linkler
-            </Heading>
+          <div className="space-y-4">
+            <h4 className="text-lg font-semibold text-white">Hızlı Linkler</h4>
 
-            <VStack align="start" gap={2}>
+            <div className="space-y-2">
               {quickLinks.map((link, index) => (
                 <Link key={index} href={link.href}>
-                  <Text
-                    fontSize="sm"
-                    color="gray.300"
-                    _hover={{
-                      color: "var(--accent)",
-                      textDecoration: "underline",
-                    }}
-                    cursor="pointer"
-                    transition="all 0.2s ease"
-                  >
+                  <span className="text-sm text-gray-300 hover:text-green-400 hover:underline cursor-pointer transition-all">
                     {link.name}
-                  </Text>
+                  </span>
                 </Link>
               ))}
-            </VStack>
-          </VStack>
+            </div>
+          </div>
 
           {/* İletişim Bilgileri */}
-          <VStack align="start" gap={4}>
-            <Heading as="h4" size="md" color="white">
-              İletişim
-            </Heading>
+          <div className="space-y-4">
+            <h4 className="text-lg font-semibold text-white">İletişim</h4>
 
-            <VStack align="start" gap={3} fontSize="sm" color="gray.300">
-              <Text>
-                <Text as="span" fontWeight="semibold" color="white">
-                  Adres:
-                </Text>
+            <div className="space-y-3 text-sm text-gray-300">
+              <div>
+                <span className="font-semibold text-white">Adres:</span>
                 <br />
                 {COMPANY_ADDRESS}
-              </Text>
+              </div>
 
-              <Text>
-                <Text as="span" fontWeight="semibold" color="white">
-                  Telefon:
-                </Text>
+              <div>
+                <span className="font-semibold text-white">Telefon:</span>
                 <br />
                 {COMPANY_PHONE}
-              </Text>
+              </div>
 
-              <Text>
-                <Text as="span" fontWeight="semibold" color="white">
-                  E-posta:
-                </Text>
+              <div>
+                <span className="font-semibold text-white">E-posta:</span>
                 <br />
                 {COMPANY_EMAIL}
-              </Text>
+              </div>
 
-              <Text>
-                <Text as="span" fontWeight="semibold" color="white">
+              <div>
+                <span className="font-semibold text-white">
                   Çalışma Saatleri:
-                </Text>
+                </span>
                 <br />
                 {COMPANY_WORK_HOURS}
-              </Text>
-            </VStack>
-          </VStack>
+              </div>
+            </div>
+          </div>
 
           {/* Sosyal Medya */}
-          <VStack align="start" gap={4}>
-            <Heading as="h4" size="md" color="white">
-              Takip Edin
-            </Heading>
+          <div className="space-y-4">
+            <h4 className="text-lg font-semibold text-white">Takip Edin</h4>
 
-            <Text fontSize="sm" color="gray.300" lineHeight="tall">
+            <p className="text-sm text-gray-300 leading-relaxed">
               Güncel içerikler ve eğitim duyuruları için bizi takip edin!
-            </Text>
+            </p>
 
-            <HStack gap={3} flexWrap="wrap">
+            <div className="flex gap-3 flex-wrap">
               {socialLinks.map((social, index) => (
                 <a
                   key={index}
@@ -186,78 +149,42 @@ export default function Footer() {
                   rel="noopener noreferrer"
                   aria-label={`${social.name} sayfamızı ziyaret edin`}
                 >
-                  <Box
-                    w={10}
-                    h={10}
-                    bg="gray.700"
-                    borderRadius="12px"
-                    display="flex"
-                    alignItems="center"
-                    justifyContent="center"
-                    color="gray.300"
-                    _hover={{
-                      bg: "gray.600",
-                      color: social.color,
-                      transform: "translateY(-2px)",
-                      shadow: "md",
-                    }}
-                    transition="all 0.2s ease"
-                  >
-                    <Icon boxSize={5}>
-                      <social.icon />
-                    </Icon>
-                  </Box>
+                  <div className="w-10 h-10 bg-gray-700 rounded-xl flex items-center justify-center text-gray-300 hover:bg-gray-600 hover:text-white hover:-translate-y-0.5 hover:shadow-md transition-all">
+                    <social.icon className="w-5 h-5" />
+                  </div>
                 </a>
               ))}
-            </HStack>
-          </VStack>
-        </SimpleGrid>
+            </div>
+          </div>
+        </div>
 
         {/* Alt Çizgi ve Copyright */}
-        <Box mt={12} pt={8} borderTop="1px solid" borderColor="gray.600">
-          <VStack gap={4} textAlign="center">
-            <HStack
-              justify="center"
-              gap={6}
-              flexWrap="wrap"
-              fontSize="sm"
-              color="gray.400"
-            >
+        <div className="mt-12 pt-8 border-t border-gray-600">
+          <div className="space-y-4 text-center">
+            <div className="flex justify-center gap-6 flex-wrap text-sm text-gray-400">
               <Link href="/gizlilik-politikasi">
-                <Text
-                  _hover={{ color: "var(--accent)" }}
-                  cursor="pointer"
-                  transition="color 0.2s ease"
-                >
+                <span className="hover:text-green-400 cursor-pointer transition-colors">
                   Gizlilik Politikası
-                </Text>
+                </span>
               </Link>
               <Link href="/kullanim-kosullari">
-                <Text
-                  _hover={{ color: "var(--accent)" }}
-                  cursor="pointer"
-                  transition="color 0.2s ease"
-                >
+                <span className="hover:text-green-400 cursor-pointer transition-colors">
                   Kullanım Koşulları
-                </Text>
+                </span>
               </Link>
               <Link href="/cerez-politikasi">
-                <Text
-                  _hover={{ color: "var(--accent)" }}
-                  cursor="pointer"
-                  transition="color 0.2s ease"
-                >
+                <span className="hover:text-green-400 cursor-pointer transition-colors">
                   Çerez Politikası
-                </Text>
+                </span>
               </Link>
-            </HStack>
+            </div>
 
-            <Text fontSize="sm" color="gray.400">
+            <p className="text-sm text-gray-400">
               © {currentYear} NutriHome Akademi. Tüm hakları saklıdır.
-            </Text>
-          </VStack>
-        </Box>
-      </Container>
-    </Box>
+            </p>
+          </div>
+        </div>
+      </div>
+    </footer>
   );
 }

@@ -1,16 +1,9 @@
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import { BlogPost } from "@/types";
-import {
-  Badge,
-  Button,
-  Heading,
-  HStack,
-  Icon,
-  Image,
-  Link,
-  Text,
-  VStack,
-} from "@chakra-ui/react";
-import { FiArrowLeft, FiUser } from "react-icons/fi";
+import { ArrowLeft, User } from "lucide-react";
+import Image from "next/image";
+import Link from "next/link";
 
 interface BlogDetailHeaderProps {
   post: BlogPost;
@@ -20,61 +13,51 @@ export default function BlogDetailHeader({ post }: BlogDetailHeaderProps) {
   return (
     <>
       <Link href="/blog">
-        <Button
-          variant="ghost"
-          color="var(--primary)"
-          _hover={{ bg: "rgba(var(--primary-rgb), 0.06)" }}
-        >
-          <Icon mr={2}>
-            <FiArrowLeft />
-          </Icon>
+        <Button variant="ghost" className="text-primary hover:bg-primary/10">
+          <ArrowLeft className="w-4 h-4 mr-2" />
           Blog&apos;a Dön
         </Button>
       </Link>
 
-      <VStack gap={6} align="start" w="full">
+      <div className="flex flex-col gap-6 items-start w-full">
         <Badge
-          color="var(--primary)"
-          bg="rgba(var(--primary-rgb), 0.08)"
-          fontSize="sm"
-          px={3}
-          py={1}
-          borderRadius="8px"
+          className="text-sm px-3 py-1 rounded-lg"
+          style={{
+            color: "var(--primary)",
+            backgroundColor: "rgba(var(--primary-rgb), 0.08)",
+          }}
         >
           {post.category}
         </Badge>
 
-        <Heading as="h1" size="2xl" color="gray.800" lineHeight="short">
+        <h1 className="text-3xl font-bold text-gray-800 leading-tight">
           {post.title}
-        </Heading>
+        </h1>
 
-        <HStack justify="space-between" w="full" flexWrap="wrap" gap={4}>
-          <HStack gap={4} fontSize="sm" color="gray.600">
-            <HStack gap={2}>
-              <Icon boxSize={4}>
-                <FiUser />
-              </Icon>
-              <Text>{post.author}</Text>
-            </HStack>
-          </HStack>
+        <div className="flex justify-between items-center w-full flex-wrap gap-4">
+          <div className="flex items-center gap-4 text-sm text-gray-600">
+            <div className="flex items-center gap-2">
+              <User className="w-4 h-4" />
+              <span>{post.author}</span>
+            </div>
+          </div>
 
-          <Text fontSize="sm" color="gray.500">
+          <span className="text-sm text-gray-500">
             {new Date(post.createdAt).toLocaleDateString("tr-TR", {
               year: "numeric",
               month: "long",
               day: "numeric",
             })}
-          </Text>
-        </HStack>
-      </VStack>
+          </span>
+        </div>
+      </div>
 
       <Image
         src={post.imageUrl || ""}
         alt={post.title}
-        w="full"
-        h="400px"
-        objectFit="cover"
-        borderRadius="12px"
+        width={800}
+        height={400}
+        className="w-full h-[400px] object-cover rounded-xl"
       />
     </>
   );

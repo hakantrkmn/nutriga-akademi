@@ -1,6 +1,5 @@
 "use client";
 
-import { Box, Container, Grid } from "@chakra-ui/react";
 import React from "react";
 
 import { EgitimDetailContentProps } from "@/types";
@@ -15,7 +14,7 @@ export default function EgitimDetailContent({
   const [isImageError, setIsImageError] = React.useState(false);
 
   return (
-    <Box bg="var(--background-alt)" minH="100vh">
+    <div className="bg-gray-50 min-h-screen">
       {/* Header/Hero Section */}
       <EgitimDetailHero
         egitim={egitim}
@@ -24,21 +23,18 @@ export default function EgitimDetailContent({
       />
 
       {/* Main Content */}
-      <Container maxW="1200px" px={{ base: 4, md: 6 }} py={{ base: 8, md: 12 }}>
-        <Grid
-          templateColumns={{ base: "1fr", lg: "2.5fr 1.5fr" }}
-          gap={{ base: 12, lg: 10 }}
-        >
+      <div className="container mx-auto px-4 md:px-6 py-8 md:py-12 max-w-6xl">
+        <div className="grid grid-cols-1 lg:grid-cols-[2.5fr_1.5fr] gap-12 lg:gap-10">
           {/* Left Column: Course Content */}
           <EgitimContent egitim={egitim} />
 
           {/* Right Column: Sticky Sidebar */}
           <EgitimPrice egitim={egitim} />
-        </Grid>
+        </div>
 
         {/* CTA Section */}
         <EgitimCTA egitim={egitim} />
-      </Container>
-    </Box>
+      </div>
+    </div>
   );
 }

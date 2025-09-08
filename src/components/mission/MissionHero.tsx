@@ -1,62 +1,32 @@
-import {
-  Box,
-  Container,
-  VStack,
-  Heading,
-  Text,
-  Icon,
-} from "@chakra-ui/react";
 import { HiBadgeCheck } from "react-icons/hi";
 
 export default function MissionHero() {
   return (
-    <Box bg="green.50" pt={20} pb={16}>
-      <Container maxW="1200px" px={{ base: 4, md: 6 }}>
-        <VStack gap={8} textAlign="center" maxW="900px" mx="auto">
-          <Box
-            bg="green.100"
-            p={6}
-            borderRadius="20px"
-            display="inline-block"
-          >
-            <Icon boxSize={12} color="green.500">
-              <HiBadgeCheck />
-            </Icon>
-          </Box>
-          
-          <VStack gap={6}>
-            <Heading 
-              as="h1" 
-              size="3xl" 
-              color="green.500"
-              fontWeight="bold"
-            >
-              Misyonumuz
-            </Heading>
-            
-            <Text 
-              fontSize="2xl" 
-              color="gray.700" 
-              lineHeight="tall"
-              fontWeight="medium"
-            >
-              Beslenme alanında en güncel ve kanıta dayalı bilgileri paylaşarak, 
-              diyetisyenlerin mesleki yeterliliklerini artırmak ve toplum sağlığına katkı sağlamak.
-            </Text>
+    <div className="bg-green-50 pt-20 pb-16">
+      <div className="container mx-auto px-4 md:px-6 max-w-6xl">
+        <div className="flex flex-col items-center gap-8 text-center max-w-4xl mx-auto">
+          <div className="bg-green-100 p-6 rounded-2xl inline-block">
+            <HiBadgeCheck className="w-12 h-12 text-green-500" />
+          </div>
 
-            <Text 
-              fontSize="lg" 
-              color="gray.600" 
-              lineHeight="tall"
-              maxW="700px"
-            >
-              NutriHome Akademi olarak, beslenme biliminin sürekli gelişen doğasını takip ederek, 
-              diyetisyenlere en güncel bilgileri sunmayı ve onların profesyonel gelişimlerine 
-              destek olmayı kendimize görev edindik.
-            </Text>
-          </VStack>
-        </VStack>
-      </Container>
-    </Box>
+          <div className="flex flex-col gap-6">
+            <h1 className="text-5xl font-bold text-green-500">Misyonumuz</h1>
+
+            <p className="text-2xl text-gray-700 leading-relaxed font-medium">
+              Beslenme alanında en güncel ve kanıta dayalı bilgileri paylaşarak,
+              diyetisyenlerin mesleki yeterliliklerini artırmak ve toplum
+              sağlığına katkı sağlamak.
+            </p>
+
+            <p className="text-lg text-gray-600 leading-relaxed max-w-3xl">
+              NutriHome Akademi olarak, beslenme biliminin sürekli gelişen
+              doğasını takip ederek, diyetisyenlere en güncel bilgileri sunmayı
+              ve onların profesyonel gelişimlerine destek olmayı kendimize görev
+              edindik.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
   );
 }

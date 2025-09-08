@@ -1,205 +1,172 @@
-'use client'
+"use client";
 
-import {
-  Box,
-  HStack,
-  VStack,
-  Text,
-  Button,
-  Icon,
-  Badge
-} from '@chakra-ui/react'
-import { FiLogOut, FiHome, FiBookOpen, FiFileText } from 'react-icons/fi'
-import { useRouter, usePathname } from 'next/navigation'
-import { useState, useEffect } from 'react'
-import { createClient } from '@/lib/supabase/client'
-import Link from 'next/link'
-
-
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { createClient } from "@/lib/supabase/client";
+import Link from "next/link";
+import { usePathname, useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+import { FiBookOpen, FiFileText, FiHome, FiLogOut } from "react-icons/fi";
 
 export default function AdminHeader() {
-  const router = useRouter()
-  const pathname = usePathname()
-  const [adminEmail, setAdminEmail] = useState<string>('')
-  const supabase = createClient()
-  
-  const bgColor = 'white'
-  const borderColor = 'gray.200'
-  const textColor = 'gray.900'
-  const subTextColor = 'gray.600'
-  const activeColor = 'green.600'
-  const activeBg = 'green.50'
+  const router = useRouter();
+  const pathname = usePathname();
+  const [adminEmail, setAdminEmail] = useState<string>("");
+  const supabase = createClient();
 
   useEffect(() => {
     // Admin email'ini al
-    const email = process.env.NEXT_PUBLIC_ADMIN_EMAIL || 'admin@nutriga.com'
-    setAdminEmail(email)
-  }, [])
+    const email = process.env.NEXT_PUBLIC_ADMIN_EMAIL || "admin@nutriga.com";
+    setAdminEmail(email);
+  }, []);
 
   const handleLogout = async () => {
     try {
-      await supabase.auth.signOut()
-      router.push('/admin')
+      await supabase.auth.signOut();
+      router.push("/admin");
     } catch (error) {
-      console.error('Çıkış yapılırken hata:', error)
+      console.error("Çıkış yapılırken hata:", error);
     }
-  }
+  };
 
   const isActive = (href: string) => {
-    if (href === '/admin/dashboard') {
-      return pathname === '/admin/dashboard'
+    if (href === "/admin/dashboard") {
+      return pathname === "/admin/dashboard";
     }
-    return pathname.startsWith(href)
-  }
+    return pathname.startsWith(href);
+  };
 
   return (
-    <Box
-      as="header"
-      bg={bgColor}
-      borderBottom="1px"
-      borderColor={borderColor}
-      px={{ base: 4, md: 6 }}
-      py={{ base: 3, md: 4 }}
-      position="sticky"
-      top={0}
-      zIndex={1100}
-      boxShadow="sm"
-    >
-      <HStack justify="space-between" align="center" w="full">
+    <header className="bg-white border-b border-gray-200 px-4 md:px-6 py-3 md:py-4 sticky top-0 z-50 shadow-sm">
+      <div className="flex justify-between items-center w-full">
         {/* Sol taraf - Logo */}
-        <VStack align="start" gap={0} flexShrink={0}>
-          <Text
-            fontSize={{ base: "lg", md: "xl" }}
-            fontWeight="bold"
-            color={textColor}
-            lineHeight="1"
-          >
+        <div className="flex flex-col items-start gap-0 flex-shrink-0">
+          <h1 className="text-lg md:text-xl font-bold text-gray-900 leading-none">
             Nutriga Akademi
-          </Text>
-          <Text
-            fontSize={{ base: "xs", md: "sm" }}
-            color={subTextColor}
-            lineHeight="1"
-          >
+          </h1>
+          <p className="text-xs md:text-sm text-gray-600 leading-none">
             Admin Panel
-          </Text>
-        </VStack>
+          </p>
+        </div>
 
         {/* Orta - Navigation (Desktop) */}
-        <HStack gap={1} display={{ base: "none", md: "flex" }}>
+        <div className="hidden md:flex gap-1">
           <Link href="/admin/dashboard">
             <Button
               variant="ghost"
               size="sm"
-              color={isActive('/admin/dashboard') ? activeColor : textColor}
-              bg={isActive('/admin/dashboard') ? activeBg : 'transparent'}
-              _hover={{ bg: isActive('/admin/dashboard') ? activeBg : 'gray.50' }}
+              className={`${
+                isActive("/admin/dashboard")
+                  ? "bg-green-50 text-green-600"
+                  : "text-gray-900 hover:bg-gray-50"
+              }`}
             >
-              <Icon as={FiHome} mr={2} />
+              <FiHome className="mr-2 h-4 w-4" />
               Dashboard
             </Button>
           </Link>
-          
+
           <Link href="/admin/egitimler">
             <Button
               variant="ghost"
               size="sm"
-              color={isActive('/admin/egitimler') ? activeColor : textColor}
-              bg={isActive('/admin/egitimler') ? activeBg : 'transparent'}
-              _hover={{ bg: isActive('/admin/egitimler') ? activeBg : 'gray.50' }}
+              className={`${
+                isActive("/admin/egitimler")
+                  ? "bg-green-50 text-green-600"
+                  : "text-gray-900 hover:bg-gray-50"
+              }`}
             >
-              <Icon as={FiBookOpen} mr={2} />
+              <FiBookOpen className="mr-2 h-4 w-4" />
               Eğitimler
             </Button>
           </Link>
-          
+
           <Link href="/admin/blog">
             <Button
               variant="ghost"
               size="sm"
-              color={isActive('/admin/blog') ? activeColor : textColor}
-              bg={isActive('/admin/blog') ? activeBg : 'transparent'}
-              _hover={{ bg: isActive('/admin/blog') ? activeBg : 'gray.50' }}
+              className={`${
+                isActive("/admin/blog")
+                  ? "bg-green-50 text-green-600"
+                  : "text-gray-900 hover:bg-gray-50"
+              }`}
             >
-              <Icon as={FiFileText} mr={2} />
+              <FiFileText className="mr-2 h-4 w-4" />
               Blog
             </Button>
           </Link>
-        </HStack>
+        </div>
 
         {/* Mobil Navigation */}
-        <HStack gap={1} display={{ base: "flex", md: "none" }}>
+        <div className="flex md:hidden gap-1">
           <Link href="/admin/dashboard">
             <Button
               variant="ghost"
               size="sm"
-              color={isActive('/admin/dashboard') ? activeColor : textColor}
-              bg={isActive('/admin/dashboard') ? activeBg : 'transparent'}
-              _hover={{ bg: isActive('/admin/dashboard') ? activeBg : 'gray.50' }}
-              px={2}
+              className={`px-2 ${
+                isActive("/admin/dashboard")
+                  ? "bg-green-50 text-green-600"
+                  : "text-gray-900 hover:bg-gray-50"
+              }`}
             >
-              <Icon as={FiHome} />
+              <FiHome className="h-4 w-4" />
             </Button>
           </Link>
-          
+
           <Link href="/admin/egitimler">
             <Button
               variant="ghost"
               size="sm"
-              color={isActive('/admin/egitimler') ? activeColor : textColor}
-              bg={isActive('/admin/egitimler') ? activeBg : 'transparent'}
-              _hover={{ bg: isActive('/admin/egitimler') ? activeBg : 'gray.50' }}
-              px={2}
+              className={`px-2 ${
+                isActive("/admin/egitimler")
+                  ? "bg-green-50 text-green-600"
+                  : "text-gray-900 hover:bg-gray-50"
+              }`}
             >
-              <Icon as={FiBookOpen} />
+              <FiBookOpen className="h-4 w-4" />
             </Button>
           </Link>
-          
+
           <Link href="/admin/blog">
             <Button
               variant="ghost"
               size="sm"
-              color={isActive('/admin/blog') ? activeColor : textColor}
-              bg={isActive('/admin/blog') ? activeBg : 'transparent'}
-              _hover={{ bg: isActive('/admin/blog') ? activeBg : 'gray.50' }}
-              px={2}
+              className={`px-2 ${
+                isActive("/admin/blog")
+                  ? "bg-green-50 text-green-600"
+                  : "text-gray-900 hover:bg-gray-50"
+              }`}
             >
-              <Icon as={FiFileText} />
+              <FiFileText className="h-4 w-4" />
             </Button>
           </Link>
-        </HStack>
+        </div>
 
         {/* Sağ taraf - Admin bilgileri ve çıkış */}
-        <HStack gap={{ base: 2, md: 4 }} flexShrink={0}>
+        <div className="flex gap-2 md:gap-4 flex-shrink-0">
           <Badge
-            colorScheme="green"
-            variant="subtle"
-            px={{ base: 2, md: 3 }}
-            py={1}
-            borderRadius="full"
-            fontSize="xs"
-            display={{ base: "none", sm: "block" }}
+            variant="secondary"
+            className="hidden sm:block px-2 md:px-3 py-1 rounded-full text-xs bg-green-100 text-green-800"
           >
             Admin
           </Badge>
-          
-          <HStack gap={{ base: 1, md: 3 }}>
-            <Text fontSize="sm" color={textColor} display={{ base: "none", lg: "block" }}>
+
+          <div className="flex gap-1 md:gap-3">
+            <span className="hidden lg:block text-sm text-gray-900">
               {adminEmail}
-            </Text>
+            </span>
             <Button
               variant="ghost"
               size="sm"
-              color={textColor}
               onClick={handleLogout}
-              px={{ base: 2, md: 3 }}
+              className="px-2 md:px-3 text-gray-900 hover:bg-gray-50"
             >
-              <Icon as={FiLogOut} mr={{ base: 0, md: 2 }} />
-              <Text display={{ base: "none", md: "block" }}>Çıkış</Text>
+              <FiLogOut className="h-4 w-4 md:mr-2" />
+              <span className="hidden md:block">Çıkış</span>
             </Button>
-          </HStack>
-        </HStack>
-      </HStack>
-    </Box>
-  )
+          </div>
+        </div>
+      </div>
+    </header>
+  );
 }

@@ -1,25 +1,16 @@
 "use client";
 
-import { cartApi, CartItemDTO } from "@/lib/api";
-// import { prisma } from "@/lib/prisma";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
 import { toaster } from "@/components/ui/toaster";
+import { cartApi, CartItemDTO } from "@/lib/api";
 import { createClient } from "@/lib/supabase/client";
-import {
-  Badge,
-  Box,
-  Button,
-  Card,
-  Heading,
-  HStack,
-  Icon,
-  Input,
-  Text,
-  VStack,
-} from "@chakra-ui/react";
+import { Minus, Plus, Trash2 } from "lucide-react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
-import { FiMinus, FiPlus, FiTrash2 } from "react-icons/fi";
 
 export default function CartPage() {
   const [items, setItems] = useState<CartItemDTO[]>([]);
@@ -50,7 +41,7 @@ export default function CartPage() {
     return () => {
       sub.subscription.unsubscribe();
     };
-  }, []);
+  }, [supabase.auth]);
 
   const subtotal = useMemo(() => {
     return items.reduce((sum, it) => {
@@ -80,44 +71,33 @@ export default function CartPage() {
   };
 
   return (
-    <Box maxW="7xl" mx="auto" px={{ base: 4, md: 6 }} py={{ base: 6, md: 8 }}>
-      <VStack gap={6} align="stretch">
-        <Box>
-          <Heading size="xl" color="gray.900" mb={2}>
-            Sepet
-          </Heading>
-          <Text color="gray.600">
+    <div className="max-w-7xl mx-auto px-4 md:px-6 py-6 md:py-8">
+      <div className="flex flex-col gap-6">
+        {/* Header */}
+        <div>
+          <h1 className="text-2xl font-bold text-gray-900 mb-2">Sepet</h1>
+          <p className="text-gray-600">
             Ürünlerini gözden geçir ve satın almaya geç
-          </Text>
-        </Box>
+          </p>
+        </div>
 
-        <Card.Root bg="white" borderRadius="lg" shadow="sm">
-          <Card.Body>
-            <VStack gap={4} align="stretch">
-              {loading && <Text>Yükleniyor...</Text>}
+        {/* Cart Items */}
+        <Card className="bg-white rounded-lg shadow-sm">
+          <CardContent className="p-6">
+            <div className="flex flex-col gap-4">
+              {loading && <p>Yükleniyor...</p>}
               {!loading && items.length === 0 && (
-                <Text color="gray.500">Sepetin boş.</Text>
+                <p className="text-gray-500">Sepetin boş.</p>
               )}
               {!loading &&
                 items.map((it) => (
-                  <Box
+                  <div
                     key={it.id}
-                    display="flex"
-                    flexDirection={{ base: "column", md: "row" }}
-                    gap={4}
-                    alignItems={{ base: "stretch", md: "center" }}
-                    justifyContent="space-between"
-                    w="full"
+                    className="flex flex-col md:flex-row gap-4 items-stretch md:items-center justify-between w-full"
                   >
-                    <HStack gap={4} align="center">
-                      <Box
-                        w={{ base: "72px", md: "96px" }}
-                        h={{ base: "54px", md: "72px" }}
-                        position="relative"
-                        bg="gray.50"
-                        borderRadius="md"
-                        overflow="hidden"
-                      >
+                    {/* Product Info */}
+                    <div className="flex items-center gap-4">
+                      <div className="relative w-16 md:w-24 h-12 md:h-18 bg-gray-50 rounded-md overflow-hidden">
                         <Image
                           src={
                             it.education?.imageUrl ||
@@ -125,14 +105,13 @@ export default function CartPage() {
                           }
                           alt={it.education?.title || "Eğitim"}
                           fill
-                          style={{ objectFit: "cover" }}
+                          className="object-cover"
                         />
-                      </Box>
-                      <VStack align="start" gap={1} minW={0}>
-                        <Text
-                          fontWeight="medium"
-                          color="gray.800"
-                          css={{
+                      </div>
+                      <div className="flex flex-col items-start gap-1 min-w-0 flex-1">
+                        <h3
+                          className="font-medium text-gray-800 line-clamp-2"
+                          style={{
                             display: "-webkit-box",
                             WebkitBoxOrient: "vertical",
                             WebkitLineClamp: 2,
@@ -140,104 +119,90 @@ export default function CartPage() {
                           }}
                         >
                           {it.education?.title}
-                        </Text>
+                        </h3>
                         <Badge
-                          color="var(--accent)"
-                          bg="rgba(var(--accent-rgb), 0.12)"
-                          variant="subtle"
+                          className="text-xs"
+                          style={{
+                            color: "var(--accent)",
+                            backgroundColor: "rgba(var(--accent-rgb), 0.12)",
+                          }}
                         >
                           {it.education?.category}
                         </Badge>
-                      </VStack>
-                    </HStack>
+                      </div>
+                    </div>
 
-                    <HStack
-                      gap={3}
-                      align="center"
-                      justify={{ base: "space-between", md: "flex-end" }}
-                      flexWrap="wrap"
-                      w="full"
-                    >
-                      <HStack gap={2} align="center">
+                    {/* Quantity and Actions */}
+                    <div className="flex gap-3 items-center justify-between md:justify-end flex-wrap w-full md:w-auto">
+                      {/* Quantity Controls */}
+                      <div className="flex items-center gap-2">
                         <Button
                           size="sm"
                           variant="outline"
-                          borderColor="var(--primary)"
-                          _hover={{ bg: "rgba(var(--primary-rgb), 0.06)" }}
+                          className="border-primary hover:bg-primary/10"
                           onClick={() =>
                             updateQty(it.id, Math.max(1, it.quantity - 1))
                           }
                         >
-                          <Icon as={FiMinus} />
+                          <Minus className="w-4 h-4" />
                         </Button>
                         <Input
                           value={it.quantity}
                           readOnly
-                          textAlign="center"
-                          w={{ base: "56px", md: "64px" }}
-                          px={0}
+                          className="w-14 md:w-16 text-center px-0"
                         />
                         <Button
                           size="sm"
                           variant="outline"
-                          borderColor="var(--primary)"
-                          _hover={{ bg: "rgba(var(--primary-rgb), 0.06)" }}
+                          className="border-primary hover:bg-primary/10"
                           onClick={() => updateQty(it.id, it.quantity + 1)}
                         >
-                          <Icon as={FiPlus} />
+                          <Plus className="w-4 h-4" />
                         </Button>
-                      </HStack>
+                      </div>
 
-                      <Text
-                        fontWeight="semibold"
-                        color="gray.900"
-                        minW={{ md: "96px" }}
-                        textAlign={{ md: "right" }}
-                      >
+                      {/* Price */}
+                      <span className="font-semibold text-gray-900 min-w-[96px] text-right">
                         ₺{Number(it.education?.price ?? 0) * it.quantity}
-                      </Text>
+                      </span>
 
+                      {/* Remove Button */}
                       <Button
                         variant="outline"
-                        colorScheme="red"
+                        size="sm"
+                        className="border-red-200 text-red-600 hover:bg-red-50"
                         onClick={() => removeItem(it.id)}
                       >
-                        <Icon as={FiTrash2} />
+                        <Trash2 className="w-4 h-4" />
                       </Button>
-                    </HStack>
-                  </Box>
+                    </div>
+                  </div>
                 ))}
-            </VStack>
-          </Card.Body>
-        </Card.Root>
+            </div>
+          </CardContent>
+        </Card>
 
-        <Card.Root bg="white" borderRadius="lg" shadow="sm">
-          <Card.Body>
-            <VStack gap={3} align="stretch">
-              <HStack justify="space-between">
-                <Text color="gray.600">Ara toplam</Text>
-                <Text fontWeight="semibold">₺{subtotal}</Text>
-              </HStack>
-              <HStack justify="space-between">
-                <Text color="gray.600">KDV</Text>
-                <Text fontWeight="semibold">Dahil</Text>
-              </HStack>
-              <Box h="1px" bg="gray.200" />
-              <HStack justify="space-between">
-                <Text fontWeight="bold" color="gray.800">
-                  Toplam
-                </Text>
-                <Text fontWeight="bold" color="var(--primary)">
-                  ₺{subtotal}
-                </Text>
-              </HStack>
+        {/* Order Summary */}
+        <Card className="bg-white rounded-lg shadow-sm">
+          <CardContent className="p-6">
+            <div className="flex flex-col gap-3">
+              <div className="flex justify-between">
+                <span className="text-gray-600">Ara toplam</span>
+                <span className="font-semibold">₺{subtotal}</span>
+              </div>
+              <div className="flex justify-between">
+                <span className="text-gray-600">KDV</span>
+                <span className="font-semibold">Dahil</span>
+              </div>
+              <div className="h-px bg-gray-200" />
+              <div className="flex justify-between">
+                <span className="font-bold text-gray-800">Toplam</span>
+                <span className="font-bold text-primary">₺{subtotal}</span>
+              </div>
               <Button
-                bg="var(--primary)"
-                color="white"
                 size="lg"
-                borderRadius="12px"
+                className="w-full h-12 rounded-xl bg-primary hover:bg-primary/90 text-white disabled:opacity-50"
                 disabled={items.length === 0}
-                _hover={{ bg: "var(--primary-hover)" }}
                 onClick={async () => {
                   if (!isAuthenticated) {
                     toaster.success("Satın almak için lütfen giriş yapın");
@@ -255,17 +220,17 @@ export default function CartPage() {
                     } else {
                       toaster.error(`Satın alma başarısız: ${data.error}`);
                     }
-                  } catch (error) {
+                  } catch {
                     toaster.error("Satın alma sırasında bir hata oluştu.");
                   }
                 }}
               >
                 {isAuthenticated ? "Satın Almaya Geç" : "Giriş Yap ve Satın Al"}
               </Button>
-            </VStack>
-          </Card.Body>
-        </Card.Root>
-      </VStack>
-    </Box>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+    </div>
   );
 }

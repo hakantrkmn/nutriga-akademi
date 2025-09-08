@@ -1,113 +1,74 @@
 import { COMPANY_NAME } from "@/constants";
-import {
-  Box,
-  Container,
-  SimpleGrid,
-  VStack,
-  Heading,
-  Text,
-  Icon,
-} from "@chakra-ui/react";
 import { HiBadgeCheck, HiEye, HiHeart } from "react-icons/hi";
 
 const values = [
   {
     icon: HiBadgeCheck,
     title: "Misyonumuz",
-    description: "Beslenme alanında en güncel ve kanıta dayalı bilgileri paylaşarak, diyetisyenlerin mesleki yeterliliklerini artırmak ve toplum sağlığına katkı sağlamak.",
-    color: "green.500"
+    description:
+      "Beslenme alanında en güncel ve kanıta dayalı bilgileri paylaşarak, diyetisyenlerin mesleki yeterliliklerini artırmak ve toplum sağlığına katkı sağlamak.",
+    color: "green.500",
   },
   {
     icon: HiEye,
-    title: "Vizyonumuz", 
-    description: "Türkiye'nin beslenme alanında önde gelen eğitim platformu olmak ve dünya standartlarında diyetisyen uzmanlar yetiştirmek.",
-    color: "orange.500"
+    title: "Vizyonumuz",
+    description:
+      "Türkiye'nin beslenme alanında önde gelen eğitim platformu olmak ve dünya standartlarında diyetisyen uzmanlar yetiştirmek.",
+    color: "orange.500",
   },
   {
     icon: HiHeart,
     title: "Değerlerimiz",
-    description: "Bilimsellik, sürekli öğrenme, etik değerler, yenilikçilik ve toplumsal sorumluluk ilkelerini benimser, kaliteli eğitim sunmayı hedefleriz.",
-    color: "green.600"
-  }
+    description:
+      "Bilimsellik, sürekli öğrenme, etik değerler, yenilikçilik ve toplumsal sorumluluk ilkelerini benimser, kaliteli eğitim sunmayı hedefleriz.",
+    color: "green.600",
+  },
 ];
 
 export default function AboutValues() {
   return (
-    <Box py={16} bg="white">
-      <Container maxW="1200px" px={{ base: 4, md: 6 }}>
-        <VStack gap={12}>
-          <VStack gap={4} textAlign="center">
-            <Heading 
-              as="h2" 
-              size="xl" 
-              color="gray.800"
-            >
-              Değerlerimiz
-            </Heading>
-            <Text 
-              fontSize="lg" 
-              color="gray.600" 
-              maxW="600px"
-            >
+    <div className="py-16 bg-white">
+      <div className="max-w-6xl mx-auto px-4 md:px-6">
+        <div className="flex flex-col items-center space-y-12">
+          <div className="flex flex-col items-center space-y-4 text-center">
+            <h2 className="text-3xl font-bold text-gray-800">Değerlerimiz</h2>
+            <p className="text-lg text-gray-600 max-w-2xl">
               {COMPANY_NAME}&apos;yi ayakta tutan temel değerler ve ilkelerimiz
-            </Text>
-          </VStack>
+            </p>
+          </div>
 
-          <SimpleGrid 
-            columns={{ base: 1, md: 3 }} 
-            gap={8} 
-            w="full"
-          >
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 w-full">
             {values.map((value, index) => (
-              <VStack 
+              <div
                 key={index}
-                p={8}
-                bg="gray.50"
-                borderRadius="12px"
-                border="1px solid"
-                borderColor="gray.100"
-                textAlign="center"
-                gap={6}
-                _hover={{
-                  transform: "translateY(-4px)",
-                  shadow: "lg",
-                  borderColor: value.color
-                }}
-                transition="all 0.3s ease"
+                className="p-8 bg-gray-50 rounded-xl border border-gray-100 text-center space-y-6 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:border-green-500"
               >
-                <Box
-                  bg={`${value.color.split('.')[0]}.50`}
-                  p={4}
-                  borderRadius="16px"
-                  display="inline-block"
+                <div
+                  className={`p-4 rounded-2xl inline-block ${
+                    value.color === "green.500"
+                      ? "bg-green-50 text-green-500"
+                      : value.color === "orange.500"
+                      ? "bg-orange-50 text-orange-500"
+                      : "bg-green-100 text-green-600"
+                  }`}
                 >
-                  <Icon boxSize={8} color={value.color}>
-                    <value.icon />
-                  </Icon>
-                </Box>
+                  <value.icon className="w-8 h-8" />
+                </div>
 
-                <VStack gap={3}>
-                  <Heading 
-                    as="h3" 
-                    size="md" 
-                    color="gray.800"
-                  >
+                <div className="space-y-3">
+                  <h3 className="text-xl font-semibold text-gray-800">
                     {value.title}
-                  </Heading>
-                  
-                  <Text 
-                    fontSize="md" 
-                    color="gray.600" 
-                    lineHeight="tall"
-                  >
+                  </h3>
+
+                  <p className="text-gray-600 leading-relaxed">
                     {value.description}
-                  </Text>
-                </VStack>
-              </VStack>
+                  </p>
+                </div>
+              </div>
             ))}
-          </SimpleGrid>
-        </VStack>
-      </Container>
-    </Box>
+          </div>
+        </div>
+      </div>
+    </div>
   );
 }

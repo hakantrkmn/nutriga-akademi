@@ -1,22 +1,16 @@
 "use client";
 
-import {
-  Box,
-  VStack,
-  Button,
-  Text,
-  Heading,
-  Input,
-  Textarea,
-} from "@chakra-ui/react";
-import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
 import { toaster } from "@/components/ui/toaster";
+import { useState } from "react";
 
 export default function ContactForm() {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
-    message: ""
+    message: "",
   });
 
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -24,185 +18,108 @@ export default function ContactForm() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
-    
+
     try {
       // Simulated form submission
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+
       // Reset form
       setFormData({ name: "", email: "", message: "" });
-      
+
       toaster.success("Mesajınız başarıyla gönderildi!");
-      
     } catch (error) {
-      toaster.error("Mesaj gönderilirken bir hata oluştu. Lütfen tekrar deneyin.");
+      toaster.error(
+        "Mesaj gönderilirken bir hata oluştu. Lütfen tekrar deneyin."
+      );
     } finally {
       setIsSubmitting(false);
     }
   };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     setFormData({
       ...formData,
-      [e.target.name]: e.target.value
+      [e.target.name]: e.target.value,
     });
   };
 
   return (
-    <Box
-      bg="white"
-      p={8}
-      borderRadius="12px"
-      shadow="lg"
-      maxW="600px"
-      w="full"
-    >
-      <VStack gap={6} align="stretch">
-        <Box textAlign="center">
-          <Heading 
-            as="h2" 
-            size="lg" 
-            color="gray.800" 
-            mb={2}
-          >
+    <div className="bg-white p-8 rounded-xl shadow-lg max-w-2xl w-full">
+      <div className="flex flex-col gap-6">
+        <div className="text-center">
+          <h2 className="text-xl font-semibold text-gray-800 mb-2">
             Bizimle İletişime Geçin
-          </Heading>
-          <Text color="gray.600" fontSize="md">
-            Sorularınız için bize mesaj gönderin, size en kısa sürede dönüş yapalım.
-          </Text>
-        </Box>
+          </h2>
+          <p className="text-gray-600 text-sm">
+            Sorularınız için bize mesaj gönderin, size en kısa sürede dönüş
+            yapalım.
+          </p>
+        </div>
 
-        <Box as="form" onSubmit={handleSubmit}>
-          <VStack gap={5}>
+        <form onSubmit={handleSubmit}>
+          <div className="flex flex-col gap-5">
             {/* Name Input */}
-            <Box w="full">
-              <Text 
-                fontSize="sm" 
-                fontWeight="medium" 
-                color="gray.700" 
-                mb={2}
-              >
+            <div className="w-full">
+              <label className="block text-sm font-medium text-gray-700 mb-2">
                 İsim Soyisim *
-              </Text>
+              </label>
               <Input
                 type="text"
                 name="name"
                 value={formData.name}
                 onChange={handleChange}
-                required
-                w="full"
-                p={3}
-                border="2px solid"
-                borderColor="gray.100"
-                borderRadius="8px"
-                fontSize="md"
-                bg="gray.50"
-                _hover={{ borderColor: "gray.200" }}
-                _focus={{
-                  outline: "none",
-                  borderColor: "green.500",
-                  bg: "white"
-                }}
                 placeholder="Adınızı ve soyadınızı girin"
+                required
               />
-            </Box>
+            </div>
 
             {/* Email Input */}
-            <Box w="full">
-              <Text 
-                fontSize="sm" 
-                fontWeight="medium" 
-                color="gray.700" 
-                mb={2}
-              >
+            <div className="w-full">
+              <label className="block text-sm font-medium text-gray-700 mb-2">
                 E-posta Adresi *
-              </Text>
+              </label>
               <Input
                 type="email"
                 name="email"
                 value={formData.email}
                 onChange={handleChange}
-                required
-                w="full"
-                p={3}
-                border="2px solid"
-                borderColor="gray.100"
-                borderRadius="8px"
-                fontSize="md"
-                bg="gray.50"
-                _hover={{ borderColor: "gray.200" }}
-                _focus={{
-                  outline: "none",
-                  borderColor: "green.500",
-                  bg: "white"
-                }}
                 placeholder="email@example.com"
+                required
               />
-            </Box>
+            </div>
 
             {/* Message Textarea */}
-            <Box w="full">
-              <Text 
-                fontSize="sm" 
-                fontWeight="medium" 
-                color="gray.700" 
-                mb={2}
-              >
+            <div className="w-full">
+              <label className="block text-sm font-medium text-gray-700 mb-2">
                 Mesajınız *
-              </Text>
+              </label>
               <Textarea
                 name="message"
                 value={formData.message}
                 onChange={handleChange}
-                required
-                w="full"
-                p={3}
-                border="2px solid"
-                borderColor="gray.100"
-                borderRadius="8px"
-                fontSize="md"
-                bg="gray.50"
-                minH="120px"
-                resize="vertical"
-                _hover={{ borderColor: "gray.200" }}
-                _focus={{
-                  outline: "none",
-                  borderColor: "green.500",
-                  bg: "white"
-                }}
                 placeholder="Mesajınızı buraya yazın..."
+                className="min-h-[120px] resize-y"
+                required
               />
-            </Box>
+            </div>
 
             {/* Submit Button */}
             <Button
               type="submit"
-              bg="green.500"
-              color="white"
-              size="lg"
-              w="full"
-              borderRadius="12px"
-              _hover={{ bg: "green.600" }}
-              _active={{ bg: "green.700" }}
-              loading={isSubmitting}
-              loadingText="Gönderiliyor..."
+              className="bg-green-500 hover:bg-green-600 text-white w-full"
+              disabled={isSubmitting}
             >
-              Mesaj Gönder
+              {isSubmitting ? "Gönderiliyor..." : "Mesaj Gönder"}
             </Button>
-          </VStack>
-        </Box>
+          </div>
+        </form>
 
-        <Box 
-          pt={4} 
-          borderTop="1px solid" 
-          borderColor="gray.100"
-          textAlign="center"
-        >
-          <Text fontSize="sm" color="gray.500">
-            * işaretli alanlar zorunludur
-          </Text>
-        </Box>
-      </VStack>
-    </Box>
+        <div className="pt-4 border-t border-gray-100 text-center">
+          <p className="text-sm text-gray-500">* işaretli alanlar zorunludur</p>
+        </div>
+      </div>
+    </div>
   );
 }

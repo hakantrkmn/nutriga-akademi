@@ -1,25 +1,18 @@
-import { Box, Container, Heading, Text, VStack } from "@chakra-ui/react";
-
 export default function BlogHero() {
   return (
-    <Box bg="var(--background-alt)" py={16}>
-      <Container maxW="1200px" px={{ base: 4, md: 6 }}>
-        <VStack gap={6} textAlign="center" maxW="800px" mx="auto">
-          <Heading as="h1" size="3xl" color="var(--primary)" fontWeight="bold">
+    <div className="bg-gray-50 py-16">
+      <div className="max-w-6xl mx-auto px-4 md:px-6">
+        <div className="flex flex-col gap-6 text-center max-w-4xl mx-auto">
+          <h1 className="text-4xl md:text-5xl font-bold text-green-600">
             NutriHome Blog
-          </Heading>
+          </h1>
 
-          <Text
-            fontSize={{ base: "lg", md: "xl" }}
-            color="gray.700"
-            lineHeight="tall"
-            maxW="600px"
-          >
+          <p className="text-lg md:text-xl text-gray-700 leading-relaxed max-w-2xl mx-auto">
             Beslenme uzmanlarından güncel makaleler, sağlıklı yaşam ipuçları ve
             beslenme rehberleri ile kendinizi geliştirin.
-          </Text>
-        </VStack>
-      </Container>
-    </Box>
+          </p>
+        </div>
+      </div>
+    </div>
   );
 }

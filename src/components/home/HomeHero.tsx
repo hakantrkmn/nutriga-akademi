@@ -1,102 +1,54 @@
 "use client";
 
+import { Button } from "@/components/ui/button";
 import { heroData } from "@/data/heroData";
-import {
-  Box,
-  Button,
-  Container,
-  Flex,
-  Heading,
-  HStack,
-  Text,
-  useBreakpointValue,
-  VStack,
-} from "@chakra-ui/react";
 import Image from "next/image";
 import Link from "next/link";
+import { useEffect, useState } from "react";
 
 export default function Hero() {
-  const isMobile = useBreakpointValue({ base: true, md: false });
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
 
   return (
-    <Box
-      bg={`linear-gradient(135deg, var(--primary) 0%, var(--primary-hover) 100%)`}
-      color="white"
-      py={{ base: 16, md: 24 }}
-      position="relative"
-      overflow="hidden"
-    >
+    <div className="bg-gradient-to-br from-green-600 to-green-700 text-white py-16 md:py-24 relative overflow-hidden">
       {/* Background Pattern */}
-      <Box
-        position="absolute"
-        top="0"
-        left="0"
-        right="0"
-        bottom="0"
-        opacity="0.1"
-        backgroundImage="url('data:image/svg+xml,%3Csvg width=%2260%22 height=%2260%22 viewBox=%220 0 60 60%22 xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cg fill=%22none%22 fill-rule=%22evenodd%22%3E%3Cg fill=%22%23ffffff%22 fill-opacity=%220.1%22%3E%3Ccircle cx=%2230%22 cy=%2230%22 r=%222%22/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')"
+      <div
+        className="absolute inset-0 opacity-10"
+        style={{
+          backgroundImage:
+            "url('data:image/svg+xml,%3Csvg width=%2260%22 height=%2260%22 viewBox=%220 0 60 60%22 xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cg fill=%22none%22 fill-rule=%22evenodd%22%3E%3Cg fill=%22%23ffffff%22 fill-opacity=%220.1%22%3E%3Ccircle cx=%2230%22 cy=%2230%22 r=%222%22/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')",
+        }}
       />
 
-      <Container maxW="container.xl" position="relative" zIndex={1}>
-        <Flex
-          direction={{ base: "column", lg: "row" }}
-          align="center"
-          gap={{ base: 8, lg: 12 }}
-          minH={{ base: "auto", lg: "500px" }}
-        >
+      <div className="max-w-7xl mx-auto px-4 md:px-6 relative z-10">
+        <div className="flex flex-col lg:flex-row items-center gap-8 lg:gap-12 min-h-[500px]">
           {/* Content */}
-          <VStack
-            align={{ base: "center", lg: "start" }}
-            gap={6}
-            flex="1"
-            textAlign={{ base: "center", lg: "left" }}
-          >
-            <Heading
-              as="h1"
-              size={{ base: "2xl", md: "3xl", lg: "4xl" }}
-              fontWeight="bold"
-              lineHeight="1.2"
-              maxW="600px"
-            >
+          <div className="flex-1 space-y-6 text-center lg:text-left">
+            <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold leading-tight max-w-[600px]">
               {heroData.title.main}
-              <Text as="span" className="text-accent" display="block">
+              <span className="block text-green-300">
                 {heroData.title.highlight}
-              </Text>
-            </Heading>
+              </span>
+            </h1>
 
-            <Text
-              fontSize={{ base: "lg", md: "xl" }}
-              maxW="500px"
-              opacity="0.9"
-              lineHeight="1.6"
-            >
+            <p className="text-lg md:text-xl max-w-[500px] opacity-90 leading-relaxed">
               {heroData.description}
-            </Text>
+            </p>
 
-            <HStack
-              gap={4}
-              flexWrap="wrap"
-              justify={{ base: "center", lg: "start" }}
-            >
+            <div className="flex gap-4 flex-wrap justify-center lg:justify-start">
               <Link href={heroData.buttons.primary.href}>
                 <Button
                   size="lg"
-                  bg="var(--primary)"
-                  color="white"
-                  borderRadius="12px"
-                  px={8}
-                  py={6}
-                  fontSize="lg"
-                  fontWeight="semibold"
-                  _hover={{
-                    bg: "var(--primary-hover)",
-                    transform: "translateY(-2px)",
-                    boxShadow: "0 8px 25px rgba(var(--primary-rgb), 0.3)",
-                  }}
-                  _active={{
-                    transform: "translateY(0)",
-                  }}
-                  transition="all 0.3s ease"
+                  className="bg-green-600 hover:bg-green-700 text-white px-8 py-6 text-lg font-semibold rounded-xl hover:-translate-y-0.5 hover:shadow-lg transition-all"
                 >
                   {heroData.buttons.primary.text}
                 </Button>
@@ -106,89 +58,46 @@ export default function Hero() {
                 <Button
                   variant="outline"
                   size="lg"
-                  borderColor="white"
-                  color="white"
-                  borderRadius="12px"
-                  px={8}
-                  py={6}
-                  fontSize="lg"
-                  fontWeight="semibold"
-                  _hover={{
-                    bg: "white",
-                    color: "var(--primary)",
-                    transform: "translateY(-2px)",
-                  }}
-                  _active={{
-                    transform: "translateY(0)",
-                  }}
-                  transition="all 0.3s ease"
+                  className="border-white text-white hover:bg-white hover:text-green-600 px-8 py-6 text-lg font-semibold rounded-xl hover:-translate-y-0.5 transition-all"
                 >
                   {heroData.buttons.secondary.text}
                 </Button>
               </Link>
-            </HStack>
+            </div>
 
             {/* Stats */}
-            <HStack
-              gap={8}
-              pt={4}
-              flexWrap="wrap"
-              justify={{ base: "center", lg: "start" }}
-            >
+            <div className="flex gap-8 pt-4 flex-wrap justify-center lg:justify-start">
               {heroData.stats.map((stat, index) => (
-                <VStack key={index} gap={1}>
-                  <Text
-                    fontSize="2xl"
-                    fontWeight="bold"
-                    className="text-accent"
-                  >
+                <div key={index} className="text-center">
+                  <p className="text-2xl font-bold text-green-300">
                     {stat.value}
-                  </Text>
-                  <Text fontSize="sm" opacity="0.8">
-                    {stat.label}
-                  </Text>
-                </VStack>
+                  </p>
+                  <p className="text-sm opacity-80">{stat.label}</p>
+                </div>
               ))}
-            </HStack>
-          </VStack>
+            </div>
+          </div>
 
           {/* Hero Image */}
           {!isMobile && (
-            <Box flex="1" maxW="500px">
-              <Box
-                position="relative"
-                borderRadius="20px"
-                overflow="hidden"
-                boxShadow="0 20px 40px rgba(0, 0, 0, 0.1)"
-              >
+            <div className="flex-1 max-w-[500px]">
+              <div className="relative rounded-3xl overflow-hidden shadow-2xl">
                 <Image
                   src={heroData.image.src}
                   alt={heroData.image.alt}
                   width={500}
                   height={400}
-                  style={{
-                    width: "100%",
-                    height: "400px",
-                    objectFit: "cover",
-                    aspectRatio: "5/4",
-                  }}
+                  className="w-full h-[400px] object-cover"
                   priority
                   placeholder="blur"
                   blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAIAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAhEAACAQMDBQAAAAAAAAAAAAABAgMABAUGIWGRkqGx0f/EABUBAQEAAAAAAAAAAAAAAAAAAAMF/8QAGhEAAgIDAAAAAAAAAAAAAAAAAAECEgMRkf/aAAwDAQACEQMRAD8AltJagyeH0AthI5xdrLcNM91BF5pX2HaH9bcfaSXWGaRmknyJckliyjqTzSlT54b6bk+h0R//2Q=="
                 />
-                <Box
-                  position="absolute"
-                  top="0"
-                  left="0"
-                  right="0"
-                  bottom="0"
-                  bg={`linear-gradient(45deg, rgba(var(--primary-rgb), 0.1), rgba(var(--accent-rgb), 0.1))`}
-                />
-              </Box>
-            </Box>
+                <div className="absolute inset-0 bg-gradient-to-br from-green-600/10 to-green-700/10" />
+              </div>
+            </div>
           )}
-        </Flex>
-      </Container>
-    </Box>
+        </div>
+      </div>
+    </div>
   );
 }

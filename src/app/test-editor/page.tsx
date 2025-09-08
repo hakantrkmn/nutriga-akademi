@@ -1,15 +1,7 @@
 "use client";
 
 import TipTapEditor from "@/components/admin/TipTapEditor";
-import {
-  Box,
-  Button,
-  Container,
-  Heading,
-  HStack,
-  Text,
-  VStack,
-} from "@chakra-ui/react";
+import { Button } from "@/components/ui/button";
 import { useState } from "react";
 
 export default function TestEditorPage() {
@@ -155,51 +147,49 @@ export default function TestEditorPage() {
   };
 
   return (
-    <Container maxW="full" p={0} h="100vh">
-      <VStack h="100vh" gap={0}>
+    <div className="w-full h-screen p-0">
+      <div className="flex flex-col h-screen gap-0">
         {/* Header */}
-        <Box
-          w="full"
-          bg="gray.50"
-          p={4}
-          borderBottom="1px"
-          borderColor="gray.200"
-        >
-          <HStack justify="space-between" align="center">
-            <VStack align="start" gap={1}>
-              <Heading size="lg" color="gray.800">
+        <div className="w-full bg-gray-50 p-4 border-b border-gray-200">
+          <div className="flex justify-between items-center">
+            <div className="flex flex-col items-start gap-1">
+              <h1 className="text-xl font-semibold text-gray-800">
                 TipTap Editör Test Sayfası
-              </Heading>
-              <Text color="gray.600" fontSize="sm">
+              </h1>
+              <p className="text-gray-600 text-sm">
                 Tüm editör özelliklerini test edebilirsiniz
-              </Text>
-            </VStack>
-            <HStack gap={3}>
+              </p>
+            </div>
+            <div className="flex gap-3">
               <Button
                 onClick={handleLoadSample}
-                colorScheme="blue"
                 variant="outline"
                 size="sm"
+                className="border-blue-200 text-blue-600 hover:bg-blue-50"
               >
                 Örnek İçerik Yükle
               </Button>
-              <Button onClick={handleSave} colorScheme="green" size="sm">
+              <Button
+                onClick={handleSave}
+                size="sm"
+                className="bg-green-600 hover:bg-green-700 text-white"
+              >
                 Kaydet
               </Button>
               <Button
                 onClick={handleClear}
-                colorScheme="red"
                 variant="outline"
                 size="sm"
+                className="border-red-200 text-red-600 hover:bg-red-50"
               >
                 Temizle
               </Button>
-            </HStack>
-          </HStack>
-        </Box>
+            </div>
+          </div>
+        </div>
 
         {/* Editor */}
-        <Box w="full" flex="1" p={4} position="relative">
+        <div className="w-full flex-1 p-4 relative">
           <TipTapEditor
             content={content}
             onChange={setContent}
@@ -209,57 +199,28 @@ export default function TestEditorPage() {
           {/* Floating Save Button - Sağ alt köşe */}
           <Button
             onClick={handleSave}
-            colorScheme="green"
             size="lg"
-            position="fixed"
-            bottom="20px"
-            right="20px"
-            borderRadius="full"
-            boxShadow="lg"
-            zIndex={1000}
-            _hover={{
-              transform: "scale(1.05)",
-              boxShadow: "xl",
-            }}
-            transition="all 0.2s"
+            className="fixed bottom-5 right-5 rounded-full shadow-lg z-[1000] bg-green-600 hover:bg-green-700 text-white hover:scale-105 hover:shadow-xl transition-all duration-200"
             disabled={!content}
           >
             💾 Kaydet
           </Button>
-        </Box>
+        </div>
 
         {/* Footer - Content Preview */}
         {savedContent && (
-          <Box
-            w="full"
-            bg="gray.100"
-            p={4}
-            borderTop="1px"
-            borderColor="gray.200"
-            maxH="200px"
-            overflow="auto"
-          >
-            <VStack align="start" gap={2}>
-              <Text fontWeight="bold" color="gray.700">
+          <div className="w-full bg-gray-100 p-4 border-t border-gray-200 max-h-48 overflow-auto">
+            <div className="flex flex-col items-start gap-2">
+              <p className="font-bold text-gray-700">
                 Kaydedilen İçerik (JSON):
-              </Text>
-              <Box
-                bg="white"
-                p={3}
-                borderRadius="md"
-                border="1px"
-                borderColor="gray.300"
-                w="full"
-                fontSize="xs"
-                fontFamily="mono"
-                overflow="auto"
-              >
+              </p>
+              <div className="bg-white p-3 rounded-md border border-gray-300 w-full text-xs font-mono overflow-auto">
                 <pre>{JSON.stringify(savedContent, null, 2)}</pre>
-              </Box>
-            </VStack>
-          </Box>
+              </div>
+            </div>
+          </div>
         )}
-      </VStack>
-    </Container>
+      </div>
+    </div>
   );
 }

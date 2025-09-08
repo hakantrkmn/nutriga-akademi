@@ -1,16 +1,11 @@
 "use client";
 
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import { toaster } from "@/components/ui/toaster";
 import { createClient } from "@/lib/supabase/client";
-import {
-  Box,
-  Button,
-  Field,
-  Heading,
-  Input,
-  Text,
-  VStack,
-} from "@chakra-ui/react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
@@ -41,7 +36,9 @@ export default function LoginPage() {
       }
     } catch (err: unknown) {
       const message =
-        err instanceof Error ? err.message : "Giriş işlemi sırasında bir hata oluştu.";
+        err instanceof Error
+          ? err.message
+          : "Giriş işlemi sırasında bir hata oluştu.";
       toaster.error(message);
     } finally {
       setLoading(false);
@@ -49,58 +46,60 @@ export default function LoginPage() {
   };
 
   return (
-    <Box maxW="md" mx="auto" px={{ base: 4, md: 0 }} py={{ base: 10, md: 16 }}>
-      <VStack gap={6} align="stretch">
-        <Box textAlign="center">
-          <Heading size="lg" color="gray.900" mb={2}>
-            Giriş Yap
-          </Heading>
-          <Text color="gray.600">Hesabınıza erişin</Text>
-        </Box>
+    <div className="max-w-md mx-auto px-4 md:px-0 py-10 md:py-16">
+      <div className="space-y-6">
+        <div className="text-center">
+          <h1 className="text-2xl font-bold text-gray-900 mb-2">Giriş Yap</h1>
+          <p className="text-gray-600">Hesabınıza erişin</p>
+        </div>
 
-        <Box
-          as="form"
-          onSubmit={handleSubmit}
-          bg="white"
-          p={6}
-          borderRadius="lg"
-          boxShadow="sm"
-        >
-          <VStack gap={4} align="stretch">
-            <Field.Root required>
-              <Field.Label>E-posta</Field.Label>
-              <Input
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder="ornek@mail.com"
-              />
-            </Field.Root>
-            <Field.Root required>
-              <Field.Label>Şifre</Field.Label>
-              <Input
-                type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                placeholder="••••••••"
-              />
-            </Field.Root>
-            <Button type="submit" colorScheme="green" loading={loading}>
-              Giriş Yap
-            </Button>
-            <Text color="gray.600" fontSize="sm" textAlign="center">
-              Hesabın yok mu?{" "}
+        <Card>
+          <CardContent className="p-6">
+            <form onSubmit={handleSubmit} className="space-y-4">
+              <div className="space-y-2">
+                <Label htmlFor="email">E-posta</Label>
+                <Input
+                  id="email"
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="ornek@mail.com"
+                  required
+                />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="password">Şifre</Label>
+                <Input
+                  id="password"
+                  type="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  placeholder="••••••••"
+                  required
+                />
+              </div>
               <Button
-                variant="ghost"
-                colorScheme="green"
-                onClick={() => router.push("/auth/register")}
+                type="submit"
+                className="w-full bg-green-600 hover:bg-green-700"
+                disabled={loading}
               >
-                Kayıt ol
+                {loading ? "Giriş yapılıyor..." : "Giriş Yap"}
               </Button>
-            </Text>
-          </VStack>
-        </Box>
-      </VStack>
-    </Box>
+              <p className="text-gray-600 text-sm text-center">
+                Hesabın yok mu?{" "}
+                <Button
+                  type="button"
+                  variant="link"
+                  className="text-green-600 hover:text-green-700 p-0 h-auto"
+                  onClick={() => router.push("/auth/register")}
+                >
+                  Kayıt ol
+                </Button>
+              </p>
+            </form>
+          </CardContent>
+        </Card>
+      </div>
+    </div>
   );
 }

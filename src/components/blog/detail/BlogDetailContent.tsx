@@ -1,16 +1,15 @@
 "use client";
 
 import { BlogDetailContentProps } from "@/types";
-import { Box, Container, VStack } from "@chakra-ui/react";
 import BlogDetailFooter from "./BlogDetailFooter";
 import BlogDetailHeader from "./BlogDetailHeader";
 import BlogDetailContentTipTap from "./BlogDetailTipTapSection";
 
 export default function BlogDetailContent({ post }: BlogDetailContentProps) {
   return (
-    <Box bg="var(--background-alt)" minH="100vh">
-      <Container maxW="800px" px={{ base: 4, md: 6 }} py={8}>
-        <VStack gap={8} align="start" w="full">
+    <div className="bg-gray-50 min-h-screen">
+      <div className="container mx-auto px-4 md:px-6 py-8 max-w-4xl">
+        <div className="flex flex-col gap-8 w-full">
           <BlogDetailHeader post={post} />
 
           <BlogDetailContentTipTap
@@ -21,8 +20,8 @@ export default function BlogDetailContent({ post }: BlogDetailContentProps) {
           />
 
           <BlogDetailFooter />
-        </VStack>
-      </Container>
-    </Box>
+        </div>
+      </div>
+    </div>
   );
 }

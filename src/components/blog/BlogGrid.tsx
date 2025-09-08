@@ -1,32 +1,31 @@
 import BlogCard from "@/components/blog/BlogCard";
 import { BlogGridProps } from "@/types";
-import { Box, Container, SimpleGrid, Text, VStack } from "@chakra-ui/react";
 
 export default function BlogGrid({ posts }: BlogGridProps) {
   if (posts.length === 0) {
     return (
-      <Container maxW="1200px" px={{ base: 4, md: 6 }} py={16}>
-        <VStack gap={4} textAlign="center">
-          <Text fontSize="xl" color="gray.600">
+      <div className="max-w-6xl mx-auto px-4 md:px-6 py-16">
+        <div className="flex flex-col gap-4 text-center">
+          <p className="text-xl text-gray-600">
             Bu kategoride henüz blog yazısı bulunmuyor.
-          </Text>
-          <Text color="gray.500">
+          </p>
+          <p className="text-gray-500">
             Yakında yeni içeriklerle karşınızda olacağız!
-          </Text>
-        </VStack>
-      </Container>
+          </p>
+        </div>
+      </div>
     );
   }
 
   return (
-    <Box bg="var(--background-alt)" py={16}>
-      <Container maxW="1200px" px={{ base: 4, md: 6 }}>
-        <SimpleGrid columns={{ base: 1, md: 2, lg: 3 }} gap={8} w="full">
+    <div className="bg-gray-50 py-16">
+      <div className="max-w-6xl mx-auto px-4 md:px-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 w-full">
           {posts.map((post) => (
             <BlogCard key={post.id} post={post} />
           ))}
-        </SimpleGrid>
-      </Container>
-    </Box>
+        </div>
+      </div>
+    </div>
   );
 }

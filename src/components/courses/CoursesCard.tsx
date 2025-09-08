@@ -1,17 +1,9 @@
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
 import { toaster } from "@/components/ui/toaster";
 import { cartApi } from "@/lib/api";
 import { EgitimCardProps } from "@/types";
-import {
-  Badge,
-  Box,
-  Button,
-  Card,
-  HStack,
-  Heading,
-  Icon,
-  Text,
-  VStack,
-} from "@chakra-ui/react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -40,172 +32,98 @@ export default function EgitimCard({ egitim }: EgitimCardProps) {
       }
     }
   };
+
   return (
     <Link href={`/egitimler/${egitim.slug}`}>
-      <Card.Root
-        bg="white"
-        borderRadius="12px"
-        overflow="hidden"
-        shadow="md"
-        _hover={{
-          shadow: "lg",
-          transform: "translateY(-4px)",
-        }}
-        transition="all 0.3s ease"
-        h="full"
-      >
-        <Box position="relative">
-          <Box
-            h="200px"
-            w="full"
-            bg="gray.100"
-            position="relative"
-            overflow="hidden"
-          >
+      <Card className="bg-white rounded-xl overflow-hidden shadow-md hover:shadow-lg hover:-translate-y-1 transition-all h-full">
+        <div className="relative">
+          <div className="h-48 w-full bg-gray-100 relative overflow-hidden">
             <Image
               src={egitim.imageUrl || "/images/egitim-default.jpg"}
               alt={egitim.title}
               width={400}
               height={200}
               loading="lazy"
-              style={{
-                width: "auto",
-                height: "200px",
-                objectFit: "cover",
-                aspectRatio: "2/1",
-              }}
+              className="w-full h-48 object-cover"
               sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
             />
-          </Box>
+          </div>
 
-          <Badge
-            position="absolute"
-            top={3}
-            right={3}
-            colorScheme="accent"
-            fontSize="xs"
-            px={2}
-            py={1}
-            borderRadius="6px"
-          >
+          <Badge className="absolute top-3 right-3 bg-green-100 text-green-800 text-xs px-2 py-1 rounded-md">
             {egitim.level || "Seviye"}
           </Badge>
-        </Box>
+        </div>
 
-        <Card.Body p={6}>
-          <VStack align="start" gap={4} h="full">
-            <HStack justify="space-between" w="full">
-              <Badge
-                color="var(--primary)"
-                bg="rgba(var(--primary-rgb), 0.08)"
-                fontSize="xs"
-                px={2}
-                py={1}
-                borderRadius="6px"
-              >
+        <CardContent className="p-6">
+          <div className="flex flex-col gap-4 h-full">
+            <div className="flex justify-between items-center w-full">
+              <Badge className="text-green-600 bg-green-50 text-xs px-2 py-1 rounded-md">
                 {egitim.category}
               </Badge>
-              <Text fontSize="xs" color="gray.500">
+              <span className="text-xs text-gray-500">
                 {egitim.salesCount} kişi aldı
-              </Text>
-            </HStack>
+              </span>
+            </div>
 
-            <Heading
-              as="h3"
-              size="lg"
-              color="gray.800"
-              lineHeight="short"
-              css={{
-                display: "-webkit-box",
-                WebkitBoxOrient: "vertical",
-                WebkitLineClamp: 2,
-                overflow: "hidden",
-              }}
-            >
+            <h3 className="text-lg font-semibold text-gray-800 leading-tight line-clamp-2">
               {egitim.title}
-            </Heading>
+            </h3>
 
-            <Text
-              color="gray.600"
-              fontSize="sm"
-              lineHeight="tall"
-              flex="1"
-              css={{
-                display: "-webkit-box",
-                WebkitBoxOrient: "vertical",
-                WebkitLineClamp: 3,
-                overflow: "hidden",
-              }}
-            >
+            <p className="text-sm text-gray-600 leading-relaxed flex-1 line-clamp-3">
               {egitim.description}
-            </Text>
+            </p>
 
-            <VStack gap={3} w="full">
-              <HStack
-                justify="space-between"
-                w="full"
-                fontSize="xs"
-                color="gray.500"
-              >
-                <HStack gap={2}>
-                  <Icon boxSize={4}>
-                    <FiUser />
-                  </Icon>
-                  <Text>{egitim.instructor || "Eğitmen"}</Text>
-                </HStack>
+            <div className="space-y-3 w-full">
+              <div className="flex justify-between items-center w-full text-xs text-gray-500">
+                <div className="flex items-center gap-2">
+                  <FiUser className="w-4 h-4" />
+                  <span>{egitim.instructor || "Eğitmen"}</span>
+                </div>
 
-                <HStack gap={2}>
-                  <Icon boxSize={4}>
-                    <FiClock />
-                  </Icon>
-                  <Text>{egitim.salesCount || "Süre"}</Text>
-                </HStack>
-              </HStack>
+                <div className="flex items-center gap-2">
+                  <FiClock className="w-4 h-4" />
+                  <span>{egitim.salesCount || "Süre"}</span>
+                </div>
+              </div>
 
-              <HStack justify="space-between" w="full" align="center">
-                <VStack align="start" gap={1}>
-                  <Text fontSize="2xl" fontWeight="bold" color="var(--primary)">
+              <div className="flex justify-between items-center w-full">
+                <div className="flex flex-col gap-1">
+                  <span className="text-2xl font-bold text-green-600">
                     ₺{egitim.price?.toString()}
-                  </Text>
-                  <Text fontSize="xs" color="gray.500">
+                  </span>
+                  <span className="text-xs text-gray-500">
                     Tek seferlik ödeme
-                  </Text>
-                </VStack>
+                  </span>
+                </div>
 
-                <VStack gap={2}>
-                  <Button
-                    bg="var(--primary)"
-                    color="white"
-                    size="sm"
-                    borderRadius="8px"
-                    px={4}
-                    _hover={{ bg: "var(--primary-hover)" }}
-                  >
+                <div className="flex flex-col gap-2">
+                  <Button className="bg-green-600 hover:bg-green-700 text-white text-sm rounded-lg px-4">
                     Detayları Gör
                   </Button>
 
                   <Button
-                    bg={added ? "var(--accent)" : "transparent"}
-                    border="1px solid"
-                    borderColor="var(--accent)"
-                    color={added ? "white" : "var(--accent)"}
-                    size="sm"
-                    borderRadius="8px"
-                    px={4}
-                    loading={adding}
+                    variant={added ? "default" : "outline"}
+                    className={`text-sm rounded-lg px-4 ${
+                      added
+                        ? "bg-green-100 text-green-800 border-green-200"
+                        : "border-green-600 text-green-600 hover:bg-green-50"
+                    }`}
+                    disabled={adding}
                     onClick={handleAddToCart}
                   >
-                    <Icon mr={2}>
-                      <FiShoppingCart />
-                    </Icon>
-                    {added ? "Eklendi" : "Sepete Ekle"}
+                    <FiShoppingCart className="mr-2 w-4 h-4" />
+                    {adding
+                      ? "Ekleniyor..."
+                      : added
+                      ? "Eklendi"
+                      : "Sepete Ekle"}
                   </Button>
-                </VStack>
-              </HStack>
-            </VStack>
-          </VStack>
-        </Card.Body>
-      </Card.Root>
+                </div>
+              </div>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
     </Link>
   );
 }

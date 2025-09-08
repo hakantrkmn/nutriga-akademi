@@ -1,39 +1,29 @@
 "use client";
 
+import { Button } from "@/components/ui/button";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import {
+  Sheet,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet";
 import { COMPANY_NAME } from "@/constants";
 import { createClient } from "@/lib/supabase/client";
-import {
-  Box,
-  Button,
-  Drawer,
-  Flex,
-  HStack,
-  Icon,
-  IconButton,
-  Menu,
-  Portal,
-  Text,
-  useBreakpointValue,
-  useDisclosure,
-  VStack,
-} from "@chakra-ui/react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { HiMenu } from "react-icons/hi";
 
-const navLinkStyles = {
-  fontSize: "md",
-  fontWeight: "medium",
-  color: "gray.700",
-  _hover: { color: "var(--primary)" },
-  cursor: "pointer",
-  transition: "color 0.2s ease",
-};
-
 export default function Header() {
-  const { open, onOpen, onClose } = useDisclosure();
-  const isMobile = useBreakpointValue({ base: true, lg: false });
+  const [isMobile, setIsMobile] = useState(false);
+  const [open, setOpen] = useState(false);
   const router = useRouter();
   const supabase = createClient();
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -54,10 +44,16 @@ export default function Header() {
       setUserEmail(session?.user?.email ?? null);
     });
 
-    console.log("isAuthenticated", isAuthenticated);
+    // Check if mobile
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 1024);
+    };
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
 
     return () => {
       sub.subscription.unsubscribe();
+      window.removeEventListener("resize", checkMobile);
     };
   }, [supabase]);
 
@@ -70,176 +66,88 @@ export default function Header() {
 
   const NavItems = () => (
     <>
-      <Link href="/">
-        <Text {...navLinkStyles}>Ana Sayfa</Text>
+      <Link
+        href="/"
+        className="text-gray-700 hover:text-green-600 transition-colors"
+      >
+        Ana Sayfa
       </Link>
 
-      <Menu.Root>
-        <Menu.Trigger asChild>
+      <DropdownMenu>
+        <DropdownMenuTrigger asChild>
           <Button
             variant="ghost"
-            fontSize="md"
-            fontWeight="medium"
-            color="gray.700"
-            bg="transparent"
-            _hover={{ color: "var(--primary)", bg: "transparent" }}
-            _active={{ bg: "transparent" }}
-            _focus={{ boxShadow: "none" }}
-            p={0}
-            h="auto"
-            minH="auto"
+            className="text-gray-700 hover:text-green-600"
           >
             Kurumsal
           </Button>
-        </Menu.Trigger>
-        <Portal>
-          <Menu.Positioner>
-            <Menu.Content
-              bg="white"
-              border="1px solid"
-              borderColor="gray.100"
-              shadow="0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)"
-              borderRadius="12px"
-              p={2}
-              minW="180px"
-              mt={2}
-              overflow="hidden"
-            >
-              <Menu.Item
-                value="hakkimizda"
-                px={4}
-                py={3}
-                borderRadius="8px"
-                fontSize="sm"
-                fontWeight="medium"
-                color="gray.700"
-                _hover={{
-                  bg: "rgba(var(--primary-rgb), 0.06)",
-                  color: "var(--primary)",
-                }}
-                _focus={{
-                  bg: "rgba(var(--primary-rgb), 0.06)",
-                  color: "var(--primary)",
-                }}
-                cursor="pointer"
-                transition="all 0.2s ease"
-                asChild
-              >
-                <Link href="/hakkimizda">Hakkımızda</Link>
-              </Menu.Item>
-              <Menu.Item
-                value="misyon"
-                px={4}
-                py={3}
-                borderRadius="8px"
-                fontSize="sm"
-                fontWeight="medium"
-                color="gray.700"
-                _hover={{
-                  bg: "rgba(var(--primary-rgb), 0.06)",
-                  color: "var(--primary)",
-                }}
-                _focus={{
-                  bg: "rgba(var(--primary-rgb), 0.06)",
-                  color: "var(--primary)",
-                }}
-                cursor="pointer"
-                transition="all 0.2s ease"
-                asChild
-              >
-                <Link href="/misyon">Misyonumuz</Link>
-              </Menu.Item>
-              <Menu.Item
-                value="vizyon"
-                px={4}
-                py={3}
-                borderRadius="8px"
-                fontSize="sm"
-                fontWeight="medium"
-                color="gray.700"
-                _hover={{
-                  bg: "rgba(var(--primary-rgb), 0.06)",
-                  color: "var(--primary)",
-                }}
-                _focus={{
-                  bg: "rgba(var(--primary-rgb), 0.06)",
-                  color: "var(--primary)",
-                }}
-                cursor="pointer"
-                transition="all 0.2s ease"
-                asChild
-              >
-                <Link href="/vizyon">Vizyonumuz</Link>
-              </Menu.Item>
-            </Menu.Content>
-          </Menu.Positioner>
-        </Portal>
-      </Menu.Root>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent className="w-48">
+          <DropdownMenuItem asChild>
+            <Link href="/hakkimizda" className="cursor-pointer">
+              Hakkımızda
+            </Link>
+          </DropdownMenuItem>
+          <DropdownMenuItem asChild>
+            <Link href="/misyon" className="cursor-pointer">
+              Misyonumuz
+            </Link>
+          </DropdownMenuItem>
+          <DropdownMenuItem asChild>
+            <Link href="/vizyon" className="cursor-pointer">
+              Vizyonumuz
+            </Link>
+          </DropdownMenuItem>
+        </DropdownMenuContent>
+      </DropdownMenu>
 
-      <Link href="/egitimler">
-        <Text {...navLinkStyles}>Eğitimler</Text>
+      <Link
+        href="/egitimler"
+        className="text-gray-700 hover:text-green-600 transition-colors"
+      >
+        Eğitimler
       </Link>
 
-      <Link href="/blog">
-        <Text {...navLinkStyles}>Blog</Text>
+      <Link
+        href="/blog"
+        className="text-gray-700 hover:text-green-600 transition-colors"
+      >
+        Blog
       </Link>
 
-      <Link href="/iletisim">
-        <Text {...navLinkStyles}>İletişim</Text>
+      <Link
+        href="/iletisim"
+        className="text-gray-700 hover:text-green-600 transition-colors"
+      >
+        İletişim
       </Link>
     </>
   );
 
   return (
-    <Box
-      as="header"
-      bg="white"
-      shadow="sm"
-      borderBottom="1px"
-      borderColor="gray.100"
-      position="fixed"
-      top="0"
-      left="0"
-      right="0"
-      zIndex="1000"
-    >
-      <Flex
-        maxW="1200px"
-        mx="auto"
-        px={{ base: 4, md: 6 }}
-        py={4}
-        align="center"
-        justify="space-between"
-      >
+    <header className="bg-white shadow-sm border-b border-gray-100 fixed top-0 left-0 right-0 z-50">
+      <div className="max-w-6xl mx-auto px-4 md:px-6 py-4 flex items-center justify-between">
         {/* Logo */}
         <Link href="/">
-          <Text
-            fontSize="2xl"
-            fontWeight="bold"
-            color="var(--primary)"
-            cursor="pointer"
-            _hover={{ color: "var(--primary-hover)" }}
-          >
+          <h1 className="text-2xl font-bold text-green-600 hover:text-green-700 cursor-pointer transition-colors">
             {COMPANY_NAME}
-          </Text>
+          </h1>
         </Link>
 
         {/* Desktop Navigation */}
         {!isMobile && (
-          <HStack gap={8}>
+          <nav className="flex items-center gap-8">
             <NavItems />
-          </HStack>
+          </nav>
         )}
 
         {/* Desktop Cart & Auth Buttons */}
         {!isMobile && (
-          <HStack gap={3}>
+          <div className="flex items-center gap-3">
             {isAuthenticated && (
               <Button
                 variant="ghost"
-                borderRadius="12px"
-                color="var(--primary)"
-                _hover={{ bg: "rgba(var(--primary-rgb), 0.06)" }}
+                className="text-green-600 hover:bg-green-50"
                 onClick={() => router.push("/cart")}
               >
                 Sepet
@@ -247,21 +155,12 @@ export default function Header() {
             )}
             {isAuthenticated ? (
               <>
-                <Text
-                  color="gray.600"
-                  fontSize="sm"
-                  maxW="220px"
-                  overflow="hidden"
-                  textOverflow="ellipsis"
-                  whiteSpace="nowrap"
-                >
+                <span className="text-gray-600 text-sm max-w-[220px] truncate">
                   {userEmail}
-                </Text>
+                </span>
                 <Button
                   variant="ghost"
-                  borderRadius="12px"
-                  color="var(--primary)"
-                  _hover={{ bg: "rgba(var(--primary-rgb), 0.06)" }}
+                  className="text-green-600 hover:bg-green-50"
                   onClick={handleLogout}
                 >
                   Çıkış Yap
@@ -271,131 +170,98 @@ export default function Header() {
               <>
                 <Button
                   variant="ghost"
-                  borderRadius="12px"
-                  color="gray.700"
-                  _hover={{ bg: "gray.50" }}
+                  className="text-gray-700 hover:bg-gray-50"
                   onClick={() => router.push("/auth/login")}
                 >
                   Giriş Yap
                 </Button>
                 <Button
-                  bg="var(--primary)"
-                  color="white"
-                  borderRadius="12px"
-                  _hover={{ bg: "var(--primary-hover)" }}
+                  className="bg-green-600 hover:bg-green-700 text-white"
                   onClick={() => router.push("/auth/register")}
                 >
                   Kayıt Ol
                 </Button>
               </>
             )}
-          </HStack>
+          </div>
         )}
 
         {/* Mobile Hamburger */}
         {isMobile && (
-          <IconButton aria-label="Open menu" onClick={onOpen} variant="ghost">
-            <Icon>
-              <HiMenu />
-            </Icon>
-          </IconButton>
+          <Sheet open={open} onOpenChange={setOpen}>
+            <SheetTrigger asChild>
+              <Button variant="ghost" size="icon">
+                <HiMenu className="h-5 w-5" />
+              </Button>
+            </SheetTrigger>
+          </Sheet>
         )}
-      </Flex>
+      </div>
 
-      {/* Mobile Drawer */}
-      <Drawer.Root
-        open={open}
-        onOpenChange={(details) => (details.open ? onOpen() : onClose())}
-      >
-        <Drawer.Backdrop />
-        <Drawer.Positioner>
-          <Drawer.Content>
-            <Drawer.Header>
-              <Drawer.Title>Menü</Drawer.Title>
-              <Drawer.CloseTrigger />
-            </Drawer.Header>
-            <Drawer.Body pt={6}>
-              <VStack gap={6} align="start" w="full">
-                <NavItems />
+      {/* Mobile Sheet */}
+      <Sheet open={open} onOpenChange={setOpen}>
+        <SheetContent>
+          <SheetHeader>
+            <SheetTitle>Menü</SheetTitle>
+          </SheetHeader>
+          <div className="pt-6 space-y-6">
+            <nav className="flex flex-col space-y-4">
+              <NavItems />
+            </nav>
 
-                <Box pt={6} w="full">
-                  <VStack gap={3} w="full">
-                    {isAuthenticated && (
-                      <Button
-                        variant="ghost"
-                        w="full"
-                        justifyContent="start"
-                        borderRadius="12px"
-                        color="var(--primary)"
-                        _hover={{ bg: "rgba(var(--primary-rgb), 0.06)" }}
-                        onClick={() => {
-                          onClose();
-                          router.push("/cart");
-                        }}
-                      >
-                        Sepet
-                      </Button>
-                    )}
-                    {isAuthenticated ? (
-                      <>
-                        <Text
-                          color="gray.600"
-                          fontSize="sm"
-                          w="full"
-                          textAlign="left"
-                        >
-                          {userEmail}
-                        </Text>
-                        <Button
-                          variant="ghost"
-                          w="full"
-                          justifyContent="start"
-                          borderRadius="12px"
-                          color="var(--primary)"
-                          _hover={{ bg: "rgba(var(--primary-rgb), 0.06)" }}
-                          onClick={handleLogout}
-                        >
-                          Çıkış Yap
-                        </Button>
-                      </>
-                    ) : (
-                      <>
-                        <Button
-                          variant="ghost"
-                          w="full"
-                          justifyContent="start"
-                          borderRadius="12px"
-                          color="gray.700"
-                          _hover={{ bg: "gray.50" }}
-                          onClick={() => {
-                            onClose();
-                            router.push("/auth/login");
-                          }}
-                        >
-                          Giriş Yap
-                        </Button>
-                        <Button
-                          bg="var(--primary)"
-                          color="white"
-                          w="full"
-                          borderRadius="12px"
-                          _hover={{ bg: "var(--primary-hover)" }}
-                          onClick={() => {
-                            onClose();
-                            router.push("/auth/register");
-                          }}
-                        >
-                          Kayıt Ol
-                        </Button>
-                      </>
-                    )}
-                  </VStack>
-                </Box>
-              </VStack>
-            </Drawer.Body>
-          </Drawer.Content>
-        </Drawer.Positioner>
-      </Drawer.Root>
-    </Box>
+            <div className="pt-6 space-y-3">
+              {isAuthenticated && (
+                <Button
+                  variant="ghost"
+                  className="w-full justify-start text-green-600 hover:bg-green-50"
+                  onClick={() => {
+                    setOpen(false);
+                    router.push("/cart");
+                  }}
+                >
+                  Sepet
+                </Button>
+              )}
+              {isAuthenticated ? (
+                <>
+                  <p className="text-gray-600 text-sm w-full text-left">
+                    {userEmail}
+                  </p>
+                  <Button
+                    variant="ghost"
+                    className="w-full justify-start text-green-600 hover:bg-green-50"
+                    onClick={handleLogout}
+                  >
+                    Çıkış Yap
+                  </Button>
+                </>
+              ) : (
+                <>
+                  <Button
+                    variant="ghost"
+                    className="w-full justify-start text-gray-700 hover:bg-gray-50"
+                    onClick={() => {
+                      setOpen(false);
+                      router.push("/auth/login");
+                    }}
+                  >
+                    Giriş Yap
+                  </Button>
+                  <Button
+                    className="w-full bg-green-600 hover:bg-green-700 text-white"
+                    onClick={() => {
+                      setOpen(false);
+                      router.push("/auth/register");
+                    }}
+                  >
+                    Kayıt Ol
+                  </Button>
+                </>
+              )}
+            </div>
+          </div>
+        </SheetContent>
+      </Sheet>
+    </header>
   );
 }

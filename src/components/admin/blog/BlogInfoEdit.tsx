@@ -1,225 +1,202 @@
-import { BlogPost } from '@/types'
-import { Box, VStack, Heading, Text, Input, Grid, GridItem, NativeSelectField, NativeSelectRoot, Image, Button } from '@chakra-ui/react'
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { BlogPost } from "@/types";
 
 interface BlogInfoEditProps {
-  formData: BlogPost
-  setFormData: (data: BlogPost) => void
-  handleImageUpload: (e: React.ChangeEvent<HTMLInputElement>) => void
-  uploading: boolean
-  uploadedImage: string | null
+  formData: BlogPost;
+  setFormData: (data: BlogPost) => void;
+  handleImageUpload: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  uploading: boolean;
+  uploadedImage: string | null;
 }
 
-
-export default function BlogInfoEdit({ formData, setFormData, handleImageUpload, uploading, uploadedImage }: BlogInfoEditProps) {
+export default function BlogInfoEdit({
+  formData,
+  setFormData,
+  handleImageUpload,
+  uploading,
+  uploadedImage,
+}: BlogInfoEditProps) {
   return (
-    <Box p={6} bg="white" borderRadius="lg" border="1px solid" borderColor="gray.200" shadow="sm" w="full">
-    <VStack gap={4} align="stretch">
-      <Heading size="lg" color="gray.900">
-        Blog Bilgileri
-      </Heading>
-      
-      <Grid templateColumns={{ base: "1fr", md: "1fr 1fr" }} gap={4}>
-        {/* Başlık */}
-        <GridItem>
-          <Box>
-            <Text fontSize="sm" fontWeight="semibold" color="gray.700" mb={2}>
+    <Card>
+      <CardHeader>
+        <CardTitle className="text-xl text-gray-900">Blog Bilgileri</CardTitle>
+      </CardHeader>
+      <CardContent className="space-y-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {/* Başlık */}
+          <div className="space-y-2">
+            <Label
+              htmlFor="title"
+              className="text-sm font-semibold text-gray-700"
+            >
               Blog Başlığı
-            </Text>
+            </Label>
             <Input
+              id="title"
               placeholder="Blog yazısının başlığını girin..."
               value={formData.title}
-              onChange={(e) => setFormData({ ...formData, title: e.target.value })}
-              size="md"
-              borderRadius="8px"
-              borderColor="gray.200"
-              bg="white"
-              color="gray.800"
-              _placeholder={{ color: "gray.500" }}
-              _focus={{
-                borderColor: "green.500",
-                boxShadow: "0 0 0 1px var(--primary)"
-              }}
+              onChange={(e) =>
+                setFormData({ ...formData, title: e.target.value })
+              }
             />
-          </Box>
-        </GridItem>
+          </div>
 
-        {/* Slug */}
-        <GridItem>
-          <Box>
-            <Text fontSize="sm" fontWeight="semibold" color="gray.700" mb={2}>
+          {/* Slug */}
+          <div className="space-y-2">
+            <Label
+              htmlFor="slug"
+              className="text-sm font-semibold text-gray-700"
+            >
               URL Slug
-            </Text>
+            </Label>
             <Input
+              id="slug"
               placeholder="blog-yazisi-slug"
               value={formData.slug}
-              onChange={(e) => setFormData({ ...formData, slug: e.target.value })}
-              size="md"
-              borderRadius="8px"
-              borderColor="gray.200"
-              bg="white"
-              color="gray.800"
-              _placeholder={{ color: "gray.500" }}
-              _focus={{
-                borderColor: "green.500",
-                boxShadow: "0 0 0 1px var(--primary)"
-              }}
+              onChange={(e) =>
+                setFormData({ ...formData, slug: e.target.value })
+              }
             />
-          </Box>
-        </GridItem>
+          </div>
 
-        {/* Kategori */}
-        <GridItem>
-          <Box>
-            <Text fontSize="sm" fontWeight="semibold" color="gray.700" mb={2}>
+          {/* Kategori */}
+          <div className="space-y-2">
+            <Label
+              htmlFor="category"
+              className="text-sm font-semibold text-gray-700"
+            >
               Kategori
-            </Text>
-            <NativeSelectRoot size="md">
-              <NativeSelectField
-                value={formData.category || ''}
-                onChange={(e) => setFormData({ ...formData, category: e.target.value })}
-                borderRadius="8px"
-                borderColor="gray.200"
-                bg="white"
-                color="gray.800"
-                _focus={{
-                  borderColor: "green.500",
-                  boxShadow: "0 0 0 1px var(--primary)"
-                }}
-              >
-                <option value="" style={{ color: '#9CA3AF', backgroundColor: 'white' }}>Kategori seçin...</option>
-                <option value="Genel" style={{ color: '#1F2937', backgroundColor: 'white' }}>Genel</option>
-                <option value="Beslenme" style={{ color: '#1F2937', backgroundColor: 'white' }}>Beslenme</option>
-                <option value="Sağlık" style={{ color: '#1F2937', backgroundColor: 'white' }}>Sağlık</option>
-                <option value="Yaşam Tarzı" style={{ color: '#1F2937', backgroundColor: 'white' }}>Yaşam Tarzı</option>
-                <option value="Haberler" style={{ color: '#1F2937', backgroundColor: 'white' }}>Haberler</option>
-                <option value="İpuçları" style={{ color: '#1F2937', backgroundColor: 'white' }}>İpuçları</option>
-              </NativeSelectField>
-            </NativeSelectRoot>
-          </Box>
-        </GridItem>
+            </Label>
+            <Select
+              value={formData.category || ""}
+              onValueChange={(value) =>
+                setFormData({ ...formData, category: value })
+              }
+            >
+              <SelectTrigger>
+                <SelectValue placeholder="Kategori seçin..." />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="Genel">Genel</SelectItem>
+                <SelectItem value="Beslenme">Beslenme</SelectItem>
+                <SelectItem value="Sağlık">Sağlık</SelectItem>
+                <SelectItem value="Yaşam Tarzı">Yaşam Tarzı</SelectItem>
+                <SelectItem value="Haberler">Haberler</SelectItem>
+                <SelectItem value="İpuçları">İpuçları</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
 
-        {/* Yazar */}
-        <GridItem>
-          <Box>
-            <Text fontSize="sm" fontWeight="semibold" color="gray.700" mb={2}>
+          {/* Yazar */}
+          <div className="space-y-2">
+            <Label
+              htmlFor="author"
+              className="text-sm font-semibold text-gray-700"
+            >
               Yazar
-            </Text>
+            </Label>
             <Input
+              id="author"
               placeholder="Yazar adı"
-              value={formData.author || ''}
-              onChange={(e) => setFormData({ ...formData, author: e.target.value })}
-              size="md"
-              borderRadius="8px"
-              borderColor="gray.200"
-              bg="white"
-              color="gray.800"
-              _placeholder={{ color: "gray.500" }}
-              _focus={{
-                borderColor: "green.500",
-                boxShadow: "0 0 0 1px var(--primary)"
-              }}
+              value={formData.author || ""}
+              onChange={(e) =>
+                setFormData({ ...formData, author: e.target.value })
+              }
             />
-          </Box>
-        </GridItem>
+          </div>
 
-        {/* Yayın Tarihi */}
-        <GridItem>
-          <Box>
-            <Text fontSize="sm" fontWeight="semibold" color="gray.700" mb={2}>
+          {/* Yayın Tarihi */}
+          <div className="space-y-2">
+            <Label
+              htmlFor="date"
+              className="text-sm font-semibold text-gray-700"
+            >
               Yayın Tarihi
-            </Text>
+            </Label>
             <Input
+              id="date"
               type="date"
-              value={formData.createdAt ? new Date(formData.createdAt).toISOString().split('T')[0] : ''}
-              onChange={(e) => setFormData({ ...formData, createdAt: new Date(e.target.value) })}
-              size="md"
-              borderRadius="8px"
-              borderColor="gray.200"
-              bg="white"
-              color="gray.800"
-              _focus={{
-                borderColor: "green.500",
-                boxShadow: "0 0 0 1px var(--primary)"
-              }}
+              value={
+                formData.createdAt
+                  ? new Date(formData.createdAt).toISOString().split("T")[0]
+                  : ""
+              }
+              onChange={(e) =>
+                setFormData({
+                  ...formData,
+                  createdAt: new Date(e.target.value),
+                })
+              }
             />
-          </Box>
-        </GridItem>
+          </div>
 
-        {/* Görsel Yükleme */}
-        <GridItem>
-          <Box>
-            <Text fontSize="sm" fontWeight="semibold" color="gray.700" mb={2}>
+          {/* Görsel Yükleme */}
+          <div className="col-span-2 space-y-3">
+            <Label className="text-sm font-semibold text-gray-700">
               Blog Görseli
-            </Text>
-            <VStack gap={3} align="stretch">
+            </Label>
+            <div className="space-y-3">
               <input
                 type="file"
                 accept="image/*"
                 onChange={handleImageUpload}
-                style={{ display: 'none' }}
+                style={{ display: "none" }}
                 id="image-upload"
               />
               <Button
                 variant="outline"
-                size="md"
-                colorScheme="green"
-                borderRadius="8px"
-                loading={uploading}
-                loadingText="Yükleniyor..."
-                cursor="pointer"
-                onClick={() => document.getElementById('image-upload')?.click()}
-                _hover={{
-                  borderColor: "green.500",
-                  color: "green.600"
-                }}
+                disabled={uploading}
+                onClick={() => document.getElementById("image-upload")?.click()}
+                className="w-full"
               >
-                {uploadedImage ? 'Görseli Değiştir' : 'Görsel Yükle'}
+                {uploading
+                  ? "Yükleniyor..."
+                  : uploadedImage
+                  ? "Görseli Değiştir"
+                  : "Görsel Yükle"}
               </Button>
               {uploadedImage && (
-                <Box>
-                  <Text fontSize="xs" color="green.600" mb={2}>
-                    ✓ Görsel yüklendi
-                  </Text>
-                  <Image
+                <div className="space-y-2">
+                  <p className="text-xs text-green-600">✓ Görsel yüklendi</p>
+                  <img
                     src={uploadedImage}
                     alt="Blog görseli"
-                    w="100%"
-                    h="120px"
-                    objectFit="cover"
-                    borderRadius="8px"
-                    border="1px solid"
-                    borderColor="gray.200"
-                    shadow="sm"
+                    className="w-full h-32 object-cover rounded-lg border border-gray-200 shadow-sm"
                   />
-                </Box>
+                </div>
               )}
-            </VStack>
-          </Box>
-        </GridItem>
-      </Grid>
+            </div>
+          </div>
+        </div>
 
-      {/* Açıklama - Tam genişlik */}
-      <Box>
-        <Text fontSize="sm" fontWeight="semibold" color="gray.700" mb={2}>
-          Kısa Açıklama
-        </Text>
-        <Input
-          placeholder="Blog yazısının kısa açıklamasını girin..."
-          value={formData.excerpt || ''}
-          onChange={(e) => setFormData({ ...formData, excerpt: e.target.value })}
-          size="md"
-          borderRadius="8px"
-          borderColor="gray.200"
-          bg="white"
-          color="gray.800"
-          _placeholder={{ color: "gray.500" }}
-          _focus={{
-            borderColor: "green.500",
-            boxShadow: "0 0 0 1px var(--primary)"
-          }}
-        />
-      </Box>
-    </VStack>
-  </Box>
-  )
+        {/* Açıklama - Tam genişlik */}
+        <div className="space-y-2">
+          <Label
+            htmlFor="excerpt"
+            className="text-sm font-semibold text-gray-700"
+          >
+            Kısa Açıklama
+          </Label>
+          <Input
+            id="excerpt"
+            placeholder="Blog yazısının kısa açıklamasını girin..."
+            value={formData.excerpt || ""}
+            onChange={(e) =>
+              setFormData({ ...formData, excerpt: e.target.value })
+            }
+          />
+        </div>
+      </CardContent>
+    </Card>
+  );
 }

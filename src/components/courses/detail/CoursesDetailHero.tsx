@@ -1,19 +1,17 @@
+"use client";
+
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import { EgitimDetailHeroProps } from "@/types";
 import {
-  Badge,
-  Box,
-  Button,
-  Container,
-  Grid,
-  Heading,
-  HStack,
-  Icon,
-  Image,
-  Link,
-  Text,
-  VStack,
-} from "@chakra-ui/react";
-import { FiArrowLeft, FiClock, FiImage, FiUser, FiUsers } from "react-icons/fi";
+  ArrowLeft,
+  Clock,
+  Image as ImageIcon,
+  User,
+  Users,
+} from "lucide-react";
+import Image from "next/image";
+import Link from "next/link";
 
 export default function EgitimDetailHero({
   egitim,
@@ -21,167 +19,104 @@ export default function EgitimDetailHero({
   setIsImageError,
 }: EgitimDetailHeroProps) {
   return (
-    <Box
-      bg="var(--background-alt)"
-      borderBottom="1px solid"
-      borderColor="gray.100"
-      shadow="sm"
+    <div
+      className="border-b border-gray-100 shadow-sm"
+      style={{ backgroundColor: "var(--background-alt)" }}
     >
-      <Container maxW="1200px" px={{ base: 4, md: 6 }} py={{ base: 8, md: 12 }}>
-        <Grid
-          templateColumns={{ base: "1fr", lg: "2fr 1fr" }}
-          gap={{ base: 8, md: 12 }}
-          alignItems="start"
-        >
-          <VStack gap={6} align="start">
+      <div className="max-w-7xl mx-auto px-4 md:px-6 py-8 md:py-12">
+        <div className="grid grid-cols-1 lg:grid-cols-[2fr_1fr] gap-8 md:gap-12 items-start">
+          {/* Content Section */}
+          <div className="flex flex-col gap-6 items-start">
+            {/* Back Button */}
             <Link href="/egitimler">
               <Button
                 variant="ghost"
-                color="var(--primary)"
-                _hover={{
-                  bg: "rgba(var(--primary-rgb), 0.06)",
-                  color: "var(--primary)",
-                  textDecoration: "none",
-                }}
                 size="sm"
-                borderRadius="8px"
-                px={3}
-                py={2}
-                transition="all 0.2s ease"
+                className="rounded-lg px-3 py-2 text-primary hover:bg-primary/10 transition-all duration-200"
               >
-                <HStack gap={2}>
-                  <Icon as={FiArrowLeft} boxSize={4} />
-                  <Text fontWeight="medium">Tüm Eğitimler</Text>
-                </HStack>
+                <div className="flex items-center gap-2">
+                  <ArrowLeft className="w-4 h-4" />
+                  <span className="font-medium">Tüm Eğitimler</span>
+                </div>
               </Button>
             </Link>
 
-            <HStack gap={3} flexWrap="wrap">
+            {/* Badges */}
+            <div className="flex gap-3 flex-wrap">
               <Badge
-                color="var(--primary)"
-                bg="rgba(var(--primary-rgb), 0.08)"
-                variant="solid"
-                fontSize="xs"
-                px={3}
-                py={1}
-                borderRadius="8px"
-                fontWeight="medium"
+                className="text-xs px-3 py-1 rounded-lg font-medium"
+                style={{
+                  color: "var(--primary)",
+                  backgroundColor: "rgba(var(--primary-rgb), 0.08)",
+                }}
               >
                 {egitim.category}
               </Badge>
               <Badge
-                color="var(--accent)"
                 variant="outline"
-                fontSize="xs"
-                px={3}
-                py={1}
-                borderRadius="8px"
-                borderColor="var(--accent)"
-                fontWeight="medium"
+                className="text-xs px-3 py-1 rounded-lg font-medium border-accent text-accent"
               >
                 {egitim.level}
               </Badge>
-            </HStack>
+            </div>
 
-            <Heading
-              as="h1"
-              size={{ base: "xl", md: "2xl" }}
-              color="gray.800"
-              fontWeight="bold"
-              lineHeight="short"
-              fontFamily="Poppins, sans-serif"
-            >
+            {/* Title */}
+            <h1 className="text-2xl md:text-3xl font-bold text-gray-800 leading-tight font-[Poppins,sans-serif]">
               {egitim.title}
-            </Heading>
+            </h1>
 
-            <Text
-              fontSize={{ base: "md", md: "lg" }}
-              color="gray.600"
-              maxW="90%"
-              lineHeight="tall"
-              fontFamily="Inter, sans-serif"
-            >
+            {/* Description */}
+            <p className="text-base md:text-lg text-gray-600 max-w-[90%] leading-relaxed font-[Inter,sans-serif]">
               {egitim.description}
-            </Text>
+            </p>
 
-            <HStack
-              gap={8}
-              pt={2}
-              color="gray.600"
-              fontSize="sm"
-              flexWrap="wrap"
-            >
-              <HStack gap={2}>
-                <Icon as={FiUser} color="var(--primary)" boxSize={4} />
-                <Text fontWeight="medium">
+            {/* Meta Information */}
+            <div className="flex gap-8 pt-2 text-gray-600 text-sm flex-wrap">
+              <div className="flex items-center gap-2">
+                <User className="w-4 h-4 text-primary" />
+                <span className="font-medium">
                   Eğitmen:{" "}
-                  <Text as="span" color="gray.800">
-                    {egitim.instructor}
-                  </Text>
-                </Text>
-              </HStack>
-              <HStack gap={2}>
-                <Icon as={FiUsers} color="var(--primary)" boxSize={4} />
-                <Text fontWeight="medium">
-                  <Text as="span" color="gray.800">
-                    {egitim.salesCount}
-                  </Text>{" "}
+                  <span className="text-gray-800">{egitim.instructor}</span>
+                </span>
+              </div>
+              <div className="flex items-center gap-2">
+                <Users className="w-4 h-4 text-primary" />
+                <span className="font-medium">
+                  <span className="text-gray-800">{egitim.salesCount}</span>{" "}
                   öğrenci
-                </Text>
-              </HStack>
-              <HStack gap={2}>
-                <Icon as={FiClock} color="var(--primary)" boxSize={4} />
-                <Text fontWeight="medium">
-                  <Text as="span" color="gray.800">
-                    {egitim.salesCount}
-                  </Text>
-                </Text>
-              </HStack>
-            </HStack>
-          </VStack>
+                </span>
+              </div>
+              <div className="flex items-center gap-2">
+                <Clock className="w-4 h-4 text-primary" />
+                <span className="font-medium">
+                  <span className="text-gray-800">{egitim.salesCount}</span>
+                </span>
+              </div>
+            </div>
+          </div>
 
-          <Box
-            h={{ base: "280px", md: "380px" }}
-            w="full"
-            bg="gray.100"
-            borderRadius="16px"
-            overflow="hidden"
-            shadow="xl"
-            border="1px solid"
-            borderColor="gray.200"
-            _hover={{
-              shadow: "2xl",
-              transform: "translateY(-2px)",
-              transition: "all 0.3s ease",
-            }}
-          >
+          {/* Image Section */}
+          <div className="h-72 md:h-96 w-full bg-gray-100 rounded-2xl overflow-hidden shadow-xl border border-gray-200 hover:shadow-2xl hover:-translate-y-0.5 transition-all duration-300">
             {!isImageError ? (
               <Image
                 src={egitim.imageUrl || "/images/egitim-default.jpg"}
                 alt={egitim.title}
-                h="full"
-                w="full"
-                objectFit="cover"
+                width={400}
+                height={400}
+                className="w-full h-full object-cover"
                 onError={() => setIsImageError(true)}
               />
             ) : (
-              <VStack
-                h="full"
-                w="full"
-                justify="center"
-                bg="gray.100"
-                color="gray.400"
-                gap={4}
-              >
-                <Icon as={FiImage} boxSize={16} />
-                <Text fontSize="sm" fontWeight="medium">
+              <div className="h-full w-full flex flex-col items-center justify-center bg-gray-100 text-gray-400 gap-4">
+                <ImageIcon className="w-16 h-16" />
+                <span className="text-sm font-medium">
                   Eğitim görseli bulunamadı
-                </Text>
-              </VStack>
+                </span>
+              </div>
             )}
-          </Box>
-        </Grid>
-      </Container>
-    </Box>
+          </div>
+        </div>
+      </div>
+    </div>
   );
 }

@@ -1,73 +1,59 @@
-import {
-  Box,
-  Container,
-  Heading,
-  HStack,
-  Icon,
-  Text,
-  VStack,
-} from "@chakra-ui/react";
 import { FiAward, FiBook, FiUsers } from "react-icons/fi";
 
 export default function EgitimlerHero() {
   return (
-    <Box bg="var(--background-alt)" py={16}>
-      <Container maxW="1200px" px={{ base: 4, md: 6 }}>
-        <VStack gap={8} textAlign="center" maxW="800px" mx="auto">
-          <Heading as="h1" size="3xl" color="var(--primary)" fontWeight="bold">
+    <div className="bg-gray-50 py-16">
+      <div className="max-w-6xl mx-auto px-4 md:px-6">
+        <div className="flex flex-col gap-8 text-center max-w-4xl mx-auto">
+          <h1 className="text-4xl md:text-5xl font-bold text-green-600">
             Profesyonel Beslenme Eğitimleri
-          </Heading>
+          </h1>
 
-          <Text
-            fontSize={{ base: "lg", md: "xl" }}
-            color="gray.700"
-            lineHeight="tall"
-            maxW="600px"
-          >
+          <p className="text-lg md:text-xl text-gray-700 leading-relaxed max-w-2xl mx-auto">
             Alanında uzman eğitmenlerden, güncel bilimsel verilerle desteklenen
             kapsamlı beslenme eğitimleri alın. Kariyerinizi bir üst seviyeye
             taşıyın.
-          </Text>
+          </p>
 
-          <HStack gap={12} flexWrap="wrap" justify="center" pt={4}>
-            <VStack gap={2} align="center">
-              <Icon boxSize={8} color="var(--primary)">
-                <FiBook />
-              </Icon>
-              <Text fontWeight="semibold" color="gray.700">
-                6+ Eğitim
-              </Text>
-              <Text fontSize="sm" color="gray.600">
-                Farklı uzmanlık alanları
-              </Text>
-            </VStack>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-8">
+            <div className="flex flex-col items-center gap-4">
+              <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center">
+                <FiAward className="w-8 h-8 text-green-600" />
+              </div>
+              <h3 className="text-lg font-semibold text-gray-800">
+                Sertifikalı Eğitimler
+              </h3>
+              <p className="text-sm text-gray-600 text-center">
+                Tamamladığınız eğitimler için resmi sertifika alın
+              </p>
+            </div>
 
-            <VStack gap={2} align="center">
-              <Icon boxSize={8} color="var(--accent)">
-                <FiAward />
-              </Icon>
-              <Text fontWeight="semibold" color="gray.700">
-                Sertifikalı
-              </Text>
-              <Text fontSize="sm" color="gray.600">
-                Geçerli sertifikalar
-              </Text>
-            </VStack>
+            <div className="flex flex-col items-center gap-4">
+              <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center">
+                <FiBook className="w-8 h-8 text-green-600" />
+              </div>
+              <h3 className="text-lg font-semibold text-gray-800">
+                Güncel İçerik
+              </h3>
+              <p className="text-sm text-gray-600 text-center">
+                En son bilimsel araştırmalarla güncellenen içerikler
+              </p>
+            </div>
 
-            <VStack gap={2} align="center">
-              <Icon boxSize={8} color="var(--primary)">
-                <FiUsers />
-              </Icon>
-              <Text fontWeight="semibold" color="gray.700">
-                500+ Mezun
-              </Text>
-              <Text fontSize="sm" color="gray.600">
-                Başarılı profesyoneller
-              </Text>
-            </VStack>
-          </HStack>
-        </VStack>
-      </Container>
-    </Box>
+            <div className="flex flex-col items-center gap-4">
+              <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center">
+                <FiUsers className="w-8 h-8 text-green-600" />
+              </div>
+              <h3 className="text-lg font-semibold text-gray-800">
+                Uzman Eğitmenler
+              </h3>
+              <p className="text-sm text-gray-600 text-center">
+                Alanında deneyimli uzmanlardan öğrenin
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   );
 }

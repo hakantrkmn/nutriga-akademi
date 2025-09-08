@@ -1,36 +1,25 @@
-import { Box, Button, Link, Text, VStack } from "@chakra-ui/react";
+import { Button } from "@/components/ui/button";
+import Link from "next/link";
 
 export default function BlogDetailFooter() {
   return (
     <>
-      <Box
-        bg="rgba(var(--primary-rgb), 0.06)"
-        p={6}
-        borderRadius="12px"
-        w="full"
-        border="1px solid"
-        borderColor="rgba(var(--primary-rgb), 0.2)"
-      >
-        <VStack gap={3} align="start">
-          <Text fontWeight="semibold" color="var(--primary)">
+      <div className="bg-green-50 p-6 rounded-xl w-full border border-green-200">
+        <div className="flex flex-col gap-3 items-start">
+          <p className="font-semibold text-green-600">
             Bu yazıyı beğendiniz mi?
-          </Text>
-          <Text fontSize="sm" color="gray.600" lineHeight="tall">
+          </p>
+          <p className="text-sm text-gray-600 leading-relaxed">
             Daha fazla beslenme rehberi ve sağlıklı yaşam ipuçları için blog
             sayfamızı takip edin!
-          </Text>
+          </p>
           <Link href="/blog">
-            <Button
-              bg="var(--primary)"
-              color="white"
-              _hover={{ bg: "var(--primary-hover)" }}
-              size="sm"
-            >
+            <Button className="bg-green-600 hover:bg-green-700 text-white">
               Diğer Yazıları İncele
             </Button>
           </Link>
-        </VStack>
-      </Box>
+        </div>
+      </div>
     </>
   );
 }

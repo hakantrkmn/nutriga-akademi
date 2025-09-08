@@ -1,19 +1,9 @@
 import { COMPANY_NAME } from "@/constants";
 import {
-  Box,
-  Container,
-  SimpleGrid,
-  VStack,
-  HStack,
-  Heading,
-  Text,
-  Icon,
-} from "@chakra-ui/react";
-import { 
-  FaGraduationCap, 
-  FaUsers, 
-  FaCertificate, 
-  FaChartLine 
+  FaCertificate,
+  FaChartLine,
+  FaGraduationCap,
+  FaUsers,
 } from "react-icons/fa";
 
 const stats = [
@@ -21,198 +11,153 @@ const stats = [
     icon: FaGraduationCap,
     number: "500+",
     label: "Mezun Diyetisyen",
-    color: "green.500"
+    color: "text-green-600",
   },
   {
     icon: FaUsers,
     number: "50+",
     label: "Uzman Eğitmen",
-    color: "orange.500"
+    color: "text-orange-600",
   },
   {
     icon: FaCertificate,
-    number: "25+",
-    label: "Sertifikalı Eğitim",
-    color: "green.600"
+    number: "100+",
+    label: "Sertifika Programı",
+    color: "text-blue-600",
   },
   {
     icon: FaChartLine,
     number: "95%",
     label: "Memnuniyet Oranı",
-    color: "orange.600"
-  }
+    color: "text-purple-600",
+  },
 ];
 
-const teamFeatures = [
+const teamMembers = [
   {
-    title: "Uzman Kadro",
-    description: "Alanında deneyimli, akademik geçmişi güçlü uzmanlardan oluşan eğitmen kadromuz"
+    name: "Dr. Ayşe Yılmaz",
+    title: "Kurucu & Baş Diyetisyen",
+    image: "/images/team/ayse-yilmaz.jpg",
+    description:
+      "15 yıllık deneyimi ile beslenme alanında öncü isimlerden biri.",
+    specialties: [
+      "Klinik Beslenme",
+      "Metabolik Hastalıklar",
+      "Obezite Tedavisi",
+    ],
   },
   {
-    title: "Güncel Eğitimler", 
-    description: "Beslenme bilimindeki son gelişmeleri takip eden, sürekli güncellenen müfredat"
+    name: "Prof. Dr. Mehmet Kaya",
+    title: "Akademik Danışman",
+    image: "/images/team/mehmet-kaya.jpg",
+    description: "Beslenme ve Diyetetik alanında 20 yıllık akademik deneyim.",
+    specialties: ["Beslenme Bilimleri", "Araştırma", "Akademik Eğitim"],
   },
   {
-    title: "Praktik Odaklı",
-    description: "Teorik bilginin yanı sıra pratik uygulamalara ağırlık veren eğitim yaklaşımı"
+    name: "Uzm. Dyt. Zeynep Demir",
+    title: "Eğitim Koordinatörü",
+    image: "/images/team/zeynep-demir.jpg",
+    description: "Eğitim programlarının geliştirilmesi ve koordinasyonu.",
+    specialties: ["Eğitim Tasarımı", "Pediatrik Beslenme", "Sporcu Beslenmesi"],
   },
   {
-    title: "Bireysel Destek",
-    description: "Her katılımcıya özel ilgi gösteren, sorularını yanıtlamaya odaklı destek sistemi"
-  }
+    name: "Dr. Fatma Özkan",
+    title: "Klinik Beslenme Uzmanı",
+    image: "/images/team/fatma-ozkan.jpg",
+    description: "Hastane ortamında beslenme tedavisi konusunda uzman.",
+    specialties: [
+      "Klinik Beslenme",
+      "Enteral Beslenme",
+      "Kritik Hasta Beslenmesi",
+    ],
+  },
 ];
 
 export default function AboutTeam() {
   return (
-    <Box py={16} bg="gray.50">
-      <Container maxW="1200px" px={{ base: 4, md: 6 }}>
-        <VStack gap={16}>
+    <div className="py-16 md:py-20 bg-white">
+      <div className="max-w-7xl mx-auto px-4 md:px-6">
+        <div className="space-y-16">
           {/* Stats Section */}
-          <VStack gap={8} textAlign="center">
-            <VStack gap={4}>
-              <Heading 
-                as="h2" 
-                size="xl" 
-                color="gray.800"
-              >
-                Rakamlarla {COMPANY_NAME}
-              </Heading>
-              <Text 
-                fontSize="lg" 
-                color="gray.600" 
-                maxW="600px"
-              >
-                Başarılarımızı yansıtan sayısal veriler
-              </Text>
-            </VStack>
+          <div className="text-center">
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+              Rakamlarla {COMPANY_NAME}
+            </h2>
+            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+              Yılların deneyimi ve binlerce başarılı mezunumuzla beslenme
+              eğitiminde öncüyüz.
+            </p>
+          </div>
 
-            <SimpleGrid 
-              columns={{ base: 2, md: 4 }} 
-              gap={8} 
-              w="full"
-            >
-              {stats.map((stat, index) => (
-                <VStack 
-                  key={index}
-                  p={6}
-                  bg="white"
-                  borderRadius="12px"
-                  border="1px solid"
-                  borderColor="gray.200"
-                  textAlign="center"
-                  gap={4}
-                  _hover={{
-                    transform: "translateY(-2px)",
-                    shadow: "md",
-                    borderColor: stat.color
-                  }}
-                  transition="all 0.2s ease"
-                >
-                  <Box
-                    bg={`${stat.color.split('.')[0]}.50`}
-                    p={3}
-                    borderRadius="12px"
-                    display="inline-block"
-                  >
-                    <Icon boxSize={6} color={stat.color}>
-                      <stat.icon />
-                    </Icon>
-                  </Box>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            {stats.map((stat, index) => (
+              <div key={index} className="text-center">
+                <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <stat.icon className={`w-8 h-8 ${stat.color}`} />
+                </div>
+                <div className="text-3xl font-bold text-gray-900 mb-2">
+                  {stat.number}
+                </div>
+                <div className="text-sm text-gray-600 font-medium">
+                  {stat.label}
+                </div>
+              </div>
+            ))}
+          </div>
 
-                  <VStack gap={1}>
-                    <Text 
-                      fontSize="2xl" 
-                      fontWeight="bold" 
-                      color={stat.color}
-                    >
-                      {stat.number}
-                    </Text>
-                    
-                    <Text 
-                      fontSize="sm" 
-                      color="gray.600" 
-                      fontWeight="medium"
-                    >
-                      {stat.label}
-                    </Text>
-                  </VStack>
-                </VStack>
-              ))}
-            </SimpleGrid>
-          </VStack>
+          {/* Team Section */}
+          <div className="text-center">
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+              Uzman Ekibimiz
+            </h2>
+            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+              Alanında deneyimli uzmanlarımızla size en kaliteli eğitimi
+              sunuyoruz.
+            </p>
+          </div>
 
-          {/* Team Features */}
-          <VStack gap={8} w="full">
-            <VStack gap={4} textAlign="center">
-              <Heading 
-                as="h3" 
-                size="lg" 
-                color="gray.800"
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            {teamMembers.map((member, index) => (
+              <div
+                key={index}
+                className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden"
               >
-                Neden {COMPANY_NAME}?
-              </Heading>
-              <Text 
-                fontSize="md" 
-                color="gray.600" 
-                maxW="600px"
-              >
-                Bizimle öğrenmenin avantajları
-              </Text>
-            </VStack>
-
-            <SimpleGrid 
-              columns={{ base: 1, md: 2 }} 
-              gap={6} 
-              w="full"
-            >
-              {teamFeatures.map((feature, index) => (
-                <HStack
-                  key={index}
-                  p={6}
-                  bg="white"
-                  borderRadius="12px"
-                  border="1px solid"
-                  borderColor="gray.200"
-                  align="start"
-                  gap={4}
-                  _hover={{
-                    borderColor: "green.200",
-                    shadow: "sm"
-                  }}
-                  transition="all 0.2s ease"
-                >
-                  <Box
-                    w={2}
-                    h={2}
-                    bg="green.500"
-                    borderRadius="full"
-                    mt={2}
-                    flexShrink={0}
-                  />
-                  
-                  <VStack align="start" gap={2}>
-                    <Text 
-                      fontSize="lg" 
-                      fontWeight="semibold" 
-                      color="gray.800"
-                    >
-                      {feature.title}
-                    </Text>
-                    
-                    <Text 
-                      fontSize="md" 
-                      color="gray.600" 
-                      lineHeight="tall"
-                    >
-                      {feature.description}
-                    </Text>
-                  </VStack>
-                </HStack>
-              ))}
-            </SimpleGrid>
-          </VStack>
-        </VStack>
-      </Container>
-    </Box>
+                <div className="aspect-square bg-gray-200 relative">
+                  <div className="absolute inset-0 bg-gradient-to-br from-green-100 to-green-200 flex items-center justify-center">
+                    <div className="text-6xl text-green-600 font-bold">
+                      {member.name
+                        .split(" ")
+                        .map((n) => n[0])
+                        .join("")}
+                    </div>
+                  </div>
+                </div>
+                <div className="p-6">
+                  <h3 className="text-lg font-semibold text-gray-900 mb-1">
+                    {member.name}
+                  </h3>
+                  <p className="text-sm text-green-600 font-medium mb-3">
+                    {member.title}
+                  </p>
+                  <p className="text-sm text-gray-600 mb-4 leading-relaxed">
+                    {member.description}
+                  </p>
+                  <div className="space-y-1">
+                    {member.specialties.map((specialty, idx) => (
+                      <span
+                        key={idx}
+                        className="inline-block bg-gray-100 text-gray-700 text-xs px-2 py-1 rounded-full mr-1 mb-1"
+                      >
+                        {specialty}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
   );
 }

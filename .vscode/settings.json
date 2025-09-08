@@ -29,7 +29,7 @@
   "editor.fontSize": 13,
   "editor.fontFamily": "JetBrains Mono", // Kod için güzel font
   "editor.fontLigatures": true, // Özel karakter birleştirmeleri
-  "editor.minimap.enabled": false, // Sağdaki minimap'i kapat
+  "editor.minimap.enabled": true, // Sağdaki minimap'i kapat
   "editor.bracketPairColorization.enabled": true, // Parantezleri renklendir
   "editor.guides.bracketPairs": true, // Parantez çizgileri
   "editor.lineHeight": 1.5,

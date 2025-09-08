@@ -1,14 +1,6 @@
+import { Badge } from "@/components/ui/badge";
+import { Card, CardContent } from "@/components/ui/card";
 import { BlogCardProps } from "@/types";
-import {
-  Badge,
-  Box,
-  Card,
-  HStack,
-  Heading,
-  Icon,
-  Text,
-  VStack,
-} from "@chakra-ui/react";
 import Image from "next/image";
 import Link from "next/link";
 import { FiUser } from "react-icons/fi";
@@ -16,106 +8,50 @@ import { FiUser } from "react-icons/fi";
 export default function BlogCard({ post }: BlogCardProps) {
   return (
     <Link href={`/blog/${post.slug}`}>
-      <Card.Root
-        bg="white"
-        borderRadius="12px"
-        overflow="hidden"
-        shadow="md"
-        _hover={{
-          shadow: "lg",
-          transform: "translateY(-4px)",
-        }}
-        transition="all 0.3s ease"
-        cursor="pointer"
-        h="full"
-      >
-        <Box
-          h="200px"
-          w="full"
-          bg="gray.100"
-          position="relative"
-          overflow="hidden"
-        >
+      <Card className="bg-white rounded-xl overflow-hidden shadow-md hover:shadow-lg hover:-translate-y-1 transition-all cursor-pointer h-full">
+        <div className="h-48 w-full bg-gray-100 relative overflow-hidden">
           <Image
             src={post.imageUrl || "/images/blog-default.jpg"}
             alt={post.title}
             width={400}
             height={200}
             loading="lazy"
-            style={{
-              width: "auto",
-              height: "200px",
-              objectFit: "cover",
-              aspectRatio: "2/1",
-            }}
+            className="w-full h-48 object-cover"
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
           />
-        </Box>
+        </div>
 
-        <Card.Body p={6}>
-          <VStack align="start" gap={4} h="full">
-            <Badge
-              color="var(--primary)"
-              bg="rgba(var(--primary-rgb), 0.08)"
-              fontSize="xs"
-              px={2}
-              py={1}
-              borderRadius="6px"
-            >
+        <CardContent className="p-6">
+          <div className="flex flex-col gap-4 h-full">
+            <Badge className="text-green-600 bg-green-50 text-xs px-2 py-1 rounded-md w-fit">
               {post.category}
             </Badge>
 
-            <Heading
-              as="h3"
-              size="lg"
-              color="gray.800"
-              lineHeight="short"
-              _hover={{ color: "var(--primary)" }}
-              transition="color 0.2s ease"
-              css={{
-                display: "-webkit-box",
-                WebkitBoxOrient: "vertical",
-                WebkitLineClamp: 2,
-                overflow: "hidden",
-              }}
-            >
+            <h3 className="text-lg font-semibold text-gray-800 leading-tight hover:text-green-600 transition-colors line-clamp-2">
               {post.title}
-            </Heading>
+            </h3>
 
-            <Text
-              color="gray.600"
-              fontSize="sm"
-              lineHeight="tall"
-              flex="1"
-              css={{
-                display: "-webkit-box",
-                WebkitBoxOrient: "vertical",
-                WebkitLineClamp: 3,
-                overflow: "hidden",
-              }}
-            >
+            <p className="text-sm text-gray-600 leading-relaxed flex-1 line-clamp-3">
               {post.excerpt}
-            </Text>
+            </p>
 
-            <HStack justify="space-between" w="full" pt={2}>
-              <HStack gap={2} fontSize="xs" color="gray.500">
-                <Icon boxSize={4}>
-                  <FiUser />
-                </Icon>
-                <Text>{post.author}</Text>
-              </HStack>
-            </HStack>
+            <div className="flex justify-between items-center w-full pt-2">
+              <div className="flex items-center gap-2 text-xs text-gray-500">
+                <FiUser className="w-4 h-4" />
+                <span>{post.author}</span>
+              </div>
+            </div>
 
-            <Text fontSize="xs" color="gray.400">
+            <p className="text-xs text-gray-400">
               {new Date(post.createdAt).toLocaleDateString("tr-TR", {
                 year: "numeric",
                 month: "long",
                 day: "numeric",
               })}
-            </Text>
-          </VStack>
-        </Card.Body>
-      </Card.Root>
+            </p>
+          </div>
+        </CardContent>
+      </Card>
     </Link>
   );
 }

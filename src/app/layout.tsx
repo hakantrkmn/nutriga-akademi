@@ -1,4 +1,3 @@
-import { Provider } from "@/components/ui/provider";
 import type { Metadata } from "next";
 import { Inter, Nunito, Poppins, Source_Sans_3 } from "next/font/google";
 import "./globals.css";
@@ -48,10 +47,8 @@ export default function RootLayout({
       <body
         className={`${poppins.variable} ${inter.variable} ${nunito.variable} ${sourceSans3.variable} antialiased`}
       >
-        <Provider>
-          <ConditionalLayout>{children}</ConditionalLayout>
-          <Toaster />
-        </Provider>
+        <ConditionalLayout>{children}</ConditionalLayout>
+        <Toaster />
       </body>
     </html>
   );

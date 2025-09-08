@@ -1,15 +1,35 @@
 "use client";
-
-import { Box } from "@chakra-ui/react";
+import BubbleMenuExt from "@tiptap/extension-bubble-menu";
+import CharacterCount from "@tiptap/extension-character-count";
+import CodeBlockLowlight from "@tiptap/extension-code-block-lowlight";
 import Color from "@tiptap/extension-color";
+import FloatingMenuExt from "@tiptap/extension-floating-menu";
+import FontFamily from "@tiptap/extension-font-family";
+import FontSize from "@tiptap/extension-font-size";
+import Heading from "@tiptap/extension-heading";
 import Highlight from "@tiptap/extension-highlight";
-import Image from "@tiptap/extension-image";
+import HorizontalRule from "@tiptap/extension-horizontal-rule";
+import Link from "@tiptap/extension-link";
+import Mention from "@tiptap/extension-mention";
+import Placeholder from "@tiptap/extension-placeholder";
+import Subscript from "@tiptap/extension-subscript";
+import Superscript from "@tiptap/extension-superscript";
+import { Table } from "@tiptap/extension-table";
+import { TableCell } from "@tiptap/extension-table-cell";
+import { TableHeader } from "@tiptap/extension-table-header";
+import { TableRow } from "@tiptap/extension-table-row";
+import TaskItem from "@tiptap/extension-task-item";
+import TaskList from "@tiptap/extension-task-list";
 import TextAlign from "@tiptap/extension-text-align";
 import { TextStyle } from "@tiptap/extension-text-style";
-import { generateHTML } from "@tiptap/html";
+import Underline from "@tiptap/extension-underline";
+import Youtube from "@tiptap/extension-youtube";
 import StarterKit from "@tiptap/starter-kit";
-import { useEffect, useState } from "react";
-
+import { createLowlight } from "lowlight";
+import { ResizableImage } from "tiptap-extension-resizable-image";
+// Chakra UI import removed
+import { generateHTML } from "@tiptap/core";
+import { useEffect, useMemo, useState } from "react";
 interface TipTapWrapperProps {
   content: string | object;
   className?: string;
@@ -17,24 +37,44 @@ interface TipTapWrapperProps {
 
 // TipTap extensions - sadece görüntüleme için gerekli olanlar
 const extensions = [
-  StarterKit.configure({
-    heading: {
-      levels: [1, 2, 3, 4, 5, 6],
-    },
-  }),
-  Image.configure({
+  StarterKit.configure({ codeBlock: false, horizontalRule: false }),
+  Heading.configure({ levels: [1, 2, 3, 4, 5, 6] }),
+  ResizableImage.configure({
+    allowBase64: true,
+    defaultWidth: 200,
+    defaultHeight: 200,
     HTMLAttributes: {
-      style: 'display: block; margin: 0 auto; max-width: 100%; height: auto; border-radius: 8px;'
+      class: "tiptap-image-resizable",
+      style: "display: block; margin: 0 auto; text-align: center;",
     },
   }),
-  Highlight,
-  TextAlign.configure({
-    types: ['heading', 'paragraph', 'image'],
-    alignments: ['left', 'center', 'right', 'justify'],
-    defaultAlignment: 'left',
+  Link.configure({
+    openOnClick: false,
+    HTMLAttributes: { class: "tiptap-link" },
   }),
+  Table.configure({ resizable: true }),
+  TableRow,
+  TableHeader,
+  TableCell,
+  CodeBlockLowlight.configure({ lowlight: createLowlight() }),
+  Highlight.configure({ multicolor: true }),
+  TextAlign.configure({ types: ["heading", "paragraph", "image"] }),
+  Underline,
   TextStyle,
-  Color,
+  Color.configure({ types: ["textStyle"] }),
+  FontFamily.configure({ types: ["textStyle"] }),
+  FontSize.configure({ types: ["textStyle"] }),
+  Subscript,
+  Superscript,
+  TaskList,
+  TaskItem.configure({ nested: true }),
+  Youtube.configure({ controls: false, nocookie: true }),
+  HorizontalRule,
+  Mention.configure({ HTMLAttributes: { class: "mention" } }),
+  CharacterCount,
+  BubbleMenuExt,
+  FloatingMenuExt,
+  Placeholder.configure({ placeholder: "Yükleniyor..." }),
 ];
 
 // imageResize node'larını image node'larına dönüştür
@@ -76,12 +116,9 @@ const processContent = (content: string | object): string => {
       try {
         const parsedContent = JSON.parse(content);
         // imageResize node'larını image node'larına dönüştür
-        const convertedContent = convertImageResizeToImage(
-          parsedContent as Record<string, unknown>
-        );
 
         // TipTap'ın resmi generateHTML fonksiyonunu kullan
-        return generateHTML(convertedContent, extensions);
+        return generateHTML(parsedContent, extensions);
       } catch (error) {
         console.error("JSON string parse error:", error);
         return "<p>İçerik yüklenirken hata oluştu.</p>";
@@ -114,89 +151,27 @@ export default function TipTapWrapper({
   content,
   className = "tiptap-content",
 }: TipTapWrapperProps) {
-  const [htmlContent, setHtmlContent] = useState<string>("");
   const [isClient, setIsClient] = useState(false);
 
+  // Client-side rendering kontrolü
   useEffect(() => {
     setIsClient(true);
-    setHtmlContent(processContent(content));
-  }, [content]);
+  }, []);
+
+  // useMemo ile içeriği işle, render sırasında state güncellemesi yapmadan
+  const htmlContent = useMemo(() => {
+    if (!isClient) return "";
+    return processContent(content);
+  }, [content, isClient]);
 
   // SSR sırasında boş div göster, client-side'da HTML göster
   if (!isClient) {
-    return <Box className={className} />;
+    return <div className={className} />;
   }
 
   return (
-    <Box
-      className={className}
-      css={{
-        padding: "8px !important",
-        // TipTap extension'ından gelen alignment'ları destekle
-        "& p[style*='text-align: center']": {
-          textAlign: "center !important",
-        },
-        "& p[style*='text-align: right']": {
-          textAlign: "right !important",
-        },
-        "& p[style*='text-align: justify']": {
-          textAlign: "justify !important",
-        },
-        "& h1": {
-          fontSize: "2rem !important",
-          fontWeight: "bold !important",
-          lineHeight: "1.2 !important",
-          margin: "1.5rem 0 1rem 0 !important",
-          color: "inherit !important",
-        },
-        "& h2": {
-          fontSize: "1.5rem !important",
-          fontWeight: "bold !important",
-          lineHeight: "1.3 !important",
-          margin: "1.25rem 0 0.75rem 0 !important",
-          color: "inherit !important",
-        },
-        "& h3": {
-          fontSize: "1.25rem !important",
-          fontWeight: "semibold !important",
-          lineHeight: "1.4 !important",
-          margin: "1rem 0 0.5rem 0 !important",
-          color: "inherit !important",
-        },
-        "& h4": {
-          fontSize: "1.125rem !important",
-          fontWeight: "semibold !important",
-          lineHeight: "1.4 !important",
-          margin: "0.875rem 0 0.5rem 0 !important",
-          color: "inherit !important",
-        },
-        "& h5": {
-          fontSize: "1rem !important",
-          fontWeight: "semibold !important",
-          lineHeight: "1.5 !important",
-          margin: "0.75rem 0 0.5rem 0 !important",
-          color: "inherit !important",
-        },
-        "& h6": {
-          fontSize: "0.875rem !important",
-          fontWeight: "semibold !important",
-          lineHeight: "1.5 !important",
-          margin: "0.75rem 0 0.5rem 0 !important",
-          color: "inherit !important",
-        },
-        "& p": {
-          margin: "0.75rem 0 !important",
-          lineHeight: "1.6 !important",
-        },
-        "& ul, & ol": {
-          margin: "0.75rem 0 !important",
-          paddingLeft: "1.5rem !important",
-        },
-        "& li": {
-          margin: "0.25rem 0 !important",
-          lineHeight: "1.5 !important",
-        },
-      }}
+    <div
+      className={`prose ProseMirror max-w-none ${className || ""}`}
       dangerouslySetInnerHTML={{ __html: htmlContent }}
     />
   );

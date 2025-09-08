@@ -1,221 +1,149 @@
 import {
-  Box,
-  Container,
-  SimpleGrid,
-  VStack,
-  HStack,
-  Heading,
-  Text,
-  Icon,
-} from "@chakra-ui/react";
-import { 
-  FaBookReader, 
-  FaChalkboardTeacher, 
-  FaUsers, 
+  FaBookReader,
   FaCertificate,
+  FaChalkboardTeacher,
   FaHeart,
-  FaLightbulb
+  FaLightbulb,
+  FaUsers,
 } from "react-icons/fa";
 
 const missionPoints = [
   {
     icon: FaBookReader,
     title: "Güncel Bilgi",
-    description: "Beslenme bilimindeki en son gelişmeleri takip ederek, kanıta dayalı eğitim içerikleri sunuyoruz.",
-    color: "green.500"
+    description:
+      "Beslenme bilimindeki en son gelişmeleri takip ederek, kanıta dayalı eğitim içerikleri sunuyoruz.",
+    color: "green.500",
   },
   {
     icon: FaChalkboardTeacher,
     title: "Kaliteli Eğitim",
-    description: "Deneyimli uzmanlarımızla, teorik bilgiyi pratiğe dönüştüren etkili eğitim programları geliştiriyoruz.",
-    color: "orange.500"
+    description:
+      "Deneyimli uzmanlarımızla, teorik bilgiyi pratiğe dönüştüren etkili eğitim programları geliştiriyoruz.",
+    color: "orange.500",
   },
   {
     icon: FaUsers,
     title: "Mesleki Gelişim",
-    description: "Diyetisyenlerin kariyer yolculuğunda yanında olarak, sürekli öğrenmeyi destekliyoruz.",
-    color: "green.600"
+    description:
+      "Diyetisyenlerin kariyer yolculuğunda yanında olarak, sürekli öğrenmeyi destekliyoruz.",
+    color: "green.600",
   },
   {
     icon: FaCertificate,
     title: "Sertifikasyon",
-    description: "Katılımcılarımıza uluslararası standartlarda geçerli sertifikalar sunarak değer katıyoruz.",
-    color: "orange.600"
+    description:
+      "Katılımcılarımıza uluslararası standartlarda geçerli sertifikalar sunarak değer katıyoruz.",
+    color: "orange.600",
   },
   {
     icon: FaHeart,
     title: "Toplum Sağlığı",
-    description: "Eğittiğimiz uzmanlar aracılığıyla toplumun beslenme bilincini artırmayı hedefliyoruz.",
-    color: "green.500"
+    description:
+      "Eğittiğimiz uzmanlar aracılığıyla toplumun beslenme bilincini artırmayı hedefliyoruz.",
+    color: "green.500",
   },
   {
     icon: FaLightbulb,
     title: "İnovasyon",
-    description: "Eğitim metodolojilerinde yenilikçi yaklaşımlarla öğrenme deneyimini zenginleştiriyoruz.",
-    color: "orange.500"
-  }
+    description:
+      "Eğitim metodolojilerinde yenilikçi yaklaşımlarla öğrenme deneyimini zenginleştiriyoruz.",
+    color: "orange.500",
+  },
 ];
 
 const commitments = [
   "Bilimsel araştırmalara dayalı güncel içerik sunmak",
-  "Etik değerleri ön planda tutarak eğitim vermek", 
+  "Etik değerleri ön planda tutarak eğitim vermek",
   "Her katılımcının bireysel ihtiyaçlarını gözetmek",
   "Sürekli gelişim ve iyileştirme anlayışını benimser",
-  "Toplumsal sorumluluk bilincini yaygınlaştırmak"
+  "Toplumsal sorumluluk bilincini yaygınlaştırmak",
 ];
 
 export default function MissionDetails() {
   return (
     <>
       {/* Mission Points */}
-      <Box py={16} bg="white">
-        <Container maxW="1200px" px={{ base: 4, md: 6 }}>
-          <VStack gap={12}>
-            <VStack gap={4} textAlign="center">
-              <Heading 
-                as="h2" 
-                size="xl" 
-                color="gray.800"
-              >
+      <div className="py-16 bg-white">
+        <div className="container mx-auto px-4 md:px-6 max-w-6xl">
+          <div className="flex flex-col items-center gap-12">
+            <div className="flex flex-col items-center gap-4 text-center">
+              <h2 className="text-3xl font-bold text-gray-800">
                 Misyonumuzun Temel Unsurları
-              </Heading>
-              <Text 
-                fontSize="lg" 
-                color="gray.600" 
-                maxW="600px"
-              >
+              </h2>
+              <p className="text-lg text-gray-600 max-w-2xl">
                 Hedeflerimize ulaşmak için odaklandığımız ana konular
-              </Text>
-            </VStack>
+              </p>
+            </div>
 
-            <SimpleGrid 
-              columns={{ base: 1, md: 2, lg: 3 }} 
-              gap={8} 
-              w="full"
-            >
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 w-full">
               {missionPoints.map((point, index) => (
-                <VStack 
+                <div
                   key={index}
-                  p={8}
-                  bg="gray.50"
-                  borderRadius="12px"
-                  border="1px solid"
-                  borderColor="gray.100"
-                  textAlign="center"
-                  gap={6}
-                  _hover={{
-                    transform: "translateY(-4px)",
-                    shadow: "lg",
-                    borderColor: point.color
-                  }}
-                  transition="all 0.3s ease"
-                  h="full"
+                  className="p-8 bg-gray-50 rounded-xl border border-gray-100 text-center space-y-6 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:border-green-500 h-full"
                 >
-                  <Box
-                    bg={`${point.color.split('.')[0]}.50`}
-                    p={4}
-                    borderRadius="16px"
-                    display="inline-block"
+                  <div
+                    className={`p-4 rounded-2xl inline-block ${
+                      point.color === "green.500"
+                        ? "bg-green-50 text-green-500"
+                        : point.color === "orange.500"
+                        ? "bg-orange-50 text-orange-500"
+                        : point.color === "green.600"
+                        ? "bg-green-100 text-green-600"
+                        : "bg-orange-100 text-orange-600"
+                    }`}
                   >
-                    <Icon boxSize={8} color={point.color}>
-                      <point.icon />
-                    </Icon>
-                  </Box>
+                    <point.icon className="w-8 h-8" />
+                  </div>
 
-                  <VStack gap={3}>
-                    <Heading 
-                      as="h3" 
-                      size="md" 
-                      color="gray.800"
-                    >
+                  <div className="space-y-3">
+                    <h3 className="text-xl font-semibold text-gray-800">
                       {point.title}
-                    </Heading>
-                    
-                    <Text 
-                      fontSize="sm" 
-                      color="gray.600" 
-                      lineHeight="tall"
-                    >
+                    </h3>
+
+                    <p className="text-sm text-gray-600 leading-relaxed">
                       {point.description}
-                    </Text>
-                  </VStack>
-                </VStack>
+                    </p>
+                  </div>
+                </div>
               ))}
-            </SimpleGrid>
-          </VStack>
-        </Container>
-      </Box>
+            </div>
+          </div>
+        </div>
+      </div>
 
       {/* Commitments */}
-      <Box py={16} bg="gray.50">
-        <Container maxW="1200px" px={{ base: 4, md: 6 }}>
-          <VStack gap={12}>
-            <VStack gap={4} textAlign="center">
-              <Heading 
-                as="h2" 
-                size="xl" 
-                color="gray.800"
-              >
+      <div className="py-16 bg-gray-50">
+        <div className="container mx-auto px-4 md:px-6 max-w-6xl">
+          <div className="flex flex-col items-center gap-12">
+            <div className="flex flex-col items-center gap-4 text-center">
+              <h2 className="text-3xl font-bold text-gray-800">
                 Taahhütlerimiz
-              </Heading>
-              <Text 
-                fontSize="lg" 
-                color="gray.600" 
-                maxW="600px"
-              >
+              </h2>
+              <p className="text-lg text-gray-600 max-w-2xl">
                 Misyonumuzu gerçekleştirmek için verdiğimiz sözler
-              </Text>
-            </VStack>
+              </p>
+            </div>
 
-            <VStack gap={6} w="full" maxW="800px" mx="auto">
+            <div className="flex flex-col gap-6 w-full max-w-4xl mx-auto">
               {commitments.map((commitment, index) => (
-                <HStack
+                <div
                   key={index}
-                  p={6}
-                  bg="white"
-                  borderRadius="12px"
-                  border="1px solid"
-                  borderColor="gray.200"
-                  w="full"
-                  align="start"
-                  gap={4}
-                  _hover={{
-                    borderColor: "green.200",
-                    shadow: "sm",
-                    transform: "translateX(8px)"
-                  }}
-                  transition="all 0.2s ease"
+                  className="p-6 bg-white rounded-xl border border-gray-200 w-full flex items-start gap-4 transition-all duration-200 hover:border-green-200 hover:shadow-sm hover:translate-x-2"
                 >
-                  <Box
-                    bg="green.500"
-                    color="white"
-                    borderRadius="full"
-                    w={8}
-                    h={8}
-                    display="flex"
-                    alignItems="center"
-                    justifyContent="center"
-                    fontSize="sm"
-                    fontWeight="bold"
-                    flexShrink={0}
-                  >
+                  <div className="bg-green-500 text-white rounded-full w-8 h-8 flex items-center justify-center text-sm font-bold flex-shrink-0">
                     {index + 1}
-                  </Box>
-                  
-                  <Text 
-                    fontSize="lg" 
-                    color="gray.700" 
-                    lineHeight="tall"
-                    fontWeight="medium"
-                  >
+                  </div>
+
+                  <p className="text-lg text-gray-700 leading-relaxed font-medium">
                     {commitment}
-                  </Text>
-                </HStack>
+                  </p>
+                </div>
               ))}
-            </VStack>
-          </VStack>
-        </Container>
-      </Box>
+            </div>
+          </div>
+        </div>
+      </div>
     </>
   );
 }

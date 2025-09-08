@@ -3,25 +3,15 @@
 import EgitimDetailHero from "@/components/courses/detail/CoursesDetailHero";
 import EgitimPrice from "@/components/courses/detail/CoursesPriceSection";
 import EgitimContent from "@/components/courses/detail/CoursesTiptapSection";
+import { Button } from "@/components/ui/button";
+import { toaster } from "@/components/ui/toaster";
 import { egitimlerApi } from "@/lib/api";
 import { Egitim } from "@/types";
 import { generateSlug } from "@/utils";
-import {
-  Box,
-  Button,
-  Container,
-  Grid,
-  HStack,
-  Heading,
-  Icon,
-  Text,
-  VStack,
-} from "@chakra-ui/react";
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { FiArrowLeft, FiSave } from "react-icons/fi";
 import EgitimSettings from "./CourseSettings";
-import { toaster } from "@/components/ui/toaster";
 export default function EgitimFormPage({ egitimId }: { egitimId?: string }) {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
@@ -208,66 +198,56 @@ export default function EgitimFormPage({ egitimId }: { egitimId?: string }) {
 
   if (loadingData) {
     return (
-      <Box>
-        <VStack gap={6} align="stretch">
-          <HStack justify="space-between" align="center">
-            <Box>
-              <Heading size="lg" color="gray.900">
+      <div className="max-w-6xl mx-auto p-6">
+        <div className="space-y-6">
+          <div className="flex justify-between items-center">
+            <div>
+              <h1 className="text-2xl font-bold text-gray-900">
                 Eğitim Yükleniyor...
-              </Heading>
-              <Text color="gray.600">
+              </h1>
+              <p className="text-gray-600">
                 Eğitim verileri yükleniyor, lütfen bekleyin
-              </Text>
-            </Box>
-          </HStack>
-        </VStack>
-      </Box>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
     );
   }
 
   return (
-    <Box bg="gray.50" minH="100vh">
+    <div className="bg-gray-50 min-h-screen">
       {/* Admin Header */}
-      <Box
-        bg="white"
-        borderBottom="1px solid"
-        borderColor="gray.100"
-        shadow="sm"
-      >
-        <Container
-          maxW="1200px"
-          px={{ base: 4, md: 6 }}
-          py={{ base: 4, md: 6 }}
-        >
-          <HStack justify="space-between" align="center">
-            <Box>
-              <Heading size="lg" color="gray.900">
+      <div className="bg-white border-b border-gray-100 shadow-sm">
+        <div className="max-w-6xl mx-auto px-4 md:px-6 py-4 md:py-6">
+          <div className="flex justify-between items-center">
+            <div>
+              <h1 className="text-2xl font-bold text-gray-900">
                 {isEditing.current ? "Eğitim Düzenle" : "Yeni Eğitim Ekle"}
-              </Heading>
-              <Text color="gray.600">
+              </h1>
+              <p className="text-gray-600">
                 {isEditing.current
                   ? "Eğitim bilgilerini düzenleyin"
                   : "Yeni bir eğitim oluşturun"}
-              </Text>
-            </Box>
-            <HStack gap={3}>
+              </p>
+            </div>
+            <div className="flex gap-3">
               <Button variant="outline" onClick={handleCancel}>
-                <Icon as={FiArrowLeft} mr={2} />
+                <FiArrowLeft className="mr-2 h-4 w-4" />
                 Geri Dön
               </Button>
               <Button
-                colorScheme="green"
                 onClick={handleSave}
-                loading={loading}
-                loadingText="Kaydediliyor..."
+                disabled={loading}
+                className="bg-green-600 hover:bg-green-700"
               >
-                <Icon as={FiSave} mr={2} />
-                Kaydet
+                <FiSave className="mr-2 h-4 w-4" />
+                {loading ? "Kaydediliyor..." : "Kaydet"}
               </Button>
-            </HStack>
-          </HStack>
-        </Container>
-      </Box>
+            </div>
+          </div>
+        </div>
+      </div>
       <EgitimDetailHero
         key={egitimId}
         egitim={formData}
@@ -276,13 +256,10 @@ export default function EgitimFormPage({ egitimId }: { egitimId?: string }) {
       />
 
       {/* Main Content */}
-      <Container maxW="1200px" px={{ base: 4, md: 6 }} py={{ base: 8, md: 12 }}>
-        <VStack gap={8} align="stretch">
+      <div className="max-w-6xl mx-auto px-4 md:px-6 py-8 md:py-12">
+        <div className="space-y-8">
           {/* Top Grid: Editor and Preview */}
-          <Grid
-            templateColumns={{ base: "1fr", lg: "2.5fr 1.5fr" }}
-            gap={{ base: 12, lg: 10 }}
-          >
+          <div className="grid grid-cols-1 lg:grid-cols-[2.5fr_1.5fr] gap-8 lg:gap-10">
             {/* Left Column: Editor */}
             <EgitimContent
               egitim={formData}
@@ -292,7 +269,7 @@ export default function EgitimFormPage({ egitimId }: { egitimId?: string }) {
 
             {/* Right Column: Preview & Settings */}
             <EgitimPrice egitim={formData} />
-          </Grid>
+          </div>
 
           {/* Bottom: Settings */}
           <EgitimSettings
@@ -303,35 +280,23 @@ export default function EgitimFormPage({ egitimId }: { egitimId?: string }) {
             uploading={uploading}
             uploadedImage={uploadedImage || ""}
           />
-        </VStack>
+        </div>
         {/* JSON Kaydet Butonu */}
-        <Box mt={8} textAlign="center">
+        <div className="mt-8 text-center">
           <Button
             variant="outline"
-            colorScheme="blue"
             onClick={handleSaveAsJSON}
             size="lg"
-            borderRadius="12px"
-            px={8}
-            py={6}
-            fontSize="md"
-            fontWeight="semibold"
-            _hover={{
-              bg: "blue.50",
-              borderColor: "blue.300",
-              transform: "translateY(-1px)",
-              shadow: "md",
-            }}
-            transition="all 0.2s ease"
+            className="px-8 py-6 text-base font-semibold hover:bg-blue-50 hover:border-blue-300 hover:-translate-y-0.5 hover:shadow-md transition-all duration-200"
           >
-            <Icon as={FiSave} mr={3} />
+            <FiSave className="mr-3 h-4 w-4" />
             JSON Olarak Kaydet
           </Button>
-          <Text fontSize="sm" color="gray.500" mt={2}>
+          <p className="text-sm text-gray-500 mt-2">
             Editör içeriğini JSON dosyası olarak bilgisayarınıza indirin
-          </Text>
-        </Box>
-      </Container>
-    </Box>
+          </p>
+        </div>
+      </div>
+    </div>
   );
 }

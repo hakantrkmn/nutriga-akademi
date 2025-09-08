@@ -1,25 +1,22 @@
 "use client";
 
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
+import { toaster } from "@/components/ui/toaster";
 import { egitimlerApi } from "@/lib/api";
 import { Egitim } from "@/types";
-import {
-  Badge,
-  Box,
-  Button,
-  Card,
-  Center,
-  HStack,
-  Heading,
-  Icon,
-  Spinner,
-  Table,
-  Text,
-  VStack,
-} from "@chakra-ui/react";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { FiEdit, FiPlus, FiTrash2 } from "react-icons/fi";
-import { toaster } from "@/components/ui/toaster";
 
 export default function EgitimlerManagement() {
   const router = useRouter();
@@ -82,225 +79,187 @@ export default function EgitimlerManagement() {
 
   if (loading) {
     return (
-      <Box maxW="7xl" mx="auto" px={{ base: 4, md: 6 }} py={{ base: 6, md: 8 }}>
-        <VStack gap={6} align="stretch">
+      <div className="max-w-7xl mx-auto px-4 md:px-6 py-6 md:py-8">
+        <div className="space-y-6">
           {/* Header */}
-          <HStack justify="space-between" align="center">
-            <Box>
-              <Heading size="lg" color="gray.900">
+          <div className="flex justify-between items-center">
+            <div>
+              <h1 className="text-2xl font-bold text-gray-900">
                 Eğitimler Yönetimi
-              </Heading>
-              <Text color="gray.600">
+              </h1>
+              <p className="text-gray-600">
                 Eğitimlerinizi ekleyin, düzenleyin ve yönetin
-              </Text>
-            </Box>
-            <Button colorScheme="green" onClick={handleAddEgitim}>
-              <Icon as={FiPlus} mr={2} />
+              </p>
+            </div>
+            <Button
+              onClick={handleAddEgitim}
+              className="bg-green-600 hover:bg-green-700"
+            >
+              <FiPlus className="mr-2 h-4 w-4" />
               Yeni Eğitim
             </Button>
-          </HStack>
+          </div>
 
           {/* Loading State */}
-          <Card.Root className="loading-container">
-            <Card.Body>
-              <Center py={20}>
-                <VStack gap={4}>
-                  <Spinner
-                    size="xl"
-                    color="green.500"
-                    className="loading-spinner"
-                  />
-                  <Text color="gray.600" fontSize="lg" className="loading-text">
-                    Eğitimler yükleniyor...
-                  </Text>
-                </VStack>
-              </Center>
-            </Card.Body>
-          </Card.Root>
-        </VStack>
-      </Box>
+          <Card>
+            <CardContent className="py-20">
+              <div className="flex flex-col items-center justify-center space-y-4">
+                <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-green-500"></div>
+                <p className="text-gray-600 text-lg">Eğitimler yükleniyor...</p>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+      </div>
     );
   }
 
   return (
-    <Box maxW="7xl" mx="auto" px={{ base: 4, md: 6 }} py={{ base: 6, md: 8 }}>
-      <VStack gap={6} align="stretch">
+    <div className="max-w-7xl mx-auto px-4 md:px-6 py-6 md:py-8">
+      <div className="space-y-6">
         {/* Header */}
-        <HStack justify="space-between" align="center">
-          <Box>
-            <Heading size="lg" color="gray.900">
+        <div className="flex justify-between items-center">
+          <div>
+            <h1 className="text-2xl font-bold text-gray-900">
               Eğitimler Yönetimi
-            </Heading>
-            <Text color="gray.600">
+            </h1>
+            <p className="text-gray-600">
               Eğitimlerinizi ekleyin, düzenleyin ve yönetin
-            </Text>
-          </Box>
-          <Button colorScheme="green" onClick={handleAddEgitim}>
-            <Icon as={FiPlus} mr={2} />
+            </p>
+          </div>
+          <Button
+            onClick={handleAddEgitim}
+            className="bg-green-600 hover:bg-green-700"
+          >
+            <FiPlus className="mr-2 h-4 w-4" />
             Yeni Eğitim
           </Button>
-        </HStack>
+        </div>
 
         {/* Eğitimler Tablosu */}
-        <Card.Root
-          bg="white"
-          borderRadius="lg"
-          boxShadow="sm"
-          className="admin-table-container"
-        >
-          <Card.Body p={0}>
-            <Table.Root size="sm" className="admin-table">
-              <Table.Header>
-                <Table.Row bg="gray.50" className="admin-table-header-row">
-                  <Table.ColumnHeader
-                    color="gray.700"
-                    fontWeight="semibold"
-                    fontSize="sm"
-                    py={4}
-                    px={6}
-                  >
+        <Card>
+          <CardContent className="p-0">
+            <Table>
+              <TableHeader>
+                <TableRow className="bg-gray-50">
+                  <TableHead className="text-gray-700 font-semibold text-sm py-4 px-6">
                     Başlık
-                  </Table.ColumnHeader>
-                  <Table.ColumnHeader
-                    color="gray.700"
-                    fontWeight="semibold"
-                    fontSize="sm"
-                    py={4}
-                    px={6}
-                  >
+                  </TableHead>
+                  <TableHead className="text-gray-700 font-semibold text-sm py-4 px-6">
                     Kategori
-                  </Table.ColumnHeader>
-                  <Table.ColumnHeader
-                    color="gray.700"
-                    fontWeight="semibold"
-                    fontSize="sm"
-                    py={4}
-                    px={6}
-                  >
+                  </TableHead>
+                  <TableHead className="text-gray-700 font-semibold text-sm py-4 px-6">
                     Fiyat
-                  </Table.ColumnHeader>
-                  <Table.ColumnHeader
-                    color="gray.700"
-                    fontWeight="semibold"
-                    fontSize="sm"
-                    py={4}
-                    px={6}
-                  >
+                  </TableHead>
+                  <TableHead className="text-gray-700 font-semibold text-sm py-4 px-6">
                     Satış
-                  </Table.ColumnHeader>
-                  <Table.ColumnHeader
-                    color="gray.700"
-                    fontWeight="semibold"
-                    fontSize="sm"
-                    py={4}
-                    px={6}
-                  >
+                  </TableHead>
+                  <TableHead className="text-gray-700 font-semibold text-sm py-4 px-6">
                     Tarih
-                  </Table.ColumnHeader>
-                  <Table.ColumnHeader
-                    color="gray.700"
-                    fontWeight="semibold"
-                    fontSize="sm"
-                    py={4}
-                    px={6}
-                    textAlign="center"
-                  >
+                  </TableHead>
+                  <TableHead className="text-gray-700 font-semibold text-sm py-4 px-6 text-center">
                     İşlemler
-                  </Table.ColumnHeader>
-                </Table.Row>
-              </Table.Header>
-              <Table.Body>
+                  </TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
                 {egitimler.length === 0 ? (
-                  <Table.Row>
-                    <Table.Cell colSpan={6} textAlign="center" py={12}>
-                      <VStack gap={3}>
-                        <Text color="gray.500" fontSize="lg">
+                  <TableRow>
+                    <TableCell colSpan={6} className="text-center py-12">
+                      <div className="space-y-3">
+                        <p className="text-gray-500 text-lg">
                           Henüz eğitim eklenmemiş
-                        </Text>
-                        <Text color="gray.400" fontSize="sm">
+                        </p>
+                        <p className="text-gray-400 text-sm">
                           İlk eğitiminizi eklemek için &quot;Yeni Eğitim&quot;
                           butonuna tıklayın
-                        </Text>
-                      </VStack>
-                    </Table.Cell>
-                  </Table.Row>
+                        </p>
+                      </div>
+                    </TableCell>
+                  </TableRow>
                 ) : (
                   egitimler.map((egitim, index) => (
-                    <Table.Row
+                    <TableRow
                       key={egitim.id}
-                      bg={index % 2 === 0 ? "white" : "gray.25"}
-                      _hover={{ bg: "gray.50" }}
+                      className={`${
+                        index % 2 === 0 ? "bg-white" : "bg-gray-25"
+                      } hover:bg-gray-50`}
                     >
-                      <Table.Cell py={4} px={6}>
-                        <VStack align="start" gap={1}>
-                          <Text fontWeight="medium" color="gray.900">
+                      <TableCell className="py-4 px-6">
+                        <div className="space-y-1">
+                          <p className="font-medium text-gray-900">
                             {egitim.title}
-                          </Text>
-                          <Text fontSize="sm" color="gray.500">
+                          </p>
+                          <p className="text-sm text-gray-500">
                             /{egitim.slug}
-                          </Text>
-                        </VStack>
-                      </Table.Cell>
-                      <Table.Cell py={4} px={6}>
+                          </p>
+                        </div>
+                      </TableCell>
+                      <TableCell className="py-4 px-6">
                         {egitim.category ? (
-                          <Badge colorScheme="blue" variant="subtle">
+                          <Badge
+                            variant="secondary"
+                            className="bg-blue-100 text-blue-800"
+                          >
                             {egitim.category}
                           </Badge>
                         ) : (
-                          <Text color="gray.400">-</Text>
+                          <span className="text-gray-400">-</span>
                         )}
-                      </Table.Cell>
-                      <Table.Cell py={4} px={6}>
+                      </TableCell>
+                      <TableCell className="py-4 px-6">
                         {egitim.price ? (
-                          <Text fontWeight="medium" color="green.600">
+                          <p className="font-medium text-green-600">
                             ₺{egitim.price?.toString()}
-                          </Text>
+                          </p>
                         ) : (
-                          <Text color="gray.400">-</Text>
+                          <span className="text-gray-400">-</span>
                         )}
-                      </Table.Cell>
-                      <Table.Cell py={4} px={6}>
-                        <Text color="gray.700">{egitim.salesCount || 0}</Text>
-                      </Table.Cell>
-                      <Table.Cell py={4} px={6}>
-                        <Text fontSize="sm" color="gray.500">
+                      </TableCell>
+                      <TableCell className="py-4 px-6">
+                        <span className="text-gray-700">
+                          {egitim.salesCount || 0}
+                        </span>
+                      </TableCell>
+                      <TableCell className="py-4 px-6">
+                        <p className="text-sm text-gray-500">
                           {egitim.createdAt
                             ? new Date(egitim.createdAt).toLocaleDateString(
                                 "tr-TR"
                               )
                             : "-"}
-                        </Text>
-                      </Table.Cell>
-                      <Table.Cell py={4} px={6} textAlign="center">
-                        <HStack gap={2} justify="center">
+                        </p>
+                      </TableCell>
+                      <TableCell className="py-4 px-6 text-center">
+                        <div className="flex gap-2 justify-center">
                           <Button
                             size="sm"
                             variant="outline"
-                            colorScheme="blue"
                             onClick={() => handleEditEgitim(egitim)}
+                            className="border-blue-300 text-blue-600 hover:bg-blue-50"
                           >
-                            <Icon as={FiEdit} />
+                            <FiEdit className="h-4 w-4" />
                           </Button>
                           <Button
                             size="sm"
                             variant="outline"
-                            colorScheme="red"
                             onClick={() =>
                               egitim.id && handleDeleteEgitim(egitim.id)
                             }
+                            className="border-red-300 text-red-600 hover:bg-red-50"
                           >
-                            <Icon as={FiTrash2} />
+                            <FiTrash2 className="h-4 w-4" />
                           </Button>
-                        </HStack>
-                      </Table.Cell>
-                    </Table.Row>
+                        </div>
+                      </TableCell>
+                    </TableRow>
                   ))
                 )}
-              </Table.Body>
-            </Table.Root>
-          </Card.Body>
-        </Card.Root>
-      </VStack>
-    </Box>
+              </TableBody>
+            </Table>
+          </CardContent>
+        </Card>
+      </div>
+    </div>
   );
 }

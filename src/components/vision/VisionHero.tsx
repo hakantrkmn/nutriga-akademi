@@ -1,62 +1,30 @@
-import {
-  Box,
-  Container,
-  VStack,
-  Heading,
-  Text,
-  Icon,
-} from "@chakra-ui/react";
 import { HiEye } from "react-icons/hi";
 
 export default function VisionHero() {
   return (
-    <Box bg="orange.50" pt={20} pb={16}>
-      <Container maxW="1200px" px={{ base: 4, md: 6 }}>
-        <VStack gap={8} textAlign="center" maxW="900px" mx="auto">
-          <Box
-            bg="orange.100"
-            p={6}
-            borderRadius="20px"
-            display="inline-block"
-          >
-            <Icon boxSize={12} color="orange.500">
-              <HiEye />
-            </Icon>
-          </Box>
-          
-          <VStack gap={6}>
-            <Heading 
-              as="h1" 
-              size="3xl" 
-              color="orange.500"
-              fontWeight="bold"
-            >
-              Vizyonumuz
-            </Heading>
-            
-            <Text 
-              fontSize="2xl" 
-              color="gray.700" 
-              lineHeight="tall"
-              fontWeight="medium"
-            >
-              Türkiye&apos;nin beslenme alanında önde gelen eğitim platformu olmak ve 
-              dünya standartlarında diyetisyen uzmanlar yetiştirmek.
-            </Text>
+    <div className="bg-orange-50 pt-20 pb-16">
+      <div className="container mx-auto px-4 md:px-6 max-w-6xl">
+        <div className="flex flex-col items-center gap-8 text-center max-w-4xl mx-auto">
+          <div className="bg-orange-100 p-6 rounded-2xl inline-block">
+            <HiEye className="w-12 h-12 text-orange-500" />
+          </div>
 
-            <Text 
-              fontSize="lg" 
-              color="gray.600" 
-              lineHeight="tall"
-              maxW="700px"
-            >
-              Geleceğe bakışımız, beslenme bilimindeki liderliğimizi pekiştirerek, 
-              küresel standartlarda eğitim veren, yenilikçi ve sürdürülebilir bir 
-              akademi olmaktır.
-            </Text>
-          </VStack>
-        </VStack>
-      </Container>
-    </Box>
+          <div className="flex flex-col gap-6">
+            <h1 className="text-5xl font-bold text-orange-500">Vizyonumuz</h1>
+
+            <p className="text-2xl text-gray-700 leading-relaxed font-medium">
+              Türkiye&apos;nin beslenme alanında önde gelen eğitim platformu
+              olmak ve dünya standartlarında diyetisyen uzmanlar yetiştirmek.
+            </p>
+
+            <p className="text-lg text-gray-600 leading-relaxed max-w-3xl">
+              Geleceğe bakışımız, beslenme bilimindeki liderliğimizi
+              pekiştirerek, küresel standartlarda eğitim veren, yenilikçi ve
+              sürdürülebilir bir akademi olmaktır.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
   );
 }

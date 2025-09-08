@@ -2,7 +2,8 @@
 
 import Footer from "@/components/common/Footer";
 import Header from "@/components/common/Header";
-import { Box } from "@chakra-ui/react";
+// AdminProvider removed
+// Chakra UI import removed
 import { usePathname } from "next/navigation";
 
 interface ConditionalLayoutProps {
@@ -14,7 +15,7 @@ export default function ConditionalLayout({
 }: ConditionalLayoutProps) {
   const pathname = usePathname();
 
-  // Admin sayfaları için sadece children (kendi layout'ları var)
+  // Admin sayfaları için sadece children render et
   if (pathname.startsWith("/admin")) {
     return <>{children}</>;
   }
@@ -23,7 +24,7 @@ export default function ConditionalLayout({
   return (
     <div className="site-root site-theme-sage site-font-sage">
       <Header />
-      <Box pt="80px">{children}</Box>
+      <div className="pt-20">{children}</div>
       <Footer />
     </div>
   );

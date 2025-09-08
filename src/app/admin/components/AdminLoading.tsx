@@ -1,7 +1,5 @@
 "use client";
 
-import { Box, Flex, Spinner, Text, VStack } from "@chakra-ui/react";
-
 interface AdminLoadingProps {
   message?: string;
 }
@@ -10,16 +8,14 @@ export default function AdminLoading({
   message = "Yükleniyor...",
 }: AdminLoadingProps) {
   return (
-    <Box minH="50vh" py={8}>
-      <VStack gap={6} align="center">
+    <div className="min-h-[50vh] py-8">
+      <div className="flex flex-col items-center gap-6">
         {/* Loading Spinner */}
-        <Flex align="center" gap={3} color="green.500">
-          <Spinner size="lg" color="green.500" />
-          <Text fontSize="lg" fontWeight="medium" color="gray.600">
-            {message}
-          </Text>
-        </Flex>
-      </VStack>
-    </Box>
+        <div className="flex items-center gap-3 text-green-500">
+          <div className="w-8 h-8 border-4 border-green-200 border-t-green-500 rounded-full animate-spin"></div>
+          <p className="text-lg font-medium text-gray-600">{message}</p>
+        </div>
+      </div>
+    </div>
   );
 }

@@ -1,27 +1,23 @@
-import { Box, GridItem } from "@chakra-ui/react";
 import { EgitimContentProps } from "@/types";
 import dynamic from "next/dynamic";
 
-const TipTapWrapper = dynamic(() => import("@/components/common/TipTapWrapper"), {
-  ssr: false
-});
+const TipTapWrapper = dynamic(
+  () => import("@/components/common/TipTapWrapper"),
+  {
+    ssr: false,
+  }
+);
 const TipTapEditor = dynamic(() => import("@/components/admin/TipTapEditor"), {
-  ssr: false
+  ssr: false,
 });
 
-
-export default function EgitimContent({ egitim, isEditing, setFormData }: EgitimContentProps) {
+export default function EgitimContent({
+  egitim,
+  isEditing,
+  setFormData,
+}: EgitimContentProps) {
   return (
-    <GridItem>
-    <Box 
-      w="full"
-      bg="white"
-      borderRadius="12px"
-      p={8}
-      shadow="sm"
-      border="1px solid"
-      borderColor="gray.100"
-    >
+    <div className="w-full bg-white rounded-xl p-8 shadow-sm border border-gray-100">
       {isEditing ? (
         <TipTapEditor
           content={egitim.content as object}
@@ -29,12 +25,11 @@ export default function EgitimContent({ egitim, isEditing, setFormData }: Egitim
           placeholder="Eğitim içeriğini buraya yazın..."
         />
       ) : (
-      <TipTapWrapper 
-        content={egitim.content as object}
-        className="egitim-content"
-      />
+        <TipTapWrapper
+          content={egitim.content as object}
+          className="egitim-content"
+        />
       )}
-    </Box>
-  </GridItem>
-  )
+    </div>
+  );
 }
