@@ -1,7 +1,7 @@
 "use client";
 
 import { BlogPost } from "@/types";
-import { VStack } from "@chakra-ui/react";
+import { Box, VStack } from "@chakra-ui/react";
 import { useMemo, useState } from "react";
 import CategoryFilter from "./BlogCategoryFilter";
 import BlogGrid from "./BlogGrid";
@@ -24,13 +24,15 @@ export default function BlogContent({ posts }: BlogContentProps) {
   };
 
   return (
-    <VStack gap={0} w="full">
-      <BlogHero />
-      <CategoryFilter
-        selectedCategory={selectedCategory}
-        onCategoryChange={handleCategoryChange}
-      />
-      <BlogGrid posts={filteredPosts} />
-    </VStack>
+    <Box bg="var(--background-alt)">
+      <VStack gap={0} w="full">
+        <BlogHero />
+        <CategoryFilter
+          selectedCategory={selectedCategory}
+          onCategoryChange={handleCategoryChange}
+        />
+        <BlogGrid posts={filteredPosts} />
+      </VStack>
+    </Box>
   );
 }

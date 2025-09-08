@@ -111,8 +111,8 @@ export default function CartPage() {
                   >
                     <HStack gap={4} align="center">
                       <Box
-                        w="80px"
-                        h="60px"
+                        w={{ base: "72px", md: "96px" }}
+                        h={{ base: "54px", md: "72px" }}
                         position="relative"
                         bg="gray.50"
                         borderRadius="md"
@@ -141,7 +141,11 @@ export default function CartPage() {
                         >
                           {it.education?.title}
                         </Text>
-                        <Badge colorScheme="blue" variant="subtle">
+                        <Badge
+                          color="var(--accent)"
+                          bg="rgba(var(--accent-rgb), 0.12)"
+                          variant="subtle"
+                        >
                           {it.education?.category}
                         </Badge>
                       </VStack>
@@ -158,6 +162,8 @@ export default function CartPage() {
                         <Button
                           size="sm"
                           variant="outline"
+                          borderColor="var(--primary)"
+                          _hover={{ bg: "rgba(var(--primary-rgb), 0.06)" }}
                           onClick={() =>
                             updateQty(it.id, Math.max(1, it.quantity - 1))
                           }
@@ -168,19 +174,26 @@ export default function CartPage() {
                           value={it.quantity}
                           readOnly
                           textAlign="center"
-                          w="48px"
+                          w={{ base: "56px", md: "64px" }}
                           px={0}
                         />
                         <Button
                           size="sm"
                           variant="outline"
+                          borderColor="var(--primary)"
+                          _hover={{ bg: "rgba(var(--primary-rgb), 0.06)" }}
                           onClick={() => updateQty(it.id, it.quantity + 1)}
                         >
                           <Icon as={FiPlus} />
                         </Button>
                       </HStack>
 
-                      <Text fontWeight="semibold" color="gray.900">
+                      <Text
+                        fontWeight="semibold"
+                        color="gray.900"
+                        minW={{ md: "96px" }}
+                        textAlign={{ md: "right" }}
+                      >
                         ₺{Number(it.education?.price ?? 0) * it.quantity}
                       </Text>
 
@@ -214,15 +227,17 @@ export default function CartPage() {
                 <Text fontWeight="bold" color="gray.800">
                   Toplam
                 </Text>
-                <Text fontWeight="bold" color="green.600">
+                <Text fontWeight="bold" color="var(--primary)">
                   ₺{subtotal}
                 </Text>
               </HStack>
               <Button
-                colorScheme="green"
+                bg="var(--primary)"
+                color="white"
                 size="lg"
                 borderRadius="12px"
                 disabled={items.length === 0}
+                _hover={{ bg: "var(--primary-hover)" }}
                 onClick={async () => {
                   if (!isAuthenticated) {
                     toaster.success("Satın almak için lütfen giriş yapın");

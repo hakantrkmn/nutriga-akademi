@@ -63,7 +63,7 @@ export default function EgitimPrice({ egitim }: EgitimPriceProps) {
                 <Text
                   fontSize="5xl"
                   fontWeight="bold"
-                  color="green.500"
+                  color="var(--primary)"
                   fontFamily="Poppins, sans-serif"
                 >
                   ₺{egitim.price?.toString()}
@@ -75,7 +75,8 @@ export default function EgitimPrice({ egitim }: EgitimPriceProps) {
 
               <VStack gap={4} w="full">
                 <Button
-                  colorScheme="green"
+                  bg="var(--primary)"
+                  color="white"
                   size="lg"
                   w="full"
                   borderRadius="12px"
@@ -83,7 +84,7 @@ export default function EgitimPrice({ egitim }: EgitimPriceProps) {
                   fontSize="md"
                   fontWeight="semibold"
                   _hover={{
-                    bg: "green.600",
+                    bg: "var(--primary-hover)",
                     transform: "translateY(-1px)",
                     shadow: "lg",
                   }}
@@ -95,7 +96,7 @@ export default function EgitimPrice({ egitim }: EgitimPriceProps) {
                   </HStack>
                 </Button>
                 <Button
-                  colorScheme="orange"
+                  bg={added ? "var(--accent)" : "transparent"}
                   variant={added ? "solid" : "outline"}
                   size="lg"
                   w="full"
@@ -103,11 +104,11 @@ export default function EgitimPrice({ egitim }: EgitimPriceProps) {
                   py={7}
                   fontSize="md"
                   fontWeight="semibold"
-                  borderColor="orange.300"
-                  color="orange.600"
+                  borderColor="var(--accent)"
+                  color={added ? "white" : "var(--accent)"}
                   _hover={{
-                    bg: "orange.50",
-                    borderColor: "orange.400",
+                    bg: "rgba(var(--accent-rgb), 0.08)",
+                    borderColor: "var(--accent)",
                     transform: "translateY(-1px)",
                   }}
                   transition="all 0.2s ease"
@@ -134,11 +135,15 @@ export default function EgitimPrice({ egitim }: EgitimPriceProps) {
                     justify="space-between"
                     w="full"
                     p={3}
-                    bg="gray.50"
+                    bg="var(--background-alt)"
                     borderRadius="8px"
                   >
                     <HStack gap={3}>
-                      <Icon as={FiBarChart} color="green.500" boxSize={4} />
+                      <Icon
+                        as={FiBarChart}
+                        color="var(--primary)"
+                        boxSize={4}
+                      />
                       <Text fontWeight="medium" color="gray.700">
                         Seviye
                       </Text>
@@ -151,11 +156,11 @@ export default function EgitimPrice({ egitim }: EgitimPriceProps) {
                     justify="space-between"
                     w="full"
                     p={3}
-                    bg="gray.50"
+                    bg="var(--background-alt)"
                     borderRadius="8px"
                   >
                     <HStack gap={3}>
-                      <Icon as={FiAward} color="green.500" boxSize={4} />
+                      <Icon as={FiAward} color="var(--primary)" boxSize={4} />
                       <Text fontWeight="medium" color="gray.700">
                         Sertifika
                       </Text>
@@ -172,19 +177,23 @@ export default function EgitimPrice({ egitim }: EgitimPriceProps) {
               <VStack gap={3} align="start" w="full">
                 <VStack gap={2} align="start" w="full">
                   <HStack gap={3}>
-                    <Icon as={FiCheckCircle} color="green.500" boxSize={4} />
+                    <Icon
+                      as={FiCheckCircle}
+                      color="var(--primary)"
+                      boxSize={4}
+                    />
                     <Text fontSize="sm" color="gray.600" fontWeight="medium">
                       7 gün iade garantisi
                     </Text>
                   </HStack>
                   <HStack gap={3}>
-                    <Icon as={FiLock} color="green.500" boxSize={4} />
+                    <Icon as={FiLock} color="var(--primary)" boxSize={4} />
                     <Text fontSize="sm" color="gray.600" fontWeight="medium">
                       Güvenli ödeme
                     </Text>
                   </HStack>
                   <HStack gap={3}>
-                    <Icon as={FiUsers} color="green.500" boxSize={4} />
+                    <Icon as={FiUsers} color="var(--primary)" boxSize={4} />
                     <Text fontSize="sm" color="gray.600" fontWeight="medium">
                       Sınırsız erişim
                     </Text>

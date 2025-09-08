@@ -8,7 +8,7 @@ import BlogDetailContentTipTap from "./BlogDetailTipTapSection";
 
 export default function BlogDetailContent({ post }: BlogDetailContentProps) {
   return (
-    <Box bg="white" minH="100vh">
+    <Box bg="var(--background-alt)" minH="100vh">
       <Container maxW="800px" px={{ base: 4, md: 6 }} py={8}>
         <VStack gap={8} align="start" w="full">
           <BlogDetailHeader post={post} />

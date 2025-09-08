@@ -26,7 +26,7 @@ const navLinkStyles = {
   fontSize: "md",
   fontWeight: "medium",
   color: "gray.700",
-  _hover: { color: "green.500" },
+  _hover: { color: "var(--primary)" },
   cursor: "pointer",
   transition: "color 0.2s ease",
 };
@@ -82,7 +82,7 @@ export default function Header() {
             fontWeight="medium"
             color="gray.700"
             bg="transparent"
-            _hover={{ color: "green.500", bg: "transparent" }}
+            _hover={{ color: "var(--primary)", bg: "transparent" }}
             _active={{ bg: "transparent" }}
             _focus={{ boxShadow: "none" }}
             p={0}
@@ -114,12 +114,12 @@ export default function Header() {
                 fontWeight="medium"
                 color="gray.700"
                 _hover={{
-                  bg: "green.50",
-                  color: "green.600",
+                  bg: "rgba(var(--primary-rgb), 0.06)",
+                  color: "var(--primary)",
                 }}
                 _focus={{
-                  bg: "green.50",
-                  color: "green.600",
+                  bg: "rgba(var(--primary-rgb), 0.06)",
+                  color: "var(--primary)",
                 }}
                 cursor="pointer"
                 transition="all 0.2s ease"
@@ -136,12 +136,12 @@ export default function Header() {
                 fontWeight="medium"
                 color="gray.700"
                 _hover={{
-                  bg: "green.50",
-                  color: "green.600",
+                  bg: "rgba(var(--primary-rgb), 0.06)",
+                  color: "var(--primary)",
                 }}
                 _focus={{
-                  bg: "green.50",
-                  color: "green.600",
+                  bg: "rgba(var(--primary-rgb), 0.06)",
+                  color: "var(--primary)",
                 }}
                 cursor="pointer"
                 transition="all 0.2s ease"
@@ -158,12 +158,12 @@ export default function Header() {
                 fontWeight="medium"
                 color="gray.700"
                 _hover={{
-                  bg: "green.50",
-                  color: "green.600",
+                  bg: "rgba(var(--primary-rgb), 0.06)",
+                  color: "var(--primary)",
                 }}
                 _focus={{
-                  bg: "green.50",
-                  color: "green.600",
+                  bg: "rgba(var(--primary-rgb), 0.06)",
+                  color: "var(--primary)",
                 }}
                 cursor="pointer"
                 transition="all 0.2s ease"
@@ -216,9 +216,9 @@ export default function Header() {
           <Text
             fontSize="2xl"
             fontWeight="bold"
-            color="green.500"
+            color="var(--primary)"
             cursor="pointer"
-            _hover={{ color: "green.600" }}
+            _hover={{ color: "var(--primary-hover)" }}
           >
             {COMPANY_NAME}
           </Text>
@@ -238,8 +238,8 @@ export default function Header() {
               <Button
                 variant="ghost"
                 borderRadius="12px"
-                color="gray.700"
-                _hover={{ bg: "gray.50" }}
+                color="var(--primary)"
+                _hover={{ bg: "rgba(var(--primary-rgb), 0.06)" }}
                 onClick={() => router.push("/cart")}
               >
                 Sepet
@@ -260,8 +260,8 @@ export default function Header() {
                 <Button
                   variant="ghost"
                   borderRadius="12px"
-                  color="gray.700"
-                  _hover={{ bg: "gray.50" }}
+                  color="var(--primary)"
+                  _hover={{ bg: "rgba(var(--primary-rgb), 0.06)" }}
                   onClick={handleLogout}
                 >
                   Çıkış Yap
@@ -279,10 +279,10 @@ export default function Header() {
                   Giriş Yap
                 </Button>
                 <Button
-                  bg="orange.500"
+                  bg="var(--primary)"
                   color="white"
                   borderRadius="12px"
-                  _hover={{ bg: "orange.600" }}
+                  _hover={{ bg: "var(--primary-hover)" }}
                   onClick={() => router.push("/auth/register")}
                 >
                   Kayıt Ol
@@ -326,8 +326,8 @@ export default function Header() {
                         w="full"
                         justifyContent="start"
                         borderRadius="12px"
-                        color="gray.700"
-                        _hover={{ bg: "gray.50" }}
+                        color="var(--primary)"
+                        _hover={{ bg: "rgba(var(--primary-rgb), 0.06)" }}
                         onClick={() => {
                           onClose();
                           router.push("/cart");
@@ -351,8 +351,8 @@ export default function Header() {
                           w="full"
                           justifyContent="start"
                           borderRadius="12px"
-                          color="gray.700"
-                          _hover={{ bg: "gray.50" }}
+                          color="var(--primary)"
+                          _hover={{ bg: "rgba(var(--primary-rgb), 0.06)" }}
                           onClick={handleLogout}
                         >
                           Çıkış Yap
@@ -375,11 +375,11 @@ export default function Header() {
                           Giriş Yap
                         </Button>
                         <Button
-                          bg="orange.500"
+                          bg="var(--primary)"
                           color="white"
                           w="full"
                           borderRadius="12px"
-                          _hover={{ bg: "orange.600" }}
+                          _hover={{ bg: "var(--primary-hover)" }}
                           onClick={() => {
                             onClose();
                             router.push("/auth/register");

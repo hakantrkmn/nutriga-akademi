@@ -1,22 +1,83 @@
 @import "tailwindcss";
 
-:root {
-  /* NutriHome Akademi Renk Paleti */
-  --background: #FAFAFA;
-  --background-alt: #F5F5F5;
-  --foreground: #212121;
-  --primary: #4CAF50;
-  --primary-hover: #43A047;
-  --accent: #FF9800;
-  --accent-hover: #F57C00;
-  --white: #ffffff;
-  --gray-50: #FAFAFA;
-  --gray-100: #F5F5F5;
-  --gray-500: #9E9E9E;
-  --gray-600: #757575;
-  --gray-700: #616161;
+/* Site Theme Root (user-facing pages only) */
+.site-root {
+  --background: #ffffff;
+  --background-alt: #f8fafc;
+  --foreground: #0f172a;
+  --primary: #4a7c59; /* default to Sage */
+  --primary-hover: #2d5a3f;
+  --accent: #9ed2c6;
+  --accent-hover: #82c3b4;
   --border-radius: 12px;
   --border-radius-sm: 8px;
+
+  background-color: var(--background);
+  color: var(--foreground);
+}
+
+/* Theme: Sage/Olive (Option B) */
+.site-root.site-theme-sage {
+  --background: #ffffff;
+  --background-alt: #f1f5f9; /* slate-100 */
+  --foreground: #0f172a; /* slate-900 */
+  --primary: #4a7c59;
+  --primary-hover: #2d5a3f;
+  --accent: #9ed2c6;
+  --accent-hover: #82c3b4;
+  --primary-rgb: 74, 124, 89;
+  --primary-hover-rgb: 45, 90, 63;
+  --accent-rgb: 158, 210, 198;
+  --accent-hover-rgb: 130, 195, 180;
+}
+
+/* Theme: Emerald (Option A) */
+.site-root.site-theme-emerald {
+  --background: #ffffff;
+  --background-alt: #ecfdf5; /* emerald-50 */
+  --foreground: #111827; /* gray-900 */
+  --primary: #10b981; /* emerald-500 */
+  --primary-hover: #047857; /* emerald-700 */
+  --accent: #22d3ee; /* cyan-400 */
+  --accent-hover: #06b6d4; /* cyan-500 */
+  --primary-rgb: 16, 185, 129;
+  --primary-hover-rgb: 4, 120, 87;
+  --accent-rgb: 34, 211, 238;
+  --accent-hover-rgb: 6, 182, 212;
+}
+
+/* Font families bound to variables from next/font (active per theme) */
+.site-font-sage {
+  /* Option B */
+  --font-heading-active: var(--font-nunito);
+  --font-body-active: var(--font-source-sans);
+}
+
+.site-font-emerald {
+  /* Option A */
+  --font-heading-active: var(--font-poppins);
+  --font-body-active: var(--font-inter);
+}
+
+/* Apply fonts for user-facing pages */
+.site-root h1,
+.site-root h2,
+.site-root h3,
+.site-root h4,
+.site-root h5,
+.site-root h6 {
+  font-family: var(--font-heading-active), system-ui, -apple-system, Arial,
+    sans-serif;
+}
+
+.site-root,
+.site-root p,
+.site-root span,
+.site-root li,
+.site-root a,
+.site-root div {
+  font-family: var(--font-body-active), system-ui, -apple-system, Arial,
+    sans-serif;
 }
 
 /* TipTap Editor Container */
@@ -130,7 +191,7 @@
 }
 
 .ProseMirror blockquote {
-  border-left: 4px solid #4CAF50;
+  border-left: 4px solid #4caf50;
   padding-left: 1rem;
   margin: 1rem 0;
   font-style: italic;
@@ -138,16 +199,16 @@
 }
 
 .ProseMirror code {
-  background-color: #F5F5F5;
+  background-color: #f5f5f5;
   padding: 0.125rem 0.25rem;
   border-radius: 4px;
-  font-family: 'Courier New', monospace;
+  font-family: "Courier New", monospace;
   font-size: 0.875rem;
   color: #212121 !important;
 }
 
 .ProseMirror pre {
-  background-color: #F5F5F5;
+  background-color: #f5f5f5;
   padding: 1rem;
   border-radius: 8px;
   overflow-x: auto;
@@ -161,13 +222,13 @@
 }
 
 .tiptap-link {
-  color: #4CAF50;
+  color: #4caf50;
   text-decoration: underline;
   cursor: pointer;
 }
 
 .tiptap-link:hover {
-  color: #43A047;
+  color: #43a047;
 }
 
 .tiptap-image {
@@ -201,7 +262,7 @@
 }
 
 .ProseMirror img.tiptap-image-resizable:hover {
-  border-color: #4CAF50;
+  border-color: #4caf50;
   box-shadow: 0 2px 8px rgba(76, 175, 80, 0.3);
 }
 
@@ -287,18 +348,18 @@
 
 .tiptap-image-resizable:hover {
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-  border-color: #4CAF50;
+  border-color: #4caf50;
 }
 
 .tiptap-image-resizable.selected {
-  outline: 2px solid #4CAF50;
+  outline: 2px solid #4caf50;
   outline-offset: 2px;
 }
 
 /* Resize handles */
 .tiptap-image-resizable .resize-handle {
   position: absolute;
-  background: #4CAF50;
+  background: #4caf50;
   border: 2px solid white;
   border-radius: 50%;
   width: 12px;
@@ -359,14 +420,14 @@
 }
 
 .tiptap-image-resizable.selected {
-  outline: 2px solid #4CAF50;
+  outline: 2px solid #4caf50;
   outline-offset: 2px;
 }
 
 /* Resize handles */
 .tiptap-image-resizable .resize-handle {
   position: absolute;
-  background: #4CAF50;
+  background: #4caf50;
   border: 2px solid white;
   border-radius: 50%;
   width: 12px;
@@ -401,7 +462,7 @@
 .ProseMirror .is-editor-empty:first-child::before {
   content: attr(data-placeholder);
   float: left;
-  color: #9E9E9E;
+  color: #9e9e9e;
   pointer-events: none;
   height: 0;
 }
@@ -414,7 +475,8 @@
   table-layout: fixed;
 }
 
-.ProseMirror table td, .ProseMirror table th {
+.ProseMirror table td,
+.ProseMirror table th {
   border: 1px solid #e2e8f0;
   padding: 0.5rem;
   text-align: left;
@@ -431,7 +493,10 @@
   z-index: 2;
   position: absolute;
   content: "";
-  left: 0; right: 0; top: 0; bottom: 0;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
   background: rgba(200, 200, 255, 0.4);
   pointer-events: none;
 }
@@ -477,14 +542,14 @@
 }
 
 .toolbar-btn.active {
-  background: #4CAF50;
-  border-color: #4CAF50;
+  background: #4caf50;
+  border-color: #4caf50;
   color: white;
 }
 
 .toolbar-btn.active:hover {
-  background: #43A047;
-  border-color: #43A047;
+  background: #43a047;
+  border-color: #43a047;
 }
 
 .toolbar-btn.disabled {
@@ -506,20 +571,9 @@
   line-height: 1;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --color-primary: var(--primary);
-  --color-accent: var(--accent);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
 /* Light theme varsayılan - dark theme kaldırıldı (plan uyarınca) */
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: 'Inter', 'Roboto', Arial, sans-serif;
+  font-family: "Inter", "Roboto", Arial, sans-serif;
   line-height: 1.6;
   font-size: 16px;
 }
@@ -530,41 +584,55 @@ body.admin-layout {
 }
 
 /* Typography */
-h1, h2, h3, h4, h5, h6 {
-  font-family: 'Poppins', 'Nunito', sans-serif;
+.site-root h1,
+.site-root h2,
+.site-root h3,
+.site-root h4,
+.site-root h5,
+.site-root h6 {
+  font-family: var(--font-heading);
   font-weight: 600;
   line-height: 1.3;
-  color: var(--foreground);
 }
 
-/* Utility classes - Plan uyarınca */
-.border-radius-default {
+/* Utility classes - centralized for user pages */
+.site-root .radius-default {
   border-radius: var(--border-radius);
 }
-
-.border-radius-sm {
+.site-root .radius-sm {
   border-radius: var(--border-radius-sm);
 }
-
-.bg-primary {
+.site-root .bg-primary {
   background-color: var(--primary);
 }
-
-.bg-accent {
+.site-root .bg-primary-hover {
+  background-color: var(--primary-hover);
+}
+.site-root .bg-accent {
   background-color: var(--accent);
 }
-
-.text-primary {
+.site-root .bg-accent-hover {
+  background-color: var(--accent-hover);
+}
+.site-root .text-primary {
   color: var(--primary);
 }
-
-.text-accent {
+.site-root .text-accent {
   color: var(--accent);
+}
+.site-root .link-primary {
+  color: var(--primary);
+  text-decoration: none;
+}
+.site-root .link-primary:hover {
+  color: var(--primary-hover);
+  text-decoration: underline;
 }
 
 /* Smooth transitions - Plan uyarınca "hover efektleri yumuşak" */
 * {
-  transition: color 0.2s ease, background-color 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+  transition: color 0.2s ease, background-color 0.2s ease,
+    border-color 0.2s ease, transform 0.2s ease;
 }
 
 /* Focus states - accessibility */
@@ -574,8 +642,8 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 /* Chakra UI v3 sticky/fixed element scroll behavior fix */
-[data-sticky], 
-[style*="position: sticky"], 
+[data-sticky],
+[style*="position: sticky"],
 [style*="position: fixed"] {
   scroll-behavior: auto !important;
 }
@@ -836,7 +904,7 @@ h1, h2, h3, h4, h5, h6 {
 
 /* add important to the custom option */
 .custom-option {
-  color: #2D3748;
+  color: #2d3748;
   background-color: white;
   padding: 8px;
 }

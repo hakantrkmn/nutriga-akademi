@@ -7,39 +7,41 @@ const system = createSystem(defaultConfig, {
   theme: {
     tokens: {
       colors: {
-        green: {
-          50: { value: "#E8F5E8" },
-          100: { value: "#C8E6C9" },
-          500: { value: "#4CAF50" },
-          600: { value: "#43A047" },
+        brand: {
+          50: { value: "#FFF8F5" },
+          100: { value: "#FEECE4" },
+          200: { value: "#FDDACF" },
+          300: { value: "#FBC8BA" },
+          400: { value: "#F9B6A5" },
+          500: { value: "#F7C5A8" }, // primary
+          600: { value: "#F4B691" }, // primary-hover
+          700: { value: "#F1A77B" },
+          800: { value: "#EE9864" },
+          900: { value: "#EB894D" },
         },
-        orange: {
-          50: { value: "#FFF3E0" },
-          100: { value: "#FFE0B2" },
-          500: { value: "#FF9800" },
-          600: { value: "#F57C00" },
-        },
-        blue: {
-          50: { value: "#E3F2FD" },
-          100: { value: "#BBDEFB" },
-          500: { value: "#2196F3" },
-          600: { value: "#1976D2" },
-        },
-        purple: {
-          50: { value: "#F3E5F5" },
-          100: { value: "#E1BEE7" },
-          500: { value: "#9C27B0" },
-          600: { value: "#7B1FA2" },
+        accent: {
+          50: { value: "#F5FCFB" },
+          100: { value: "#EBF9F7" },
+          200: { value: "#E0F6F4" },
+          300: { value: "#D6F3F0" },
+          400: { value: "#CCF0ED" },
+          500: { value: "#A0C1B8" }, // accent
+          600: { value: "#8EAEa4" }, // accent-hover
+          700: { value: "#7D9B90" },
+          800: { value: "#6B887C" },
+          900: { value: "#5A7568" },
         },
         gray: {
-          50: { value: "#FAFAFA" },
-          100: { value: "#F5F5F5" },
-          200: { value: "#E5E5E5" },
-          500: { value: "#9E9E9E" },
-          600: { value: "#757575" },
-          700: { value: "#616161" },
-          800: { value: "#424242" },
-          900: { value: "#212121" },
+          50: { value: "#FEFBF6" }, // background
+          100: { value: "#FBF8F1" }, // background-alt
+          200: { value: "#F6F3ED" },
+          300: { value: "#F1EDE8" },
+          400: { value: "#ECE8E3" },
+          500: { value: "#B8B8B3" },
+          600: { value: "#9A9994" },
+          700: { value: "#7A7975" },
+          800: { value: "#5C5B57" }, // foreground
+          900: { value: "#3D3D3D" },
         },
       },
     },

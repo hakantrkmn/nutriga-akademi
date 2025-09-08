@@ -1,26 +1,26 @@
 "use client";
 
+import { heroData } from "@/data/heroData";
 import {
   Box,
-  Container,
-  Heading,
-  Text,
   Button,
-  VStack,
-  HStack,
+  Container,
   Flex,
+  Heading,
+  HStack,
+  Text,
   useBreakpointValue,
+  VStack,
 } from "@chakra-ui/react";
-import Link from "next/link";
 import Image from "next/image";
-import { heroData } from "@/data/heroData";
+import Link from "next/link";
 
 export default function Hero() {
   const isMobile = useBreakpointValue({ base: true, md: false });
 
   return (
     <Box
-      bg="linear-gradient(135deg, #4CAF50 0%, #45a049 100%)"
+      bg={`linear-gradient(135deg, var(--primary) 0%, var(--primary-hover) 100%)`}
       color="white"
       py={{ base: 16, md: 24 }}
       position="relative"
@@ -59,7 +59,7 @@ export default function Hero() {
               maxW="600px"
             >
               {heroData.title.main}
-              <Text as="span" color="orange.300" display="block">
+              <Text as="span" className="text-accent" display="block">
                 {heroData.title.highlight}
               </Text>
             </Heading>
@@ -81,7 +81,7 @@ export default function Hero() {
               <Link href={heroData.buttons.primary.href}>
                 <Button
                   size="lg"
-                  bg="orange.500"
+                  bg="var(--primary)"
                   color="white"
                   borderRadius="12px"
                   px={8}
@@ -89,9 +89,9 @@ export default function Hero() {
                   fontSize="lg"
                   fontWeight="semibold"
                   _hover={{
-                    bg: "orange.600",
+                    bg: "var(--primary-hover)",
                     transform: "translateY(-2px)",
-                    boxShadow: "0 8px 25px rgba(255, 152, 0, 0.3)",
+                    boxShadow: "0 8px 25px rgba(var(--primary-rgb), 0.3)",
                   }}
                   _active={{
                     transform: "translateY(0)",
@@ -115,7 +115,7 @@ export default function Hero() {
                   fontWeight="semibold"
                   _hover={{
                     bg: "white",
-                    color: "green.500",
+                    color: "var(--primary)",
                     transform: "translateY(-2px)",
                   }}
                   _active={{
@@ -137,7 +137,11 @@ export default function Hero() {
             >
               {heroData.stats.map((stat, index) => (
                 <VStack key={index} gap={1}>
-                  <Text fontSize="2xl" fontWeight="bold" color="orange.300">
+                  <Text
+                    fontSize="2xl"
+                    fontWeight="bold"
+                    className="text-accent"
+                  >
                     {stat.value}
                   </Text>
                   <Text fontSize="sm" opacity="0.8">
@@ -166,7 +170,7 @@ export default function Hero() {
                     width: "100%",
                     height: "400px",
                     objectFit: "cover",
-                    aspectRatio: "5/4"
+                    aspectRatio: "5/4",
                   }}
                   priority
                   placeholder="blur"
@@ -178,7 +182,7 @@ export default function Hero() {
                   left="0"
                   right="0"
                   bottom="0"
-                  bg="linear-gradient(45deg, rgba(76, 175, 80, 0.1), rgba(255, 152, 0, 0.1))"
+                  bg={`linear-gradient(45deg, rgba(var(--primary-rgb), 0.1), rgba(var(--accent-rgb), 0.1))`}
                 />
               </Box>
             </Box>

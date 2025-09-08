@@ -1,14 +1,6 @@
-import {
-  Container,
-  SimpleGrid,
-  VStack,
-  Text,
-  Box
-} from "@chakra-ui/react";
 import BlogCard from "@/components/blog/BlogCard";
 import { BlogGridProps } from "@/types";
-
-
+import { Box, Container, SimpleGrid, Text, VStack } from "@chakra-ui/react";
 
 export default function BlogGrid({ posts }: BlogGridProps) {
   if (posts.length === 0) {
@@ -27,13 +19,9 @@ export default function BlogGrid({ posts }: BlogGridProps) {
   }
 
   return (
-    <Box bg="gray.50" py={16}>
+    <Box bg="var(--background-alt)" py={16}>
       <Container maxW="1200px" px={{ base: 4, md: 6 }}>
-        <SimpleGrid
-          columns={{ base: 1, md: 2, lg: 3 }}
-          gap={8}
-          w="full"
-        >
+        <SimpleGrid columns={{ base: 1, md: 2, lg: 3 }} gap={8} w="full">
           {posts.map((post) => (
             <BlogCard key={post.id} post={post} />
           ))}

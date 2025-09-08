@@ -1,7 +1,7 @@
 "use client";
 
 import { Egitim } from "@/types";
-import { VStack } from "@chakra-ui/react";
+import { Box, VStack } from "@chakra-ui/react";
 import { useMemo, useState } from "react";
 import CategoryFilter from "./CoursesCategoryFilter";
 import EgitimlerGrid from "./CoursesGrid";
@@ -39,15 +39,17 @@ export default function EgitimlerContent({ egitimler }: EgitimlerContentProps) {
   };
 
   return (
-    <VStack gap={0} w="full">
-      <EgitimlerHero />
-      <CategoryFilter
-        selectedCategory={selectedCategory}
-        selectedLevel={selectedLevel}
-        onCategoryChange={handleCategoryChange}
-        onLevelChange={handleLevelChange}
-      />
-      <EgitimlerGrid egitimler={filteredEgitimler} />
-    </VStack>
+    <Box bg="var(--background-alt)" w="full" minH="100vh">
+      <VStack gap={0} w="full">
+        <EgitimlerHero />
+        <CategoryFilter
+          selectedCategory={selectedCategory}
+          selectedLevel={selectedLevel}
+          onCategoryChange={handleCategoryChange}
+          onLevelChange={handleLevelChange}
+        />
+        <EgitimlerGrid egitimler={filteredEgitimler} />
+      </VStack>
+    </Box>
   );
 }

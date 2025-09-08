@@ -24,7 +24,7 @@ export default function EgitimlerGrid({ egitimler }: EgitimlerGridProps) {
   }
 
   return (
-    <Box bg="gray.50" py={16}>
+    <Box bg="var(--background-alt)" py={16}>
       <Container maxW="1200px" px={{ base: 4, md: 6 }}>
         <SimpleGrid columns={{ base: 1, md: 2, lg: 3 }} gap={8} w="full">
           {egitimler.map((egitim) => (

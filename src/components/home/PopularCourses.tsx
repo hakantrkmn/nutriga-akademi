@@ -28,13 +28,14 @@ export default function PopularEgitimler({ egitimler }: PopularEgitimlerProps) {
     .slice(0, 6);
 
   return (
-    <Box py={{ base: 16, md: 20 }} bg="white">
+    <Box py={{ base: 16, md: 20 }} bg="var(--background-alt)">
       <Container maxW="container.xl">
         <VStack gap={12} align="center">
           {/* Section Header */}
           <VStack gap={4} textAlign="center" maxW="600px">
             <Badge
-              colorScheme="green"
+              color="var(--primary)"
+              bg="rgba(var(--primary-rgb), 0.08)"
               px={4}
               py={2}
               borderRadius="full"
@@ -51,7 +52,7 @@ export default function PopularEgitimler({ egitimler }: PopularEgitimlerProps) {
               fontWeight="bold"
             >
               En Çok Tercih Edilen
-              <Text as="span" color="green.500" display="block">
+              <Text as="span" className="text-primary" display="block">
                 Beslenme Eğitimleri
               </Text>
             </Heading>
@@ -86,7 +87,6 @@ export default function PopularEgitimler({ egitimler }: PopularEgitimlerProps) {
             <Link href="/egitimler">
               <Button
                 size="lg"
-                colorScheme="green"
                 variant="outline"
                 borderRadius="12px"
                 px={8}
@@ -95,10 +95,10 @@ export default function PopularEgitimler({ egitimler }: PopularEgitimlerProps) {
                 fontWeight="semibold"
                 borderWidth="2px"
                 _hover={{
-                  bg: "green.500",
+                  bg: "var(--primary)",
                   color: "white",
                   transform: "translateY(-2px)",
-                  boxShadow: "0 8px 25px rgba(76, 175, 80, 0.3)",
+                  boxShadow: "0 8px 25px rgba(var(--primary-rgb), 0.3)",
                 }}
                 _active={{
                   transform: "translateY(0)",
@@ -113,7 +113,9 @@ export default function PopularEgitimler({ egitimler }: PopularEgitimlerProps) {
           {/* Stats Section */}
           <Box
             w="full"
-            bg="gray.50"
+            bg="white"
+            border="1px solid"
+            borderColor="gray.200"
             borderRadius="16px"
             p={{ base: 6, md: 8 }}
             textAlign="center"
@@ -123,7 +125,7 @@ export default function PopularEgitimler({ egitimler }: PopularEgitimlerProps) {
                 <Text
                   fontSize={{ base: "2xl", md: "3xl" }}
                   fontWeight="bold"
-                  color="green.500"
+                  className="text-primary"
                 >
                   {egitimler.length}+
                 </Text>
@@ -136,7 +138,7 @@ export default function PopularEgitimler({ egitimler }: PopularEgitimlerProps) {
                 <Text
                   fontSize={{ base: "2xl", md: "3xl" }}
                   fontWeight="bold"
-                  color="orange.500"
+                  className="text-accent"
                 >
                   {egitimler.reduce(
                     (sum, egitim) => sum + (egitim.salesCount || 0),
@@ -153,7 +155,7 @@ export default function PopularEgitimler({ egitimler }: PopularEgitimlerProps) {
                 <Text
                   fontSize={{ base: "2xl", md: "3xl" }}
                   fontWeight="bold"
-                  color="blue.500"
+                  className="text-primary"
                 >
                   4.9/5
                 </Text>

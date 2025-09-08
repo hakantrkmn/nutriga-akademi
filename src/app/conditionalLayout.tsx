@@ -21,10 +21,10 @@ export default function ConditionalLayout({
 
   // Normal sayfalar için header ve footer
   return (
-    <>
+    <div className="site-root site-theme-sage site-font-sage">
       <Header />
       <Box pt="80px">{children}</Box>
       <Footer />
-    </>
+    </div>
   );
 }

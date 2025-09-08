@@ -82,7 +82,7 @@ export default function EgitimCard({ egitim }: EgitimCardProps) {
             position="absolute"
             top={3}
             right={3}
-            colorScheme="orange"
+            colorScheme="accent"
             fontSize="xs"
             px={2}
             py={1}
@@ -96,7 +96,8 @@ export default function EgitimCard({ egitim }: EgitimCardProps) {
           <VStack align="start" gap={4} h="full">
             <HStack justify="space-between" w="full">
               <Badge
-                colorScheme="green"
+                color="var(--primary)"
+                bg="rgba(var(--primary-rgb), 0.08)"
                 fontSize="xs"
                 px={2}
                 py={1}
@@ -163,7 +164,7 @@ export default function EgitimCard({ egitim }: EgitimCardProps) {
 
               <HStack justify="space-between" w="full" align="center">
                 <VStack align="start" gap={1}>
-                  <Text fontSize="2xl" fontWeight="bold" color="green.600">
+                  <Text fontSize="2xl" fontWeight="bold" color="var(--primary)">
                     ₺{egitim.price?.toString()}
                   </Text>
                   <Text fontSize="xs" color="gray.500">
@@ -173,17 +174,21 @@ export default function EgitimCard({ egitim }: EgitimCardProps) {
 
                 <VStack gap={2}>
                   <Button
-                    colorScheme="green"
+                    bg="var(--primary)"
+                    color="white"
                     size="sm"
                     borderRadius="8px"
                     px={4}
+                    _hover={{ bg: "var(--primary-hover)" }}
                   >
                     Detayları Gör
                   </Button>
 
                   <Button
-                    colorScheme="orange"
-                    variant={added ? "solid" : "outline"}
+                    bg={added ? "var(--accent)" : "transparent"}
+                    border="1px solid"
+                    borderColor="var(--accent)"
+                    color={added ? "white" : "var(--accent)"}
                     size="sm"
                     borderRadius="8px"
                     px={4}

@@ -11,10 +11,10 @@ import { FiAward, FiBook, FiUsers } from "react-icons/fi";
 
 export default function EgitimlerHero() {
   return (
-    <Box bg="green.50" py={16}>
+    <Box bg="var(--background-alt)" py={16}>
       <Container maxW="1200px" px={{ base: 4, md: 6 }}>
         <VStack gap={8} textAlign="center" maxW="800px" mx="auto">
-          <Heading as="h1" size="3xl" color="green.600" fontWeight="bold">
+          <Heading as="h1" size="3xl" color="var(--primary)" fontWeight="bold">
             Profesyonel Beslenme Eğitimleri
           </Heading>
 
@@ -31,7 +31,7 @@ export default function EgitimlerHero() {
 
           <HStack gap={12} flexWrap="wrap" justify="center" pt={4}>
             <VStack gap={2} align="center">
-              <Icon boxSize={8} color="green.500">
+              <Icon boxSize={8} color="var(--primary)">
                 <FiBook />
               </Icon>
               <Text fontWeight="semibold" color="gray.700">
@@ -43,7 +43,7 @@ export default function EgitimlerHero() {
             </VStack>
 
             <VStack gap={2} align="center">
-              <Icon boxSize={8} color="orange.500">
+              <Icon boxSize={8} color="var(--accent)">
                 <FiAward />
               </Icon>
               <Text fontWeight="semibold" color="gray.700">
@@ -55,7 +55,7 @@ export default function EgitimlerHero() {
             </VStack>
 
             <VStack gap={2} align="center">
-              <Icon boxSize={8} color="green.500">
+              <Icon boxSize={8} color="var(--primary)">
                 <FiUsers />
               </Icon>
               <Text fontWeight="semibold" color="gray.700">

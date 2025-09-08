@@ -85,9 +85,9 @@ export default function Footer() {
               <Text
                 fontSize="2xl"
                 fontWeight="bold"
-                color="green.400"
+                color="var(--accent)"
                 cursor="pointer"
-                _hover={{ color: "green.300" }}
+                _hover={{ color: "var(--primary)" }}
                 transition="color 0.2s ease"
               >
                 {COMPANY_NAME}
@@ -113,7 +113,7 @@ export default function Footer() {
                     fontSize="sm"
                     color="gray.300"
                     _hover={{
-                      color: "green.400",
+                      color: "var(--accent)",
                       textDecoration: "underline",
                     }}
                     cursor="pointer"
@@ -225,7 +225,7 @@ export default function Footer() {
             >
               <Link href="/gizlilik-politikasi">
                 <Text
-                  _hover={{ color: "green.400" }}
+                  _hover={{ color: "var(--accent)" }}
                   cursor="pointer"
                   transition="color 0.2s ease"
                 >
@@ -234,7 +234,7 @@ export default function Footer() {
               </Link>
               <Link href="/kullanim-kosullari">
                 <Text
-                  _hover={{ color: "green.400" }}
+                  _hover={{ color: "var(--accent)" }}
                   cursor="pointer"
                   transition="color 0.2s ease"
                 >
@@ -243,7 +243,7 @@ export default function Footer() {
               </Link>
               <Link href="/cerez-politikasi">
                 <Text
-                  _hover={{ color: "green.400" }}
+                  _hover={{ color: "var(--accent)" }}
                   cursor="pointer"
                   transition="color 0.2s ease"
                 >

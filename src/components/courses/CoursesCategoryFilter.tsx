@@ -32,10 +32,9 @@ export default function CategoryFilter({
               key={category}
               size="md"
               variant={selectedCategory === category ? "solid" : "outline"}
-              colorScheme={selectedCategory === category ? "green" : undefined}
-              bg={selectedCategory === category ? "green.500" : "white"}
-              color={selectedCategory === category ? "white" : "green.600"}
-              borderColor="green.500"
+              bg={selectedCategory === category ? "var(--primary)" : "white"}
+              color={selectedCategory === category ? "white" : "var(--primary)"}
+              borderColor="var(--primary)"
               onClick={() => onCategoryChange(category)}
               borderRadius="20px"
               px={6}
@@ -44,8 +43,12 @@ export default function CategoryFilter({
               _hover={{
                 transform: "translateY(-2px)",
                 shadow: "md",
-                bg: selectedCategory === category ? "green.600" : "green.50",
-                color: selectedCategory === category ? "white" : "green.700",
+                bg:
+                  selectedCategory === category
+                    ? "var(--primary-hover)"
+                    : "rgba(var(--primary-rgb), 0.06)",
+                color:
+                  selectedCategory === category ? "white" : "var(--primary)",
               }}
               transition="all 0.2s ease"
             >
@@ -59,10 +62,10 @@ export default function CategoryFilter({
             <NativeSelectField
               value={selectedLevel}
               onChange={(e) => onLevelChange(e.target.value)}
-              borderColor="green.500"
+              borderColor="var(--primary)"
               _focus={{
-                borderColor: "green.600",
-                boxShadow: "0 0 0 1px var(--chakra-colors-green-600)",
+                borderColor: "var(--primary-hover)",
+                boxShadow: "0 0 0 1px var(--primary-hover)",
               }}
             >
               <option value="">Seviye Seçin</option>

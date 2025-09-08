@@ -31,13 +31,14 @@ export default function BlogSection({ posts }: BlogSectionProps) {
     .slice(0, 6);
 
   return (
-    <Box py={{ base: 16, md: 20 }} bg="gray.50">
+    <Box py={{ base: 16, md: 20 }} bg="var(--background-alt)">
       <Container maxW="container.xl">
         <VStack gap={12} align="center">
           {/* Section Header */}
           <VStack gap={4} textAlign="center" maxW="600px">
             <Badge
-              colorScheme="orange"
+              color="var(--primary)"
+              bg="rgba(var(--primary-rgb), 0.08)"
               px={4}
               py={2}
               borderRadius="full"
@@ -54,7 +55,7 @@ export default function BlogSection({ posts }: BlogSectionProps) {
               fontWeight="bold"
             >
               Beslenme ve Sağlık
-              <Text as="span" color="orange.500" display="block">
+              <Text as="span" className="text-accent" display="block">
                 Blog Yazıları
               </Text>
             </Heading>
@@ -89,7 +90,6 @@ export default function BlogSection({ posts }: BlogSectionProps) {
             <Link href="/blog">
               <Button
                 size="lg"
-                colorScheme="orange"
                 variant="outline"
                 borderRadius="12px"
                 px={8}
@@ -98,10 +98,10 @@ export default function BlogSection({ posts }: BlogSectionProps) {
                 fontWeight="semibold"
                 borderWidth="2px"
                 _hover={{
-                  bg: "orange.500",
+                  bg: "var(--primary)",
                   color: "white",
                   transform: "translateY(-2px)",
-                  boxShadow: "0 8px 25px rgba(255, 152, 0, 0.3)",
+                  boxShadow: "0 8px 25px rgba(var(--primary-rgb), 0.3)",
                 }}
                 _active={{
                   transform: "translateY(0)",
@@ -153,19 +153,21 @@ export default function BlogSection({ posts }: BlogSectionProps) {
                   fontSize="md"
                   _focus={{
                     outline: "none",
-                    borderColor: "orange.500",
+                    borderColor: "var(--primary)",
                   }}
                   _placeholder={{
                     color: "gray.400",
                   }}
                 />
                 <Button
-                  colorScheme="orange"
+                  bg="var(--primary)"
+                  color="white"
                   size="md"
                   px={6}
                   borderRadius="8px"
                   fontWeight="semibold"
                   _hover={{
+                    bg: "var(--primary-hover)",
                     transform: "translateY(-1px)",
                   }}
                   _active={{

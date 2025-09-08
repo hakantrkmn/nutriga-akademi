@@ -11,11 +11,11 @@ import {
 
 export default function IletisimContent() {
   return (
-    <Box bg="gray.50" minH="100vh" pt={20} pb={12}>
+    <Box bg="var(--background-alt)" minH="100vh" pt={20} pb={12}>
       <Container maxW="1200px" px={{ base: 4, md: 6 }}>
         {/* Page Header */}
         <VStack gap={4} textAlign="center" mb={12}>
-          <Heading as="h1" size="2xl" color="green.500" fontWeight="bold">
+          <Heading as="h1" size="2xl" color="var(--primary)" fontWeight="bold">
             İletişime Geçin
           </Heading>
           <Text fontSize="xl" color="gray.600" maxW="600px" lineHeight="tall">
@@ -48,7 +48,7 @@ export default function IletisimContent() {
           borderRadius="12px"
           shadow="sm"
           borderLeft="4px solid"
-          borderColor="green.500"
+          borderColor="var(--primary)"
         >
           <VStack align="start" gap={4}>
             <Heading as="h3" size="md" color="gray.800">

@@ -1,32 +1,24 @@
 "use client";
 
-import {
-  HStack,
-  Button,
-  Container
-} from "@chakra-ui/react";
 import { blogCategories } from "@/data/dummyBlogData";
 import { CategoryFilterProps } from "@/types";
+import { Button, Container, HStack } from "@chakra-ui/react";
 
-
-export default function CategoryFilter({ selectedCategory, onCategoryChange }: CategoryFilterProps) {
+export default function CategoryFilter({
+  selectedCategory,
+  onCategoryChange,
+}: CategoryFilterProps) {
   return (
     <Container maxW="1200px" px={{ base: 4, md: 6 }} py={8}>
-      <HStack
-        gap={3}
-        flexWrap="wrap"
-        justify="center"
-        align="center"
-      >
+      <HStack gap={3} flexWrap="wrap" justify="center" align="center">
         {blogCategories.map((category) => (
           <Button
             key={category}
             size="md"
             variant={selectedCategory === category ? "solid" : "outline"}
-            colorScheme={selectedCategory === category ? "green" : undefined}
-            bg={selectedCategory === category ? "green.500" : "white"}
-            color={selectedCategory === category ? "white" : "green.600"}
-            borderColor="green.500"
+            bg={selectedCategory === category ? "var(--primary)" : "white"}
+            color={selectedCategory === category ? "white" : "var(--primary)"}
+            borderColor="var(--primary)"
             onClick={() => onCategoryChange(category)}
             borderRadius="20px"
             px={6}
@@ -35,8 +27,11 @@ export default function CategoryFilter({ selectedCategory, onCategoryChange }: C
             _hover={{
               transform: "translateY(-2px)",
               shadow: "md",
-              bg: selectedCategory === category ? "green.600" : "green.50",
-              color: selectedCategory === category ? "white" : "green.700"
+              bg:
+                selectedCategory === category
+                  ? "var(--primary-hover)"
+                  : "rgba(var(--primary-rgb), 0.06)",
+              color: selectedCategory === category ? "white" : "var(--primary)",
             }}
             transition="all 0.2s ease"
           >
