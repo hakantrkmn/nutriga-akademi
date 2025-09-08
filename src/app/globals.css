@@ -32,6 +32,15 @@
   box-sizing: border-box !important;
 }
 
+/* Sticky Toolbar */
+.tiptap-toolbar-container {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  background-color: white;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
 /* TipTap Editor Styles */
 .ProseMirror {
   outline: none;

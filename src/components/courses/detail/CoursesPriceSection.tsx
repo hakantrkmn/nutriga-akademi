@@ -1,3 +1,4 @@
+import { cartApi } from "@/lib/api";
 import { EgitimPriceProps } from "@/types";
 import {
   Box,
@@ -10,6 +11,9 @@ import {
   Text,
   VStack,
 } from "@chakra-ui/react";
+// import { useRouter } from "next/navigation";
+import { toaster } from "@/components/ui/toaster";
+import { useState } from "react";
 import {
   FiAward,
   FiBarChart,
@@ -20,6 +24,38 @@ import {
 } from "react-icons/fi";
 
 export default function EgitimPrice({ egitim }: EgitimPriceProps) {
+  // const router = useRouter();
+  const [adding, setAdding] = useState(false);
+  const [added, setAdded] = useState(false);
+
+  const handleAddToCart = async () => {
+    setAdding(true);
+    const res = await cartApi.add(egitim.id);
+    setAdding(false);
+    if (res.success) {
+      setAdded(true);
+      setTimeout(() => setAdded(false), 2000);
+      toaster.create({
+        title: "Sepete eklendi",
+        description: egitim.title,
+        type: "success",
+      });
+    } else if (res.error) {
+      if (res.error.toLowerCase().includes("giriş")) {
+        toaster.create({
+          title: "Giriş gerekli",
+          description: "Sepete eklemek için giriş yapın",
+          type: "info",
+        });
+      } else {
+        toaster.create({
+          title: "Hata",
+          description: res.error,
+          type: "error",
+        });
+      }
+    }
+  };
   return (
     <GridItem>
       <VStack gap={6} position={{ lg: "sticky" }} top="6rem">
@@ -72,7 +108,7 @@ export default function EgitimPrice({ egitim }: EgitimPriceProps) {
                 </Button>
                 <Button
                   colorScheme="orange"
-                  variant="outline"
+                  variant={added ? "solid" : "outline"}
                   size="lg"
                   w="full"
                   borderRadius="12px"
@@ -87,8 +123,10 @@ export default function EgitimPrice({ egitim }: EgitimPriceProps) {
                     transform: "translateY(-1px)",
                   }}
                   transition="all 0.2s ease"
+                  loading={adding}
+                  onClick={handleAddToCart}
                 >
-                  Sepete Ekle
+                  {added ? "Eklendi" : "Sepete Ekle"}
                 </Button>
               </VStack>
 

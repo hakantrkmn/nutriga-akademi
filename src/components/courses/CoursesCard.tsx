@@ -1,3 +1,5 @@
+import { toaster } from "@/components/ui/toaster";
+import { cartApi } from "@/lib/api";
 import { EgitimCardProps } from "@/types";
 import {
   Badge,
@@ -12,9 +14,44 @@ import {
 } from "@chakra-ui/react";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
 import { FiClock, FiShoppingCart, FiUser } from "react-icons/fi";
 
 export default function EgitimCard({ egitim }: EgitimCardProps) {
+  const router = useRouter();
+  const [adding, setAdding] = useState(false);
+  const [added, setAdded] = useState(false);
+
+  const handleAddToCart = async (e: React.MouseEvent) => {
+    e.preventDefault();
+    setAdding(true);
+    const res = await cartApi.add(egitim.id);
+    setAdding(false);
+    if (res.success) {
+      setAdded(true);
+      setTimeout(() => setAdded(false), 2000);
+      toaster.create({
+        title: "Sepete eklendi",
+        description: egitim.title,
+        type: "success",
+      });
+    } else if (res.error) {
+      if (res.error.toLowerCase().includes("giriş")) {
+        toaster.create({
+          title: "Giriş gerekli",
+          description: "Sepete eklemek için giriş yapın",
+          type: "info",
+        });
+      } else {
+        toaster.create({
+          title: "Hata",
+          description: res.error,
+          type: "error",
+        });
+      }
+    }
+  };
   return (
     <Link href={`/egitimler/${egitim.slug}`}>
       <Card.Root
@@ -158,15 +195,17 @@ export default function EgitimCard({ egitim }: EgitimCardProps) {
 
                   <Button
                     colorScheme="orange"
-                    variant="outline"
+                    variant={added ? "solid" : "outline"}
                     size="sm"
                     borderRadius="8px"
                     px={4}
+                    loading={adding}
+                    onClick={handleAddToCart}
                   >
                     <Icon mr={2}>
                       <FiShoppingCart />
                     </Icon>
-                    Sepete Ekle
+                    {added ? "Eklendi" : "Sepete Ekle"}
                   </Button>
                 </VStack>
               </HStack>

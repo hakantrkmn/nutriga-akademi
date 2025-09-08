@@ -1,87 +1,87 @@
-'use client'
+"use client";
 
-import { useState, useEffect } from 'react'
-import { useRouter } from 'next/navigation'
+import { egitimlerApi } from "@/lib/api";
+import { Egitim } from "@/types";
 import {
+  Badge,
   Box,
-  VStack,
-  HStack,
-  Heading,
-  Text,
   Button,
   Card,
-  Table,
-  Icon,
-  Badge,
-  Spinner,
   Center,
-} from '@chakra-ui/react'
-import { FiPlus, FiEdit, FiTrash2 } from 'react-icons/fi'
-import { egitimlerApi } from '@/lib/api'
-import { Egitim } from '@/types'
+  HStack,
+  Heading,
+  Icon,
+  Spinner,
+  Table,
+  Text,
+  VStack,
+} from "@chakra-ui/react";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+import { FiEdit, FiPlus, FiTrash2 } from "react-icons/fi";
 
 export default function EgitimlerManagement() {
-  const router = useRouter()
-  const [egitimler, setEgitimler] = useState<Egitim[]>([])
-  const [loading, setLoading] = useState(true)
+  const router = useRouter();
+  const [egitimler, setEgitimler] = useState<Egitim[]>([]);
+  const [loading, setLoading] = useState(true);
 
   // Eğitimleri yükle
   const loadEgitimler = async () => {
     try {
-      setLoading(true)
-      const response = await egitimlerApi.getAll()
-      
+      setLoading(true);
+      const response = await egitimlerApi.getAll();
+
       if (response.success && response.data) {
-        setEgitimler(response.data)
+        setEgitimler(response.data);
       } else {
-        console.error('Eğitimler yüklenemedi:', response.error)
+        console.error("Eğitimler yüklenemedi:", response.error);
       }
     } catch (error) {
-      console.error('Eğitimler yüklenirken hata:', error)
+      console.error("Eğitimler yüklenirken hata:", error);
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
-  }
+  };
 
   useEffect(() => {
-    loadEgitimler()
-  }, [])
+    loadEgitimler();
+  }, []);
 
   // Yeni eğitim ekle
   const handleAddEgitim = () => {
-    router.push('/admin/egitimler/course')
-  }
+    router.push("/admin/egitimler/course");
+  };
 
   // Eğitim düzenle
   const handleEditEgitim = (egitim: Egitim) => {
     if (egitim.id) {
-      router.push(`/admin/egitimler/course/${egitim.id}`)
+      router.push(`/admin/egitimler/course/${egitim.id}`);
     }
-  }
+  };
 
   // Eğitim sil
   const handleDeleteEgitim = async (id: string) => {
-    if (!confirm('Bu eğitimi silmek istediğinizden emin misiniz?')) {
-      return
+    if (!confirm("Bu eğitimi silmek istediğinizden emin misiniz?")) {
+      return;
     }
 
     try {
-      const response = await egitimlerApi.delete(id)
-      
+      const response = await egitimlerApi.delete(id);
+
       if (response.success) {
-        await loadEgitimler() // Listeyi yenile
-        console.log('Eğitim başarıyla silindi')
+        await loadEgitimler(); // Listeyi yenile
+        console.log("Eğitim başarıyla silindi");
       } else {
-        console.error('Eğitim silinemedi')
+        console.error("Eğitim silinemedi");
       }
     } catch (error) {
-      console.error('Eğitim silinirken hata:', error)
+      console.error("Eğitim silinirken hata:", error);
     }
-  }
+  };
 
   if (loading) {
     return (
-      <Box>
+      <Box maxW="7xl" mx="auto" px={{ base: 4, md: 6 }} py={{ base: 6, md: 8 }}>
         <VStack gap={6} align="stretch">
           {/* Header */}
           <HStack justify="space-between" align="center">
@@ -93,10 +93,7 @@ export default function EgitimlerManagement() {
                 Eğitimlerinizi ekleyin, düzenleyin ve yönetin
               </Text>
             </Box>
-            <Button
-              colorScheme="green"
-              onClick={handleAddEgitim}
-            >
+            <Button colorScheme="green" onClick={handleAddEgitim}>
               <Icon as={FiPlus} mr={2} />
               Yeni Eğitim
             </Button>
@@ -121,11 +118,11 @@ export default function EgitimlerManagement() {
           </Card.Root>
         </VStack>
       </Box>
-    )
+    );
   }
 
   return (
-    <Box>
+    <Box maxW="7xl" mx="auto" px={{ base: 4, md: 6 }} py={{ base: 6, md: 8 }}>
       <VStack gap={6} align="stretch">
         {/* Header */}
         <HStack justify="space-between" align="center">
@@ -137,23 +134,25 @@ export default function EgitimlerManagement() {
               Eğitimlerinizi ekleyin, düzenleyin ve yönetin
             </Text>
           </Box>
-          <Button
-            colorScheme="green"
-            onClick={handleAddEgitim}
-          >
+          <Button colorScheme="green" onClick={handleAddEgitim}>
             <Icon as={FiPlus} mr={2} />
             Yeni Eğitim
           </Button>
         </HStack>
 
         {/* Eğitimler Tablosu */}
-        <Card.Root bg="white" borderRadius="lg" boxShadow="sm" className="admin-table-container">
+        <Card.Root
+          bg="white"
+          borderRadius="lg"
+          boxShadow="sm"
+          className="admin-table-container"
+        >
           <Card.Body p={0}>
             <Table.Root size="sm" className="admin-table">
               <Table.Header>
                 <Table.Row bg="gray.50" className="admin-table-header-row">
-                  <Table.ColumnHeader 
-                    color="gray.700" 
+                  <Table.ColumnHeader
+                    color="gray.700"
                     fontWeight="semibold"
                     fontSize="sm"
                     py={4}
@@ -161,8 +160,8 @@ export default function EgitimlerManagement() {
                   >
                     Başlık
                   </Table.ColumnHeader>
-                  <Table.ColumnHeader 
-                    color="gray.700" 
+                  <Table.ColumnHeader
+                    color="gray.700"
                     fontWeight="semibold"
                     fontSize="sm"
                     py={4}
@@ -170,8 +169,8 @@ export default function EgitimlerManagement() {
                   >
                     Kategori
                   </Table.ColumnHeader>
-                  <Table.ColumnHeader 
-                    color="gray.700" 
+                  <Table.ColumnHeader
+                    color="gray.700"
                     fontWeight="semibold"
                     fontSize="sm"
                     py={4}
@@ -179,8 +178,8 @@ export default function EgitimlerManagement() {
                   >
                     Fiyat
                   </Table.ColumnHeader>
-                  <Table.ColumnHeader 
-                    color="gray.700" 
+                  <Table.ColumnHeader
+                    color="gray.700"
                     fontWeight="semibold"
                     fontSize="sm"
                     py={4}
@@ -188,8 +187,8 @@ export default function EgitimlerManagement() {
                   >
                     Satış
                   </Table.ColumnHeader>
-                  <Table.ColumnHeader 
-                    color="gray.700" 
+                  <Table.ColumnHeader
+                    color="gray.700"
                     fontWeight="semibold"
                     fontSize="sm"
                     py={4}
@@ -197,8 +196,8 @@ export default function EgitimlerManagement() {
                   >
                     Tarih
                   </Table.ColumnHeader>
-                  <Table.ColumnHeader 
-                    color="gray.700" 
+                  <Table.ColumnHeader
+                    color="gray.700"
                     fontWeight="semibold"
                     fontSize="sm"
                     py={4}
@@ -218,14 +217,15 @@ export default function EgitimlerManagement() {
                           Henüz eğitim eklenmemiş
                         </Text>
                         <Text color="gray.400" fontSize="sm">
-                          İlk eğitiminizi eklemek için &quot;Yeni Eğitim&quot; butonuna tıklayın
+                          İlk eğitiminizi eklemek için &quot;Yeni Eğitim&quot;
+                          butonuna tıklayın
                         </Text>
                       </VStack>
                     </Table.Cell>
                   </Table.Row>
                 ) : (
                   egitimler.map((egitim, index) => (
-                    <Table.Row 
+                    <Table.Row
                       key={egitim.id}
                       bg={index % 2 === 0 ? "white" : "gray.25"}
                       _hover={{ bg: "gray.50" }}
@@ -263,7 +263,11 @@ export default function EgitimlerManagement() {
                       </Table.Cell>
                       <Table.Cell py={4} px={6}>
                         <Text fontSize="sm" color="gray.500">
-                          {egitim.createdAt ? new Date(egitim.createdAt).toLocaleDateString('tr-TR') : '-'}
+                          {egitim.createdAt
+                            ? new Date(egitim.createdAt).toLocaleDateString(
+                                "tr-TR"
+                              )
+                            : "-"}
                         </Text>
                       </Table.Cell>
                       <Table.Cell py={4} px={6} textAlign="center">
@@ -280,7 +284,9 @@ export default function EgitimlerManagement() {
                             size="sm"
                             variant="outline"
                             colorScheme="red"
-                            onClick={() => egitim.id && handleDeleteEgitim(egitim.id)}
+                            onClick={() =>
+                              egitim.id && handleDeleteEgitim(egitim.id)
+                            }
                           >
                             <Icon as={FiTrash2} />
                           </Button>
@@ -295,5 +301,5 @@ export default function EgitimlerManagement() {
         </Card.Root>
       </VStack>
     </Box>
-  )
+  );
 }

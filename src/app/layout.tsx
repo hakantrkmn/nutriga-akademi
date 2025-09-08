@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 
+import { Toaster } from "@/components/ui/toaster";
 import ConditionalLayout from "./conditionalLayout";
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -31,6 +32,7 @@ export default function RootLayout({
       >
         <Provider>
           <ConditionalLayout>{children}</ConditionalLayout>
+          <Toaster />
         </Provider>
       </body>
     </html>

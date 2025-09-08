@@ -1,23 +1,26 @@
 "use client";
 
+import { COMPANY_NAME } from "@/constants";
+import { createClient } from "@/lib/supabase/client";
 import {
   Box,
+  Button,
+  Drawer,
   Flex,
   HStack,
-  VStack,
-  Button,
-  Text,
   Icon,
   IconButton,
-  useBreakpointValue,
-  useDisclosure,
   Menu,
   Portal,
-  Drawer,
+  Text,
+  useBreakpointValue,
+  useDisclosure,
+  VStack,
 } from "@chakra-ui/react";
-import { HiMenu } from "react-icons/hi";
 import Link from "next/link";
-import { COMPANY_NAME } from "@/constants";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+import { HiMenu } from "react-icons/hi";
 
 const navLinkStyles = {
   fontSize: "md",
@@ -31,6 +34,37 @@ const navLinkStyles = {
 export default function Header() {
   const { open, onOpen, onClose } = useDisclosure();
   const isMobile = useBreakpointValue({ base: true, lg: false });
+  const router = useRouter();
+  const supabase = createClient();
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [userEmail, setUserEmail] = useState<string | null>(null);
+
+  useEffect(() => {
+    const init = async () => {
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+      setIsAuthenticated(!!user);
+      setUserEmail(user?.email ?? null);
+    };
+    init();
+
+    const { data: sub } = supabase.auth.onAuthStateChange((_event, session) => {
+      setIsAuthenticated(!!session?.user);
+      setUserEmail(session?.user?.email ?? null);
+    });
+
+    return () => {
+      sub.subscription.unsubscribe();
+    };
+  }, [supabase]);
+
+  const handleLogout = async () => {
+    await supabase.auth.signOut();
+    setIsAuthenticated(false);
+    setUserEmail(null);
+    router.replace("/");
+  };
 
   const NavItems = () => (
     <>
@@ -69,21 +103,21 @@ export default function Header() {
               mt={2}
               overflow="hidden"
             >
-              <Menu.Item 
-                value="hakkimizda" 
+              <Menu.Item
+                value="hakkimizda"
                 px={4}
                 py={3}
-                borderRadius="8px" 
+                borderRadius="8px"
                 fontSize="sm"
                 fontWeight="medium"
                 color="gray.700"
-                _hover={{ 
+                _hover={{
                   bg: "green.50",
-                  color: "green.600"
+                  color: "green.600",
                 }}
-                _focus={{ 
+                _focus={{
                   bg: "green.50",
-                  color: "green.600"
+                  color: "green.600",
                 }}
                 cursor="pointer"
                 transition="all 0.2s ease"
@@ -91,21 +125,21 @@ export default function Header() {
               >
                 <Link href="/hakkimizda">Hakkımızda</Link>
               </Menu.Item>
-              <Menu.Item 
-                value="misyon" 
+              <Menu.Item
+                value="misyon"
                 px={4}
                 py={3}
-                borderRadius="8px" 
+                borderRadius="8px"
                 fontSize="sm"
                 fontWeight="medium"
                 color="gray.700"
-                _hover={{ 
+                _hover={{
                   bg: "green.50",
-                  color: "green.600"
+                  color: "green.600",
                 }}
-                _focus={{ 
+                _focus={{
                   bg: "green.50",
-                  color: "green.600"
+                  color: "green.600",
                 }}
                 cursor="pointer"
                 transition="all 0.2s ease"
@@ -113,21 +147,21 @@ export default function Header() {
               >
                 <Link href="/misyon">Misyonumuz</Link>
               </Menu.Item>
-              <Menu.Item 
-                value="vizyon" 
+              <Menu.Item
+                value="vizyon"
                 px={4}
                 py={3}
-                borderRadius="8px" 
+                borderRadius="8px"
                 fontSize="sm"
                 fontWeight="medium"
                 color="gray.700"
-                _hover={{ 
+                _hover={{
                   bg: "green.50",
-                  color: "green.600"
+                  color: "green.600",
                 }}
-                _focus={{ 
+                _focus={{
                   bg: "green.50",
-                  color: "green.600"
+                  color: "green.600",
                 }}
                 cursor="pointer"
                 transition="all 0.2s ease"
@@ -155,11 +189,11 @@ export default function Header() {
   );
 
   return (
-    <Box 
-      as="header" 
-      bg="white" 
-      shadow="sm" 
-      borderBottom="1px" 
+    <Box
+      as="header"
+      bg="white"
+      shadow="sm"
+      borderBottom="1px"
       borderColor="gray.100"
       position="fixed"
       top="0"
@@ -195,7 +229,7 @@ export default function Header() {
           </HStack>
         )}
 
-        {/* Desktop Auth Buttons */}
+        {/* Desktop Cart & Auth Buttons */}
         {!isMobile && (
           <HStack gap={3}>
             <Button
@@ -203,27 +237,60 @@ export default function Header() {
               borderRadius="12px"
               color="gray.700"
               _hover={{ bg: "gray.50" }}
+              onClick={() => router.push("/cart")}
             >
-              Giriş Yap
+              Sepet
             </Button>
-            <Button
-              bg="orange.500"
-              color="white"
-              borderRadius="12px"
-              _hover={{ bg: "orange.600" }}
-            >
-              Kayıt Ol
-            </Button>
+            {isAuthenticated ? (
+              <>
+                <Text
+                  color="gray.600"
+                  fontSize="sm"
+                  maxW="220px"
+                  overflow="hidden"
+                  textOverflow="ellipsis"
+                  whiteSpace="nowrap"
+                >
+                  {userEmail}
+                </Text>
+                <Button
+                  variant="ghost"
+                  borderRadius="12px"
+                  color="gray.700"
+                  _hover={{ bg: "gray.50" }}
+                  onClick={handleLogout}
+                >
+                  Çıkış Yap
+                </Button>
+              </>
+            ) : (
+              <>
+                <Button
+                  variant="ghost"
+                  borderRadius="12px"
+                  color="gray.700"
+                  _hover={{ bg: "gray.50" }}
+                  onClick={() => router.push("/auth/login")}
+                >
+                  Giriş Yap
+                </Button>
+                <Button
+                  bg="orange.500"
+                  color="white"
+                  borderRadius="12px"
+                  _hover={{ bg: "orange.600" }}
+                  onClick={() => router.push("/auth/register")}
+                >
+                  Kayıt Ol
+                </Button>
+              </>
+            )}
           </HStack>
         )}
 
         {/* Mobile Hamburger */}
         {isMobile && (
-          <IconButton
-            aria-label="Open menu"
-            onClick={onOpen}
-            variant="ghost"
-          >
+          <IconButton aria-label="Open menu" onClick={onOpen} variant="ghost">
             <Icon>
               <HiMenu />
             </Icon>
@@ -232,7 +299,10 @@ export default function Header() {
       </Flex>
 
       {/* Mobile Drawer */}
-      <Drawer.Root open={open} onOpenChange={(details) => details.open ? onOpen() : onClose()}>
+      <Drawer.Root
+        open={open}
+        onOpenChange={(details) => (details.open ? onOpen() : onClose())}
+      >
         <Drawer.Backdrop />
         <Drawer.Positioner>
           <Drawer.Content>
@@ -243,7 +313,7 @@ export default function Header() {
             <Drawer.Body pt={6}>
               <VStack gap={6} align="start" w="full">
                 <NavItems />
-                
+
                 <Box pt={6} w="full">
                   <VStack gap={3} w="full">
                     <Button
@@ -253,18 +323,66 @@ export default function Header() {
                       borderRadius="12px"
                       color="gray.700"
                       _hover={{ bg: "gray.50" }}
+                      onClick={() => {
+                        onClose();
+                        router.push("/cart");
+                      }}
                     >
-                      Giriş Yap
+                      Sepet
                     </Button>
-                    <Button
-                      bg="orange.500"
-                      color="white"
-                      w="full"
-                      borderRadius="12px"
-                      _hover={{ bg: "orange.600" }}
-                    >
-                      Kayıt Ol
-                    </Button>
+                    {isAuthenticated ? (
+                      <>
+                        <Text
+                          color="gray.600"
+                          fontSize="sm"
+                          w="full"
+                          textAlign="left"
+                        >
+                          {userEmail}
+                        </Text>
+                        <Button
+                          variant="ghost"
+                          w="full"
+                          justifyContent="start"
+                          borderRadius="12px"
+                          color="gray.700"
+                          _hover={{ bg: "gray.50" }}
+                          onClick={handleLogout}
+                        >
+                          Çıkış Yap
+                        </Button>
+                      </>
+                    ) : (
+                      <>
+                        <Button
+                          variant="ghost"
+                          w="full"
+                          justifyContent="start"
+                          borderRadius="12px"
+                          color="gray.700"
+                          _hover={{ bg: "gray.50" }}
+                          onClick={() => {
+                            onClose();
+                            router.push("/auth/login");
+                          }}
+                        >
+                          Giriş Yap
+                        </Button>
+                        <Button
+                          bg="orange.500"
+                          color="white"
+                          w="full"
+                          borderRadius="12px"
+                          _hover={{ bg: "orange.600" }}
+                          onClick={() => {
+                            onClose();
+                            router.push("/auth/register");
+                          }}
+                        >
+                          Kayıt Ol
+                        </Button>
+                      </>
+                    )}
                   </VStack>
                 </Box>
               </VStack>

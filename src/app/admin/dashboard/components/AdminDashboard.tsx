@@ -68,7 +68,7 @@ export default function AdminDashboard() {
   ];
 
   return (
-    <Box>
+    <Box maxW="7xl" mx="auto" px={{ base: 4, md: 6 }} py={{ base: 6, md: 8 }}>
       <VStack gap={6} align="stretch">
         {/* Header */}
         <Box>

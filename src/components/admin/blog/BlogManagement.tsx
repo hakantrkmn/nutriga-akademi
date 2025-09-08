@@ -80,7 +80,7 @@ export default function BlogManagement() {
 
   if (loading) {
     return (
-      <Box>
+      <Box maxW="7xl" mx="auto" px={{ base: 4, md: 6 }} py={{ base: 6, md: 8 }}>
         <VStack gap={6} align="stretch">
           {/* Header */}
           <HStack justify="space-between" align="center">
@@ -121,7 +121,7 @@ export default function BlogManagement() {
   }
 
   return (
-    <Box>
+    <Box maxW="7xl" mx="auto" px={{ base: 4, md: 6 }} py={{ base: 6, md: 8 }}>
       <VStack gap={6} align="stretch">
         {/* Header */}
         <HStack justify="space-between" align="center">

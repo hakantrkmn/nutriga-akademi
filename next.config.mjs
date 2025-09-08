@@ -1,7 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   experimental: {
-    optimizePackageImports: ["@chakra-ui/react", "react-icons"],
+    optimizePackageImports: ["react-icons"],
     // Enable faster builds
     esmExternals: true,
   },
@@ -31,6 +31,7 @@ const nextConfig = {
       },
     ],
   },
+  /*
   webpack: (config, { dev, isServer }) => {
     // Development optimizations
     if (dev && !isServer) {
@@ -57,12 +58,12 @@ const nextConfig = {
         chunks: 'all',
         cacheGroups: {
           chakra: {
-            test: /[\\/]node_modules[\\/]@chakra-ui[\\/]/,
+            test: /[\\/]node_modules[\\/]@chakra-ui[\\/]/
             name: 'chakra',
             chunks: 'all',
           },
           icons: {
-            test: /[\\/]node_modules[\\/]react-icons[\\/]/,
+            test: /[\\/]node_modules[\\/]react-icons[\\/]/
             name: 'icons',
             chunks: 'all',
           },
@@ -72,6 +73,7 @@ const nextConfig = {
 
     return config;
   },
+  */
   // Disable webpack cache warnings
   onDemandEntries: {
     maxInactiveAge: 25 * 1000,
