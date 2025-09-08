@@ -1,4 +1,5 @@
 import { prisma } from "@/lib/prisma";
+import { updateBlogPosts } from "@/lib/redis";
 import { NextRequest, NextResponse } from "next/server";
 
 // GET - Tek blog yazısı getir
@@ -83,6 +84,8 @@ export async function PUT(
       },
     });
 
+    await updateBlogPosts();
+
     return NextResponse.json({
       success: true,
       data: guncellenenBlogPost,
@@ -120,6 +123,8 @@ export async function DELETE(
     await prisma.blogPost.delete({
       where: { id },
     });
+
+    await updateBlogPosts();
 
     return NextResponse.json({
       success: true,

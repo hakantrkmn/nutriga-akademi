@@ -87,3 +87,19 @@ export const getCourses = async () => {
   }
   return courses;
 };
+
+export const updateBlogPosts = async () => {
+  const blogPosts = await prisma.blogPost.findMany();
+  await redis.set("blogPosts", JSON.stringify(blogPosts));
+};
+
+export const updateCourses = async () => {
+  const courses = await prisma.egitim.findMany();
+  const convertedCourses = courses.map((course) => {
+    return {
+      ...course,
+      price: parseFloat(course.price?.toString() || "0"),
+    };
+  });
+  await redis.set("courses", JSON.stringify(convertedCourses));
+};

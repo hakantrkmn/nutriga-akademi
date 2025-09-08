@@ -1,4 +1,5 @@
 import { prisma } from "@/lib/prisma";
+import { updateBlogPosts } from "@/lib/redis";
 import { NextRequest, NextResponse } from "next/server";
 
 // GET - Tüm blog yazılarını listele
@@ -58,6 +59,7 @@ export async function POST(request: NextRequest) {
         author: author || null,
       },
     });
+    await updateBlogPosts();
 
     return NextResponse.json({
       success: true,

@@ -35,18 +35,18 @@ export async function POST(request: NextRequest) {
     }
 
     const supabase = await createClient();
-    
+
     // Benzersiz dosya adı oluştur
     const timestamp = Date.now();
     const fileName = `${timestamp}-${file.name}`;
     const filePath = `uploads/${fileName}`;
 
     // Supabase Storage'a yükle
-    const { data: uploadData, error: uploadError } = await supabase.storage
-      .from('public-files')
+    const { error: uploadError } = await supabase.storage
+      .from("public-files")
       .upload(filePath, file, {
-        cacheControl: '3600',
-        upsert: false
+        cacheControl: "3600",
+        upsert: false,
       });
 
     if (uploadError) {
@@ -58,9 +58,9 @@ export async function POST(request: NextRequest) {
     }
 
     // Public URL'i al
-    const { data: { publicUrl } } = supabase.storage
-      .from('public-files')
-      .getPublicUrl(filePath);
+    const {
+      data: { publicUrl },
+    } = supabase.storage.from("public-files").getPublicUrl(filePath);
 
     return NextResponse.json({
       success: true,
