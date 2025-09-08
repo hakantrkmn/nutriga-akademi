@@ -1,7 +1,5 @@
-import { existsSync } from "fs";
-import { mkdir, writeFile } from "fs/promises";
+import { createClient } from "@/lib/supabase/server";
 import { NextRequest, NextResponse } from "next/server";
-import { join } from "path";
 
 export async function POST(request: NextRequest) {
   try {
@@ -36,25 +34,33 @@ export async function POST(request: NextRequest) {
       });
     }
 
-    const bytes = await file.arrayBuffer();
-    const buffer = Buffer.from(bytes);
-
-    // Uploads klasörünü oluştur
-    const uploadsDir = join(process.cwd(), "public", "uploads");
-    if (!existsSync(uploadsDir)) {
-      await mkdir(uploadsDir, { recursive: true });
-    }
-
+    const supabase = await createClient();
+    
     // Benzersiz dosya adı oluştur
     const timestamp = Date.now();
     const fileName = `${timestamp}-${file.name}`;
-    const filePath = join(uploadsDir, fileName);
+    const filePath = `uploads/${fileName}`;
 
-    // Dosyayı kaydet
-    await writeFile(filePath, buffer);
+    // Supabase Storage'a yükle
+    const { data: uploadData, error: uploadError } = await supabase.storage
+      .from('public-files')
+      .upload(filePath, file, {
+        cacheControl: '3600',
+        upsert: false
+      });
 
-    // Public URL'i döndür
-    const publicUrl = `/uploads/${fileName}`;
+    if (uploadError) {
+      console.error("Supabase upload error:", uploadError);
+      return NextResponse.json({
+        success: false,
+        error: "Dosya yüklenirken bir hata oluştu",
+      });
+    }
+
+    // Public URL'i al
+    const { data: { publicUrl } } = supabase.storage
+      .from('public-files')
+      .getPublicUrl(filePath);
 
     return NextResponse.json({
       success: true,
