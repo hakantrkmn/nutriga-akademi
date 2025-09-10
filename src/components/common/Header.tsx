@@ -19,6 +19,7 @@ import { createClient } from "@/lib/supabase/client";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import { FiLogOut } from "react-icons/fi";
 import { HiMenu } from "react-icons/hi";
 
 export default function Header() {
@@ -77,7 +78,7 @@ export default function Header() {
         <DropdownMenuTrigger asChild>
           <Button
             variant="ghost"
-            className="text-gray-700 hover:text-green-600"
+            className="text-gray-700 hover:text-green-600 justify-start"
           >
             Kurumsal
           </Button>
@@ -143,45 +144,46 @@ export default function Header() {
 
         {/* Desktop Cart & Auth Buttons */}
         {!isMobile && (
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-4">
             {isAuthenticated && (
               <Button
                 variant="ghost"
-                className="text-green-600 hover:bg-green-50"
+                className="text-green-600 hover:bg-green-50 px-4 py-2 font-medium"
                 onClick={() => router.push("/cart")}
               >
-                Sepet
+                🛒 Sepet
               </Button>
             )}
             {isAuthenticated ? (
-              <>
-                <span className="text-gray-600 text-sm max-w-[220px] truncate">
-                  {userEmail}
+              <div className="flex items-center gap-2">
+                <span className="text-gray-600 text-sm font-medium max-w-[120px] truncate">
+                  {userEmail?.split("@")[0]}
                 </span>
                 <Button
                   variant="ghost"
-                  className="text-green-600 hover:bg-green-50"
+                  className="text-gray-600 hover:bg-gray-50 px-2 py-2"
                   onClick={handleLogout}
+                  title="Çıkış Yap"
                 >
-                  Çıkış Yap
+                  <FiLogOut className="h-4 w-4" />
                 </Button>
-              </>
+              </div>
             ) : (
-              <>
+              <div className="flex items-center gap-3">
                 <Button
                   variant="ghost"
-                  className="text-gray-700 hover:bg-gray-50"
+                  className="text-gray-700 hover:bg-gray-50 px-4 py-2 font-medium"
                   onClick={() => router.push("/auth/login")}
                 >
                   Giriş Yap
                 </Button>
                 <Button
-                  className="bg-green-600 hover:bg-green-700 text-white"
+                  className="bg-green-600 hover:bg-green-700 text-white px-6 py-2 font-medium"
                   onClick={() => router.push("/auth/register")}
                 >
                   Kayıt Ol
                 </Button>
-              </>
+              </div>
             )}
           </div>
         )}

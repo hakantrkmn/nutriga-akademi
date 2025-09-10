@@ -28,7 +28,7 @@ import StarterKit from "@tiptap/starter-kit";
 import { createLowlight } from "lowlight";
 import { ResizableImage } from "tiptap-extension-resizable-image";
 // Chakra UI import removed
-import { generateHTML } from "@tiptap/core";
+import { generateHTML } from "@tiptap/html";
 import { useEffect, useMemo, useState } from "react";
 interface TipTapWrapperProps {
   content: string | object;
@@ -110,23 +110,27 @@ const convertImageResizeToImage = (
 
 // Ana wrapper fonksiyonu
 const processContent = (content: string | object): string => {
+  console.log("content", typeof content);
   // Eğer string ise, JSON string mi yoksa HTML string mi kontrol et
   if (typeof content === "string") {
     // JSON string olup olmadığını kontrol et
-    if (content.startsWith("{") || content.startsWith("[")) {
-      try {
-        const parsedContent = JSON.parse(content);
-        // imageResize node'larını image node'larına dönüştür
-
-        // TipTap'ın resmi generateHTML fonksiyonunu kullan
-        return generateHTML(parsedContent, extensions);
-      } catch (error) {
-        console.error("JSON string parse error:", error);
-        return "<p>İçerik yüklenirken hata oluştu.</p>";
+    try {
+      let tet = null;
+      const parsedContent = JSON.parse(content);
+      if (typeof parsedContent === "string") {
+        tet = JSON.parse(parsedContent);
+      } else {
+        tet = parsedContent;
       }
+      // imageResize node'larını image node'larına dönüştür
+      console.log("parsedContent", typeof tet);
+      // TipTap'ın resmi generateHTML fonksiyonunu kullan
+      return generateHTML(tet, extensions);
+    } catch (error) {
+      console.error("JSON string parse error:", error);
+      return "<p>İçerik yüklenirken hata oluştu.</p>";
     }
     // HTML string ise direkt döndür
-    return content;
   }
 
   // Eğer object ise, TipTap JSON formatında
@@ -162,6 +166,7 @@ export default function TipTapWrapper({
   // useMemo ile içeriği işle, render sırasında state güncellemesi yapmadan
   const htmlContent = useMemo(() => {
     if (!isClient) return "";
+    console.log("content", typeof content);
     return processContent(content);
   }, [content, isClient]);
 

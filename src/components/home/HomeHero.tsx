@@ -1,13 +1,25 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
-import { heroData } from "@/data/heroData";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  type CarouselApi,
+} from "@/components/ui/carousel";
+import { HeroSlide } from "@prisma/client";
+import Autoplay from "embla-carousel-autoplay";
 import Image from "next/image";
-import Link from "next/link";
-import { useEffect, useState } from "react";
-
-export default function Hero() {
+import { useEffect, useRef, useState } from "react";
+export default function Hero({ slides }: { slides: HeroSlide[] }) {
   const [isMobile, setIsMobile] = useState(false);
+  const [api, setApi] = useState<CarouselApi>();
+  const [current, setCurrent] = useState(0);
+  const [imageErrors, setImageErrors] = useState<{ [key: number]: boolean }>(
+    {}
+  );
+  const autoplayRef = useRef(
+    Autoplay({ delay: 5000, stopOnInteraction: false })
+  );
 
   useEffect(() => {
     const checkMobile = () => {
@@ -18,8 +30,42 @@ export default function Hero() {
     return () => window.removeEventListener("resize", checkMobile);
   }, []);
 
+  useEffect(() => {
+    if (!api) {
+      return;
+    }
+
+    setCurrent(api.selectedScrollSnap());
+
+    const handleSelect = () => {
+      setCurrent(api.selectedScrollSnap());
+    };
+
+    const handlePointerDown = () => {
+      // Kullanıcı dokunduğunda autoplay'i durdur
+      autoplayRef.current?.stop();
+    };
+
+    const handlePointerUp = () => {
+      // 5 saniye sonra autoplay'i tekrar başlat
+      setTimeout(() => {
+        autoplayRef.current?.play();
+      }, 5000);
+    };
+
+    api.on("select", handleSelect);
+    api.on("pointerDown", handlePointerDown);
+    api.on("pointerUp", handlePointerUp);
+
+    return () => {
+      api.off("select", handleSelect);
+      api.off("pointerDown", handlePointerDown);
+      api.off("pointerUp", handlePointerUp);
+    };
+  }, [api]);
+
   return (
-    <div className="bg-gradient-to-br from-green-600 to-green-700 text-white py-16 md:py-24 relative overflow-hidden">
+    <div className="bg-gradient-to-br from-green-600 to-green-700 text-white py-16 md:py-20 relative overflow-hidden">
       {/* Background Pattern */}
       <div
         className="absolute inset-0 opacity-10"
@@ -29,73 +75,111 @@ export default function Hero() {
         }}
       />
 
-      <div className="max-w-7xl mx-auto px-4 md:px-6 relative z-10">
-        <div className="flex flex-col lg:flex-row items-center gap-8 lg:gap-12 min-h-[500px]">
-          {/* Content */}
-          <div className="flex-1 space-y-6 text-center lg:text-left">
-            <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold leading-tight max-w-[600px]">
-              {heroData.title.main}
-              <span className="block text-green-300">
-                {heroData.title.highlight}
-              </span>
-            </h1>
+      <div className="max-w-7xl mx-auto px-6 md:px-8 lg:px-12 relative z-10">
+        <Carousel
+          className="w-full"
+          setApi={setApi}
+          opts={{
+            loop: true,
+            align: "start",
+            containScroll: false,
+            dragFree: false,
+            duration: 30,
+            skipSnaps: false,
+          }}
+          plugins={[autoplayRef.current]}
+        >
+          <CarouselContent>
+            {slides.map((slide, index) => (
+              <CarouselItem key={index} className="basis-full">
+                <div className="flex flex-col lg:flex-row items-center justify-center gap-6 lg:gap-8 min-h-[350px] sm:min-h-[450px] w-full py-8 relative overflow-hidden">
+                  {/* Content */}
+                  <div className="flex-1 min-w-0 w-full lg:w-auto space-y-6 text-center lg:text-left">
+                    <div className="transform transition-none">
+                      <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold leading-tight break-words">
+                        {slide.titleMain}
+                        <span className="block text-green-300 break-words">
+                          {slide.titleHighlight}
+                        </span>
+                      </h1>
 
-            <p className="text-lg md:text-xl max-w-[500px] opacity-90 leading-relaxed">
-              {heroData.description}
-            </p>
+                      <p className="text-sm sm:text-base md:text-lg opacity-90 leading-relaxed break-words mt-6">
+                        {slide.description}
+                      </p>
+                    </div>
+                  </div>
 
-            <div className="flex gap-4 flex-wrap justify-center lg:justify-start">
-              <Link href={heroData.buttons.primary.href}>
-                <Button
-                  size="lg"
-                  className="bg-green-600 hover:bg-green-700 text-white px-8 py-6 text-lg font-semibold rounded-xl hover:-translate-y-0.5 hover:shadow-lg transition-all"
-                >
-                  {heroData.buttons.primary.text}
-                </Button>
-              </Link>
-
-              <Link href={heroData.buttons.secondary.href}>
-                <Button
-                  variant="outline"
-                  size="lg"
-                  className="border-white text-white hover:bg-white hover:text-green-600 px-8 py-6 text-lg font-semibold rounded-xl hover:-translate-y-0.5 transition-all"
-                >
-                  {heroData.buttons.secondary.text}
-                </Button>
-              </Link>
-            </div>
-
-            {/* Stats */}
-            <div className="flex gap-8 pt-4 flex-wrap justify-center lg:justify-start">
-              {heroData.stats.map((stat, index) => (
-                <div key={index} className="text-center">
-                  <p className="text-2xl font-bold text-green-300">
-                    {stat.value}
-                  </p>
-                  <p className="text-sm opacity-80">{stat.label}</p>
+                  {/* Hero Image */}
+                  {!isMobile && (
+                    <div className="flex-shrink-0 w-full lg:w-[350px] max-w-[350px]">
+                      {!imageErrors[index] ? (
+                        <div className="relative rounded-2xl overflow-hidden shadow-xl">
+                          <Image
+                            src={slide.imageSrc}
+                            alt={slide.imageAlt}
+                            width={350}
+                            height={280}
+                            className="w-full h-[280px] object-cover"
+                            priority={index === 0}
+                            placeholder="blur"
+                            blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAIAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAhEAACAQMDBQAAAAAAAAAAAAABAgMABAUGIWGRkqGx0f/EABUBAQEAAAAAAAAAAAAAAAAAAAMF/8QAGhEAAgIDAAAAAAAAAAAAAAAAAAECEgMRkf/aAAwDAQACEQMRAD8AltJagyeH0AthI5xdrLcNM91BF5pX2HaH9bcfaSXWGaRmknyJckliyjqTzSlT54b6bk+h0R//2Q=="
+                            onError={() => {
+                              setImageErrors((prev) => ({
+                                ...prev,
+                                [index]: true,
+                              }));
+                            }}
+                          />
+                          <div className="absolute inset-0 bg-gradient-to-br from-green-600/10 to-green-700/10" />
+                        </div>
+                      ) : (
+                        <div className="relative rounded-2xl overflow-hidden shadow-xl bg-gradient-to-br from-green-600/20 to-green-700/20 h-[280px] flex items-center justify-center">
+                          <div className="text-white/60 text-center">
+                            <svg
+                              className="w-16 h-16 mx-auto mb-2"
+                              fill="currentColor"
+                              viewBox="0 0 20 20"
+                            >
+                              <path
+                                fillRule="evenodd"
+                                d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z"
+                                clipRule="evenodd"
+                              />
+                            </svg>
+                            <p className="text-sm">Görsel yüklenemedi</p>
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  )}
                 </div>
-              ))}
-            </div>
-          </div>
+              </CarouselItem>
+            ))}
+          </CarouselContent>
+        </Carousel>
 
-          {/* Hero Image */}
-          {!isMobile && (
-            <div className="flex-1 max-w-[500px]">
-              <div className="relative rounded-3xl overflow-hidden shadow-2xl">
-                <Image
-                  src={heroData.image.src}
-                  alt={heroData.image.alt}
-                  width={500}
-                  height={400}
-                  className="w-full h-[400px] object-cover"
-                  priority
-                  placeholder="blur"
-                  blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAIAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAhEAACAQMDBQAAAAAAAAAAAAABAgMABAUGIWGRkqGx0f/EABUBAQEAAAAAAAAAAAAAAAAAAAMF/8QAGhEAAgIDAAAAAAAAAAAAAAAAAAECEgMRkf/aAAwDAQACEQMRAD8AltJagyeH0AthI5xdrLcNM91BF5pX2HaH9bcfaSXWGaRmknyJckliyjqTzSlT54b6bk+h0R//2Q=="
-                />
-                <div className="absolute inset-0 bg-gradient-to-br from-green-600/10 to-green-700/10" />
-              </div>
-            </div>
-          )}
+        {/* Slider Indicators */}
+        <div className="flex justify-center mt-4 sm:mt-6 gap-2 sm:gap-3">
+          {slides.map((_, index) => (
+            <button
+              key={index}
+              className={`w-4 h-4 rounded-full transition-all duration-300 ${
+                current === index
+                  ? "bg-white scale-110"
+                  : "bg-white/40 hover:bg-white/60"
+              }`}
+              onClick={() => {
+                // Autoplay'i durdur
+                autoplayRef.current?.stop();
+                api?.scrollTo(index);
+                // 5 saniye sonra autoplay'i tekrar başlat
+                setTimeout(() => {
+                  autoplayRef.current?.play();
+                }, 5000);
+              }}
+              aria-label={`Slide ${index + 1}'e git`}
+            />
+          ))}
         </div>
       </div>
     </div>

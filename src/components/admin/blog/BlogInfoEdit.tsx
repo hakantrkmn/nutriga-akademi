@@ -19,6 +19,7 @@ interface BlogInfoEditProps {
   uploadedImage: string | null;
 }
 
+import { BLOG_CATEGORIES } from "@/constants";
 export default function BlogInfoEdit({
   formData,
   setFormData,
@@ -87,12 +88,11 @@ export default function BlogInfoEdit({
                 <SelectValue placeholder="Kategori seçin..." />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="Genel">Genel</SelectItem>
-                <SelectItem value="Beslenme">Beslenme</SelectItem>
-                <SelectItem value="Sağlık">Sağlık</SelectItem>
-                <SelectItem value="Yaşam Tarzı">Yaşam Tarzı</SelectItem>
-                <SelectItem value="Haberler">Haberler</SelectItem>
-                <SelectItem value="İpuçları">İpuçları</SelectItem>
+                {BLOG_CATEGORIES.map((category) => (
+                  <SelectItem key={category} value={category}>
+                    {category}
+                  </SelectItem>
+                ))}
               </SelectContent>
             </Select>
           </div>

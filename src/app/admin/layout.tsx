@@ -13,7 +13,7 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
   // Login sayfası için özel layout
   if (pathname === "/admin") {
     return (
-      <div className="admin-layout site-theme-sage site-font-sage">
+      <div className="site-root site-theme-sage site-font-sage">
         <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
           {children}
         </div>
@@ -22,7 +22,7 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
   }
 
   return (
-    <div className="admin-layout site-theme-sage site-font-sage">
+    <div className="site-root site-theme-sage site-font-sage">
       <AdminHeader />
       {children}
     </div>

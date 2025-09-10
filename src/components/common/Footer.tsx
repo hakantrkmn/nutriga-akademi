@@ -88,9 +88,9 @@ export default function Footer() {
           <div className="space-y-4">
             <h4 className="text-lg font-semibold text-white">Hızlı Linkler</h4>
 
-            <div className="space-y-2">
+            <div className="flex flex-col space-y-3">
               {quickLinks.map((link, index) => (
-                <Link key={index} href={link.href}>
+                <Link key={index} href={link.href} className="block">
                   <span className="text-sm text-gray-300 hover:text-green-400 hover:underline cursor-pointer transition-all">
                     {link.name}
                   </span>

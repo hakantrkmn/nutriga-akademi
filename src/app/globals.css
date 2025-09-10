@@ -59,7 +59,10 @@
   line-height: 1.2;
   margin-bottom: 1.5rem;
 }
-
+/* Header logo için margin sıfırla */
+.site-root header h1 {
+  margin-bottom: 0 !important;
+}
 .site-root h2 {
   font-size: 2rem;
   font-weight: 600;

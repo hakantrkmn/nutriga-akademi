@@ -1,12 +1,17 @@
 "use client";
 
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { createClient } from "@/lib/supabase/client";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { FiBookOpen, FiFileText, FiHome, FiLogOut } from "react-icons/fi";
+import {
+  FiBookOpen,
+  FiFileText,
+  FiHome,
+  FiImage,
+  FiLogOut,
+} from "react-icons/fi";
 
 export default function AdminHeader() {
   const router = useRouter();
@@ -37,16 +42,16 @@ export default function AdminHeader() {
   };
 
   return (
-    <header className="bg-white border-b border-gray-200 px-4 md:px-6 py-3 md:py-4 sticky top-0 z-50 shadow-sm">
-      <div className="flex justify-between items-center w-full">
+    <header className="bg-white border-b border-gray-200 px-2 md:px-6 py-1.5 md:py-2 sticky top-0 z-50 shadow-sm">
+      <div className="flex justify-between items-center w-full min-w-0">
         {/* Sol taraf - Logo */}
-        <div className="flex flex-col items-start gap-0 flex-shrink-0">
-          <h1 className="text-lg md:text-xl font-bold text-gray-900 leading-none">
+        <div className="flex items-center gap-2 md:gap-3 flex-shrink-0 min-w-0">
+          <h1 className="text-sm md:text-xl font-bold text-gray-900 leading-tight truncate">
             Nutriga Akademi
           </h1>
-          <p className="text-xs md:text-sm text-gray-600 leading-none">
-            Admin Panel
-          </p>
+          <span className="text-xs text-gray-500 bg-gray-100 px-1.5 md:px-2 py-1 rounded-full hidden sm:block">
+            Admin
+          </span>
         </div>
 
         {/* Orta - Navigation (Desktop) */}
@@ -55,7 +60,7 @@ export default function AdminHeader() {
             <Button
               variant="ghost"
               size="sm"
-              className={`${
+              className={`h-8 ${
                 isActive("/admin/dashboard")
                   ? "bg-green-50 text-green-600"
                   : "text-gray-900 hover:bg-gray-50"
@@ -70,7 +75,7 @@ export default function AdminHeader() {
             <Button
               variant="ghost"
               size="sm"
-              className={`${
+              className={`h-8 ${
                 isActive("/admin/egitimler")
                   ? "bg-green-50 text-green-600"
                   : "text-gray-900 hover:bg-gray-50"
@@ -81,11 +86,26 @@ export default function AdminHeader() {
             </Button>
           </Link>
 
+          <Link href="/admin/hero">
+            <Button
+              variant="ghost"
+              size="sm"
+              className={`h-8 ${
+                isActive("/admin/hero")
+                  ? "bg-green-50 text-green-600"
+                  : "text-gray-900 hover:bg-gray-50"
+              }`}
+            >
+              <FiImage className="mr-2 h-4 w-4" />
+              Hero
+            </Button>
+          </Link>
+
           <Link href="/admin/blog">
             <Button
               variant="ghost"
               size="sm"
-              className={`${
+              className={`h-8 ${
                 isActive("/admin/blog")
                   ? "bg-green-50 text-green-600"
                   : "text-gray-900 hover:bg-gray-50"
@@ -98,18 +118,18 @@ export default function AdminHeader() {
         </div>
 
         {/* Mobil Navigation */}
-        <div className="flex md:hidden gap-1">
+        <div className="flex md:hidden gap-0.5">
           <Link href="/admin/dashboard">
             <Button
               variant="ghost"
               size="sm"
-              className={`px-2 ${
+              className={`px-1.5 h-8 ${
                 isActive("/admin/dashboard")
                   ? "bg-green-50 text-green-600"
                   : "text-gray-900 hover:bg-gray-50"
               }`}
             >
-              <FiHome className="h-4 w-4" />
+              <FiHome className="h-3.5 w-3.5" />
             </Button>
           </Link>
 
@@ -117,13 +137,13 @@ export default function AdminHeader() {
             <Button
               variant="ghost"
               size="sm"
-              className={`px-2 ${
+              className={`px-1.5 h-8 ${
                 isActive("/admin/egitimler")
                   ? "bg-green-50 text-green-600"
                   : "text-gray-900 hover:bg-gray-50"
               }`}
             >
-              <FiBookOpen className="h-4 w-4" />
+              <FiBookOpen className="h-3.5 w-3.5" />
             </Button>
           </Link>
 
@@ -131,40 +151,31 @@ export default function AdminHeader() {
             <Button
               variant="ghost"
               size="sm"
-              className={`px-2 ${
+              className={`px-1.5 h-8 ${
                 isActive("/admin/blog")
                   ? "bg-green-50 text-green-600"
                   : "text-gray-900 hover:bg-gray-50"
               }`}
             >
-              <FiFileText className="h-4 w-4" />
+              <FiFileText className="h-3.5 w-3.5" />
             </Button>
           </Link>
         </div>
 
         {/* Sağ taraf - Admin bilgileri ve çıkış */}
-        <div className="flex gap-2 md:gap-4 flex-shrink-0">
-          <Badge
-            variant="secondary"
-            className="hidden sm:block px-2 md:px-3 py-1 rounded-full text-xs bg-green-100 text-green-800"
+        <div className="flex items-center gap-1 md:gap-3 flex-shrink-0">
+          <span className="hidden xl:block text-sm text-gray-900">
+            {adminEmail}
+          </span>
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={handleLogout}
+            className="px-1.5 md:px-3 text-gray-900 hover:bg-gray-50 h-8"
           >
-            Admin
-          </Badge>
-
-          <div className="flex gap-1 md:gap-3">
-            <span className="hidden lg:block text-sm text-gray-900">
-              {adminEmail}
-            </span>
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={handleLogout}
-              className="px-2 md:px-3 text-gray-900 hover:bg-gray-50"
-            >
-              <FiLogOut className="h-4 w-4 md:mr-2" />
-              <span className="hidden md:block">Çıkış</span>
-            </Button>
-          </div>
+            <FiLogOut className="h-3.5 w-3.5 md:h-4 md:w-4 md:mr-2" />
+            <span className="hidden md:block">Çıkış</span>
+          </Button>
         </div>
       </div>
     </header>

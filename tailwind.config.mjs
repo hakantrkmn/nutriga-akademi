@@ -10,17 +10,17 @@ const config = {
   theme: {
     extend: {
       colors: {
-        background: "#FEFBF6",
-        "background-alt": "#FBF8F1",
-        foreground: "#5C5B57",
-        primary: "#F7C5A8",
-        "primary-hover": "#F4B691",
-        accent: "#A0C1B8",
-        "accent-hover": "#8EAEa4",
+        background: "var(--background)",
+        "background-alt": "var(--background-alt)",
+        foreground: "var(--foreground)",
+        primary: "var(--primary)",
+        "primary-hover": "var(--primary-hover)",
+        accent: "var(--accent)",
+        "accent-hover": "var(--accent-hover)",
       },
       borderRadius: {
-        DEFAULT: "12px",
-        sm: "8px",
+        DEFAULT: "var(--border-radius)",
+        sm: "var(--border-radius-sm)",
       },
     },
   },

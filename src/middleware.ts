@@ -2,7 +2,12 @@ import { createServerClient } from "@supabase/ssr";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function middleware(request: NextRequest) {
-  const adminRoutes = ["/admin/dashboard", "/admin/egitimler", "/admin/blog"];
+  const adminRoutes = [
+    "/admin/dashboard",
+    "/admin/egitimler",
+    "/admin/blog",
+    "/admin/hero",
+  ];
   const pathname = request.nextUrl.pathname;
 
   // Admin routes için auth kontrolü

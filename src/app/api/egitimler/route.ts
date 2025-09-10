@@ -1,4 +1,5 @@
 import { prisma } from "@/lib/prisma";
+import { updateCourses } from "@/lib/redis";
 import { NextRequest, NextResponse } from "next/server";
 
 // GET - Tüm eğitimleri listele
@@ -71,6 +72,8 @@ export async function POST(request: NextRequest) {
         instructor,
       },
     });
+
+    updateCourses();
 
     return NextResponse.json({
       success: true,

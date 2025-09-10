@@ -1,4 +1,5 @@
 import { prisma } from "@/lib/prisma";
+import { updateCourses } from "@/lib/redis";
 import { NextRequest, NextResponse } from "next/server";
 
 // GET - Tek eğitim getir
@@ -94,6 +95,7 @@ export async function PUT(
         updatedAt: new Date(),
       },
     });
+    updateCourses();
 
     return NextResponse.json({
       success: true,
@@ -132,6 +134,8 @@ export async function DELETE(
     await prisma.egitim.delete({
       where: { id },
     });
+
+    updateCourses();
 
     return NextResponse.json({
       success: true,

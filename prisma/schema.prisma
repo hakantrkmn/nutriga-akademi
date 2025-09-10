@@ -20,7 +20,7 @@ model Egitim {
   slug        String   @unique
   price       Decimal? @db.Decimal(10, 2)
   salesCount  Int      @default(0) @map("sales_count")
-  category    String 
+  category    String
   level       String
   instructor  String
   createdAt   DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
@@ -59,4 +59,19 @@ model CartItem {
 
   @@unique([userId, educationId])
   @@map("cart_items")
+}
+
+model HeroSlide {
+  id          String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  titleMain   String   @map("title_main")
+  titleHighlight String @map("title_highlight")
+  description String
+  imageSrc    String   @map("image_src")
+  imageAlt    String   @map("image_alt")
+  isActive    Boolean  @default(true) @map("is_active")
+  sortOrder   Int      @default(0) @map("sort_order")
+  createdAt   DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt   DateTime @default(now()) @updatedAt @map("updated_at") @db.Timestamptz(6)
+
+  @@map("hero_slides")
 }
