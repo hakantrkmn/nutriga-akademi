@@ -62,7 +62,7 @@ export default function AdminHeader() {
               size="sm"
               className={`h-8 ${
                 isActive("/admin/dashboard")
-                  ? "bg-green-50 text-green-600"
+                  ? "bg-primary-50 text-primary-600"
                   : "text-gray-900 hover:bg-gray-50"
               }`}
             >
@@ -77,7 +77,7 @@ export default function AdminHeader() {
               size="sm"
               className={`h-8 ${
                 isActive("/admin/egitimler")
-                  ? "bg-green-50 text-green-600"
+                  ? "bg-primary-50 text-primary-600"
                   : "text-gray-900 hover:bg-gray-50"
               }`}
             >
@@ -92,7 +92,7 @@ export default function AdminHeader() {
               size="sm"
               className={`h-8 ${
                 isActive("/admin/hero")
-                  ? "bg-green-50 text-green-600"
+                  ? "bg-primary-50 text-primary-600"
                   : "text-gray-900 hover:bg-gray-50"
               }`}
             >
@@ -107,7 +107,7 @@ export default function AdminHeader() {
               size="sm"
               className={`h-8 ${
                 isActive("/admin/blog")
-                  ? "bg-green-50 text-green-600"
+                  ? "bg-primary-50 text-primary-600"
                   : "text-gray-900 hover:bg-gray-50"
               }`}
             >
@@ -125,7 +125,7 @@ export default function AdminHeader() {
               size="sm"
               className={`px-1.5 h-8 ${
                 isActive("/admin/dashboard")
-                  ? "bg-green-50 text-green-600"
+                  ? "bg-primary-50 text-primary-600"
                   : "text-gray-900 hover:bg-gray-50"
               }`}
             >
@@ -139,7 +139,7 @@ export default function AdminHeader() {
               size="sm"
               className={`px-1.5 h-8 ${
                 isActive("/admin/egitimler")
-                  ? "bg-green-50 text-green-600"
+                  ? "bg-primary-50 text-primary-600"
                   : "text-gray-900 hover:bg-gray-50"
               }`}
             >
@@ -153,7 +153,7 @@ export default function AdminHeader() {
               size="sm"
               className={`px-1.5 h-8 ${
                 isActive("/admin/blog")
-                  ? "bg-green-50 text-green-600"
+                  ? "bg-primary-50 text-primary-600"
                   : "text-gray-900 hover:bg-gray-50"
               }`}
             >

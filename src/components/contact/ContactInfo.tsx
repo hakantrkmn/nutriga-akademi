@@ -36,8 +36,8 @@ function ContactItem({
 }: ContactItemProps) {
   return (
     <div className="flex items-start gap-4 p-6 bg-white rounded-xl shadow-sm border border-gray-100">
-      <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0">
-        <Icon className="w-6 h-6 text-green-600" />
+      <div className="w-12 h-12 bg-primary-100 rounded-full flex items-center justify-center flex-shrink-0">
+        <Icon className="w-6 h-6 text-primary-600" />
       </div>
       <div className="flex-1">
         <h3 className="text-lg font-semibold text-gray-900 mb-1">{title}</h3>

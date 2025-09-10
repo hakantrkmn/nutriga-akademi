@@ -92,7 +92,7 @@ export default function BlogManagement() {
             </div>
             <Button
               onClick={handleAddPost}
-              className="bg-green-600 hover:bg-green-700 text-white"
+              className="bg-primary-600 hover:bg-primary-700 text-white"
             >
               <Plus className="w-4 h-4 mr-2" />
               Yeni Blog Yazısı
@@ -104,7 +104,7 @@ export default function BlogManagement() {
             <CardContent className="p-6">
               <div className="flex justify-center items-center py-20">
                 <div className="flex flex-col items-center gap-4">
-                  <Loader2 className="w-8 h-8 text-green-500 animate-spin" />
+                  <Loader2 className="w-8 h-8 text-primary-500 animate-spin" />
                   <p className="text-gray-600 text-lg">
                     Blog yazıları yükleniyor...
                   </p>

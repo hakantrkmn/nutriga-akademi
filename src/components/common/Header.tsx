@@ -91,7 +91,7 @@ export default function Header() {
     <>
       <Link
         href="/"
-        className="text-gray-700 hover:text-green-600 transition-colors"
+        className="text-gray-700 hover:text-primary-600 transition-colors"
       >
         Ana Sayfa
       </Link>
@@ -100,7 +100,7 @@ export default function Header() {
         <DropdownMenuTrigger asChild>
           <Button
             variant="ghost"
-            className="text-gray-700 hover:text-green-600 justify-start"
+            className="text-gray-700 hover:text-primary-600 justify-start"
           >
             Kurumsal
           </Button>
@@ -126,21 +126,21 @@ export default function Header() {
 
       <Link
         href="/egitimler"
-        className="text-gray-700 hover:text-green-600 transition-colors"
+        className="text-gray-700 hover:text-primary-600 transition-colors"
       >
         Eğitimler
       </Link>
 
       <Link
         href="/blog"
-        className="text-gray-700 hover:text-green-600 transition-colors"
+        className="text-gray-700 hover:text-primary-600 transition-colors"
       >
         Blog
       </Link>
 
       <Link
         href="/iletisim"
-        className="text-gray-700 hover:text-green-600 transition-colors"
+        className="text-gray-700 hover:text-primary-600 transition-colors"
       >
         İletişim
       </Link>
@@ -152,7 +152,7 @@ export default function Header() {
       <div className="max-w-6xl mx-auto px-4 md:px-6 py-4 flex items-center justify-between">
         {/* Logo */}
         <Link href="/">
-          <h1 className="text-2xl font-bold text-green-600 hover:text-green-700 cursor-pointer transition-colors">
+          <h1 className="text-2xl font-bold text-primary-600 hover:text-primary-700 cursor-pointer transition-colors">
             {COMPANY_NAME}
           </h1>
         </Link>
@@ -170,7 +170,7 @@ export default function Header() {
             {isAuthenticated && (
               <Button
                 variant="ghost"
-                className="text-green-600 hover:bg-green-50 px-4 py-2 font-medium"
+                className="text-primary-600 hover:bg-primary-50 px-4 py-2 font-medium"
                 onClick={() => router.push("/cart")}
               >
                 🛒 Sepet
@@ -200,7 +200,7 @@ export default function Header() {
                   Giriş Yap
                 </Button>
                 <Button
-                  className="bg-green-600 hover:bg-green-700 text-white px-6 py-2 font-medium"
+                  className="bg-primary-600 hover:bg-primary-700 text-white px-6 py-2 font-medium"
                   onClick={() => router.push("/auth/register")}
                 >
                   Kayıt Ol
@@ -237,7 +237,7 @@ export default function Header() {
               {isAuthenticated && (
                 <Button
                   variant="ghost"
-                  className="w-full justify-start text-green-600 hover:bg-green-50"
+                  className="w-full justify-start text-primary-600 hover:bg-primary-50"
                   onClick={() => {
                     setOpen(false);
                     router.push("/cart");
@@ -253,7 +253,7 @@ export default function Header() {
                   </p>
                   <Button
                     variant="ghost"
-                    className="w-full justify-start text-green-600 hover:bg-green-50"
+                    className="w-full justify-start text-primary-600 hover:bg-primary-50"
                     onClick={handleLogout}
                   >
                     Çıkış Yap
@@ -272,7 +272,7 @@ export default function Header() {
                     Giriş Yap
                   </Button>
                   <Button
-                    className="w-full bg-green-600 hover:bg-green-700 text-white"
+                    className="w-full bg-primary-600 hover:bg-primary-700 text-white"
                     onClick={() => {
                       setOpen(false);
                       router.push("/auth/register");

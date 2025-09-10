@@ -7,7 +7,7 @@ import { EgitimCardProps } from "@/types";
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
-import { FiClock, FiShoppingCart, FiUser } from "react-icons/fi";
+import { FiShoppingCart, FiUser } from "react-icons/fi";
 
 export default function EgitimCard({ egitim }: EgitimCardProps) {
   const [adding, setAdding] = useState(false);
@@ -47,7 +47,7 @@ export default function EgitimCard({ egitim }: EgitimCardProps) {
             />
           </div>
 
-          <Badge className="absolute top-3 right-3 bg-green-100 text-green-800 text-xs px-2 py-1 rounded-md">
+          <Badge className="absolute top-3 right-3 bg-primary-100 text-primary-800 text-xs px-2 py-1 rounded-md">
             {egitim.level || "Seviye"}
           </Badge>
         </div>
@@ -55,7 +55,7 @@ export default function EgitimCard({ egitim }: EgitimCardProps) {
         <CardContent className="p-6">
           <div className="flex flex-col gap-4 h-full">
             <div className="flex justify-between items-center w-full">
-              <Badge className="text-green-600 bg-green-50 text-xs px-2 py-1 rounded-md">
+              <Badge className="text-primary-600 bg-primary-50 text-xs px-2 py-1 rounded-md">
                 {egitim.category}
               </Badge>
               <span className="text-xs text-gray-500">
@@ -77,16 +77,11 @@ export default function EgitimCard({ egitim }: EgitimCardProps) {
                   <FiUser className="w-4 h-4" />
                   <span>{egitim.instructor || "Eğitmen"}</span>
                 </div>
-
-                <div className="flex items-center gap-2">
-                  <FiClock className="w-4 h-4" />
-                  <span>{egitim.salesCount || "Süre"}</span>
-                </div>
               </div>
 
               <div className="flex justify-between items-center w-full">
                 <div className="flex flex-col gap-1">
-                  <span className="text-2xl font-bold text-green-600">
+                  <span className="text-2xl font-bold text-primary-600">
                     ₺{egitim.price?.toString()}
                   </span>
                   <span className="text-xs text-gray-500">
@@ -95,7 +90,7 @@ export default function EgitimCard({ egitim }: EgitimCardProps) {
                 </div>
 
                 <div className="flex flex-col gap-2">
-                  <Button className="bg-green-600 hover:bg-green-700 text-white text-sm rounded-lg px-4">
+                  <Button className="bg-primary-600 hover:bg-primary-700 text-white text-sm rounded-lg px-4">
                     Detayları Gör
                   </Button>
 
@@ -103,8 +98,8 @@ export default function EgitimCard({ egitim }: EgitimCardProps) {
                     variant={added ? "default" : "outline"}
                     className={`text-sm rounded-lg px-4 ${
                       added
-                        ? "bg-green-100 text-green-800 border-green-200"
-                        : "border-green-600 text-green-600 hover:bg-green-50"
+                        ? "bg-primary-100 text-primary-800 border-primary-200"
+                        : "border-primary-600 text-primary-600 hover:bg-primary-50"
                     }`}
                     disabled={adding}
                     onClick={handleAddToCart}

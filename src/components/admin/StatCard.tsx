@@ -22,7 +22,7 @@ export default function StatCard({
       case "blue":
         return "bg-blue-100 text-blue-600";
       case "green":
-        return "bg-green-100 text-green-600";
+        return "bg-primary-100 text-primary-600";
       case "purple":
         return "bg-purple-100 text-purple-600";
       case "orange":

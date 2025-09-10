@@ -20,7 +20,7 @@
   color: var(--foreground);
 }
 
-/* Theme: Sage/Olive (Option B) */
+/* Sage/Olive Theme - Centralized Color System */
 .site-root.site-theme-sage {
   --background: #ffffff;
   --background-alt: #f1f5f9; /* slate-100 */
@@ -33,6 +33,66 @@
   --primary-hover-rgb: 45, 90, 63;
   --accent-rgb: 158, 210, 198;
   --accent-hover-rgb: 130, 195, 180;
+
+  /* Extended color palette for centralized control */
+  --primary-50: #f0fdf4;
+  --primary-100: #dcfce7;
+  --primary-200: #bbf7d0;
+  --primary-300: #86efac;
+  --primary-400: #4ade80;
+  --primary-500: #22c55e;
+  --primary-600: #16a34a;
+  --primary-700: #15803d;
+  --primary-800: #166534;
+  --primary-900: #14532d;
+
+  /* Gray scale for consistent usage */
+  --gray-50: #f9fafb;
+  --gray-100: #f3f4f6;
+  --gray-200: #e5e7eb;
+  --gray-300: #d1d5db;
+  --gray-400: #9ca3af;
+  --gray-500: #6b7280;
+  --gray-600: #4b5563;
+  --gray-700: #374151;
+  --gray-800: #1f2937;
+  --gray-900: #111827;
+
+  /* Semantic colors */
+  --success: var(--primary-600);
+  --success-light: var(--primary-100);
+  --success-text: var(--primary-800);
+  --warning: #f59e0b;
+  --warning-light: #fef3c7;
+  --warning-text: #92400e;
+  --error: #ef4444;
+  --error-light: #fee2e2;
+  --error-text: #991b1b;
+  --info: #3b82f6;
+  --info-light: #dbeafe;
+  --info-text: #1e40af;
+
+  /* Component specific colors */
+  --card-bg: #ffffff;
+  --card-border: var(--gray-200);
+  --card-shadow: rgba(0, 0, 0, 0.1);
+  --button-primary-bg: var(--primary-600);
+  --button-primary-hover: var(--primary-700);
+  --button-secondary-bg: var(--gray-100);
+  --button-secondary-hover: var(--gray-200);
+  --link-color: var(--primary-600);
+  --link-hover: var(--primary-700);
+  --text-primary: var(--gray-900);
+  --text-secondary: var(--gray-600);
+  --text-muted: var(--gray-500);
+  --border-color: var(--gray-200);
+  --border-hover: var(--gray-300);
+
+  /* Hero section specific colors */
+  --hero-bg: var(--primary-100);
+  --hero-text: var(--gray-900);
+  --hero-text-secondary: var(--gray-600);
+  --hero-accent-text: var(--primary-600);
 }
 
 /* Font families bound to variables from next/font (active per theme) */
@@ -690,6 +750,261 @@ body.admin-layout {
 .site-root .link-primary:hover {
   color: var(--primary-hover);
   text-decoration: underline;
+}
+
+/* Extended utility classes for centralized theme control */
+.site-root .bg-primary-50 {
+  background-color: var(--primary-50);
+}
+.site-root .bg-primary-100 {
+  background-color: var(--primary-100);
+}
+.site-root .bg-primary-200 {
+  background-color: var(--primary-200);
+}
+.site-root .bg-primary-300 {
+  background-color: var(--primary-300);
+}
+.site-root .bg-primary-400 {
+  background-color: var(--primary-400);
+}
+.site-root .bg-primary-500 {
+  background-color: var(--primary-500);
+}
+.site-root .bg-primary-600 {
+  background-color: var(--primary-600);
+}
+.site-root .bg-primary-700 {
+  background-color: var(--primary-700);
+}
+.site-root .bg-primary-800 {
+  background-color: var(--primary-800);
+}
+.site-root .bg-primary-900 {
+  background-color: var(--primary-900);
+}
+
+.site-root .text-primary-50 {
+  color: var(--primary-50);
+}
+.site-root .text-primary-100 {
+  color: var(--primary-100);
+}
+.site-root .text-primary-200 {
+  color: var(--primary-200);
+}
+.site-root .text-primary-300 {
+  color: var(--primary-300);
+}
+.site-root .text-primary-400 {
+  color: var(--primary-400);
+}
+.site-root .text-primary-500 {
+  color: var(--primary-500);
+}
+.site-root .text-primary-600 {
+  color: var(--primary-600);
+}
+.site-root .text-primary-700 {
+  color: var(--primary-700);
+}
+.site-root .text-primary-800 {
+  color: var(--primary-800);
+}
+.site-root .text-primary-900 {
+  color: var(--primary-900);
+}
+
+.site-root .bg-gray-50 {
+  background-color: var(--gray-50);
+}
+.site-root .bg-gray-100 {
+  background-color: var(--gray-100);
+}
+.site-root .bg-gray-200 {
+  background-color: var(--gray-200);
+}
+.site-root .bg-gray-300 {
+  background-color: var(--gray-300);
+}
+.site-root .bg-gray-400 {
+  background-color: var(--gray-400);
+}
+.site-root .bg-gray-500 {
+  background-color: var(--gray-500);
+}
+.site-root .bg-gray-600 {
+  background-color: var(--gray-600);
+}
+.site-root .bg-gray-700 {
+  background-color: var(--gray-700);
+}
+.site-root .bg-gray-800 {
+  background-color: var(--gray-800);
+}
+.site-root .bg-gray-900 {
+  background-color: var(--gray-900);
+}
+
+.site-root .text-gray-50 {
+  color: var(--gray-50);
+}
+.site-root .text-gray-100 {
+  color: var(--gray-100);
+}
+.site-root .text-gray-200 {
+  color: var(--gray-200);
+}
+.site-root .text-gray-300 {
+  color: var(--gray-300);
+}
+.site-root .text-gray-400 {
+  color: var(--gray-400);
+}
+.site-root .text-gray-500 {
+  color: var(--gray-500);
+}
+.site-root .text-gray-600 {
+  color: var(--gray-600);
+}
+.site-root .text-gray-700 {
+  color: var(--gray-700);
+}
+.site-root .text-gray-800 {
+  color: var(--gray-800);
+}
+.site-root .text-gray-900 {
+  color: var(--gray-900);
+}
+
+.site-root .border-gray-100 {
+  border-color: var(--gray-100);
+}
+.site-root .border-gray-200 {
+  border-color: var(--gray-200);
+}
+.site-root .border-gray-300 {
+  border-color: var(--gray-300);
+}
+.site-root .border-primary-200 {
+  border-color: var(--primary-200);
+}
+.site-root .border-primary-600 {
+  border-color: var(--primary-600);
+}
+
+.site-root .hover\:bg-primary-50:hover {
+  background-color: var(--primary-50);
+}
+.site-root .hover\:bg-primary-700:hover {
+  background-color: var(--primary-700);
+}
+.site-root .hover\:bg-gray-50:hover {
+  background-color: var(--gray-50);
+}
+.site-root .hover\:bg-gray-100:hover {
+  background-color: var(--gray-100);
+}
+.site-root .hover\:text-primary-600:hover {
+  color: var(--primary-600);
+}
+.site-root .hover\:text-primary-700:hover {
+  color: var(--primary-700);
+}
+.site-root .hover\:border-gray-300:hover {
+  border-color: var(--gray-300);
+}
+
+/* Semantic utility classes */
+.site-root .bg-success {
+  background-color: var(--success);
+}
+.site-root .bg-success-light {
+  background-color: var(--success-light);
+}
+.site-root .text-success {
+  color: var(--success);
+}
+.site-root .text-success-text {
+  color: var(--success-text);
+}
+.site-root .bg-warning {
+  background-color: var(--warning);
+}
+.site-root .bg-warning-light {
+  background-color: var(--warning-light);
+}
+.site-root .text-warning {
+  color: var(--warning);
+}
+.site-root .text-warning-text {
+  color: var(--warning-text);
+}
+.site-root .bg-error {
+  background-color: var(--error);
+}
+.site-root .bg-error-light {
+  background-color: var(--error-light);
+}
+.site-root .text-error {
+  color: var(--error);
+}
+.site-root .text-error-text {
+  color: var(--error-text);
+}
+.site-root .bg-info {
+  background-color: var(--info);
+}
+.site-root .bg-info-light {
+  background-color: var(--info-light);
+}
+.site-root .text-info {
+  color: var(--info);
+}
+.site-root .text-info-text {
+  color: var(--info-text);
+}
+
+/* Component utility classes */
+.site-root .bg-card {
+  background-color: var(--card-bg);
+}
+.site-root .border-card {
+  border-color: var(--card-border);
+}
+.site-root .text-primary-text {
+  color: var(--text-primary);
+}
+.site-root .text-secondary-text {
+  color: var(--text-secondary);
+}
+.site-root .text-muted-text {
+  color: var(--text-muted);
+}
+.site-root .border-default {
+  border-color: var(--border-color);
+}
+.site-root .hover\:border-hover:hover {
+  border-color: var(--border-hover);
+}
+
+/* Hero section utility classes */
+.site-root .bg-hero {
+  background: var(--hero-bg) !important;
+}
+
+/* Daha spesifik selector - Tailwind override'ı için */
+.site-root.site-theme-sage .bg-hero {
+  background: var(--hero-bg) !important;
+}
+.site-root .text-hero {
+  color: var(--hero-text);
+}
+.site-root .text-hero-secondary {
+  color: var(--hero-text-secondary);
+}
+.site-root .text-hero-accent {
+  color: var(--hero-accent-text);
 }
 
 /* Smooth transitions - Plan uyarınca "hover efektleri yumuşak" */

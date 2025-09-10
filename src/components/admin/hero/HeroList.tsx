@@ -158,7 +158,7 @@ export default function HeroList({ onEdit, onCreateNew }: HeroListProps) {
                 <CardTitle className="text-lg line-clamp-2">
                   {heroSlide.titleMain}
                 </CardTitle>
-                <p className="text-sm text-green-600 font-medium">
+                <p className="text-sm text-primary-600 font-medium">
                   {heroSlide.titleHighlight}
                 </p>
               </CardHeader>

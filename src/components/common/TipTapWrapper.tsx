@@ -209,7 +209,7 @@ export default function TipTapWrapper({
 
   return (
     <div
-      className={`prose ProseMirror max-w-none ${className || ""}`}
+      className={`tiptap prose ProseMirror max-w-none ${className || ""}`}
       dangerouslySetInnerHTML={{ __html: htmlContent }}
     />
   );

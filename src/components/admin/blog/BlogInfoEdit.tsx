@@ -167,7 +167,7 @@ export default function BlogInfoEdit({
               </Button>
               {uploadedImage && (
                 <div className="space-y-2">
-                  <p className="text-xs text-green-600">✓ Görsel yüklendi</p>
+                  <p className="text-xs text-primary-600">✓ Görsel yüklendi</p>
                   <img
                     src={uploadedImage}
                     alt="Blog görseli"

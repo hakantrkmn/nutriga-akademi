@@ -5,20 +5,16 @@ import { Card, CardContent } from "@/components/ui/card";
 import { toaster } from "@/components/ui/toaster";
 import { cartApi } from "@/lib/api";
 import { EgitimPriceProps } from "@/types";
-import {
-  Award,
-  BarChart3,
-  CheckCircle,
-  Lock,
-  ShoppingCart,
-  Users,
-} from "lucide-react";
+import { Award, BarChart3, CheckCircle, Lock, Users } from "lucide-react";
 import { useState } from "react";
 
 export default function EgitimPrice({ egitim }: EgitimPriceProps) {
   const [adding, setAdding] = useState(false);
   const [added, setAdded] = useState(false);
-
+  const formatPrice = (price: number | null | undefined): string => {
+    if (!price) return "0";
+    return new Intl.NumberFormat("tr-TR").format(price);
+  };
   const handleAddToCart = async () => {
     setAdding(true);
     const res = await cartApi.add(egitim.id);
@@ -44,7 +40,7 @@ export default function EgitimPrice({ egitim }: EgitimPriceProps) {
             {/* Price Section */}
             <div className="flex flex-col gap-2 items-center">
               <div className="text-5xl font-bold text-primary font-[Poppins,sans-serif]">
-                ₺{egitim.price?.toString()}
+                ₺{formatPrice(egitim.price)}
               </div>
               <div className="text-sm text-gray-500 font-medium">
                 Tek seferlik ödeme
@@ -53,16 +49,6 @@ export default function EgitimPrice({ egitim }: EgitimPriceProps) {
 
             {/* Action Buttons */}
             <div className="flex flex-col gap-4 w-full">
-              <Button
-                size="lg"
-                className="w-full h-14 rounded-xl text-base font-semibold bg-primary hover:bg-primary/90 hover:-translate-y-0.5 hover:shadow-lg transition-all duration-200"
-              >
-                <div className="flex items-center gap-3">
-                  <ShoppingCart className="w-5 h-5" />
-                  <span>Eğitimi Satın Al</span>
-                </div>
-              </Button>
-
               <Button
                 variant={added ? "default" : "outline"}
                 size="lg"

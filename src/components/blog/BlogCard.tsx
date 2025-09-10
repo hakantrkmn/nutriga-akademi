@@ -23,11 +23,11 @@ export default function BlogCard({ post }: BlogCardProps) {
 
         <CardContent className="p-6">
           <div className="flex flex-col gap-4 h-full">
-            <Badge className="text-green-600 bg-green-50 text-xs px-2 py-1 rounded-md w-fit">
+            <Badge className="text-primary-600 bg-primary-50 text-xs px-2 py-1 rounded-md w-fit">
               {post.category}
             </Badge>
 
-            <h3 className="text-lg font-semibold text-gray-800 leading-tight hover:text-green-600 transition-colors line-clamp-2">
+            <h3 className="text-lg font-semibold text-gray-800 leading-tight hover:text-primary-600 transition-colors line-clamp-2">
               {post.title}
             </h3>
 

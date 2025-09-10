@@ -73,7 +73,7 @@ export default function Footer() {
           {/* Logo ve Açıklama */}
           <div className="space-y-4">
             <Link href="/">
-              <h2 className="text-2xl font-bold text-green-400 hover:text-green-500 cursor-pointer transition-colors">
+              <h2 className="text-2xl font-bold text-primary-400 hover:text-primary-500 cursor-pointer transition-colors">
                 {COMPANY_NAME}
               </h2>
             </Link>
@@ -91,7 +91,7 @@ export default function Footer() {
             <div className="flex flex-col space-y-3">
               {quickLinks.map((link, index) => (
                 <Link key={index} href={link.href} className="block">
-                  <span className="text-sm text-gray-300 hover:text-green-400 hover:underline cursor-pointer transition-all">
+                  <span className="text-sm text-gray-300 hover:text-primary-400 hover:underline cursor-pointer transition-all">
                     {link.name}
                   </span>
                 </Link>
@@ -163,17 +163,17 @@ export default function Footer() {
           <div className="space-y-4 text-center">
             <div className="flex justify-center gap-6 flex-wrap text-sm text-gray-400">
               <Link href="/gizlilik-politikasi">
-                <span className="hover:text-green-400 cursor-pointer transition-colors">
+                <span className="hover:text-primary-400 cursor-pointer transition-colors">
                   Gizlilik Politikası
                 </span>
               </Link>
               <Link href="/kullanim-kosullari">
-                <span className="hover:text-green-400 cursor-pointer transition-colors">
+                <span className="hover:text-primary-400 cursor-pointer transition-colors">
                   Kullanım Koşulları
                 </span>
               </Link>
               <Link href="/cerez-politikasi">
-                <span className="hover:text-green-400 cursor-pointer transition-colors">
+                <span className="hover:text-primary-400 cursor-pointer transition-colors">
                   Çerez Politikası
                 </span>
               </Link>

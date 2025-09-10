@@ -18,6 +18,20 @@ export const Toolbar = ({
   setLinkModalOpen,
   setYouTubeModalOpen,
 }: ToolbarProps) => {
+  const handleHTMLImport = () => {
+    const htmlContent = window.prompt("HTML içeriğini yapıştırın:", "");
+
+    if (htmlContent && htmlContent.trim()) {
+      try {
+        // HTML'i TipTap editor'e import et
+        editor.commands.setContent(htmlContent);
+        toaster.success("HTML içeriği başarıyla yüklendi");
+      } catch (error) {
+        console.error("HTML import hatası:", error);
+        toaster.error("HTML içeriği yüklenirken bir hata oluştu");
+      }
+    }
+  };
   const handleImageUpload = async () => {
     const input = document.createElement("input");
     input.type = "file";
@@ -130,7 +144,16 @@ export const Toolbar = ({
         >
           H3
         </ToolbarButton>
-
+        <ToolbarButton
+          onClick={() => editor.chain().focus().unsetAllMarks().run()}
+          title="Formatı Temizle"
+        >
+          ��
+        </ToolbarButton>
+        {/* HTML Import Butonu */}
+        <ToolbarButton onClick={handleHTMLImport} title="HTML İçeriği Yükle">
+          📄
+        </ToolbarButton>
         <div className="w-px h-5 bg-gray-300" />
 
         <ToolbarButton
