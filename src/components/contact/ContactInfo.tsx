@@ -1,19 +1,25 @@
 "use client";
 
 import {
-  HiLocationMarker,
-  HiPhone,
-  HiMail,
-  HiClock,
-} from "react-icons/hi";
+  COMPANY_ADDRESS,
+  COMPANY_EMAIL,
+  COMPANY_FACEBOOK_URL,
+  COMPANY_INSTAGRAM_URL,
+  COMPANY_LINKEDIN_URL,
+  COMPANY_PHONE,
+  COMPANY_TWITTER_URL,
+  COMPANY_WORK_HOURS,
+  COMPANY_WORK_HOURS_WEEKEND,
+  COMPANY_YOUTUBE_URL,
+} from "@/constants";
 import {
   FaFacebook,
-  FaTwitter,
   FaInstagram,
   FaLinkedin,
+  FaTwitter,
   FaYoutube,
 } from "react-icons/fa";
-import { COMPANY_ADDRESS, COMPANY_EMAIL, COMPANY_PHONE, COMPANY_WORK_HOURS, COMPANY_WORK_HOURS_WEEKEND, COMPANY_FACEBOOK_URL, COMPANY_TWITTER_URL, COMPANY_INSTAGRAM_URL, COMPANY_LINKEDIN_URL, COMPANY_YOUTUBE_URL } from "@/constants";
+import { HiClock, HiLocationMarker, HiMail, HiPhone } from "react-icons/hi";
 
 interface ContactItemProps {
   icon: React.ElementType;
@@ -22,24 +28,21 @@ interface ContactItemProps {
   subtitle?: string;
 }
 
-function ContactItem({ icon: Icon, title, content, subtitle }: ContactItemProps) {
+function ContactItem({
+  icon: Icon,
+  title,
+  content,
+  subtitle,
+}: ContactItemProps) {
   return (
     <div className="flex items-start gap-4 p-6 bg-white rounded-xl shadow-sm border border-gray-100">
       <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0">
         <Icon className="w-6 h-6 text-green-600" />
       </div>
       <div className="flex-1">
-        <h3 className="text-lg font-semibold text-gray-900 mb-1">
-          {title}
-        </h3>
-        <p className="text-gray-600 leading-relaxed">
-          {content}
-        </p>
-        {subtitle && (
-          <p className="text-sm text-gray-500 mt-1">
-            {subtitle}
-          </p>
-        )}
+        <h3 className="text-lg font-semibold text-gray-900 mb-1">{title}</h3>
+        <p className="text-gray-600 leading-relaxed">{content}</p>
+        {subtitle && <p className="text-sm text-gray-500 mt-1">{subtitle}</p>}
       </div>
     </div>
   );
@@ -96,16 +99,8 @@ export default function ContactInfo() {
           title="Adres"
           content={COMPANY_ADDRESS}
         />
-        <ContactItem
-          icon={HiPhone}
-          title="Telefon"
-          content={COMPANY_PHONE}
-        />
-        <ContactItem
-          icon={HiMail}
-          title="E-posta"
-          content={COMPANY_EMAIL}
-        />
+        <ContactItem icon={HiPhone} title="Telefon" content={COMPANY_PHONE} />
+        <ContactItem icon={HiMail} title="E-posta" content={COMPANY_EMAIL} />
         <ContactItem
           icon={HiClock}
           title="Çalışma Saatleri"

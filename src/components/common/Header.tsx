@@ -29,7 +29,29 @@ export default function Header() {
   const supabase = createClient();
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [userEmail, setUserEmail] = useState<string | null>(null);
+  useEffect(() => {
+    const handleClick = (e: MouseEvent) => {
+      const target = e.target as HTMLElement;
+      if (!target.matches("button, a")) return;
 
+      const circle = document.createElement("span");
+      circle.className = "click-anim";
+
+      const rect = target.getBoundingClientRect();
+      circle.style.left = `${e.clientX - rect.left}px`;
+      circle.style.top = `${e.clientY - rect.top}px`;
+
+      target.appendChild(circle);
+
+      setTimeout(() => {
+        circle.remove();
+      }, 1000); // 1 saniye sonra kaldır
+    };
+
+    document.addEventListener("click", handleClick);
+
+    return () => document.removeEventListener("click", handleClick);
+  }, []);
   useEffect(() => {
     const init = async () => {
       const {
