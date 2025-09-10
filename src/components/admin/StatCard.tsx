@@ -43,7 +43,7 @@ export default function StatCard({
             </p>
           </div>
           <div className={`p-3 rounded-lg ${getColorClasses(color)}`}>
-            <Icon className="h-6 w-6" />
+            <Icon />
           </div>
         </div>
       </CardContent>

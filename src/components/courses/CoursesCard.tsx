@@ -6,12 +6,10 @@ import { cartApi } from "@/lib/api";
 import { EgitimCardProps } from "@/types";
 import Image from "next/image";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { FiClock, FiShoppingCart, FiUser } from "react-icons/fi";
 
 export default function EgitimCard({ egitim }: EgitimCardProps) {
-  const router = useRouter();
   const [adding, setAdding] = useState(false);
   const [added, setAdded] = useState(false);
 
@@ -44,7 +42,7 @@ export default function EgitimCard({ egitim }: EgitimCardProps) {
               width={400}
               height={200}
               loading="lazy"
-              className="w-full h-48 object-cover"
+              className="w-full h-48 object-contain bg-gray-50"
               sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
             />
           </div>

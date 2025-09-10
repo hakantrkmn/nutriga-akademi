@@ -4,11 +4,12 @@ import { NextRequest, NextResponse } from "next/server";
 // GET - Tek hero slide getir
 export async function GET(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const { id } = await params;
     const heroSlide = await prisma.heroSlide.findUnique({
-      where: { id: params.id },
+      where: { id },
     });
 
     if (!heroSlide) {
@@ -31,9 +32,10 @@ export async function GET(
 // PUT - Hero slide güncelle
 export async function PUT(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const { id } = await params;
     const body = await request.json();
     const {
       titleMain,
@@ -60,7 +62,7 @@ export async function PUT(
     }
 
     const heroSlide = await prisma.heroSlide.update({
-      where: { id: params.id },
+      where: { id },
       data: {
         titleMain,
         titleHighlight,
@@ -85,11 +87,12 @@ export async function PUT(
 // DELETE - Hero slide sil
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const { id } = await params;
     await prisma.heroSlide.delete({
-      where: { id: params.id },
+      where: { id },
     });
 
     return NextResponse.json({ success: true, message: "Hero slide silindi" });
