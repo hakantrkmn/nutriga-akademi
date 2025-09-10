@@ -315,23 +315,65 @@
 .ProseMirror ul,
 .prose ul {
   list-style: disc !important;
-  padding-left: 1.5rem !important;
   margin-bottom: 1rem !important;
 }
 
 .ProseMirror ol,
 .prose ol {
   list-style: decimal !important;
-  padding-left: 1.5rem !important;
   margin-bottom: 1rem !important;
 }
 
 .ProseMirror li,
 .prose li {
-  display: list-item !important;
   margin-bottom: 0.25rem !important;
 }
+.tiptap {
+  :first-child {
+    margin-top: 0;
+  }
 
+  /* List styles */
+  ul,
+  ol {
+    padding: 0 1rem;
+
+    li p {
+      margin-top: 0.25em;
+      margin-bottom: 0.25em;
+    }
+  }
+
+  /* Task list specific styles */
+  ul[data-type="taskList"] {
+    list-style: none;
+    margin-left: 0;
+    padding: 0;
+
+    li {
+      align-items: flex-start;
+      display: flex;
+
+      > label {
+        flex: 0 0 auto;
+        margin-right: 0.5rem;
+        user-select: none;
+      }
+
+      > div {
+        flex: 1 1 auto;
+      }
+    }
+
+    input[type="checkbox"] {
+      cursor: pointer;
+    }
+
+    ul[data-type="taskList"] {
+      margin: 0;
+    }
+  }
+}
 /* Resizable Image Styles - Updated for tiptap-extension-resizable-image */
 .tiptap-image-resizable,
 img[data-keep-ratio="true"] {

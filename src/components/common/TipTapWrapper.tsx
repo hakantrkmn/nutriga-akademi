@@ -108,6 +108,29 @@ const convertImageResizeToImage = (
   return node;
 };
 
+// Boş paragrafları koruma fonksiyonu
+const preserveEmptyParagraphs = (
+  content: Record<string, unknown>
+): Record<string, unknown> => {
+  if (content && content.content && Array.isArray(content.content)) {
+    content.content = content.content.map((node: Record<string, unknown>) => {
+      if (
+        node.type === "paragraph" &&
+        (!node.content ||
+          (Array.isArray(node.content) && node.content.length === 0))
+      ) {
+        // Boş paragrafı &nbsp; ile doldur
+        return {
+          ...node,
+          content: [{ type: "text", text: "\u00A0" }], // &nbsp; karakteri
+        };
+      }
+      return node;
+    });
+  }
+  return content;
+};
+
 // Ana wrapper fonksiyonu
 const processContent = (content: string | object): string => {
   console.log("content", typeof content);
@@ -122,6 +145,10 @@ const processContent = (content: string | object): string => {
       } else {
         tet = parsedContent;
       }
+
+      // Boş paragrafları koru
+      tet = preserveEmptyParagraphs(tet);
+
       // imageResize node'larını image node'larına dönüştür
       console.log("parsedContent", typeof tet);
       // TipTap'ın resmi generateHTML fonksiyonunu kullan
@@ -136,9 +163,14 @@ const processContent = (content: string | object): string => {
   // Eğer object ise, TipTap JSON formatında
   if (typeof content === "object" && content !== null) {
     try {
+      // Boş paragrafları koru
+      const contentWithEmptyParagraphs = preserveEmptyParagraphs(
+        content as Record<string, unknown>
+      );
+
       // imageResize node'larını image node'larına dönüştür
       const convertedContent = convertImageResizeToImage(
-        content as Record<string, unknown>
+        contentWithEmptyParagraphs as Record<string, unknown>
       );
 
       // TipTap'ın resmi generateHTML fonksiyonunu kullan
