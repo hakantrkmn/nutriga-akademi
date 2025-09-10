@@ -86,13 +86,14 @@ export default function Hero({ slides }: { slides: HeroSlide[] }) {
             dragFree: false,
             duration: 30,
             skipSnaps: false,
+            watchDrag: false,
           }}
           plugins={[autoplayRef.current]}
         >
           <CarouselContent>
             {slides.map((slide, index) => (
               <CarouselItem key={index} className="basis-full">
-                <div className="flex flex-col lg:flex-row items-center justify-center gap-6 lg:gap-8 min-h-[350px] sm:min-h-[450px] w-full py-8 relative overflow-hidden">
+                <div className="flex flex-col lg:flex-row items-center justify-center gap-6 lg:gap-8 h-[350px] sm:h-[450px] w-full py-8 relative overflow-hidden">
                   {/* Content */}
                   <div className="flex-1 min-w-0 w-full lg:w-auto space-y-6 text-center lg:text-left">
                     <div className="transform transition-none">
