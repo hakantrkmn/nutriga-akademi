@@ -9,10 +9,10 @@
   --background: #ffffff;
   --background-alt: #f8fafc;
   --foreground: #0f172a;
-  --primary: #4a7c59; /* default to Sage */
-  --primary-hover: #2d5a3f;
-  --accent: #9ed2c6;
-  --accent-hover: #82c3b4;
+  --primary: #16a34a; /* Improved contrast: was #4a7c59 */
+  --primary-hover: #15803d; /* Improved contrast: was #2d5a3f */
+  --accent: #10b981; /* Improved contrast: was #9ed2c6 */
+  --accent-hover: #059669; /* Improved contrast: was #82c3b4 */
   --border-radius: 12px;
   --border-radius-sm: 8px;
 
@@ -25,14 +25,14 @@
   --background: #ffffff;
   --background-alt: #f1f5f9; /* slate-100 */
   --foreground: #0f172a; /* slate-900 */
-  --primary: #4a7c59;
-  --primary-hover: #2d5a3f;
-  --accent: #9ed2c6;
-  --accent-hover: #82c3b4;
-  --primary-rgb: 74, 124, 89;
-  --primary-hover-rgb: 45, 90, 63;
-  --accent-rgb: 158, 210, 198;
-  --accent-hover-rgb: 130, 195, 180;
+  --primary: #16a34a; /* Improved contrast: was #4a7c59 */
+  --primary-hover: #15803d; /* Improved contrast: was #2d5a3f */
+  --accent: #10b981; /* Improved contrast: was #9ed2c6 */
+  --accent-hover: #059669; /* Improved contrast: was #82c3b4 */
+  --primary-rgb: 22, 163, 74; /* Updated for improved contrast */
+  --primary-hover-rgb: 21, 128, 61; /* Updated for improved contrast */
+  --accent-rgb: 16, 185, 129; /* Updated for improved contrast */
+  --accent-hover-rgb: 5, 150, 105; /* Updated for improved contrast */
 
   /* Extended color palette for centralized control */
   --primary-50: #f0fdf4;
@@ -80,19 +80,19 @@
   --button-primary-hover: var(--primary-700);
   --button-secondary-bg: var(--gray-100);
   --button-secondary-hover: var(--gray-200);
-  --link-color: var(--primary-600);
-  --link-hover: var(--primary-700);
+  --link-color: #16a34a; /* Improved contrast: was var(--primary-600) */
+  --link-hover: #15803d; /* Improved contrast: was var(--primary-700) */
   --text-primary: var(--gray-900);
-  --text-secondary: var(--gray-600);
-  --text-muted: var(--gray-500);
+  --text-secondary: #374151; /* Improved contrast: was var(--gray-600) */
+  --text-muted: #4b5563; /* Improved contrast: was var(--gray-500) */
   --border-color: var(--gray-200);
   --border-hover: var(--gray-300);
 
   /* Hero section specific colors */
   --hero-bg: var(--primary-100);
   --hero-text: var(--gray-900);
-  --hero-text-secondary: var(--gray-600);
-  --hero-accent-text: var(--primary-600);
+  --hero-text-secondary: #374151; /* Improved contrast: was var(--gray-600) */
+  --hero-accent-text: #16a34a; /* Improved contrast: was var(--primary-600) */
 }
 
 /* Font families bound to variables from next/font (active per theme) */
@@ -176,7 +176,7 @@
   outline: none;
   min-height: 250px;
   padding: 8px;
-  color: #212121 !important;
+  color: #1f2937 !important; /* Improved contrast: was #212121 */
   background: white;
   border-radius: 8px;
   overflow: hidden;
@@ -190,28 +190,28 @@
 .ProseMirror p {
   margin-bottom: 1rem;
   line-height: 1.6;
-  color: #212121 !important;
+  color: #1f2937 !important; /* Improved contrast: was #212121 */
 }
 
 .ProseMirror h1 {
   font-size: 2rem;
   font-weight: bold;
   margin-bottom: 1.5rem;
-  color: #212121 !important;
+  color: #1f2937 !important; /* Improved contrast: was #212121 */
 }
 
 .ProseMirror h2 {
   font-size: 1.5rem;
   font-weight: bold;
   margin-bottom: 1rem;
-  color: #212121 !important;
+  color: #1f2937 !important; /* Improved contrast: was #212121 */
 }
 
 .ProseMirror h3 {
   font-size: 1.25rem;
   font-weight: bold;
   margin-bottom: 0.75rem;
-  color: #212121 !important;
+  color: #1f2937 !important; /* Improved contrast: was #212121 */
 }
 
 .ProseMirror ul {
@@ -228,7 +228,7 @@
 
 .ProseMirror li {
   margin-bottom: 0.25rem;
-  color: #212121 !important;
+  color: #1f2937 !important; /* Improved contrast: was #212121 */
   display: list-item;
 }
 
@@ -260,11 +260,11 @@
 }
 
 .ProseMirror blockquote {
-  border-left: 4px solid #4caf50;
+  border-left: 4px solid #16a34a;
   padding-left: 1rem;
   margin: 1rem 0;
   font-style: italic;
-  color: #616161 !important;
+  color: #4b5563 !important; /* Improved contrast: was #616161 */
 }
 
 .ProseMirror code {
@@ -273,7 +273,7 @@
   border-radius: 4px;
   font-family: "Courier New", monospace;
   font-size: 0.875rem;
-  color: #212121 !important;
+  color: #1f2937 !important; /* Improved contrast: was #212121 */
 }
 
 .ProseMirror pre {
@@ -287,17 +287,17 @@
 .ProseMirror pre code {
   background: none;
   padding: 0;
-  color: #212121 !important;
+  color: #1f2937 !important; /* Improved contrast: was #212121 */
 }
 
 .tiptap-link {
-  color: #4caf50;
+  color: #16a34a; /* Improved contrast: was #16a34a */
   text-decoration: underline;
   cursor: pointer;
 }
 
 .tiptap-link:hover {
-  color: #43a047;
+  color: #15803d; /* Improved contrast: was #15803d */
 }
 
 .tiptap-image {
@@ -331,8 +331,8 @@
 }
 
 .ProseMirror img.tiptap-image-resizable:hover {
-  border-color: #4caf50;
-  box-shadow: 0 2px 8px rgba(76, 175, 80, 0.3);
+  border-color: #16a34a;
+  box-shadow: 0 2px 8px rgba(22, 163, 74, 0.3);
 }
 
 /* Text Formatting Styles */
@@ -467,18 +467,18 @@ img[data-keep-ratio="true"]:not([style*="max-width"]) {
 
 .tiptap-image-resizable:hover {
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-  border-color: #4caf50;
+  border-color: #16a34a;
 }
 
 .tiptap-image-resizable.selected {
-  outline: 2px solid #4caf50;
+  outline: 2px solid #16a34a;
   outline-offset: 2px;
 }
 
 /* Resize handles */
 .tiptap-image-resizable .resize-handle {
   position: absolute;
-  background: #4caf50;
+  background: #16a34a;
   border: 2px solid white;
   border-radius: 50%;
   width: 12px;
@@ -539,14 +539,14 @@ img[data-keep-ratio="true"]:not([style*="max-width"]) {
 }
 
 .tiptap-image-resizable.selected {
-  outline: 2px solid #4caf50;
+  outline: 2px solid #16a34a;
   outline-offset: 2px;
 }
 
 /* Resize handles */
 .tiptap-image-resizable .resize-handle {
   position: absolute;
-  background: #4caf50;
+  background: #16a34a;
   border: 2px solid white;
   border-radius: 50%;
   width: 12px;
@@ -581,7 +581,7 @@ img[data-keep-ratio="true"]:not([style*="max-width"]) {
 .ProseMirror .is-editor-empty:first-child::before {
   content: attr(data-placeholder);
   float: left;
-  color: #9e9e9e;
+  color: #6b7280; /* Improved contrast: was #9e9e9e */
   pointer-events: none;
   height: 0;
 }
@@ -645,7 +645,7 @@ img[data-keep-ratio="true"]:not([style*="max-width"]) {
   border: 1px solid #e2e8f0;
   border-radius: 6px;
   background: #ffffff;
-  color: #4a5568;
+  color: #374151; /* Improved contrast: was #4a5568 */
   font-size: 14px;
   font-weight: 500;
   cursor: pointer;
@@ -657,31 +657,31 @@ img[data-keep-ratio="true"]:not([style*="max-width"]) {
 .toolbar-btn:hover {
   background: #f7fafc;
   border-color: #cbd5e0;
-  color: #2d3748;
+  color: #1f2937; /* Improved contrast: was #2d3748 */
 }
 
 .toolbar-btn.active {
-  background: #4caf50;
-  border-color: #4caf50;
+  background: #16a34a; /* Improved contrast: was #16a34a */
+  border-color: #16a34a; /* Improved contrast: was #16a34a */
   color: white;
 }
 
 .toolbar-btn.active:hover {
-  background: #43a047;
-  border-color: #43a047;
+  background: #15803d; /* Improved contrast: was #15803d */
+  border-color: #15803d; /* Improved contrast: was #15803d */
 }
 
 .toolbar-btn.disabled {
   opacity: 0.5;
   cursor: not-allowed;
   background: #f7fafc;
-  color: #a0aec0;
+  color: #6b7280; /* Improved contrast: was #a0aec0 */
 }
 
 .toolbar-btn.disabled:hover {
   background: #f7fafc;
   border-color: #e2e8f0;
-  color: #a0aec0;
+  color: #6b7280; /* Improved contrast: was #a0aec0 */
 }
 
 .btn-text {

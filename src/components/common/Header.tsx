@@ -91,7 +91,7 @@ export default function Header() {
     <>
       <Link
         href="/"
-        className="text-gray-700 hover:text-primary-600 transition-colors"
+        className="text-gray-700 hover:text-primary-600 transition-colors whitespace-nowrap flex-shrink-0"
       >
         Ana Sayfa
       </Link>
@@ -100,7 +100,7 @@ export default function Header() {
         <DropdownMenuTrigger asChild>
           <Button
             variant="ghost"
-            className="text-gray-700 hover:text-primary-600 justify-start"
+            className="text-gray-700 hover:text-primary-600 hover:bg-transparent justify-start text-base font-normal h-auto px-0 py-0 whitespace-nowrap flex-shrink-0"
           >
             Kurumsal
           </Button>
@@ -126,21 +126,21 @@ export default function Header() {
 
       <Link
         href="/egitimler"
-        className="text-gray-700 hover:text-primary-600 transition-colors"
+        className="text-gray-700 hover:text-primary-600 transition-colors whitespace-nowrap flex-shrink-0"
       >
         Eğitimler
       </Link>
 
       <Link
         href="/blog"
-        className="text-gray-700 hover:text-primary-600 transition-colors"
+        className="text-gray-700 hover:text-primary-600 transition-colors whitespace-nowrap flex-shrink-0"
       >
         Blog
       </Link>
 
       <Link
         href="/iletisim"
-        className="text-gray-700 hover:text-primary-600 transition-colors"
+        className="text-gray-700 hover:text-primary-600 transition-colors whitespace-nowrap flex-shrink-0"
       >
         İletişim
       </Link>
@@ -149,28 +149,30 @@ export default function Header() {
 
   return (
     <header className="bg-white shadow-sm border-b border-gray-100 fixed top-0 left-0 right-0 z-50">
-      <div className="max-w-6xl mx-auto px-4 md:px-6 py-4 flex items-center justify-between">
+      <div className="max-w-6xl mx-auto px-4 md:px-6 py-4 grid grid-cols-[1fr_2fr_1fr] items-center md:grid-cols-[1fr_2fr_1fr] grid-cols-2">
         {/* Logo */}
-        <Link href="/">
-          <h1 className="text-2xl font-bold text-primary-600 hover:text-primary-700 cursor-pointer transition-colors">
-            {COMPANY_NAME}
-          </h1>
-        </Link>
+        <div className="justify-self-start flex-shrink-0">
+          <Link href="/">
+            <h1 className="text-2xl font-bold text-primary-600 hover:text-primary-700 cursor-pointer transition-colors whitespace-nowrap">
+              {COMPANY_NAME}
+            </h1>
+          </Link>
+        </div>
 
         {/* Desktop Navigation */}
         {!isMobile && (
-          <nav className="flex items-center gap-8">
+          <nav className="justify-self-center flex items-center gap-6 flex-shrink-0">
             <NavItems />
           </nav>
         )}
 
         {/* Desktop Cart & Auth Buttons */}
         {!isMobile && (
-          <div className="flex items-center gap-4">
+          <div className="justify-self-end flex items-center gap-4 flex-shrink-0">
             {isAuthenticated && (
               <Button
                 variant="ghost"
-                className="text-primary-600 hover:bg-primary-50 px-4 py-2 font-medium"
+                className="text-gray-700 hover:text-primary-600 hover:bg-transparent text-base font-normal h-auto px-0 py-0"
                 onClick={() => router.push("/cart")}
               >
                 🛒 Sepet
@@ -183,7 +185,7 @@ export default function Header() {
                 </span>
                 <Button
                   variant="ghost"
-                  className="text-gray-600 hover:bg-gray-50 px-2 py-2"
+                  className="text-gray-700 hover:text-primary-600 hover:bg-transparent text-base font-normal h-auto px-0 py-0"
                   onClick={handleLogout}
                   title="Çıkış Yap"
                 >
@@ -194,7 +196,7 @@ export default function Header() {
               <div className="flex items-center gap-3">
                 <Button
                   variant="ghost"
-                  className="text-gray-700 hover:bg-gray-50 px-4 py-2 font-medium"
+                  className="text-gray-700 hover:text-primary-600 hover:bg-transparent text-base font-normal h-auto px-0 py-0"
                   onClick={() => router.push("/auth/login")}
                 >
                   Giriş Yap
@@ -212,13 +214,15 @@ export default function Header() {
 
         {/* Mobile Hamburger */}
         {isMobile && (
-          <Sheet open={open} onOpenChange={setOpen}>
-            <SheetTrigger asChild>
-              <Button variant="ghost" size="icon">
-                <HiMenu className="h-5 w-5" />
-              </Button>
-            </SheetTrigger>
-          </Sheet>
+          <div className="justify-self-end md:justify-self-end">
+            <Sheet open={open} onOpenChange={setOpen}>
+              <SheetTrigger asChild>
+                <Button variant="ghost" size="icon">
+                  <HiMenu className="h-5 w-5" />
+                </Button>
+              </SheetTrigger>
+            </Sheet>
+          </div>
         )}
       </div>
 
@@ -237,7 +241,7 @@ export default function Header() {
               {isAuthenticated && (
                 <Button
                   variant="ghost"
-                  className="w-full justify-start text-primary-600 hover:bg-primary-50"
+                  className="w-full justify-start text-gray-700 hover:text-primary-600 hover:bg-transparent"
                   onClick={() => {
                     setOpen(false);
                     router.push("/cart");
@@ -253,7 +257,7 @@ export default function Header() {
                   </p>
                   <Button
                     variant="ghost"
-                    className="w-full justify-start text-primary-600 hover:bg-primary-50"
+                    className="w-full justify-start text-gray-700 hover:text-primary-600 hover:bg-transparent"
                     onClick={handleLogout}
                   >
                     Çıkış Yap
@@ -263,7 +267,7 @@ export default function Header() {
                 <>
                   <Button
                     variant="ghost"
-                    className="w-full justify-start text-gray-700 hover:bg-gray-50"
+                    className="w-full justify-start text-gray-700 hover:text-primary-600 hover:bg-transparent"
                     onClick={() => {
                       setOpen(false);
                       router.push("/auth/login");

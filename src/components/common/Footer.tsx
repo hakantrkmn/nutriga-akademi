@@ -21,13 +21,13 @@ import {
 } from "react-icons/fa";
 
 const quickLinks = [
-  { name: "Ana Sayfa", href: "/" },
+  { name: "Eğitimler", href: "/egitimler" },
+  { name: "Blog", href: "/blog" },
   { name: "Hakkımızda", href: "/hakkimizda" },
   { name: "Misyonumuz", href: "/misyon" },
   { name: "Vizyonumuz", href: "/vizyon" },
-  { name: "Eğitimler", href: "/egitimler" },
-  { name: "Blog", href: "/blog" },
   { name: "İletişim", href: "/iletisim" },
+  { name: "Ana Sayfa", href: "/" },
 ];
 
 const socialLinks = [
@@ -86,7 +86,7 @@ export default function Footer() {
 
           {/* Hızlı Linkler */}
           <div className="space-y-4">
-            <h4 className="text-lg font-semibold text-white">Hızlı Linkler</h4>
+            <h3 className="text-lg font-semibold text-white">Hızlı Linkler</h3>
 
             <div className="flex flex-col space-y-3">
               {quickLinks.map((link, index) => (
@@ -101,7 +101,7 @@ export default function Footer() {
 
           {/* İletişim Bilgileri */}
           <div className="space-y-4">
-            <h4 className="text-lg font-semibold text-white">İletişim</h4>
+            <h3 className="text-lg font-semibold text-white">İletişim</h3>
 
             <div className="space-y-3 text-sm text-gray-300">
               <div>
@@ -134,7 +134,7 @@ export default function Footer() {
 
           {/* Sosyal Medya */}
           <div className="space-y-4">
-            <h4 className="text-lg font-semibold text-white">Takip Edin</h4>
+            <h3 className="text-lg font-semibold text-white">Takip Edin</h3>
 
             <p className="text-sm text-gray-300 leading-relaxed">
               Güncel içerikler ve eğitim duyuruları için bizi takip edin!
