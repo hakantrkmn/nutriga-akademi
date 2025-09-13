@@ -2,7 +2,7 @@ import { createClient } from "redis";
 import { prisma } from "./prisma";
 
 const redis = await createClient({
-  url: "redis://default:EJ2bBH8Meo9TOovCqZhcCWd1vBIjJB8r@redis-19896.c73.us-east-1-2.ec2.redns.redis-cloud.com:19896",
+  url: process.env.REDIS_URL,
 }).connect();
 
 export const getBlogPosts = async () => {
