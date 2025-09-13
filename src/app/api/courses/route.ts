@@ -21,7 +21,7 @@ export async function GET(request: NextRequest) {
     return NextResponse.json({
       success: true,
       data: courses,
-      message: "Courses fetched successfully",
+      message: "Courses fetched successfully !",
     });
   } catch (error) {
     console.error("Database error:", error);
