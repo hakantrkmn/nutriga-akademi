@@ -7,12 +7,12 @@ import { getBlogPosts, getCourses } from "@/lib/redis";
 
 // Server Component'ta search params almak için
 interface HomePageProps {
-  searchParams: {
+  searchParams: Promise<{
     popup?: string;
     modal?: string;
     show?: string;
     [key: string]: string | undefined;
-  };
+  }>;
 }
 
 export default async function Home({ searchParams }: HomePageProps) {
@@ -29,16 +29,17 @@ export default async function Home({ searchParams }: HomePageProps) {
     },
   });
 
-  // GET parametrelerini kontrol et
-  const popup = searchParams.popup;
-  const modal = searchParams.modal;
-  const show = searchParams.show;
+  // GET parametrelerini await ile al (Next.js 15)
+  const searchParamsResolved = await searchParams;
+  const popup = searchParamsResolved.popup;
+  const modal = searchParamsResolved.modal;
+  const show = searchParamsResolved.show;
 
   console.log("Server-side GET Parametreleri:", {
     popup,
     modal,
     show,
-    allParams: searchParams,
+    allParams: searchParamsResolved,
   });
 
   // popup=true varsa log yaz

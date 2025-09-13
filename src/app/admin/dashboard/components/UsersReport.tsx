@@ -3,7 +3,7 @@
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { adminApi, UsersReport } from "@/lib/api";
+import { adminApi, type UsersReport } from "@/lib/api";
 import { useEffect, useState } from "react";
 import { FiCalendar, FiTrendingUp, FiUserCheck, FiUsers } from "react-icons/fi";
 
@@ -248,7 +248,7 @@ export default function UsersReport() {
         </CardHeader>
         <CardContent>
           <div className="space-y-3">
-            {data.recentUsers.map((user, index) => (
+            {data.recentUsers.map((user) => (
               <div
                 key={user.id}
                 className="flex items-center justify-between p-3 border rounded"

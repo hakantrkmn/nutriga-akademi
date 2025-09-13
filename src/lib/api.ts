@@ -21,7 +21,7 @@ export interface EducationSalesData {
   id: string;
   title: string;
   salesCount: number;
-  price: any;
+  price: number | null;
   category: string;
   level: string;
   _count: {

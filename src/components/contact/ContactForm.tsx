@@ -27,7 +27,7 @@ export default function ContactForm() {
       setFormData({ name: "", email: "", message: "" });
 
       toaster.success("Mesajınız başarıyla gönderildi!");
-    } catch (error) {
+    } catch {
       toaster.error(
         "Mesaj gönderilirken bir hata oluştu. Lütfen tekrar deneyin."
       );

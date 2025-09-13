@@ -2,12 +2,12 @@
 
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { adminApi, SalesReport as SalesReportType } from "@/lib/api";
+import { adminApi, type SalesReport } from "@/lib/api";
 import { useEffect, useState } from "react";
 import { FiBarChart, FiDollarSign, FiTrendingUp } from "react-icons/fi";
 
 export default function SalesReport() {
-  const [data, setData] = useState<SalesReportType | null>(null);
+  const [data, setData] = useState<SalesReport | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {

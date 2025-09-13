@@ -30,7 +30,6 @@ export default function TipTapEditor({
   const [isYouTubeModalOpen, setYouTubeModalOpen] = useState(false);
 
   const editorBg = "white";
-  const borderColor = "gray.200";
   const textColor = "gray.900";
 
   const editor = useEditor({

@@ -25,8 +25,14 @@ export async function GET() {
       take: 20, // En çok satan ilk 20 eğitim
     });
 
+    // Price field'ını number'a dönüştür
+    const formattedEducationSales = educationSales.map((edu) => ({
+      ...edu,
+      price: edu.price ? Number(edu.price) : null,
+    }));
+
     // Toplam gelir hesapla
-    const totalRevenue = educationSales.reduce((sum, edu) => {
+    const totalRevenue = formattedEducationSales.reduce((sum, edu) => {
       const price = Number(edu.price || 0);
       return sum + price * edu.salesCount;
     }, 0);
@@ -69,7 +75,7 @@ export async function GET() {
     return NextResponse.json({
       success: true,
       data: {
-        educationSales,
+        educationSales: formattedEducationSales,
         totalRevenue,
         categoryStats,
         recentSales,

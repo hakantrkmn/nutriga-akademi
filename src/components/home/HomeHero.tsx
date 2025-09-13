@@ -11,7 +11,6 @@ import Autoplay from "embla-carousel-autoplay";
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 export default function Hero({ slides }: { slides: HeroSlide[] }) {
-  const [isMobile, setIsMobile] = useState(false);
   const [api, setApi] = useState<CarouselApi>();
   const [current, setCurrent] = useState(0);
   const [imageErrors, setImageErrors] = useState<{ [key: number]: boolean }>(
@@ -21,14 +20,6 @@ export default function Hero({ slides }: { slides: HeroSlide[] }) {
     Autoplay({ delay: 5000, stopOnInteraction: false })
   );
   console.log(slides);
-  useEffect(() => {
-    const checkMobile = () => {
-      setIsMobile(window.innerWidth < 768);
-    };
-    checkMobile();
-    window.addEventListener("resize", checkMobile);
-    return () => window.removeEventListener("resize", checkMobile);
-  }, []);
 
   useEffect(() => {
     if (!api) {
