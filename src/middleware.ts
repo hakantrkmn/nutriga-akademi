@@ -40,9 +40,6 @@ export async function middleware(request: NextRequest) {
         error,
       } = await supabase.auth.getUser();
 
-      console.log("User:", user);
-      console.log("Error:", error);
-
       // User yoksa admin login'e yönlendir
       if (!user) {
         console.log("User bulunamadı - admin login'e yönlendiriliyor");
@@ -54,8 +51,6 @@ export async function middleware(request: NextRequest) {
         console.log("Email kontrolü başarısız:", user.email);
         return NextResponse.redirect(new URL("/admin", request.url));
       }
-
-      console.log("Auth kontrolü başarılı:", user.email);
     } catch (error) {
       console.error("Middleware auth error:", error);
       return NextResponse.redirect(new URL("/admin", request.url));
@@ -87,8 +82,6 @@ export async function middleware(request: NextRequest) {
       data: { user },
       error,
     } = await supabase.auth.getUser();
-    console.log("User:", user);
-    console.log("Error:", error);
     if (user?.email === process.env.NEXT_PUBLIC_ADMIN_EMAIL) {
       console.log("Email kontrolü başarısız:", user?.email);
       return NextResponse.redirect(new URL("/admin/dashboard", request.url));

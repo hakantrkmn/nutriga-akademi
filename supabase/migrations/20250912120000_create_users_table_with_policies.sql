@@ -8,7 +8,7 @@ CREATE TABLE IF NOT EXISTS public.users (
     department TEXT,
     class TEXT,
     email TEXT UNIQUE NOT NULL,
-    phone TEXT,
+    phone TEXT NOT NULL,
     desired_education_id UUID REFERENCES public.egitimler(id) ON DELETE SET NULL,
     created_at TIMESTAMPTZ DEFAULT NOW(),
     updated_at TIMESTAMPTZ DEFAULT NOW()

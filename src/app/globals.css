@@ -1466,3 +1466,24 @@ a {
 .animate-slide-up-delayed {
   animation: slideUpDelayed 0.8s ease-out;
 }
+
+/* Command Input Styles - Borderless */
+[data-radix-collection-item]:has([cmdk-input]) [cmdk-input],
+[cmdk-input] {
+  border: none !important;
+  border-radius: 0 !important;
+  border-bottom: 1px solid hsl(var(--border)) !important;
+  box-shadow: none !important;
+  background: transparent !important;
+  outline: none !important;
+}
+
+[cmdk-input]:focus {
+  border-bottom-color: hsl(var(--primary)) !important;
+  box-shadow: none !important;
+}
+
+/* Popover z-index for search menus */
+[data-radix-popper-content-wrapper] {
+  z-index: 100 !important;
+}

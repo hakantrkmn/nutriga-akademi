@@ -32,6 +32,9 @@ export default function RegisterPage() {
   // Education Selection
   const [selectedEducationId, setSelectedEducationId] = useState("");
 
+  // KVKK Acceptance
+  const [kvkkAccepted, setKvkkAccepted] = useState(false);
+
   const [loading, setLoading] = useState(false);
 
   const validateForm = () => {
@@ -42,13 +45,19 @@ export default function RegisterPage() {
     }
 
     // Check required fields
-    if (!firstName.trim() || !lastName.trim() || !email.trim() || !profession) {
+    if (
+      !firstName.trim() ||
+      !lastName.trim() ||
+      !email.trim() ||
+      !profession ||
+      !phone.trim()
+    ) {
       toaster.error("Lütfen zorunlu alanları doldurun");
       return false;
     }
 
     // If profession is "öğrenci", university, department, and class are required
-    if (profession === "öğrenci") {
+    if (profession === "Öğrenci") {
       if (!university.trim() || !department.trim() || !classValue) {
         toaster.error(
           "Öğrenciler için üniversite, bölüm ve sınıf bilgileri zorunludur"
@@ -67,6 +76,14 @@ export default function RegisterPage() {
     // Password validation
     if (password.length < 6) {
       toaster.error("Şifre en az 6 karakter olmalıdır");
+      return false;
+    }
+
+    // KVKK acceptance validation
+    if (!kvkkAccepted) {
+      toaster.error(
+        "KVKK Aydınlatma Metni'ni okuyup onaylamanız gerekmektedir"
+      );
       return false;
     }
 
@@ -103,9 +120,9 @@ export default function RegisterPage() {
           first_name: firstName.trim(),
           last_name: lastName.trim(),
           profession,
-          university: profession === "öğrenci" ? university.trim() : null,
-          department: profession === "öğrenci" ? department.trim() : null,
-          class: profession === "öğrenci" ? classValue : null,
+          university: profession === "Öğrenci" ? university.trim() : null,
+          department: profession === "Öğrenci" ? department.trim() : null,
+          class: profession === "Öğrenci" ? classValue : null,
           email: email.trim(),
           phone: phone.trim() || null,
           desired_education_id:
@@ -167,6 +184,8 @@ export default function RegisterPage() {
                   setPassword={setPassword}
                   confirmPassword={confirmPassword}
                   setConfirmPassword={setConfirmPassword}
+                  kvkkAccepted={kvkkAccepted}
+                  setKvkkAccepted={setKvkkAccepted}
                 />
               </div>
 

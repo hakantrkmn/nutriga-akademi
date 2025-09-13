@@ -42,6 +42,9 @@ export function RegisterModal({ isOpen, onClose }: RegisterModalProps) {
   // Education Selection
   const [selectedEducationId, setSelectedEducationId] = useState("");
 
+  // KVKK Acceptance
+  const [kvkkAccepted, setKvkkAccepted] = useState(false);
+
   const [loading, setLoading] = useState(false);
 
   const validateForm = () => {
@@ -50,12 +53,18 @@ export function RegisterModal({ isOpen, onClose }: RegisterModalProps) {
       return false;
     }
 
-    if (!firstName.trim() || !lastName.trim() || !email.trim() || !profession) {
+    if (
+      !firstName.trim() ||
+      !lastName.trim() ||
+      !email.trim() ||
+      !profession ||
+      !phone.trim()
+    ) {
       toaster.error("Lütfen zorunlu alanları doldurun");
       return false;
     }
 
-    if (profession === "öğrenci") {
+    if (profession === "Öğrenci") {
       if (!university.trim() || !department.trim() || !classValue) {
         toaster.error(
           "Öğrenciler için üniversite, bölüm ve sınıf bilgileri zorunludur"
@@ -72,6 +81,14 @@ export function RegisterModal({ isOpen, onClose }: RegisterModalProps) {
 
     if (password.length < 6) {
       toaster.error("Şifre en az 6 karakter olmalıdır");
+      return false;
+    }
+
+    // KVKK acceptance validation
+    if (!kvkkAccepted) {
+      toaster.error(
+        "KVKK Aydınlatma Metni'ni okuyup onaylamanız gerekmektedir"
+      );
       return false;
     }
 
@@ -125,9 +142,9 @@ export function RegisterModal({ isOpen, onClose }: RegisterModalProps) {
           first_name: firstName.trim(),
           last_name: lastName.trim(),
           profession,
-          university: profession === "öğrenci" ? university.trim() : null,
-          department: profession === "öğrenci" ? department.trim() : null,
-          class: profession === "öğrenci" ? classValue : null,
+          university: profession === "Öğrenci" ? university.trim() : null,
+          department: profession === "Öğrenci" ? department.trim() : null,
+          class: profession === "Öğrenci" ? classValue : null,
           email: email.trim(),
           phone: phone.trim() || null,
           desired_education_id:
@@ -176,6 +193,7 @@ export function RegisterModal({ isOpen, onClose }: RegisterModalProps) {
     setDepartment("");
     setClassValue("");
     setSelectedEducationId("");
+    setKvkkAccepted(false);
   };
 
   return (
@@ -203,6 +221,8 @@ export function RegisterModal({ isOpen, onClose }: RegisterModalProps) {
               setPassword={setPassword}
               confirmPassword={confirmPassword}
               setConfirmPassword={setConfirmPassword}
+              kvkkAccepted={kvkkAccepted}
+              setKvkkAccepted={setKvkkAccepted}
             />
           </div>
 
