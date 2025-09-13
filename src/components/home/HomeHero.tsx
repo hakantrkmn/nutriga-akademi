@@ -20,7 +20,7 @@ export default function Hero({ slides }: { slides: HeroSlide[] }) {
   const autoplayRef = useRef(
     Autoplay({ delay: 5000, stopOnInteraction: false })
   );
-
+  console.log(slides);
   useEffect(() => {
     const checkMobile = () => {
       setIsMobile(window.innerWidth < 768);

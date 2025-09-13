@@ -5,70 +5,22 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { toaster } from "@/components/ui/toaster";
-import { cartApi, CartItemDTO } from "@/lib/api";
-import { createClient } from "@/lib/supabase/client";
+import { useCart } from "@/hooks/useCart";
 import { Minus, Plus, Trash2 } from "lucide-react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { useEffect, useMemo, useState } from "react";
 
 export default function CartPage() {
-  const [items, setItems] = useState<CartItemDTO[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
   const router = useRouter();
-  const supabase = createClient();
-
-  const load = async () => {
-    setLoading(true);
-    const res = await cartApi.get();
-    if (res.success && res.data) setItems(res.data);
-    setLoading(false);
-  };
-
-  useEffect(() => {
-    load();
-    const init = async () => {
-      const {
-        data: { user },
-      } = await supabase.auth.getUser();
-      setIsAuthenticated(!!user);
-    };
-    init();
-    const { data: sub } = supabase.auth.onAuthStateChange((_event, session) => {
-      setIsAuthenticated(!!session?.user);
-    });
-    return () => {
-      sub.subscription.unsubscribe();
-    };
-  }, [supabase.auth]);
-
-  const subtotal = useMemo(() => {
-    return items.reduce((sum, it) => {
-      const price = Number(it.education?.price ?? 0);
-      return sum + price * it.quantity;
-    }, 0);
-  }, [items]);
-
-  const updateQty = async (id: string, qty: number) => {
-    const res = await cartApi.updateQuantity(id, qty);
-    if (res.success) {
-      load();
-      toaster.success("Sepet güncellendi");
-    } else {
-      toaster.error("Sepet güncellenirken bir hata oluştu");
-    }
-  };
-
-  const removeItem = async (id: string) => {
-    const res = await cartApi.remove(id);
-    if (res.success) {
-      load();
-      toaster.success("Ürün sepetten kaldırıldı");
-    } else {
-      toaster.error("Ürün kaldırılırken bir hata oluştu");
-    }
-  };
+  const {
+    items,
+    loading,
+    isAuthenticated,
+    subtotal,
+    updateQuantity,
+    removeItem,
+    checkout,
+  } = useCart();
 
   return (
     <div className="max-w-7xl mx-auto px-4 md:px-6 py-6 md:py-8">
@@ -141,7 +93,7 @@ export default function CartPage() {
                           variant="outline"
                           className="border-primary hover:bg-primary/10"
                           onClick={() =>
-                            updateQty(it.id, Math.max(1, it.quantity - 1))
+                            updateQuantity(it.id, Math.max(1, it.quantity - 1))
                           }
                         >
                           <Minus className="w-4 h-4" />
@@ -155,7 +107,7 @@ export default function CartPage() {
                           size="sm"
                           variant="outline"
                           className="border-primary hover:bg-primary/10"
-                          onClick={() => updateQty(it.id, it.quantity + 1)}
+                          onClick={() => updateQuantity(it.id, it.quantity + 1)}
                         >
                           <Plus className="w-4 h-4" />
                         </Button>
@@ -209,19 +161,9 @@ export default function CartPage() {
                     router.push("/auth/login");
                     return;
                   }
-                  try {
-                    const res = await fetch("/api/cart/checkout", {
-                      method: "POST",
-                    });
-                    const data = await res.json();
-                    if (res.ok) {
-                      toaster.success("Satın alma başarılı!");
-                      router.push("/"); // Redirect to home or a success page
-                    } else {
-                      toaster.error(`Satın alma başarısız: ${data.error}`);
-                    }
-                  } catch {
-                    toaster.error("Satın alma sırasında bir hata oluştu.");
+                  const result = await checkout();
+                  if (result.success) {
+                    router.push("/"); // Redirect to home or a success page
                   }
                 }}
               >

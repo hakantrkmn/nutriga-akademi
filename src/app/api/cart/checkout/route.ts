@@ -1,5 +1,5 @@
 import { prisma } from "@/lib/prisma";
-import { cartGet } from "@/lib/redis";
+import { cartGet, cartSet } from "@/lib/redis";
 import { createServerClient } from "@supabase/ssr";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -65,13 +65,72 @@ export async function POST(request: NextRequest) {
     const subtotal = details.reduce((s, d) => s + d.lineTotal, 0);
     const allValid = details.every((d) => d.exists && d.unitPrice > 0);
 
-    // Şimdilik sadece doğrulama sonuçlarını logla
-    console.log("CHECKOUT_VALIDATION", { userId, details, subtotal, allValid });
+    // Eğer tüm ürünler geçerliyse satın alma işlemini tamamla
+    if (allValid) {
+      // 3) Cart items'ları veritabanına kaydet
+      const cartItemsToCreate = items.map((item) => ({
+        userId,
+        educationId: item.educationId,
+        quantity: item.quantity,
+      }));
 
-    return NextResponse.json({
-      success: true,
-      data: { details, subtotal, allValid },
-    });
+      // Bulk insert cart items (upsert ile duplicate'ları handle et)
+      await prisma.cartItem.createMany({
+        data: cartItemsToCreate,
+        skipDuplicates: true, // Unique constraint nedeniyle duplicate'ları atla
+      });
+
+      // 4) Eğitim tablosunda satış sayılarını güncelle
+      const educationUpdates = details.map((detail) => ({
+        id: detail.educationId,
+        salesCount: {
+          increment: detail.quantity, // Satış sayısını quantity kadar arttır
+        },
+      }));
+
+      // Bulk update eğitim satış sayıları
+      for (const update of educationUpdates) {
+        await prisma.egitim.update({
+          where: { id: update.id },
+          data: { salesCount: update.salesCount },
+        });
+      }
+
+      // 5) Redis'ten sepeti temizle
+      await cartSet(userId, []);
+
+      console.log("CHECKOUT_COMPLETED", {
+        userId,
+        details,
+        subtotal,
+        cartItemsCreated: cartItemsToCreate.length,
+        educationsUpdated: educationUpdates.length,
+      });
+
+      return NextResponse.json({
+        success: true,
+        message: "Satın alma işlemi başarıyla tamamlandı",
+        data: {
+          details,
+          subtotal,
+          cartItemsCreated: cartItemsToCreate.length,
+          educationsUpdated: educationUpdates.length,
+        },
+      });
+    } else {
+      // Bazı ürünler geçerli değilse hata döndür
+      const invalidItems = details.filter((d) => !d.exists || d.unitPrice <= 0);
+      console.log("CHECKOUT_FAILED_INVALID_ITEMS", { userId, invalidItems });
+
+      return NextResponse.json(
+        {
+          success: false,
+          error: "Bazı ürünler artık mevcut değil veya fiyatları değişmiş",
+          data: { invalidItems },
+        },
+        { status: 400 }
+      );
+    }
   } catch (error) {
     console.error("Checkout error:", error);
     return NextResponse.json(

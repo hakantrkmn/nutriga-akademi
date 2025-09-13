@@ -1,5 +1,6 @@
 "use client";
 
+import ContactButton from "@/components/common/ContactButton";
 import Footer from "@/components/common/Footer";
 import Header from "@/components/common/Header";
 // AdminProvider removed
@@ -26,6 +27,7 @@ export default function ConditionalLayout({
       <Header />
       <div className="pt-20">{children}</div>
       <Footer />
+      <ContactButton />
     </div>
   );
 }

@@ -16,6 +16,93 @@ export interface AdminStats {
   totalSatislar: number;
 }
 
+// Detaylı rapor interface'leri
+export interface EducationSalesData {
+  id: string;
+  title: string;
+  salesCount: number;
+  price: any;
+  category: string;
+  level: string;
+  _count: {
+    cartItems: number;
+  };
+}
+
+export interface CategorySalesData {
+  category: string;
+  _sum: {
+    salesCount: number;
+  };
+  _count: {
+    _all: number;
+  };
+}
+
+export interface RecentSalesData {
+  createdAt: Date;
+  _count: {
+    _all: number;
+  };
+}
+
+export interface SalesReport {
+  educationSales: EducationSalesData[];
+  totalRevenue: number;
+  categoryStats: CategorySalesData[];
+  recentSales: RecentSalesData[];
+}
+
+export interface UserPurchaseData {
+  id: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+  profession: string;
+  createdAt: Date;
+  _count: {
+    cartItems: number;
+  };
+}
+
+export interface ProfessionStatsData {
+  profession: string;
+  _count: {
+    _all: number;
+  };
+}
+
+export interface RecentUserData {
+  id: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+  profession: string;
+  createdAt: Date;
+}
+
+export interface UserSpendingData {
+  userId: string;
+  userDetails: {
+    firstName: string;
+    lastName: string;
+    email: string;
+    profession: string;
+  } | null;
+  totalPurchases: number;
+  totalSpent: number;
+  totalItems: number;
+}
+
+export interface UsersReport {
+  userPurchaseStats: UserPurchaseData[];
+  professionStats: ProfessionStatsData[];
+  recentUsers: RecentUserData[];
+  userSpending: UserSpendingData[];
+  totalPurchases: number;
+  authUserCount: number;
+}
+
 // API Base URL
 const API_BASE = "/api";
 
@@ -116,6 +203,13 @@ export const adminApi = {
   // Dashboard istatistikleri
   getStats: (): Promise<ApiResponse<AdminStats>> =>
     apiCall<AdminStats>("/admin/stats"),
+
+  // Detaylı raporlar
+  getSalesReport: (): Promise<ApiResponse<SalesReport>> =>
+    apiCall<SalesReport>("/admin/reports/sales"),
+
+  getUsersReport: (): Promise<ApiResponse<UsersReport>> =>
+    apiCall<UsersReport>("/admin/reports/users"),
 };
 
 // Cart API

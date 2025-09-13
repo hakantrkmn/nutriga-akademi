@@ -1,12 +1,19 @@
 "use client";
 
 import StatCard from "@/components/admin/StatCard";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { adminApi, AdminStats } from "@/lib/api";
 import { useEffect, useState } from "react";
-import { FiBookOpen, FiFileText, FiTrendingUp, FiUsers } from "react-icons/fi";
-// AdminSidebar artık layout'ta kullanılıyor
-
-// AdminStats interface'i zaten api.ts'de tanımlı
+import {
+  FiBarChart,
+  FiBookOpen,
+  FiFileText,
+  FiTrendingUp,
+  FiUserCheck,
+  FiUsers,
+} from "react-icons/fi";
+import SalesReport from "./SalesReport";
+import UsersReport from "./UsersReport";
 
 export default function AdminDashboard() {
   const [stats, setStats] = useState<AdminStats>({
@@ -73,11 +80,11 @@ export default function AdminDashboard() {
         <div>
           <h1 className="text-3xl font-bold text-gray-900 mb-2">Dashboard</h1>
           <p className="text-gray-600">
-            NutriHome Akademi Admin Paneli - Genel Bakış
+            NutriHome Akademi Admin Paneli - Detaylı Analiz ve Raporlar
           </p>
         </div>
 
-        {/* Stats Grid */}
+        {/* Genel İstatistikler */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {statCards.map((stat, index) => (
             <StatCard
@@ -90,6 +97,28 @@ export default function AdminDashboard() {
             />
           ))}
         </div>
+
+        {/* Detaylı Raporlar */}
+        <Tabs defaultValue="sales" className="space-y-6">
+          <TabsList className="grid w-full grid-cols-2">
+            <TabsTrigger value="sales" className="flex items-center gap-2">
+              <FiBarChart className="h-4 w-4" />
+              Satış Raporları
+            </TabsTrigger>
+            <TabsTrigger value="users" className="flex items-center gap-2">
+              <FiUserCheck className="h-4 w-4" />
+              Kullanıcı Raporları
+            </TabsTrigger>
+          </TabsList>
+
+          <TabsContent value="sales" className="space-y-6">
+            <SalesReport />
+          </TabsContent>
+
+          <TabsContent value="users" className="space-y-6">
+            <UsersReport />
+          </TabsContent>
+        </Tabs>
       </div>
     </div>
   );

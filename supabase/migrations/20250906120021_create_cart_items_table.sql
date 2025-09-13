@@ -4,7 +4,7 @@ CREATE TABLE cart_items (
   user_id uuid REFERENCES auth.users(id) ON DELETE CASCADE,
   education_id uuid REFERENCES egitimler(id) ON DELETE CASCADE,
   quantity integer DEFAULT 1,
-  created_at timestamp DEFAULT now()
+  created_at timestamptz DEFAULT now()
 );
 
 -- Index'ler ekleme

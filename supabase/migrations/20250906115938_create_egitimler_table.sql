@@ -8,8 +8,11 @@ CREATE TABLE egitimler (
   slug text UNIQUE NOT NULL,
   price numeric(10,2),
   sales_count integer DEFAULT 0,
-  created_at timestamp DEFAULT now(),
-  updated_at timestamp DEFAULT now()
+  category text NOT NULL,
+  level text NOT NULL,
+  instructor text NOT NULL,
+  created_at timestamptz DEFAULT now(),
+  updated_at timestamptz DEFAULT now()
 );
 
 -- Index'ler ekleme
@@ -28,8 +31,8 @@ CREATE POLICY "Eğitimler herkese okunabilir" ON egitimler
 CREATE POLICY "Admin eğitim ekleyebilir" ON egitimler
   FOR INSERT WITH CHECK (
     EXISTS (
-      SELECT 1 FROM auth.users 
-      WHERE auth.users.id = auth.uid() 
+      SELECT 1 FROM auth.users
+      WHERE auth.users.id = auth.uid()
       AND auth.users.email = 'hakantrkmn61@gmail.com'
     )
   );
@@ -37,8 +40,8 @@ CREATE POLICY "Admin eğitim ekleyebilir" ON egitimler
 CREATE POLICY "Admin eğitim güncelleyebilir" ON egitimler
   FOR UPDATE USING (
     EXISTS (
-      SELECT 1 FROM auth.users 
-      WHERE auth.users.id = auth.uid() 
+      SELECT 1 FROM auth.users
+      WHERE auth.users.id = auth.uid()
       AND auth.users.email = 'hakantrkmn61@gmail.com'
     )
   );
@@ -46,8 +49,22 @@ CREATE POLICY "Admin eğitim güncelleyebilir" ON egitimler
 CREATE POLICY "Admin eğitim silebilir" ON egitimler
   FOR DELETE USING (
     EXISTS (
-      SELECT 1 FROM auth.users 
-      WHERE auth.users.id = auth.uid() 
+      SELECT 1 FROM auth.users
+      WHERE auth.users.id = auth.uid()
       AND auth.users.email = 'hakantrkmn61@gmail.com'
     )
   );
+
+-- Updated_at için trigger
+CREATE OR REPLACE FUNCTION handle_updated_at()
+RETURNS TRIGGER AS $$
+BEGIN
+    NEW.updated_at = NOW();
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER handle_egitimler_updated_at
+    BEFORE UPDATE ON egitimler
+    FOR EACH ROW
+    EXECUTE FUNCTION handle_updated_at();
