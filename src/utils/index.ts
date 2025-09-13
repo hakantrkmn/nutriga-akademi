@@ -14,7 +14,9 @@ export const getHTMLContent = (content: string | object | null | undefined) => {
   if (typeof content === "object") return content;
   try {
     const jsonContent = JSON.parse(content as unknown as string);
-
+    if (typeof jsonContent === "string") {
+      return JSON.parse(jsonContent);
+    }
     return jsonContent;
   } catch (error) {
     console.error("Error generating HTML:", error);

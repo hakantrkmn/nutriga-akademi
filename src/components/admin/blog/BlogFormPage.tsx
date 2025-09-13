@@ -48,7 +48,6 @@ export default function BlogFormPage({ blogId }: { blogId?: string }) {
           const response = await blogApi.getById(blogId);
 
           if (response.success && response.data) {
-            console.log("Blog verileri yüklendi:", response.data.content);
             setInitialData(response.data);
             setFormData(response.data);
             setUploadedImage(response.data.imageUrl || null);
