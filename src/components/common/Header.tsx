@@ -214,7 +214,7 @@ export default function Header() {
                   Giriş Yap
                 </Button>
                 <Button
-                  className="bg-primary-600 hover:bg-primary-700 text-white px-6 py-2 font-medium"
+                  className="bg-[#16a34a] hover:bg-[#15803d] text-white px-6 py-2 font-medium"
                   onClick={() => router.push("/auth/register")}
                 >
                   Kayıt Ol
@@ -229,7 +229,11 @@ export default function Header() {
           <div className="justify-self-end md:justify-self-end">
             <Sheet open={open} onOpenChange={setOpen}>
               <SheetTrigger asChild>
-                <Button variant="ghost" size="icon">
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className="text-secondary-text hover:text-primary hover:bg-gray-50"
+                >
                   <HiMenu className="h-5 w-5" />
                 </Button>
               </SheetTrigger>
@@ -282,7 +286,7 @@ export default function Header() {
                 <>
                   <Button
                     variant="ghost"
-                    className="w-full justify-start text-secondary-text hover:text-primary hover:bg-gray-50"
+                    className="w-full justify-center text-secondary-text hover:text-primary hover:bg-gray-50"
                     onClick={() => {
                       setOpen(false);
                       router.push("/auth/login");
@@ -291,7 +295,7 @@ export default function Header() {
                     Giriş Yap
                   </Button>
                   <Button
-                    className="w-full bg-primary hover:bg-primary-hover text-white"
+                    className="w-full bg-[#16a34a] hover:bg-[#15803d] text-white px-6 py-2 font-medium"
                     onClick={() => {
                       setOpen(false);
                       router.push("/auth/register");
