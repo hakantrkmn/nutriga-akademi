@@ -125,7 +125,7 @@ export function PersonalInfoForm({
             align="start"
             side="bottom"
             sideOffset={4}
-            avoidCollisions={true}
+            avoidCollisions={false}
           >
             <Command>
               <CommandInput placeholder="Meslek arayın..." />
@@ -180,7 +180,7 @@ export function PersonalInfoForm({
                 align="start"
                 side="bottom"
                 sideOffset={4}
-                avoidCollisions={true}
+                avoidCollisions={false}
               >
                 <Command>
                   <CommandInput placeholder="Üniversite arayın..." />
@@ -231,7 +231,7 @@ export function PersonalInfoForm({
                 align="start"
                 side="bottom"
                 sideOffset={4}
-                avoidCollisions={true}
+                avoidCollisions={false}
               >
                 <Command>
                   <CommandInput placeholder="Bölüm arayın..." />
