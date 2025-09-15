@@ -59,7 +59,6 @@ model CartItem {
   user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   education   Egitim   @relation(fields: [educationId], references: [id], onDelete: Cascade)
 
-  @@unique([userId, educationId])
   @@map("cart_items")
 }
 

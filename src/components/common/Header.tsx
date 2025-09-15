@@ -15,6 +15,7 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { COMPANY_NAME } from "@/constants";
+import { useCart } from "@/hooks/useCart";
 import { createClient } from "@/lib/supabase/client";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -27,7 +28,7 @@ export default function Header() {
   const [open, setOpen] = useState(false);
   const router = useRouter();
   const supabase = createClient();
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const { isAuthenticated } = useCart();
   const [userEmail, setUserEmail] = useState<string | null>(null);
   useEffect(() => {
     const handleClick = (e: MouseEvent) => {
@@ -57,13 +58,11 @@ export default function Header() {
       const {
         data: { user },
       } = await supabase.auth.getUser();
-      setIsAuthenticated(!!user);
       setUserEmail(user?.email ?? null);
     };
     init();
 
     const { data: sub } = supabase.auth.onAuthStateChange((_event, session) => {
-      setIsAuthenticated(!!session?.user);
       setUserEmail(session?.user?.email ?? null);
     });
 
@@ -82,16 +81,16 @@ export default function Header() {
 
   const handleLogout = async () => {
     await supabase.auth.signOut();
-    setIsAuthenticated(false);
     setUserEmail(null);
     router.replace("/");
   };
 
-  const NavItems = () => (
+  const NavItems = ({ onItemClick }: { onItemClick?: () => void }) => (
     <>
       <Link
         href="/"
-        className="text-gray-700 hover:text-primary-600 transition-colors whitespace-nowrap flex-shrink-0"
+        className="text-secondary-text hover:text-primary transition-colors whitespace-nowrap flex-shrink-0"
+        onClick={onItemClick}
       >
         Ana Sayfa
       </Link>
@@ -100,24 +99,36 @@ export default function Header() {
         <DropdownMenuTrigger asChild>
           <Button
             variant="ghost"
-            className="text-gray-700 hover:text-primary-600 hover:bg-transparent justify-start text-base font-normal h-auto px-0 py-0 whitespace-nowrap flex-shrink-0"
+            className="text-secondary-text hover:text-primary hover:bg-gray-50 justify-start text-base font-normal h-auto px-0 py-0 whitespace-nowrap flex-shrink-0"
           >
             Kurumsal
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent className="w-48">
           <DropdownMenuItem asChild>
-            <Link href="/hakkimizda" className="cursor-pointer">
+            <Link
+              href="/hakkimizda"
+              className="cursor-pointer"
+              onClick={onItemClick}
+            >
               Hakkımızda
             </Link>
           </DropdownMenuItem>
           <DropdownMenuItem asChild>
-            <Link href="/misyon" className="cursor-pointer">
+            <Link
+              href="/misyon"
+              className="cursor-pointer"
+              onClick={onItemClick}
+            >
               Misyonumuz
             </Link>
           </DropdownMenuItem>
           <DropdownMenuItem asChild>
-            <Link href="/vizyon" className="cursor-pointer">
+            <Link
+              href="/vizyon"
+              className="cursor-pointer"
+              onClick={onItemClick}
+            >
               Vizyonumuz
             </Link>
           </DropdownMenuItem>
@@ -126,21 +137,24 @@ export default function Header() {
 
       <Link
         href="/egitimler"
-        className="text-gray-700 hover:text-primary-600 transition-colors whitespace-nowrap flex-shrink-0"
+        className="text-secondary-text hover:text-primary transition-colors whitespace-nowrap flex-shrink-0"
+        onClick={onItemClick}
       >
         Eğitimler
       </Link>
 
       <Link
         href="/blog"
-        className="text-gray-700 hover:text-primary-600 transition-colors whitespace-nowrap flex-shrink-0"
+        className="text-secondary-text hover:text-primary transition-colors whitespace-nowrap flex-shrink-0"
+        onClick={onItemClick}
       >
         Blog
       </Link>
 
       <Link
         href="/iletisim"
-        className="text-gray-700 hover:text-primary-600 transition-colors whitespace-nowrap flex-shrink-0"
+        className="text-secondary-text hover:text-primary transition-colors whitespace-nowrap flex-shrink-0"
+        onClick={onItemClick}
       >
         İletişim
       </Link>
@@ -169,15 +183,13 @@ export default function Header() {
         {/* Desktop Cart & Auth Buttons */}
         {!isMobile && (
           <div className="justify-self-end flex items-center gap-4 flex-shrink-0">
-            {isAuthenticated && (
-              <Button
-                variant="ghost"
-                className="text-gray-700 hover:text-primary-600 hover:bg-transparent text-base font-normal h-auto px-0 py-0"
-                onClick={() => router.push("/cart")}
-              >
-                🛒 Sepet
-              </Button>
-            )}
+            <Button
+              variant="ghost"
+              className="text-gray-700 hover:text-primary-600 hover:bg-transparent text-base font-normal h-auto px-0 py-0"
+              onClick={() => router.push("/cart")}
+            >
+              🛒 Sepet
+            </Button>
             {isAuthenticated ? (
               <div className="flex items-center gap-2">
                 <span className="text-gray-600 text-sm font-medium max-w-[120px] truncate">
@@ -234,14 +246,14 @@ export default function Header() {
           </SheetHeader>
           <div className="pt-6 space-y-6">
             <nav className="flex flex-col space-y-4">
-              <NavItems />
+              <NavItems onItemClick={() => setOpen(false)} />
             </nav>
 
             <div className="pt-6 space-y-3">
               {isAuthenticated && (
                 <Button
                   variant="ghost"
-                  className="w-full justify-start text-gray-700 hover:text-primary-600 hover:bg-transparent"
+                  className="w-full justify-start text-secondary-text hover:text-primary hover:bg-gray-50"
                   onClick={() => {
                     setOpen(false);
                     router.push("/cart");
@@ -252,13 +264,16 @@ export default function Header() {
               )}
               {isAuthenticated ? (
                 <>
-                  <p className="text-gray-600 text-sm w-full text-left">
+                  <p className="text-muted-text text-sm w-full text-left">
                     {userEmail}
                   </p>
                   <Button
                     variant="ghost"
-                    className="w-full justify-start text-gray-700 hover:text-primary-600 hover:bg-transparent"
-                    onClick={handleLogout}
+                    className="w-full justify-start text-secondary-text hover:text-primary hover:bg-gray-50"
+                    onClick={() => {
+                      handleLogout();
+                      setOpen(false);
+                    }}
                   >
                     Çıkış Yap
                   </Button>
@@ -267,7 +282,7 @@ export default function Header() {
                 <>
                   <Button
                     variant="ghost"
-                    className="w-full justify-start text-gray-700 hover:text-primary-600 hover:bg-transparent"
+                    className="w-full justify-start text-secondary-text hover:text-primary hover:bg-gray-50"
                     onClick={() => {
                       setOpen(false);
                       router.push("/auth/login");
@@ -276,7 +291,7 @@ export default function Header() {
                     Giriş Yap
                   </Button>
                   <Button
-                    className="w-full bg-primary-600 hover:bg-primary-700 text-white"
+                    className="w-full bg-primary hover:bg-primary-hover text-white"
                     onClick={() => {
                       setOpen(false);
                       router.push("/auth/register");

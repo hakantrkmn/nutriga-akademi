@@ -74,10 +74,9 @@ export async function POST(request: NextRequest) {
         quantity: item.quantity,
       }));
 
-      // Bulk insert cart items (upsert ile duplicate'ları handle et)
+      // Bulk insert cart items
       await prisma.cartItem.createMany({
         data: cartItemsToCreate,
-        skipDuplicates: true, // Unique constraint nedeniyle duplicate'ları atla
       });
 
       // 4) Eğitim tablosunda satış sayılarını güncelle

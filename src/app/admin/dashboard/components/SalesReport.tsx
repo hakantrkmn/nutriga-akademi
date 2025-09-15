@@ -19,6 +19,7 @@ export default function SalesReport() {
       setLoading(true);
       const response = await adminApi.getSalesReport();
       if (response.success && response.data) {
+        console.log(response.data);
         setData(response.data);
       }
     } catch (error) {

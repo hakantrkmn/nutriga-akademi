@@ -1,8 +1,7 @@
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { toaster } from "@/components/ui/toaster";
-import { cartApi } from "@/lib/api";
+import { useCart } from "@/hooks/useCart";
 import { EgitimCardProps } from "@/types";
 import Image from "next/image";
 import Link from "next/link";
@@ -12,22 +11,16 @@ import { FiShoppingCart, FiUser } from "react-icons/fi";
 export default function EgitimCard({ egitim }: EgitimCardProps) {
   const [adding, setAdding] = useState(false);
   const [added, setAdded] = useState(false);
+  const { addItem } = useCart();
 
   const handleAddToCart = async (e: React.MouseEvent) => {
     e.preventDefault();
     setAdding(true);
-    const res = await cartApi.add(egitim.id);
+    const success = await addItem(egitim.id);
     setAdding(false);
-    if (res.success) {
+    if (success) {
       setAdded(true);
       setTimeout(() => setAdded(false), 2000);
-      toaster.success("Sepete eklendi");
-    } else if (res.error) {
-      if (res.error.toLowerCase().includes("giriş")) {
-        toaster.error("Giriş gerekli");
-      } else {
-        toaster.error(res.error);
-      }
     }
   };
 

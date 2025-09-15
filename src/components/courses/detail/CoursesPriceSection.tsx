@@ -2,8 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { toaster } from "@/components/ui/toaster";
-import { cartApi } from "@/lib/api";
+import { useCart } from "@/hooks/useCart";
 import { EgitimPriceProps } from "@/types";
 import { Award, BarChart3, CheckCircle, Lock, Users } from "lucide-react";
 import { useState } from "react";
@@ -11,24 +10,18 @@ import { useState } from "react";
 export default function EgitimPrice({ egitim }: EgitimPriceProps) {
   const [adding, setAdding] = useState(false);
   const [added, setAdded] = useState(false);
+  const { addItem } = useCart();
   const formatPrice = (price: number | null | undefined): string => {
     if (!price) return "0";
     return new Intl.NumberFormat("tr-TR").format(price);
   };
   const handleAddToCart = async () => {
     setAdding(true);
-    const res = await cartApi.add(egitim.id);
+    const success = await addItem(egitim.id);
     setAdding(false);
-    if (res.success) {
+    if (success) {
       setAdded(true);
       setTimeout(() => setAdded(false), 2000);
-      toaster.success("Sepete eklendi");
-    } else if (res.error) {
-      if (res.error.toLowerCase().includes("giriş")) {
-        toaster.error("Giriş gerekli");
-      } else {
-        toaster.error(res.error);
-      }
     }
   };
 
