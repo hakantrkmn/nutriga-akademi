@@ -1,5 +1,6 @@
 import { prisma } from "@/lib/prisma";
 import { updateBlogPosts } from "@/lib/redis";
+import { revalidatePath } from "next/cache";
 import { NextRequest, NextResponse } from "next/server";
 
 // GET - Tek blog yazısı getir
@@ -86,10 +87,18 @@ export async function PUT(
 
     await updateBlogPosts();
 
+    // On-demand revalidation - Güncellenen sayfaları anında güncelle
+    revalidatePath("/blog"); // Blog listesi
+    revalidatePath(`/blog/${existingPost.slug}`); // Eski slug
+    if (slug && slug !== existingPost.slug) {
+      revalidatePath(`/blog/${slug}`); // Yeni slug
+    }
+    revalidatePath("/"); // Ana sayfa
+
     return NextResponse.json({
       success: true,
       data: guncellenenBlogPost,
-      message: "Blog yazısı başarıyla güncellendi",
+      message: "Blog yazısı başarıyla güncellendi ve sayfalar güncellendi",
     });
   } catch (error) {
     console.error("Blog yazısı güncellenirken hata:", error);
@@ -126,9 +135,14 @@ export async function DELETE(
 
     await updateBlogPosts();
 
+    // On-demand revalidation - Silinen sayfayı temizle
+    revalidatePath("/blog"); // Blog listesi
+    revalidatePath(`/blog/${existingPost.slug}`); // Silinen blog sayfası
+    revalidatePath("/"); // Ana sayfa
+
     return NextResponse.json({
       success: true,
-      message: "Blog yazısı başarıyla silindi",
+      message: "Blog yazısı başarıyla silindi ve sayfalar güncellendi",
     });
   } catch (error) {
     console.error("Blog yazısı silinirken hata:", error);

@@ -5,6 +5,10 @@ import { PopupHandler } from "@/components/home/PopupHandler";
 import { prisma } from "@/lib/prisma";
 import { getBlogPosts, getCourses } from "@/lib/redis";
 
+// ISR - Incremental Static Regeneration
+// Sayfa 1 saatte bir yeniden generate edilir
+export const revalidate = 3600; // 1 saat = 3600 saniye
+
 // Server Component'ta search params almak için
 interface HomePageProps {
   searchParams: Promise<{

@@ -1,5 +1,6 @@
 import { prisma } from "@/lib/prisma";
 import { updateBlogPosts } from "@/lib/redis";
+import { revalidatePath } from "next/cache";
 import { NextRequest, NextResponse } from "next/server";
 
 // GET - Tüm blog yazılarını listele
@@ -59,12 +60,21 @@ export async function POST(request: NextRequest) {
         author: author || null,
       },
     });
+
+    // Redis cache'i güncelle
     await updateBlogPosts();
+
+    // On-demand revalidation - Static sayfaları anında güncelle
+    revalidatePath("/blog"); // Blog listesi sayfası
+    revalidatePath(`/blog/${slug}`); // Yeni blog detay sayfası
+    revalidatePath("/"); // Ana sayfa (blog section için)
+
+    console.log(`✅ Blog "${title}" eklendi ve static sayfalar güncellendi`);
 
     return NextResponse.json({
       success: true,
       data: yeniBlogPost,
-      message: "Blog yazısı başarıyla oluşturuldu",
+      message: "Blog yazısı başarıyla oluşturuldu ve sayfalar güncellendi",
     });
   } catch (error) {
     console.error("Blog yazısı oluşturulurken hata:", error);

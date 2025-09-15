@@ -2,6 +2,9 @@ import { prisma } from "@/lib/prisma";
 import { createSupabaseAdmin } from "@/lib/supabase";
 import { NextResponse } from "next/server";
 
+// Force Node.js runtime to avoid Edge Runtime issues with Supabase
+export const runtime = "nodejs";
+
 // GET - Kullanıcı raporları
 export async function GET() {
   try {

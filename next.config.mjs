@@ -25,7 +25,6 @@ const nextConfig = {
       },
     ],
   },
-  /*
   webpack: (config, { dev, isServer }) => {
     // Development optimizations
     if (dev && !isServer) {
@@ -41,33 +40,52 @@ const nextConfig = {
     config.resolve = {
       ...config.resolve,
       symlinks: false,
-      // Faster module resolution
       cacheWithContext: false,
     };
 
-    // Optimize bundle size
-    config.optimization = {
-      ...config.optimization,
-      splitChunks: {
-        chunks: 'all',
-        cacheGroups: {
-          chakra: {
-            test: /[\\/]node_modules[\\/]@chakra-ui[\\/]/
-            name: 'chakra',
-            chunks: 'all',
-          },
-          icons: {
-            test: /[\\/]node_modules[\\/]react-icons[\\/]/
-            name: 'icons',
-            chunks: 'all',
+    // Production code splitting - simplified approach
+    if (!dev && !isServer) {
+      config.optimization = {
+        ...config.optimization,
+        splitChunks: {
+          chunks: "all",
+          minSize: 20000,
+          cacheGroups: {
+            // TipTap extensions - separate chunk
+            tiptap: {
+              test: /[\\/]node_modules[\\/]@tiptap[\\/]/,
+              name: "tiptap",
+              chunks: "all",
+              priority: 20,
+            },
+            // React libraries
+            react: {
+              test: /[\\/]node_modules[\\/](react|react-dom)[\\/]/,
+              name: "react",
+              chunks: "all",
+              priority: 15,
+            },
+            // Radix UI components
+            radix: {
+              test: /[\\/]node_modules[\\/]@radix-ui[\\/]/,
+              name: "radix",
+              chunks: "all",
+              priority: 10,
+            },
+            // Other vendor libraries
+            vendor: {
+              test: /[\\/]node_modules[\\/]/,
+              name: "vendors",
+              chunks: "all",
+              priority: 5,
+            },
           },
         },
-      },
-    };
+      };
+    }
 
     return config;
   },
-  */
   // Disable webpack cache warnings
   onDemandEntries: {
     maxInactiveAge: 25 * 1000,

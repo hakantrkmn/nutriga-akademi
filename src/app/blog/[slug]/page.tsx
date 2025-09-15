@@ -2,6 +2,9 @@ import BlogDetailContent from "@/components/blog/detail/BlogDetailContent";
 import { prisma } from "@/lib/prisma";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
+
+// ISR - Blog detay sayfaları 1 saatte bir yenilenir
+export const revalidate = 3600; // 1 saat = 3600 saniye
 interface BlogDetailPageProps {
   params: Promise<{
     slug: string;

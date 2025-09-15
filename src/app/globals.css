@@ -1494,8 +1494,76 @@ a {
   --success-bg: #f0fdf4;
   --error: #ef4444;
   --error-bg: #fef2f2;
+  --warning: #f59e0b;
+  --warning-bg: #fef3c7;
+  --info: #3b82f6;
+  --info-bg: #dbeafe;
   --normal: #1a202c;
   --normal-bg: #ffffff;
+}
+
+/* Sonner Toast Success Styling */
+[data-sonner-toast][data-type="success"] {
+  background: #f0fdf4 !important;
+  border: 1px solid #16a34a !important;
+  color: #166534 !important;
+}
+
+[data-sonner-toast][data-type="success"] [data-title] {
+  color: #166534 !important;
+  font-weight: 600 !important;
+}
+
+[data-sonner-toast][data-type="success"] [data-description] {
+  color: #15803d !important;
+}
+
+/* Sonner Toast Error Styling */
+[data-sonner-toast][data-type="error"] {
+  background: #fef2f2 !important;
+  border: 1px solid #ef4444 !important;
+  color: #991b1b !important;
+}
+
+[data-sonner-toast][data-type="error"] [data-title] {
+  color: #991b1b !important;
+  font-weight: 600 !important;
+}
+
+[data-sonner-toast][data-type="error"] [data-description] {
+  color: #dc2626 !important;
+}
+
+/* Sonner Toast Warning Styling */
+[data-sonner-toast][data-type="warning"] {
+  background: #fef3c7 !important;
+  border: 1px solid #f59e0b !important;
+  color: #92400e !important;
+}
+
+[data-sonner-toast][data-type="warning"] [data-title] {
+  color: #92400e !important;
+  font-weight: 600 !important;
+}
+
+[data-sonner-toast][data-type="warning"] [data-description] {
+  color: #d97706 !important;
+}
+
+/* Sonner Toast Info Styling */
+[data-sonner-toast][data-type="info"] {
+  background: #dbeafe !important;
+  border: 1px solid #3b82f6 !important;
+  color: #1e40af !important;
+}
+
+[data-sonner-toast][data-type="info"] [data-title] {
+  color: #1e40af !important;
+  font-weight: 600 !important;
+}
+
+[data-sonner-toast][data-type="info"] [data-description] {
+  color: #2563eb !important;
 }
 
 /* React Burger Menu Styles */
