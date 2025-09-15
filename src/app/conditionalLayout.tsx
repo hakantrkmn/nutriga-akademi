@@ -25,7 +25,7 @@ export default function ConditionalLayout({
   return (
     <div className="site-root site-theme-sage site-font-sage">
       <Header />
-      <div className="pt-20">{children}</div>
+      <div>{children}</div>
       <Footer />
       <ContactButton />
     </div>

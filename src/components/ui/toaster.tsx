@@ -1,13 +1,14 @@
 "use client";
 
-import { Toaster as HotToaster, toast } from "react-hot-toast";
+import { Toaster as SonnerToaster, toast } from "sonner";
 
 export const toaster = toast;
 
 export function Toaster() {
   return (
-    <HotToaster
+    <SonnerToaster
       position="top-right"
+      theme="light"
       toastOptions={{
         duration: 3500,
         style: {
@@ -17,25 +18,6 @@ export function Toaster() {
           borderRadius: "14px",
           boxShadow:
             "0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)",
-          padding: "16px",
-        },
-        success: {
-          style: {
-            borderColor: "var(--primary)",
-          },
-          iconTheme: {
-            primary: "var(--primary)",
-            secondary: "#ffffff",
-          },
-        },
-        error: {
-          style: {
-            borderColor: "#E53E3E", // red.500
-          },
-          iconTheme: {
-            primary: "#E53E3E",
-            secondary: "#ffffff",
-          },
         },
       }}
     />

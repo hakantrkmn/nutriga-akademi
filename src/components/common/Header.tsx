@@ -7,25 +7,19 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import {
-  Sheet,
-  SheetContent,
-  SheetHeader,
-  SheetTitle,
-  SheetTrigger,
-} from "@/components/ui/sheet";
 import { COMPANY_NAME } from "@/constants";
 import { useCart } from "@/hooks/useCart";
 import { createClient } from "@/lib/supabase/client";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import { slide as Menu } from "react-burger-menu";
 import { FiLogOut } from "react-icons/fi";
 import { HiMenu } from "react-icons/hi";
 
 export default function Header() {
   const [isMobile, setIsMobile] = useState(false);
-  const [open, setOpen] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
   const router = useRouter();
   const supabase = createClient();
   const { isAuthenticated } = useCart();
@@ -162,7 +156,7 @@ export default function Header() {
   );
 
   return (
-    <header className="bg-white shadow-sm border-b border-gray-100 fixed top-0 left-0 right-0 z-50">
+    <header className="bg-white shadow-sm border-b border-gray-100 fixed top-0 left-0 right-0 z-50 relative">
       <div className="max-w-6xl mx-auto px-4 md:px-6 py-4 grid grid-cols-[1fr_2fr_1fr] items-center md:grid-cols-[1fr_2fr_1fr] grid-cols-2">
         {/* Logo */}
         <div className="justify-self-start flex-shrink-0">
@@ -226,89 +220,148 @@ export default function Header() {
 
         {/* Mobile Hamburger */}
         {isMobile && (
-          <div className="justify-self-end md:justify-self-end">
-            <Sheet open={open} onOpenChange={setOpen}>
-              <SheetTrigger asChild>
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  className="text-secondary-text hover:text-primary hover:bg-gray-50"
-                >
-                  <HiMenu className="h-5 w-5" />
-                </Button>
-              </SheetTrigger>
-            </Sheet>
+          <div className="absolute right-4 top-1/2 transform -translate-y-1/2">
+            <Button
+              variant="ghost"
+              size="icon"
+              className="text-secondary-text hover:text-primary hover:bg-gray-50"
+              onClick={() => setMenuOpen(!menuOpen)}
+            >
+              <HiMenu className="h-5 w-5" />
+            </Button>
           </div>
         )}
       </div>
 
-      {/* Mobile Sheet */}
-      <Sheet open={open} onOpenChange={setOpen}>
-        <SheetContent>
-          <SheetHeader>
-            <SheetTitle>Menü</SheetTitle>
-          </SheetHeader>
-          <div className="pt-6 space-y-6">
-            <nav className="flex flex-col space-y-4">
-              <NavItems onItemClick={() => setOpen(false)} />
+      {/* Mobile Burger Menu */}
+      {isMobile && (
+        <Menu
+          isOpen={menuOpen}
+          onStateChange={(state: { isOpen: boolean }) =>
+            setMenuOpen(state.isOpen)
+          }
+          right
+          width={280}
+          customBurgerIcon={false}
+          customCrossIcon={false}
+        >
+          <div className="p-6">
+            <h2 className="text-lg font-semibold mb-6 text-primary">Menü</h2>
+
+            {/* Navigation Links */}
+            <nav className="space-y-4 mb-8">
+              <Link
+                href="/"
+                className="block text-secondary-text hover:text-primary transition-colors py-2"
+                onClick={() => setMenuOpen(false)}
+              >
+                Ana Sayfa
+              </Link>
+
+              <div className="py-2">
+                <div className="text-secondary-text hover:text-primary cursor-pointer py-2">
+                  Kurumsal
+                </div>
+                <div className="ml-4 space-y-2 mt-2">
+                  <Link
+                    href="/hakkimizda"
+                    className="block text-gray-600 hover:text-primary transition-colors py-1"
+                    onClick={() => setMenuOpen(false)}
+                  >
+                    Hakkımızda
+                  </Link>
+                  <Link
+                    href="/misyon"
+                    className="block text-gray-600 hover:text-primary transition-colors py-1"
+                    onClick={() => setMenuOpen(false)}
+                  >
+                    Misyonumuz
+                  </Link>
+                  <Link
+                    href="/vizyon"
+                    className="block text-gray-600 hover:text-primary transition-colors py-1"
+                    onClick={() => setMenuOpen(false)}
+                  >
+                    Vizyonumuz
+                  </Link>
+                </div>
+              </div>
+
+              <Link
+                href="/egitimler"
+                className="block text-secondary-text hover:text-primary transition-colors py-2"
+                onClick={() => setMenuOpen(false)}
+              >
+                Eğitimler
+              </Link>
+
+              <Link
+                href="/blog"
+                className="block text-secondary-text hover:text-primary transition-colors py-2"
+                onClick={() => setMenuOpen(false)}
+              >
+                Blog
+              </Link>
+
+              <Link
+                href="/iletisim"
+                className="block text-secondary-text hover:text-primary transition-colors py-2"
+                onClick={() => setMenuOpen(false)}
+              >
+                İletişim
+              </Link>
             </nav>
 
-            <div className="pt-6 space-y-3">
-              {isAuthenticated && (
-                <Button
-                  variant="ghost"
-                  className="w-full justify-start text-secondary-text hover:text-primary hover:bg-gray-50"
-                  onClick={() => {
-                    setOpen(false);
-                    router.push("/cart");
-                  }}
-                >
-                  Sepet
-                </Button>
-              )}
+            {/* Auth Buttons */}
+            <div className="space-y-3">
+              <button
+                className="w-full text-left text-secondary-text hover:text-primary hover:bg-gray-50 py-2 px-3 rounded transition-colors"
+                onClick={() => {
+                  setMenuOpen(false);
+                  router.push("/cart");
+                }}
+              >
+                🛒 Sepet
+              </button>
               {isAuthenticated ? (
                 <>
-                  <p className="text-muted-text text-sm w-full text-left">
-                    {userEmail}
-                  </p>
-                  <Button
-                    variant="ghost"
-                    className="w-full justify-start text-secondary-text hover:text-primary hover:bg-gray-50"
+                  <p className="text-muted-text text-sm py-2">{userEmail}</p>
+                  <button
+                    className="w-full text-left text-secondary-text hover:text-primary hover:bg-gray-50 py-2 px-3 rounded transition-colors"
                     onClick={() => {
                       handleLogout();
-                      setOpen(false);
+                      setMenuOpen(false);
                     }}
                   >
                     Çıkış Yap
-                  </Button>
+                  </button>
                 </>
               ) : (
                 <>
-                  <Button
-                    variant="ghost"
-                    className="w-full justify-center text-secondary-text hover:text-primary hover:bg-gray-50"
+                  <button
+                    className="w-full text-center bg-gray-100 hover:bg-gray-200 text-secondary-text py-2 px-4 rounded-lg transition-colors mb-3"
                     onClick={() => {
-                      setOpen(false);
+                      setMenuOpen(false);
                       router.push("/auth/login");
                     }}
                   >
                     Giriş Yap
-                  </Button>
-                  <Button
-                    className="w-full bg-[#16a34a] hover:bg-[#15803d] text-white px-6 py-2 font-medium"
+                  </button>
+                  <button
+                    className="w-full bg-[#16a34a] hover:bg-[#15803d] text-white py-2 px-4 rounded-lg font-medium transition-colors"
                     onClick={() => {
-                      setOpen(false);
+                      setMenuOpen(false);
                       router.push("/auth/register");
                     }}
                   >
                     Kayıt Ol
-                  </Button>
+                  </button>
                 </>
               )}
             </div>
           </div>
-        </SheetContent>
-      </Sheet>
+        </Menu>
+      )}
     </header>
   );
 }
