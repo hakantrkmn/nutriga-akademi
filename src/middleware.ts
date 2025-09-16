@@ -7,6 +7,7 @@ export async function middleware(request: NextRequest) {
     "/admin/egitimler",
     "/admin/blog",
     "/admin/hero",
+    "/admin/mesajlar",
   ];
   const pathname = request.nextUrl.pathname;
 

@@ -162,6 +162,16 @@ export default function Footer() {
         <div className="mt-12 pt-8 border-t border-gray-600">
           <div className="space-y-4 text-center">
             <div className="flex justify-center gap-6 flex-wrap text-sm text-gray-400">
+              <Link href="/iptal-ve-iade">
+                <span className="hover:text-primary-400 cursor-pointer transition-colors">
+                  İptal ve İade
+                </span>
+              </Link>
+              <Link href="/gizlilik-sozlesmesi">
+                <span className="hover:text-primary-400 cursor-pointer transition-colors">
+                  Gizlilik Sözleşmesi
+                </span>
+              </Link>
               <Link href="/gizlilik-politikasi">
                 <span className="hover:text-primary-400 cursor-pointer transition-colors">
                   Gizlilik Politikası

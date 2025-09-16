@@ -11,6 +11,7 @@ import {
   FiHome,
   FiImage,
   FiLogOut,
+  FiMail,
 } from "react-icons/fi";
 
 export default function AdminHeader() {
@@ -115,6 +116,21 @@ export default function AdminHeader() {
               Blog
             </Button>
           </Link>
+
+          <Link href="/admin/mesajlar">
+            <Button
+              variant="ghost"
+              size="sm"
+              className={`h-8 ${
+                isActive("/admin/mesajlar")
+                  ? "bg-primary-50 text-primary-600"
+                  : "text-gray-900 hover:bg-gray-50"
+              }`}
+            >
+              <FiMail className="mr-2 h-4 w-4" />
+              Mesajlar
+            </Button>
+          </Link>
         </div>
 
         {/* Mobil Navigation */}
@@ -158,6 +174,20 @@ export default function AdminHeader() {
               }`}
             >
               <FiFileText className="h-3.5 w-3.5" />
+            </Button>
+          </Link>
+
+          <Link href="/admin/mesajlar">
+            <Button
+              variant="ghost"
+              size="sm"
+              className={`px-1.5 h-8 ${
+                isActive("/admin/mesajlar")
+                  ? "bg-primary-50 text-primary-600"
+                  : "text-gray-900 hover:bg-gray-50"
+              }`}
+            >
+              <FiMail className="h-3.5 w-3.5" />
             </Button>
           </Link>
         </div>

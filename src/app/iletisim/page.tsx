@@ -3,10 +3,10 @@ import type { Metadata } from "next";
 import IletisimContent from "../../components/contact/ContactContext";
 
 export const metadata: Metadata = {
-  title: "İletişim | " + COMPANY_NAME,
+  title: "Bize Soru Sorun | " + COMPANY_NAME,
   description:
     COMPANY_NAME +
-    " ile iletişime geçin. Beslenme eğitimlerimiz hakkında sorularınızı bizimle paylaşın.",
+    " hakkında sorularınızı bize sorun. Beslenme eğitimlerimiz hakkında bilgi alın.",
 };
 
 export default function IletisimPage() {

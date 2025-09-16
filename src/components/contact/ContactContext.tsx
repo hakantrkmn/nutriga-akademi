@@ -8,12 +8,11 @@ export default function IletisimContent() {
         {/* Page Header */}
         <div className="flex flex-col gap-4 text-center mb-12">
           <h1 className="text-3xl md:text-4xl font-bold text-green-600">
-            İletişime Geçin
+            Bize Soru Sorun
           </h1>
           <p className="text-xl text-gray-600 max-w-2xl mx-auto leading-relaxed">
             Beslenme eğitimlerimiz ve hizmetlerimiz hakkında merak ettikleriniz
-            için bizimle iletişime geçin. Size yardımcı olmaktan mutluluk
-            duyarız.
+            için bize soru sorun. Size yardımcı olmaktan mutluluk duyarız.
           </p>
         </div>
 

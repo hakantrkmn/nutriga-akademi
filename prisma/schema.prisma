@@ -77,7 +77,7 @@ model User {
   updatedAt          DateTime @default(now()) @updatedAt @map("updated_at") @db.Timestamptz(6)
 
   // Relations
-  desiredEducation   Egitim?  @relation("UserDesiredEducation", fields: [desiredEducationId], references: [id], onDelete: SetNull)
+  desiredEducation   Egitim?         @relation("UserDesiredEducation", fields: [desiredEducationId], references: [id], onDelete: SetNull)
   cartItems          CartItem[]
 
   @@map("users")
@@ -96,4 +96,19 @@ model HeroSlide {
   updatedAt   DateTime @default(now()) @updatedAt @map("updated_at") @db.Timestamptz(6)
 
   @@map("hero_slides")
+}
+
+model ContactMessage {
+  id        String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  name      String   @map("name")
+  email     String   @map("email")
+  phone     String   @map("phone")
+  message   String   @map("message")
+  isRead    Boolean  @default(false) @map("is_read")
+  status    String   @default("pending") @map("status") // pending, answered, archived
+  userId    String?  @map("user_id") @db.Uuid
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt DateTime @default(now()) @updatedAt @map("updated_at") @db.Timestamptz(6)
+
+  @@map("contact_messages")
 }

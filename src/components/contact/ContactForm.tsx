@@ -4,30 +4,93 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { toaster } from "@/components/ui/toaster";
-import { useState } from "react";
+import { useAuth } from "@/hooks/useAuth";
+import { useEffect, useState } from "react";
+
+interface UserData {
+  firstName: string;
+  lastName: string;
+  email: string;
+  phone: string;
+}
 
 export default function ContactForm() {
+  const { user } = useAuth();
   const [formData, setFormData] = useState({
     name: "",
     email: "",
+    phone: "",
     message: "",
   });
 
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [userData, setUserData] = useState<UserData | null>(null);
+
+  // Fetch user data when user is logged in
+  useEffect(() => {
+    const fetchUserData = async () => {
+      if (user?.email) {
+        try {
+          const response = await fetch(`/api/user/profile?email=${user.email}`);
+          if (response.ok) {
+            const data = await response.json();
+            setUserData(data);
+            // Auto-fill form with user data
+            setFormData({
+              name: `${data.firstName} ${data.lastName}`,
+              email: data.email,
+              phone: data.phone || "",
+              message: "",
+            });
+          }
+        } catch (error) {
+          console.error("Error fetching user data:", error);
+        }
+      }
+    };
+
+    fetchUserData();
+  }, [user]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
 
     try {
-      // Simulated form submission
-      await new Promise((resolve) => setTimeout(resolve, 1000));
+      // Send message to API
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          phone: formData.phone,
+          message: formData.message,
+          userId: user?.id || null,
+        }),
+      });
 
-      // Reset form
-      setFormData({ name: "", email: "", message: "" });
+      if (!response.ok) {
+        throw new Error("Mesaj gönderilemedi");
+      }
+
+      // Reset form - keep user data if logged in
+      if (user && userData) {
+        setFormData({
+          name: `${userData.firstName} ${userData.lastName}`,
+          email: userData.email,
+          phone: userData.phone || "",
+          message: "",
+        });
+      } else {
+        setFormData({ name: "", email: "", phone: "", message: "" });
+      }
 
       toaster.success("Mesajınız başarıyla gönderildi!");
-    } catch {
+    } catch (error) {
+      console.error("Form submission error:", error);
       toaster.error(
         "Mesaj gönderilirken bir hata oluştu. Lütfen tekrar deneyin."
       );
@@ -50,7 +113,7 @@ export default function ContactForm() {
       <div className="flex flex-col gap-6">
         <div className="text-center">
           <h2 className="text-xl font-semibold text-gray-800 mb-2">
-            Bizimle İletişime Geçin
+            Bize Soru Sorun
           </h2>
           <p className="text-gray-600 text-sm">
             Sorularınız için bize mesaj gönderin, size en kısa sürede dönüş
@@ -86,6 +149,21 @@ export default function ContactForm() {
                 value={formData.email}
                 onChange={handleChange}
                 placeholder="email@example.com"
+                required
+              />
+            </div>
+
+            {/* Phone Input */}
+            <div className="w-full">
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Telefon Numarası *
+              </label>
+              <Input
+                type="tel"
+                name="phone"
+                value={formData.phone}
+                onChange={handleChange}
+                placeholder="0555 555 55 55"
                 required
               />
             </div>
