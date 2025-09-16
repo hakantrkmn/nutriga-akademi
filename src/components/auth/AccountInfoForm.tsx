@@ -23,6 +23,8 @@ interface AccountInfoFormProps {
   setConfirmPassword: (value: string) => void;
   kvkkAccepted: boolean;
   setKvkkAccepted: (value: boolean) => void;
+  notificationPermission: boolean;
+  setNotificationPermission: (value: boolean) => void;
 }
 
 export function AccountInfoForm({
@@ -34,6 +36,8 @@ export function AccountInfoForm({
   setConfirmPassword,
   kvkkAccepted,
   setKvkkAccepted,
+  notificationPermission,
+  setNotificationPermission,
 }: AccountInfoFormProps) {
   const [isKvkkModalOpen, setIsKvkkModalOpen] = useState(false);
 
@@ -287,6 +291,27 @@ export function AccountInfoForm({
               </Dialog>{" "}
               &apos;ni okudum ve kişisel verilerimin yukarıda açıklanan şekilde
               işlenmesine onay veriyorum. *
+            </Label>
+          </div>
+        </div>
+
+        {/* Notification Permission Checkbox */}
+        <div className="flex items-start space-x-3 pt-2">
+          <Checkbox
+            id="notification-permission"
+            checked={notificationPermission}
+            onCheckedChange={(checked: boolean) =>
+              setNotificationPermission(checked)
+            }
+            className="mt-1"
+          />
+          <div className="text-sm leading-relaxed">
+            <Label
+              htmlFor="notification-permission"
+              className="text-gray-700 font-normal cursor-pointer"
+            >
+              Dijital posta, e-posta bildirim, kampanya ve bilgilendirmelerden
+              haberdar olmak istiyorum.
             </Label>
           </div>
         </div>

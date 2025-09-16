@@ -17,7 +17,7 @@ export async function GET(request: NextRequest) {
     // Get user profile from database
     const { data: userData, error } = await supabase
       .from("users")
-      .select("first_name, last_name, email, phone")
+      .select("first_name, last_name, email, phone, notification_permission")
       .eq("email", email)
       .single();
 
@@ -42,14 +42,12 @@ export async function GET(request: NextRequest) {
       lastName: userData.last_name,
       email: userData.email,
       phone: userData.phone,
+      notificationPermission: userData.notification_permission,
     };
 
     return NextResponse.json(formattedData);
   } catch (error) {
     console.error("API error:", error);
-    return NextResponse.json(
-      { error: "Sunucu hatası" },
-      { status: 500 }
-    );
+    return NextResponse.json({ error: "Sunucu hatası" }, { status: 500 });
   }
 }

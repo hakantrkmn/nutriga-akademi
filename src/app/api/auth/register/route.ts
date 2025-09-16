@@ -13,6 +13,7 @@ export async function POST(request: NextRequest) {
       class: classValue,
       email,
       phone,
+      notification_permission,
       desired_education_id,
     } = await request.json();
 
@@ -34,6 +35,7 @@ export async function POST(request: NextRequest) {
       class: profession === "Öğrenci" ? classValue : null,
       email: email.trim(),
       phone: phone?.trim() || null,
+      notificationPermission: notification_permission || false,
       desiredEducationId: desired_education_id || null,
     };
 

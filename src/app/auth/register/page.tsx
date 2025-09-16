@@ -35,6 +35,9 @@ export default function RegisterPage() {
   // KVKK Acceptance
   const [kvkkAccepted, setKvkkAccepted] = useState(false);
 
+  // Notification Permission
+  const [notificationPermission, setNotificationPermission] = useState(false);
+
   const [loading, setLoading] = useState(false);
 
   const validateForm = () => {
@@ -125,6 +128,7 @@ export default function RegisterPage() {
           class: profession === "Öğrenci" ? classValue : null,
           email: email.trim(),
           phone: phone.trim() || null,
+          notification_permission: notificationPermission,
           desired_education_id:
             selectedEducationId === "none" ? null : selectedEducationId || null,
         };
@@ -186,6 +190,8 @@ export default function RegisterPage() {
                   setConfirmPassword={setConfirmPassword}
                   kvkkAccepted={kvkkAccepted}
                   setKvkkAccepted={setKvkkAccepted}
+                  notificationPermission={notificationPermission}
+                  setNotificationPermission={setNotificationPermission}
                 />
               </div>
 

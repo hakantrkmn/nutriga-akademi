@@ -12,6 +12,7 @@ interface UserData {
   lastName: string;
   email: string;
   phone: string;
+  notificationPermission?: boolean;
 }
 
 export default function ContactForm() {
