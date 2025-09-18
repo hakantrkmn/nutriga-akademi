@@ -10,6 +10,7 @@ import {
 import { COMPANY_NAME } from "@/constants";
 import { useCart } from "@/hooks/useCart";
 import { createClient } from "@/lib/supabase/client";
+import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -157,11 +158,18 @@ export default function Header() {
 
   return (
     <header className="bg-white shadow-sm border-b border-gray-100 fixed top-0 left-0 right-0 z-50 relative">
-      <div className="max-w-6xl mx-auto px-4 md:px-6 py-4 grid grid-cols-[1fr_2fr_1fr] items-center md:grid-cols-[1fr_2fr_1fr] grid-cols-2">
+      <div className="max-w-6xl mx-auto px-4 md:px-6 py-4 grid grid-cols-[auto_1fr_auto] items-center md:grid-cols-[auto_1fr_auto] grid-cols-2">
         {/* Logo */}
         <div className="justify-self-start flex-shrink-0">
-          <Link href="/">
-            <h1 className="text-2xl font-bold text-primary-600 hover:text-primary-700 cursor-pointer transition-colors whitespace-nowrap">
+          <Link href="/" className="flex items-center gap-2">
+            <Image
+              src="/logo.svg"
+              alt="NutriHome Akademi Logo"
+              width={32}
+              height={32}
+              className="w-8 h-8"
+            />
+            <h1 className="text-xl font-bold text-primary-600 hover:text-primary-700 cursor-pointer transition-colors whitespace-nowrap">
               {COMPANY_NAME}
             </h1>
           </Link>

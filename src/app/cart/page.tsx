@@ -1,14 +1,18 @@
 "use client";
 
+import ContractModal from "@/components/modals/ContractModal";
+import PreInfoModal from "@/components/modals/PreInfoModal";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
+import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import { toaster } from "@/components/ui/toaster";
 import { useCart } from "@/hooks/useCart";
 import { Minus, Plus, Trash2 } from "lucide-react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
 
 export default function CartPage() {
   const router = useRouter();
@@ -21,6 +25,11 @@ export default function CartPage() {
     removeItem,
     checkout,
   } = useCart();
+
+  const [contractAccepted, setContractAccepted] = useState(false);
+  const [preInfoAccepted, setPreInfoAccepted] = useState(false);
+  const [contractModalOpen, setContractModalOpen] = useState(false);
+  const [preInfoModalOpen, setPreInfoModalOpen] = useState(false);
 
   return (
     <div className="max-w-7xl mx-auto px-4 md:px-6 py-6 md:py-8">
@@ -151,10 +160,72 @@ export default function CartPage() {
                 <span className="font-bold text-gray-800">Toplam</span>
                 <span className="font-bold text-primary">₺{subtotal}</span>
               </div>
+
+              {/* Contract Agreement */}
+              <div className="flex items-start gap-3 p-4 bg-gray-50 rounded-lg">
+                <Checkbox
+                  id="contract-agreement"
+                  checked={contractAccepted}
+                  onCheckedChange={(checked) =>
+                    setContractAccepted(checked as boolean)
+                  }
+                />
+                <label
+                  htmlFor="contract-agreement"
+                  className="text-sm text-gray-700 cursor-pointer"
+                >
+                  <ContractModal
+                    isOpen={contractModalOpen}
+                    onOpenChange={setContractModalOpen}
+                    onAccept={() => {
+                      setContractAccepted(true);
+                      setContractModalOpen(false);
+                    }}
+                  >
+                    <span className="text-primary hover:underline font-medium">
+                      Mesafeli Satış Sözleşmesi
+                    </span>
+                  </ContractModal>
+                  &apos;ni okudum ve kabul ediyorum.
+                </label>
+              </div>
+
+              {/* Pre-Information Form Agreement */}
+              <div className="flex items-start gap-3 p-4 bg-blue-50 rounded-lg">
+                <Checkbox
+                  id="pre-info-agreement"
+                  checked={preInfoAccepted}
+                  onCheckedChange={(checked) =>
+                    setPreInfoAccepted(checked as boolean)
+                  }
+                />
+                <label
+                  htmlFor="pre-info-agreement"
+                  className="text-sm text-gray-700 cursor-pointer"
+                >
+                  <PreInfoModal
+                    isOpen={preInfoModalOpen}
+                    onOpenChange={setPreInfoModalOpen}
+                    onAccept={() => {
+                      setPreInfoAccepted(true);
+                      setPreInfoModalOpen(false);
+                    }}
+                    subtotal={subtotal}
+                  >
+                    <span className="text-primary hover:underline font-medium">
+                      Ön Bilgilendirme Formu
+                    </span>
+                  </PreInfoModal>
+                  &apos;nu okudum ve kabul ediyorum.
+                </label>
+              </div>
+
               <Button
                 size="lg"
                 className="w-full h-12 rounded-xl bg-primary hover:bg-primary/90 text-white disabled:opacity-50"
-                disabled={items.length === 0}
+                disabled={
+                  items.length === 0 || !contractAccepted || !preInfoAccepted
+                }
                 onClick={async () => {
                   if (!isAuthenticated) {
                     toaster.success("Satın almak için lütfen giriş yapın");

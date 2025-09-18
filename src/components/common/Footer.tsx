@@ -172,11 +172,7 @@ export default function Footer() {
                   Gizlilik Sözleşmesi
                 </span>
               </Link>
-              <Link href="/gizlilik-politikasi">
-                <span className="hover:text-primary-400 cursor-pointer transition-colors">
-                  Gizlilik Politikası
-                </span>
-              </Link>
+
               <Link href="/kullanim-kosullari">
                 <span className="hover:text-primary-400 cursor-pointer transition-colors">
                   Kullanım Koşulları
@@ -190,7 +186,7 @@ export default function Footer() {
             </div>
 
             <p className="text-sm text-gray-400">
-              © {currentYear} NutriHome Akademi. Tüm hakları saklıdır.
+              © {currentYear} Nutriga Akademi. Tüm hakları saklıdır.
             </p>
           </div>
         </div>
