@@ -1,0 +1,23 @@
+{
+	"folders": [
+		{
+			"name": "nutriga-akademi",
+			"path": "../../.."
+		}
+	],
+	"settings": {
+		"terminal.integrated.smoothScrolling": true,
+		"terminal.integrated.cursorBlinking": true,
+		"workbench.list.smoothScrolling": true,
+		"window.autoDetectColorScheme": false,
+		"workbench.iconTheme": "material-icon-theme",
+		"material-icon-theme.folders.color": "#26a69a",
+		"material-icon-theme.activeIconPack": "angular",
+		"material-icon-theme.hidesExplorerArrows": true,
+		"workbench.colorCustomizations": {
+			"list.activeSelectionBackground": "#2d3748",
+			"list.hoverBackground": "#2d3748",
+			"list.inactiveSelectionBackground": "#2d3748"
+		}
+	}
+}

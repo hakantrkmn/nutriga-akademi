@@ -542,14 +542,14 @@ export const dummyEgitimler: Egitim[] = [
                 {
                   type: "link",
                   attrs: {
-                    href: "http://localhost:3000/admin/egitimler/yeni",
+                    href: "/admin/egitimler/yeni",
                     target: "_blank",
                     rel: "noopener noreferrer nofollow",
                     class: "tiptap-link",
                   },
                 },
               ],
-              text: "http://localhost:3000/admin/egitimler/yeni",
+              text: "/admin/egitimler/yeni",
             },
           ],
         },

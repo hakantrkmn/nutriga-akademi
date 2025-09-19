@@ -33,6 +33,7 @@ const sourceSans3 = Source_Sans_3({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://nutrigaakademi.com"),
   title: "NutriHome Akademi",
   description: "Diyetisyen eğitimleri ve beslenme bilgileri",
 };
