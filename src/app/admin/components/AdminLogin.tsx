@@ -61,7 +61,7 @@ export default function AdminLogin() {
               <h1 className="text-2xl font-bold text-green-600">
                 Admin Girişi
               </h1>
-              <p className="text-gray-600">NutriHome Akademi Admin Paneli</p>
+              <p className="text-gray-600">Nutriga Akademi Admin Paneli</p>
             </div>
 
             {/* Error Alert */}

@@ -1,18 +1,19 @@
 export const COMPANY_NAME = "Nutriga Akademi";
 export const COMPANY_ADDRESS = "İstanbul, Türkiye";
 export const COMPANY_PHONE = "+90 (212) 555 0123";
-export const COMPANY_EMAIL = "info@nutrihome.com";
+export const COMPANY_EMAIL = "info@nutrigaakademi.com";
 export const COMPANY_WORK_HOURS = "Pazartesi - Cuma: 09:00 - 18:00";
 export const COMPANY_WORK_HOURS_WEEKEND = "Cumartesi: 10:00 - 16:00";
-export const COMPANY_FACEBOOK_URL = "https://facebook.com/nutrihome";
-export const COMPANY_TWITTER_URL = "https://twitter.com/nutrihome";
-export const COMPANY_INSTAGRAM_URL = "https://instagram.com/nutrihome";
-export const COMPANY_LINKEDIN_URL = "https://linkedin.com/company/nutrihome";
-export const COMPANY_YOUTUBE_URL = "https://youtube.com/nutrihome";
+export const COMPANY_FACEBOOK_URL = "https://facebook.com/nutrigaakademi";
+export const COMPANY_TWITTER_URL = "https://twitter.com/nutrigaakademi";
+export const COMPANY_INSTAGRAM_URL = "https://instagram.com/nutrigaakademi";
+export const COMPANY_LINKEDIN_URL =
+  "https://linkedin.com/company/nutrigaakademi";
+export const COMPANY_YOUTUBE_URL = "https://youtube.com/nutrigaakademi";
 
 // İletişim bilgileri
 export const COMPANY_WHATSAPP_NUMBER = "905070548353"; // Gerçek WhatsApp numarası
-export const COMPANY_INSTAGRAM_USERNAME = "nutrihomeakademi"; // Instagram kullanıcı adı (@ olmadan)
+export const COMPANY_INSTAGRAM_USERNAME = "nutrigaakademi"; // Instagram kullanıcı adı (@ olmadan)
 export const COMPANY_WHATSAPP_MESSAGE =
   "Merhaba, Nutriga Akademi ile ilgili bilgi almak istiyorum.";
 

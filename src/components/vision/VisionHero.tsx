@@ -13,11 +13,13 @@ export default function VisionHero() {
             <h1 className="text-5xl font-bold text-orange-500">Vizyonumuz</h1>
 
             <p className="text-2xl text-gray-700 leading-relaxed font-medium">
-              Türkiye&apos;nin beslenme alanında önde gelen eğitim platformu
-              olmak ve dünya standartlarında diyetisyen uzmanlar yetiştirmek.
+              Beslenme eğitiminin gücünü herkes için erişilebilir kılarak,
+              yenilikçi ve interaktif yöntemlerle bireyleri &quot; beslenme
+              okuryazarı&quot; yapan lider bir eğitim ekosistemi olmayı
+              hedefliyor.
             </p>
 
-            <p className="text-lg text-gray-600 leading-relaxed max-w-3xl">
+            <p className="text-lg text-gray-600 leading-relaxed">
               Geleceğe bakışımız, beslenme bilimindeki liderliğimizi
               pekiştirerek, küresel standartlarda eğitim veren, yenilikçi ve
               sürdürülebilir bir akademi olmaktır.

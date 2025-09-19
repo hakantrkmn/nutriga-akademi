@@ -50,9 +50,8 @@ export default function TermsPolicy() {
               Üyelik / Kullanım Koşulları
             </h2>
             <p className="text-lg text-gray-600 max-w-3xl">
-              NutriHome Akademi platformunu kullanırken uymanız gereken
-              kurallar, haklarınız ve sorumluluklarınız hakkında detaylı
-              bilgiler.
+              Nutriga Akademi platformunu kullanırken uymanız gereken kurallar,
+              haklarınız ve sorumluluklarınız hakkında detaylı bilgiler.
             </p>
           </div>
 
@@ -450,7 +449,7 @@ export default function TermsPolicy() {
               <div className="flex items-center gap-2">
                 <HiMail className="text-green-500" />
                 <span className="font-semibold">E-posta:</span>
-                <span>destek@nutrihomeakademi.com</span>
+                <span>destek@nutrigaakademi.com</span>
               </div>
               <div className="flex items-center gap-2">
                 <span className="font-semibold">Telefon:</span>

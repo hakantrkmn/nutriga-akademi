@@ -6,9 +6,9 @@ import BlogContent from "../../components/blog/BlogContent";
 export const revalidate = 1800; // 30 dakika = 1800 saniye
 
 export const metadata: Metadata = {
-  title: "Blog | NutriHome Akademi",
+  title: "Blog | Nutriga Akademi",
   description:
-    "Beslenme uzmanlarından güncel makaleler, sağlıklı yaşam ipuçları ve beslenme rehberleri. NutriHome Akademi blog sayfası.",
+    "Beslenme uzmanlarından güncel makaleler, sağlıklı yaşam ipuçları ve beslenme rehberleri. Nutriga Akademi blog sayfası.",
 };
 
 export default async function BlogPage() {

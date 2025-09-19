@@ -58,7 +58,7 @@ export default function ContractModal({
                   <strong>ADRES:</strong> [Müşteri adresi]
                 </p>
                 <p>
-                  <strong>SATICI:</strong> NutriHome Akademi
+                  <strong>SATICI:</strong> Nutriga Akademi
                 </p>
                 <p>
                   <strong>ŞİRKET UNVANI:</strong> [Şirket unvanı]

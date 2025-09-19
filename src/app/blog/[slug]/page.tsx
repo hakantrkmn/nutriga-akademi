@@ -37,18 +37,18 @@ export async function generateMetadata({
 
     if (!postOriginal) {
       return {
-        title: "Blog yazısı bulunamadı | NutriHome Akademi",
+        title: "Blog yazısı bulunamadı | Nutriga Akademi",
       };
     }
 
     return {
-      title: `${postOriginal.title} | NutriHome Akademi`,
+      title: `${postOriginal.title} | Nutriga Akademi`,
       description: postOriginal.excerpt,
     };
   }
 
   return {
-    title: `${post.title} | NutriHome Akademi`,
+    title: `${post.title} | Nutriga Akademi`,
     description: post.excerpt,
   };
 }

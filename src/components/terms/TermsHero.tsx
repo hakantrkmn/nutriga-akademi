@@ -12,7 +12,7 @@ export default function TermsHero() {
           </p>
 
           <p className="text-lg text-gray-600 leading-relaxed">
-            NutriHome Akademi platformunu kullanırken uymanız gereken kurallar,
+            Nutriga Akademi platformunu kullanırken uymanız gereken kurallar,
             haklarınız ve sorumluluklarınız hakkında detaylı bilgi edinin.
           </p>
         </div>

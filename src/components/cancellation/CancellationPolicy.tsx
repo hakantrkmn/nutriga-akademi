@@ -72,7 +72,7 @@ export default function CancellationPolicy() {
               İptal ve İade Koşullarımız
             </h2>
             <p className="text-lg text-gray-600 max-w-2xl">
-              NutriHome Akademi olarak müşteri memnuniyetinizi ön planda
+              Nutriga Akademi olarak müşteri memnuniyetinizi ön planda
               tutuyoruz. Aşağıda iptal ve iade süreçlerimizi detaylarıyla
               bulabilirsiniz.
             </p>
@@ -302,7 +302,7 @@ export default function CancellationPolicy() {
               <div className="flex items-center gap-2">
                 <HiMail className="text-green-500" />
                 <span className="font-semibold">E-posta:</span>
-                <span>destek@nutrihomeakademi.com</span>
+                <span>destek@nutrigaakademi.com</span>
               </div>
               <div className="flex items-center gap-2">
                 <span className="font-semibold">Telefon:</span>

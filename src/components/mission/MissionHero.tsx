@@ -13,13 +13,13 @@ export default function MissionHero() {
             <h1 className="text-5xl font-bold text-green-500">Misyonumuz</h1>
 
             <p className="text-2xl text-gray-700 leading-relaxed font-medium">
-              Beslenme alanında en güncel ve kanıta dayalı bilgileri paylaşarak,
-              diyetisyenlerin mesleki yeterliliklerini artırmak ve toplum
-              sağlığına katkı sağlamak.
+              Nutriga Akademi, bilimsel temelli, erişilebilir beslenme
+              eğitimleriyle bireylerin yaşamına sürdürülebilir ve dönüştürücü
+              değer katmayı hedefler.
             </p>
 
-            <p className="text-lg text-gray-600 leading-relaxed max-w-3xl">
-              NutriHome Akademi olarak, beslenme biliminin sürekli gelişen
+            <p className="text-lg text-gray-600 leading-relaxed">
+              Nutriga Akademi olarak, beslenme biliminin sürekli gelişen
               doğasını takip ederek, diyetisyenlere en güncel bilgileri sunmayı
               ve onların profesyonel gelişimlerine destek olmayı kendimize görev
               edindik.

@@ -72,7 +72,7 @@ export default function PreInfoModal({
               </h3>
               <div className="space-y-2">
                 <p>
-                  <strong>Unvan:</strong> NutriHome Akademi
+                  <strong>Unvan:</strong> Nutriga Akademi
                 </p>
                 <p>
                   <strong>MERSİS/VKN:</strong> [Vergi Kimlik Numarası]
@@ -84,11 +84,11 @@ export default function PreInfoModal({
                   <strong>Telefon:</strong> +90 (216) 555 00 00
                 </p>
                 <p>
-                  <strong>E-posta:</strong> destek@nutrihomeakademi.com
+                  <strong>E-posta:</strong> destek@nutrigaakademi.com
                 </p>
                 <p>
                   <strong>Şikâyet/İletişim Kanalı:</strong>{" "}
-                  destek@nutrihomeakademi.com / destek formu / çağrı merkezi
+                  destek@nutrigaakademi.com / destek formu / çağrı merkezi
                 </p>
               </div>
             </div>
@@ -178,7 +178,7 @@ export default function PreInfoModal({
                 </p>
                 <p>
                   <strong>Cayma Bildirimi Kanalları:</strong>{" "}
-                  cayma@nutrihomeakademi.com / Hesabım &gt; Destek &gt; Cayma
+                  cayma@nutrigaakademi.com / Hesabım &gt; Destek &gt; Cayma
                 </p>
                 <p>
                   <strong>İade Süreci:</strong> Cayma bildiriminin ulaşmasından
@@ -237,7 +237,7 @@ export default function PreInfoModal({
               </h3>
               <div className="space-y-2">
                 <p>
-                  <strong>Şikâyet/Çözüm:</strong> destek@nutrihomeakademi.com /
+                  <strong>Şikâyet/Çözüm:</strong> destek@nutrigaakademi.com /
                   destek formu / çağrı merkezi süreçleri
                 </p>
                 <p>

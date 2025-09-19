@@ -2,9 +2,9 @@ import type { Metadata } from "next";
 import MissionContent from "../../components/mission/MissionContent";
 
 export const metadata: Metadata = {
-  title: "Misyonumuz | NutriHome Akademi",
+  title: "Misyonumuz | Nutriga Akademi",
   description:
-    "NutriHome Akademi'nin misyonu: Beslenme alanında güncel bilgileri paylaşarak diyetisyenlerin gelişimine katkı sağlamak.",
+    "Nutriga Akademi'nin misyonu: Bilimsel temelli, erişilebilir beslenme eğitimleriyle bireylerin yaşamına sürdürülebilir ve dönüştürücü değer katmak.",
 };
 
 export default function MisyonPage() {

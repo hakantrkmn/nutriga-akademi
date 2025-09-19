@@ -70,7 +70,7 @@ export default function PrivacyPolicy() {
               Gizlilik Politikamız
             </h2>
             <p className="text-lg text-gray-600 max-w-3xl">
-              NutriHome Akademi olarak, 6698 sayılı Kişisel Verilerin Korunması
+              Nutriga Akademi olarak, 6698 sayılı Kişisel Verilerin Korunması
               Kanunu (KVKK) ve ilgili mevzuat hükümlerine uygun olarak kişisel
               verilerinizi korur ve gizliliğinize saygı gösteririz.
             </p>
@@ -211,7 +211,7 @@ export default function PrivacyPolicy() {
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center text-sm text-gray-700">
               <div className="flex items-center gap-2">
                 <span className="font-semibold">E-posta:</span>
-                <span>kvkk@nutrihomeakademi.com</span>
+                <span>kvkk@nutrigaakademi.com</span>
               </div>
               <div className="flex items-center gap-2">
                 <span className="font-semibold">Telefon:</span>

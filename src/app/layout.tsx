@@ -34,8 +34,13 @@ const sourceSans3 = Source_Sans_3({
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://nutrigaakademi.com"),
-  title: "NutriHome Akademi",
+  title: "Nutriga Akademi",
   description: "Diyetisyen eğitimleri ve beslenme bilgileri",
+  icons: {
+    icon: "/favicon.svg",
+    shortcut: "/favicon.svg",
+    apple: "/favicon.svg",
+  },
 };
 
 export default function RootLayout({
