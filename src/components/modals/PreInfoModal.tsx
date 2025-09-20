@@ -32,6 +32,16 @@ export default function PreInfoModal({
           <DialogTitle className="text-2xl font-bold text-gray-800 text-center">
             Ön Bilgilendirme Formu
           </DialogTitle>
+          <div className="text-center text-sm text-gray-600 mt-2">
+            <p>
+              <strong>Platform:</strong> Nutriga Akademi
+            </p>
+            <p>
+              <strong>Formun Düzenlenme Tarihi:</strong>{" "}
+              {new Date().toLocaleDateString("tr-TR")} – Kalıcı veri saklayıcısı
+              ile iletilmiştir.
+            </p>
+          </div>
         </DialogHeader>
 
         <div className="flex-1 overflow-y-auto px-1 py-4">
@@ -75,20 +85,21 @@ export default function PreInfoModal({
                   <strong>Unvan:</strong> Nutriga Akademi
                 </p>
                 <p>
-                  <strong>MERSİS/VKN:</strong> [Vergi Kimlik Numarası]
+                  <strong>MERSİS/VKN:</strong> 10659147384
                 </p>
                 <p>
-                  <strong>Adres:</strong> [Şirket Adresi]
+                  <strong>Adres:</strong> Türkali Mah. Ihlamurdere Cad. Güven
+                  Apartmanı No: 124 İç Kapı No: 11 Beşiktaş/İstanbul
                 </p>
                 <p>
-                  <strong>Telefon:</strong> +90 (216) 555 00 00
+                  <strong>Telefon:</strong> +90 (542) 104 57 94
                 </p>
                 <p>
-                  <strong>E-posta:</strong> destek@nutrigaakademi.com
+                  <strong>E-posta:</strong> info@nutrigaakademi.com
                 </p>
                 <p>
                   <strong>Şikâyet/İletişim Kanalı:</strong>{" "}
-                  destek@nutrigaakademi.com / destek formu / çağrı merkezi
+                  info@nutrigaakademi.com
                 </p>
               </div>
             </div>
@@ -178,7 +189,7 @@ export default function PreInfoModal({
                 </p>
                 <p>
                   <strong>Cayma Bildirimi Kanalları:</strong>{" "}
-                  cayma@nutrigaakademi.com / Hesabım &gt; Destek &gt; Cayma
+                  info@nutrigaakademi.com
                 </p>
                 <p>
                   <strong>İade Süreci:</strong> Cayma bildiriminin ulaşmasından
@@ -237,13 +248,12 @@ export default function PreInfoModal({
               </h3>
               <div className="space-y-2">
                 <p>
-                  <strong>Şikâyet/Çözüm:</strong> destek@nutrigaakademi.com /
-                  destek formu / çağrı merkezi süreçleri
+                  <strong>Şikâyet/Çözüm:</strong> info@nutrigaakademi.com
                 </p>
                 <p>
                   <strong>Yargı Yolu:</strong> Parasal sınırlar dâhilinde
-                  Tüketici Hakem Heyetleri, üzerindeki tutarlar için Tüketici
-                  Mahkemeleri.
+                  İstanbul Tüketici Hakem Heyetleri, üzerindeki tutarlar için
+                  İstanbul Tüketici Mahkemeleri.
                 </p>
               </div>
             </div>
@@ -260,33 +270,49 @@ export default function PreInfoModal({
               </p>
             </div>
 
-            <div className="space-y-4">
-              <h3 className="text-lg font-semibold text-gray-800">
-                Madde 11 – Tüketici Onay Beyanları
+            <div className="space-y-4 bg-yellow-50 p-4 border-l-4 border-yellow-400">
+              <h3 className="text-lg font-semibold text-red-600">
+                Madde 11 – Tüketici Onay Beyanları (Önemli)
               </h3>
-              <div className="space-y-2">
-                <p>
-                  ☐{" "}
-                  <strong>
-                    Dijital içeriğin anında ifasına açık rıza gösteriyorum
-                  </strong>{" "}
-                  ve bu nedenle <strong>cayma hakkımı kaybedeceğimi</strong>{" "}
-                  biliyorum.
-                </p>
-                <p>
-                  ☐{" "}
-                  <strong>
-                    Canlı eğitimin 14 günlük süre dolmadan başlamasına açık rıza
-                    gösteriyorum
-                  </strong>{" "}
-                  ve bu nedenle <strong>cayma hakkımı kaybedeceğimi</strong>{" "}
-                  biliyorum.
-                </p>
-                <p>
-                  ☐ <strong>Siparişin ödeme yükümlülüğü</strong> doğurduğunu
-                  biliyorum.
-                </p>
+              <div className="space-y-3">
+                <div className="bg-white p-3 rounded border">
+                  <p className="text-red-600 font-medium">
+                    ☑{" "}
+                    <strong>
+                      Dijital içeriğin anında ifasına açık rıza gösteriyorum
+                    </strong>{" "}
+                    ve bu nedenle{" "}
+                    <strong className="text-red-700">
+                      cayma hakkımı kaybedeceğimi
+                    </strong>{" "}
+                    biliyorum.
+                  </p>
+                </div>
+                <div className="bg-white p-3 rounded border">
+                  <p className="text-red-600 font-medium">
+                    ☑{" "}
+                    <strong>
+                      Canlı eğitimin 14 günlük süre dolmadan başlamasına açık
+                      rıza gösteriyorum
+                    </strong>{" "}
+                    ve bu nedenle{" "}
+                    <strong className="text-red-700">
+                      cayma hakkımı kaybedeceğimi
+                    </strong>{" "}
+                    biliyorum.
+                  </p>
+                </div>
+                <div className="bg-white p-3 rounded border">
+                  <p className="text-red-600 font-medium">
+                    ☑ <strong>Siparişin ödeme yükümlülüğü</strong> doğurduğunu
+                    biliyorum.
+                  </p>
+                </div>
               </div>
+              <p className="text-sm text-gray-600 italic">
+                Bu onaylar yasal zorunluluktur ve &quot;Kabul Ediyorum&quot;
+                butonuna basmanızla aktif hale gelir.
+              </p>
             </div>
 
             <div className="space-y-4">

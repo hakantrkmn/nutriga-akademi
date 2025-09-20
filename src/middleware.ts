@@ -38,7 +38,6 @@ export async function middleware(request: NextRequest) {
       // Critical: Use getUser() instead of getSession() for security
       const {
         data: { user },
-        error,
       } = await supabase.auth.getUser();
 
       // User yoksa admin login'e yönlendir
@@ -52,8 +51,8 @@ export async function middleware(request: NextRequest) {
         console.log("Email kontrolü başarısız:", user.email);
         return NextResponse.redirect(new URL("/admin", request.url));
       }
-    } catch (error) {
-      console.error("Middleware auth error:", error);
+    } catch {
+      console.error("Middleware auth error:");
       return NextResponse.redirect(new URL("/admin", request.url));
     }
 
@@ -81,7 +80,6 @@ export async function middleware(request: NextRequest) {
     );
     const {
       data: { user },
-      error,
     } = await supabase.auth.getUser();
     if (user?.email === process.env.NEXT_PUBLIC_ADMIN_EMAIL) {
       console.log("Email kontrolü başarısız:", user?.email);

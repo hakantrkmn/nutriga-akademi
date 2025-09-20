@@ -2,6 +2,7 @@ import BlogSection from "@/components/home/BlogSection";
 import Hero from "@/components/home/HomeHero";
 import PopularEgitimler from "@/components/home/PopularCourses";
 import { PopupHandler } from "@/components/home/PopupHandler";
+import SloganSection from "@/components/home/SloganSection";
 import { prisma } from "@/lib/prisma";
 import { getBlogPosts, getCourses } from "@/lib/redis";
 
@@ -54,6 +55,7 @@ export default async function Home({ searchParams }: HomePageProps) {
   return (
     <>
       <Hero slides={fetchedHeroSlides} />
+      <SloganSection />
       <PopularEgitimler egitimler={fetchedCourses} />
       <BlogSection posts={fetchedBlogPosts} />
 

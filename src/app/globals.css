@@ -147,6 +147,42 @@
     sans-serif;
 }
 
+/* Dropdown Menu Animation Override */
+[data-radix-dropdown-menu-content] {
+  transform-origin: center center !important;
+  animation: none !important;
+}
+
+[data-radix-dropdown-menu-content][data-state="open"] {
+  animation: dropdown-fade-in 0.2s ease-out forwards !important;
+}
+
+[data-radix-dropdown-menu-content][data-state="closed"] {
+  animation: dropdown-fade-out 0.15s ease-in forwards !important;
+}
+
+@keyframes dropdown-fade-in {
+  0% {
+    opacity: 0;
+    transform: scale(0.95) translateY(2px);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+@keyframes dropdown-fade-out {
+  0% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(0.95) translateY(2px);
+  }
+}
+
 /* TipTap Editor Container */
 .tiptap-editor-container {
   max-width: 100% !important;

@@ -1,24 +1,14 @@
 import {
   COMPANY_ADDRESS,
   COMPANY_EMAIL,
-  COMPANY_FACEBOOK_URL,
   COMPANY_INSTAGRAM_URL,
-  COMPANY_LINKEDIN_URL,
   COMPANY_NAME,
   COMPANY_PHONE,
-  COMPANY_TWITTER_URL,
   COMPANY_WORK_HOURS,
-  COMPANY_YOUTUBE_URL,
 } from "@/constants";
 // Chakra UI imports removed - using Tailwind CSS
 import Link from "next/link";
-import {
-  FaFacebook,
-  FaInstagram,
-  FaLinkedin,
-  FaTwitter,
-  FaYoutube,
-} from "react-icons/fa";
+import { FaInstagram } from "react-icons/fa";
 
 const quickLinks = [
   { name: "Eğitimler", href: "/egitimler" },
@@ -32,34 +22,10 @@ const quickLinks = [
 
 const socialLinks = [
   {
-    name: "Facebook",
-    href: COMPANY_FACEBOOK_URL,
-    icon: FaFacebook,
-    color: "#1877F2",
-  },
-  {
-    name: "Twitter",
-    href: COMPANY_TWITTER_URL,
-    icon: FaTwitter,
-    color: "#1DA1F2",
-  },
-  {
     name: "Instagram",
     href: COMPANY_INSTAGRAM_URL,
     icon: FaInstagram,
     color: "#E4405F",
-  },
-  {
-    name: "LinkedIn",
-    href: COMPANY_LINKEDIN_URL,
-    icon: FaLinkedin,
-    color: "#0A66C2",
-  },
-  {
-    name: "YouTube",
-    href: COMPANY_YOUTUBE_URL,
-    icon: FaYoutube,
-    color: "#FF0000",
   },
 ];
 

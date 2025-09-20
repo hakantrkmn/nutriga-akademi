@@ -22,8 +22,8 @@ export default function UsersReport() {
       if (response.success && response.data) {
         setData(response.data);
       }
-    } catch (error) {
-      console.error("Kullanıcı raporları alınırken hata:", error);
+    } catch {
+      console.error("Kullanıcı raporları alınırken hata:");
     } finally {
       setLoading(false);
     }
@@ -116,7 +116,7 @@ export default function UsersReport() {
         </CardHeader>
         <CardContent>
           <div className="space-y-4">
-            {data.userPurchaseStats.slice(0, 10).map((user, index) => (
+            {data.userPurchaseStats.slice(0, 10).map((user) => (
               <div
                 key={user.id}
                 className="flex items-center justify-between p-4 border rounded-lg hover:bg-gray-50 transition-colors"
@@ -162,14 +162,14 @@ export default function UsersReport() {
         </CardHeader>
         <CardContent>
           <div className="space-y-4">
-            {data.userSpending.slice(0, 10).map((user, index) => (
+            {data.userSpending.slice(0, 10).map((user) => (
               <div
                 key={user.userId}
                 className="flex items-center justify-between p-4 border rounded-lg hover:bg-gray-50 transition-colors"
               >
                 <div className="flex items-center gap-4">
                   <div className="flex items-center justify-center w-8 h-8 bg-green-100 text-green-600 rounded-full font-bold text-sm">
-                    {index + 1}
+                    {data.userSpending.indexOf(user) + 1}
                   </div>
                   <div>
                     <h4 className="font-medium text-gray-900">
@@ -207,14 +207,14 @@ export default function UsersReport() {
         </CardHeader>
         <CardContent>
           <div className="space-y-3">
-            {data.professionStats.slice(0, 10).map((profession, index) => (
+            {data.professionStats.slice(0, 10).map((profession) => (
               <div
                 key={profession.profession}
                 className="flex items-center justify-between"
               >
                 <div className="flex items-center gap-3">
                   <div className="flex items-center justify-center w-6 h-6 bg-blue-100 text-blue-600 rounded-full text-sm font-bold">
-                    {index + 1}
+                    {data.professionStats.indexOf(profession) + 1}
                   </div>
                   <span className="font-medium capitalize">
                     {profession.profession}

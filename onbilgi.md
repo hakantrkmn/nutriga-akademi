@@ -1,8 +1,6 @@
 ﻿**ÖN BİLGİLENDİRME FORMU**
 
-**Form No:                                                  *Sürüm:                                            Sipariş No:*** 
-
-**Platform:**
+**Platform: Nutriga Akademi**
 
 **Formun Düzenlenme Tarihi: [GG/AA/YYYY] –** Kalıcı veri saklayıcısı ile iletilmiştir.
 
@@ -19,18 +17,15 @@ Tüketici/Alıcı: İnternet Sitesi üzerinden hizmeti/kursu satın alan kişi.
 
 **MADDE 2 – SATICI/SAĞLAYICI BİLGİLERİ**
 
-**Unvan				:[Şirket Unvanı]** 
+**Unvan				: Nutriga Akademi**
 
-**MERSİS/VKN			:**
+**MERSİS/VKN			:** **10659147384**
 
-**Adres				:** 
+**Adres	: Türkali Mah. Ihlamurdere Cad. Güven Apartmanı No: 124 İç Kapı No: 11 Beşiktaş/ İstanbul**
 
-**Telefon			:**  
+**Eposta			: İnfo@nutrigaakademi.com**
 
-**Eposta:** 
-
-**Şikâyet/İletişim Kanalı	: [destek@… / destek formu / çağrı merkezi]\
-(Varsa) Aracı Hizmet Sağlayıcı: [Unvan – Adres – İletişim]**
+**Şikâyet/İletişim Kanalı	: [**İnfo@nutrigaakademi.com**](mailto:İnfo@nutrigaakademi.com)**
 
 **MADDE 3 – HİZMETİN/KURSUN TEMEL NİTELİKLERİ**
 
@@ -84,8 +79,8 @@ Tüketici/Alıcı: İnternet Sitesi üzerinden hizmeti/kursu satın alan kişi.
 
 **MADDE 9 – ŞİKÂYET/BAŞVURU VE UYUŞMAZLIK ÇÖZÜMÜ**
 
-- **Şikâyet/Çözüm:** [destek@… / destek formu / çağrı merkezi süreçleri]
-- **Yargı Yolu:** Parasal sınırlar dâhilinde **Tüketici Hakem Heyetleri**, üzerindeki tutarlar için **Tüketici Mahkemeleri**.(burada hangi il mahkemeleri ve heyeti yetkili olsun istiyorsanız onların belirtilmesi gerekiyor. ) 
+- **Şikâyet/Çözüm:** İnfo@nutrigaakademi.com
+- **Yargı Yolu:** Parasal sınırlar dâhilinde  **İstanbul Tüketici Hakem Heyetleri**, üzerindeki tutarlar için **İstanbul Tüketici Mahkemeleri**.  
 
 **MADDE 10 – İLAVE ÖDEMELER VE SÖZLEŞMENİN KURULMASI**
 

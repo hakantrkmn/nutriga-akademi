@@ -10,11 +10,11 @@
 
 **ADRES			:**
 
-**SATICI			:**
+**SATICI			:** **Nutriga Akademi**
 
-**ŞİRKET UNVANI		:**
+**ŞİRKET UNVANI		:** **Nutriga Akademi**
 
-**ADRES			:**
+**ADRES			:** **Türkali Mah. Ihlamurdere Cad. Güven Apartmanı No: 124 İç Kapı No: 11 Beşiktaş/ İstanbul**
 
 **FATURA BİLGİLERİ		:**
 
@@ -87,19 +87,17 @@ Taraflar arasında imza altına alınan işbu sözleşmenin uygulamasın ve yoru
 **Madde 8 – Cayma Hakkı ve İstisnalar**\
 **8.1.** ALICI, hizmet sözleşmelerinde **sözleşmenin kurulduğu günden itibaren 14 gün içinde** herhangi bir gerekçe göstermeksizin cayma hakkına sahiptir. Cayma bildirimi yazılı veya kalıcı veri saklayıcısı ile yapılır; Platform üzerinden cayma iletildiğinde alındı teyidi derhal verilir. \
 **8.2.** **İstisnalar (MSY m.15):**\
-a) **Elektronik ortamda anında ifa edilen hizmetler veya tüketiciye anında teslim edilen gayrimaddi mallar** için cayma hakkı **kullanılamaz**. 
+a) **Elektronik ortamda anında ifa edilen hizmetler veya tüketiciye anında teslim edilen gayrimaddi mallar** için cayma hakkı **kullanılamaz**. Nutriga Akademi tarafından sağlanan hizmet bu kapsamda olup cayma hakkı kullanılamaz. 
 
 b) **Cayma süresi dolmadan, ALICI’nın açık onayıyla ifasına başlanan hizmetlere**  ilişkin sözleşmelerde **cayma hakkı kullanılamaz**. \
 **8.3.** Bu istisnalar nedeniyle, **anında erişim** sağlanan ürünler için **sipariş ekranında** aşağıdaki ifadeye onay alınır:
 
 “**Dijital içeriğin anında ifasına başlanmasına onay veriyorum ve bu nedenle cayma hakkımı kaybedeceğimi biliyorum.**”
 
-**8.4.** **Cayma Prosedürü:** Cayma beyanı **[cayma@...]/[Hesabım > Destek > Cayma]** üzerinden iletilir. Ödemeler, cayma bildiriminin ulaşmasından itibaren **14 gün içinde** ALICI’nın ödediği yönteme uygun şekilde iade edilir (uygunsa aracı hizmet sağlayıcı hükümleri saklıdır). 
-
 **8.5.** Ayıplı hizmet/uyumsuzluk durumunda 6502 sayılı Kanun kapsamındaki seçimlik haklar saklıdır.
 
 **Madde 9 – Fikri ve Sınai Mülkiyet Hakları / Lisans**\
-**9.1.** Tüm eğitim içerikleri SAĞLAYICI’ya veya ilgili hak sahiplerine aittir. ALICI’ya **kişisel, devredilemez ve münhasır olmayan** sınırlı bir kullanım hakkı tanınır.\
+**9.1.** Tüm eğitim içerikleri Nutriga Akademi veya ilgili hak sahiplerine aittir. ALICI’ya **kişisel, devredilemez ve münhasır olmayan** sınırlı bir kullanım hakkı tanınır.\
 **9.2.** İçeriklerin **kopyalanması, paylaşılması, yeniden satışı, umuma iletimi, üçüncü kişilere kullandırılması** yasaktır.
 
 **Madde 10 – Kullanım Kuralları ve Hesap Güvenliği**\
@@ -107,7 +105,7 @@ b) **Cayma süresi dolmadan, ALICI’nın açık onayıyla ifasına başlanan hi
 **10.2.** Etik ihlaller (ders akışını engelleme, taciz, telif ihlali vb.) halinde hizmet sonlandırılabilir.
 
 **Madde 11 – Mücbir Sebep ve Hizmetin Geçici Durması**\
-**11.1.** Doğal afet, siber saldırı, geniş çaplı altyapı arızaları gibi mücbir sebepler nedeniyle hizmetin sürekliliği geçici olarak kesilebilir; bu hallerde SAĞLAYICI sorumlu tutulamaz.\
+**11.1.** Doğal afet, siber saldırı, geniş çaplı altyapı arızaları gibi mücbir sebepler nedeniyle hizmetin sürekliliği geçici olarak kesilebilir; bu hallerde Nutriga Akademi sorumlu tutulamaz.\
 **11.2.** Canlı dersin mücbir sebeple yapılamaması halinde telafi dersi planlanır veya makul bedel iadesi yapılır.
 
 **Madde 12 – Kişisel Veriler ve Ticari İletiler**\
@@ -115,7 +113,7 @@ b) **Cayma süresi dolmadan, ALICI’nın açık onayıyla ifasına başlanan hi
 **12.2.** Ticari elektronik ileti onayı (varsa) ayrıca alınır; reddetme hakkı saklıdır.
 
 **Madde 13 – Şikayet ve Uyuşmazlık Çözümü**\
-**13.1.** ALICI, her türlü talep ve şikâyetini **[destek@... / destek formu / çağrı numarası]** kanalıyla iletebilir.\
+**13.1.** ALICI, her türlü talep ve şikâyetini **İnfo@nutrigaakademi.com** kanalıyla iletebilir.\
 **13.2.** ALICI, parasal sınırlar dahilinde **Tüketici Hakem Heyeti**ne; üzerindeki tutarlar için **Tüketici Mahkemeleri**ne başvurabilir. (Yetkili merci bilgisi, Ön Bilgilendirme Formu’nda ayrıca yer alır.) 
 
 **Madde 14 – Bildirim ve Delil Sözleşmesi**\

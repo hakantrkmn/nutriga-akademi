@@ -12,6 +12,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Egitim } from "@/types";
+import Image from "next/image";
 
 interface EgitimSettingsProps {
   formData: Egitim;
@@ -223,9 +224,11 @@ export default function EgitimSettings({
             {uploadedImage && (
               <div className="space-y-2">
                 <p className="text-xs text-green-600">✓ Görsel yüklendi</p>
-                <img
+                <Image
                   src={uploadedImage}
                   alt="Eğitim görseli"
+                  width={400}
+                  height={128}
                   className="w-full h-32 object-cover rounded-lg border border-gray-200 shadow-sm"
                 />
               </div>

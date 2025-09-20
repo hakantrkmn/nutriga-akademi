@@ -15,7 +15,7 @@ export default function MissionHero() {
             <p className="text-2xl text-gray-700 leading-relaxed font-medium">
               Nutriga Akademi, bilimsel temelli, erişilebilir beslenme
               eğitimleriyle bireylerin yaşamına sürdürülebilir ve dönüştürücü
-              değer katmayı hedefler.
+              değer katıyoruz.
             </p>
 
             <p className="text-lg text-gray-600 leading-relaxed">

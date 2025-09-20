@@ -10,6 +10,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { BlogPost } from "@/types";
+import Image from "next/image";
 
 interface BlogInfoEditProps {
   formData: BlogPost;
@@ -168,9 +169,11 @@ export default function BlogInfoEdit({
               {uploadedImage && (
                 <div className="space-y-2">
                   <p className="text-xs text-primary-600">✓ Görsel yüklendi</p>
-                  <img
+                  <Image
                     src={uploadedImage}
                     alt="Blog görseli"
+                    width={400}
+                    height={128}
                     className="w-full h-32 object-cover rounded-lg border border-gray-200 shadow-sm"
                   />
                 </div>

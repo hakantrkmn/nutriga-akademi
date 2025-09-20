@@ -16,7 +16,7 @@ export default function VisionHero() {
               Beslenme eğitiminin gücünü herkes için erişilebilir kılarak,
               yenilikçi ve interaktif yöntemlerle bireyleri &quot; beslenme
               okuryazarı&quot; yapan lider bir eğitim ekosistemi olmayı
-              hedefliyor.
+              hedefliyoruz.
             </p>
 
             <p className="text-lg text-gray-600 leading-relaxed">

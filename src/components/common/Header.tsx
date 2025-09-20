@@ -23,7 +23,6 @@ export default function Header() {
   const router = useRouter();
   const supabase = createClient();
   const { isAuthenticated } = useCart();
-  const [userEmail, setUserEmail] = useState<string | null>(null);
   useEffect(() => {
     const handleClick = (e: MouseEvent) => {
       const target = e.target as HTMLElement;
@@ -49,16 +48,11 @@ export default function Header() {
   }, []);
   useEffect(() => {
     const init = async () => {
-      const {
-        data: { user },
-      } = await supabase.auth.getUser();
-      setUserEmail(user?.email ?? null);
+      await supabase.auth.getUser();
     };
     init();
 
-    const { data: sub } = supabase.auth.onAuthStateChange((_event, session) => {
-      setUserEmail(session?.user?.email ?? null);
-    });
+    const { data: sub } = supabase.auth.onAuthStateChange(() => {});
 
     // Check if mobile
     const checkMobile = () => {
@@ -75,7 +69,6 @@ export default function Header() {
 
   const handleLogout = async () => {
     await supabase.auth.signOut();
-    setUserEmail(null);
     router.replace("/");
   };
 
@@ -95,17 +88,17 @@ export default function Header() {
             variant="ghost"
             className="text-secondary-text hover:text-primary hover:bg-gray-50 justify-start text-base font-normal h-auto px-0 py-0 whitespace-nowrap flex-shrink-0"
           >
-            Kurumsal
+            Hakkımızda
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent className="w-48">
           <DropdownMenuItem asChild>
             <Link
-              href="/hakkimizda"
+              href="/vizyon"
               className="cursor-pointer"
               onClick={onItemClick}
             >
-              Hakkımızda
+              Vizyonumuz
             </Link>
           </DropdownMenuItem>
           <DropdownMenuItem asChild>
@@ -115,15 +108,6 @@ export default function Header() {
               onClick={onItemClick}
             >
               Misyonumuz
-            </Link>
-          </DropdownMenuItem>
-          <DropdownMenuItem asChild>
-            <Link
-              href="/vizyon"
-              className="cursor-pointer"
-              onClick={onItemClick}
-            >
-              Vizyonumuz
             </Link>
           </DropdownMenuItem>
         </DropdownMenuContent>
@@ -189,10 +173,14 @@ export default function Header() {
               🛒 Sepet
             </Button>
             {isAuthenticated ? (
-              <div className="flex items-center gap-2">
-                <span className="text-gray-600 text-sm font-medium max-w-[120px] truncate">
-                  {userEmail?.split("@")[0]}
-                </span>
+              <div className="flex items-center gap-3">
+                <Button
+                  variant="ghost"
+                  className="text-gray-700 hover:text-primary-600 hover:bg-transparent text-base font-normal h-auto px-0 py-0"
+                  onClick={() => router.push("/hesabim")}
+                >
+                  👤 Hesabım
+                </Button>
                 <Button
                   variant="ghost"
                   className="text-gray-700 hover:text-primary-600 hover:bg-transparent text-base font-normal h-auto px-0 py-0"
@@ -264,15 +252,15 @@ export default function Header() {
 
               <div className="py-2">
                 <div className="text-secondary-text hover:text-primary cursor-pointer py-2">
-                  Kurumsal
+                  Hakkımızda
                 </div>
                 <div className="ml-4 space-y-2 mt-2">
                   <Link
-                    href="/hakkimizda"
+                    href="/vizyon"
                     className="block text-gray-600 hover:text-primary transition-colors py-1"
                     onClick={() => setMenuOpen(false)}
                   >
-                    Hakkımızda
+                    Vizyonumuz
                   </Link>
                   <Link
                     href="/misyon"
@@ -280,13 +268,6 @@ export default function Header() {
                     onClick={() => setMenuOpen(false)}
                   >
                     Misyonumuz
-                  </Link>
-                  <Link
-                    href="/vizyon"
-                    className="block text-gray-600 hover:text-primary transition-colors py-1"
-                    onClick={() => setMenuOpen(false)}
-                  >
-                    Vizyonumuz
                   </Link>
                 </div>
               </div>
@@ -329,7 +310,15 @@ export default function Header() {
               </button>
               {isAuthenticated ? (
                 <>
-                  <p className="text-muted-text text-sm py-2">{userEmail}</p>
+                  <button
+                    className="w-full text-left text-secondary-text hover:text-primary hover:bg-gray-50 py-2 px-3 rounded transition-colors"
+                    onClick={() => {
+                      setMenuOpen(false);
+                      router.push("/hesabim");
+                    }}
+                  >
+                    👤 Hesabım
+                  </button>
                   <button
                     className="w-full text-left text-secondary-text hover:text-primary hover:bg-gray-50 py-2 px-3 rounded transition-colors"
                     onClick={() => {
