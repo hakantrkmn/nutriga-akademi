@@ -1,3 +1,4 @@
+import { sendPurchaseConfirmation } from "@/lib/email";
 import { prisma } from "@/lib/prisma";
 import { cartGet, cartSet } from "@/lib/redis";
 import { createServerClient } from "@supabase/ssr";
@@ -26,10 +27,35 @@ async function getUserId(request: NextRequest, response: NextResponse) {
   return user?.id ?? null;
 }
 
+async function getUserEmail(request: NextRequest, response: NextResponse) {
+  const supabase = createServerClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+    {
+      cookies: {
+        getAll() {
+          return request.cookies.getAll();
+        },
+        setAll(cookiesToSet) {
+          cookiesToSet.forEach(({ name, value, options }) => {
+            response.cookies.set(name, value, options);
+          });
+        },
+      },
+    }
+  );
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+  return user?.email ?? null;
+}
+
 export async function POST(request: NextRequest) {
   const response = NextResponse.next();
   try {
     const userId = await getUserId(request, response);
+    const userEmail = await getUserEmail(request, response);
+
     if (!userId)
       return NextResponse.json(
         { success: false, error: "Giriş gerekli" },
@@ -59,6 +85,8 @@ export async function POST(request: NextRequest) {
         unitPrice,
         lineTotal,
         exists: !!p,
+        title: p?.title || "",
+        instructor: p?.instructor || "",
       };
     });
 
@@ -98,8 +126,39 @@ export async function POST(request: NextRequest) {
       // 5) Redis'ten sepeti temizle
       await cartSet(userId, []);
 
+      // 6) Email gönder (eğer kullanıcı email'i varsa)
+      if (userEmail) {
+        try {
+          const orderDetails = details.map((detail) => ({
+            educationId: detail.educationId,
+            quantity: detail.quantity,
+            unitPrice: detail.unitPrice,
+            lineTotal: detail.lineTotal,
+            title: detail.title,
+            instructor: detail.instructor,
+          }));
+
+          const emailResult = await sendPurchaseConfirmation({
+            userEmail,
+            userName: userEmail.split("@")[0], // Email'den isim çıkar
+            orderDetails,
+            subtotal,
+          });
+
+          if (emailResult.success) {
+            console.log("Email başarıyla gönderildi:", emailResult.data);
+          } else {
+            console.error("Email gönderme hatası:", emailResult.error);
+          }
+        } catch (emailError) {
+          console.error("Email gönderme sırasında hata:", emailError);
+          // Email hatası satın alma işlemini etkilemez
+        }
+      }
+
       console.log("CHECKOUT_COMPLETED", {
         userId,
+        userEmail,
         details,
         subtotal,
         cartItemsCreated: cartItemsToCreate.length,
