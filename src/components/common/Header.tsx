@@ -14,7 +14,6 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { slide as Menu } from "react-burger-menu";
-import { FiLogOut } from "react-icons/fi";
 import { HiMenu } from "react-icons/hi";
 
 export default function Header() {
@@ -76,7 +75,7 @@ export default function Header() {
     <>
       <Link
         href="/"
-        className="text-secondary-text hover:text-primary transition-colors whitespace-nowrap flex-shrink-0"
+        className="text-white hover:text-accent transition-colors whitespace-nowrap flex-shrink-0 font-bold"
         onClick={onItemClick}
       >
         Ana Sayfa
@@ -86,7 +85,7 @@ export default function Header() {
         <DropdownMenuTrigger asChild>
           <Button
             variant="ghost"
-            className="text-secondary-text hover:text-primary hover:bg-gray-50 justify-start text-base font-normal h-auto px-0 py-0 whitespace-nowrap flex-shrink-0"
+            className="text-white hover:text-accent hover:bg-transparent justify-start text-base font-bold h-auto px-0 py-0 whitespace-nowrap flex-shrink-0"
           >
             Hakkımızda
           </Button>
@@ -115,7 +114,7 @@ export default function Header() {
 
       <Link
         href="/egitimler"
-        className="text-secondary-text hover:text-primary transition-colors whitespace-nowrap flex-shrink-0"
+        className="text-white hover:text-accent transition-colors whitespace-nowrap flex-shrink-0 font-bold"
         onClick={onItemClick}
       >
         Eğitimler
@@ -123,7 +122,7 @@ export default function Header() {
 
       <Link
         href="/blog"
-        className="text-secondary-text hover:text-primary transition-colors whitespace-nowrap flex-shrink-0"
+        className="text-white hover:text-accent transition-colors whitespace-nowrap flex-shrink-0 font-bold"
         onClick={onItemClick}
       >
         Blog
@@ -131,7 +130,7 @@ export default function Header() {
 
       <Link
         href="/iletisim"
-        className="text-secondary-text hover:text-primary transition-colors whitespace-nowrap flex-shrink-0"
+        className="text-white hover:text-accent transition-colors whitespace-nowrap flex-shrink-0 font-bold"
         onClick={onItemClick}
       >
         İletişim
@@ -140,7 +139,7 @@ export default function Header() {
   );
 
   return (
-    <header className="bg-white shadow-sm border-b border-gray-100 fixed top-0 left-0 right-0 z-50 relative">
+    <header className="bg-secondary shadow-sm border-b border-gray-100 fixed top-0 left-0 right-0 z-50 relative">
       <div className="max-w-6xl mx-auto px-4 md:px-6 py-2 grid grid-cols-[auto_1fr_auto] items-center md:grid-cols-[auto_1fr_auto] grid-cols-2">
         {/* Logo */}
         <div className="justify-self-start flex-shrink-0 p-2">
@@ -167,40 +166,40 @@ export default function Header() {
           <div className="justify-self-end flex items-center gap-4 flex-shrink-0">
             <Button
               variant="ghost"
-              className="text-gray-700 hover:text-primary-600 hover:bg-transparent text-base font-normal h-auto px-0 py-0"
+              className="text-white hover:text-accent hover:bg-transparent text-base font-bold h-auto px-0 py-0"
               onClick={() => router.push("/cart")}
             >
-              🛒 Sepet
+              Sepetin
             </Button>
             {isAuthenticated ? (
               <div className="flex items-center gap-3">
                 <Button
                   variant="ghost"
-                  className="text-gray-700 hover:text-primary-600 hover:bg-transparent text-base font-normal h-auto px-0 py-0"
+                  className="text-white hover:text-accent hover:bg-transparent text-base font-bold h-auto px-0 py-0"
                   onClick={() => router.push("/hesabim")}
                 >
-                  👤 Hesabım
+                  Hesabim
                 </Button>
                 <Button
                   variant="ghost"
-                  className="text-gray-700 hover:text-primary-600 hover:bg-transparent text-base font-normal h-auto px-0 py-0"
+                  className="text-white hover:text-accent hover:bg-transparent text-base font-bold h-auto px-0 py-0"
                   onClick={handleLogout}
                   title="Çıkış Yap"
                 >
-                  <FiLogOut className="h-4 w-4" />
+                  Çıkış Yap
                 </Button>
               </div>
             ) : (
               <div className="flex items-center gap-3">
                 <Button
                   variant="ghost"
-                  className="text-gray-700 hover:text-primary-600 hover:bg-transparent text-base font-normal h-auto px-0 py-0"
+                  className="text-white hover:text-accent hover:bg-transparent text-base font-normal h-auto px-0 py-0"
                   onClick={() => router.push("/auth/login")}
                 >
                   Giriş Yap
                 </Button>
                 <Button
-                  className="bg-[#16a34a] hover:bg-[#15803d] text-white px-6 py-2 font-medium"
+                  className="bg-primary hover:bg-primary-hover text-white px-6 py-2 font-medium"
                   onClick={() => router.push("/auth/register")}
                 >
                   Kayıt Ol
@@ -216,7 +215,7 @@ export default function Header() {
             <Button
               variant="ghost"
               size="icon"
-              className="text-secondary-text hover:text-primary hover:bg-gray-50"
+              className="text-white hover:text-accent hover:bg-transparent"
               onClick={() => setMenuOpen(!menuOpen)}
             >
               <HiMenu className="h-5 w-5" />
@@ -244,14 +243,14 @@ export default function Header() {
             <nav className="space-y-4 mb-8">
               <Link
                 href="/"
-                className="block text-secondary-text hover:text-primary transition-colors py-2"
+                className="block text-secondary hover:text-primary transition-colors py-2 font-bold"
                 onClick={() => setMenuOpen(false)}
               >
                 Ana Sayfa
               </Link>
 
               <div className="py-2">
-                <div className="text-secondary-text hover:text-primary cursor-pointer py-2">
+                <div className="text-secondary hover:text-primary cursor-pointer py-2 font-bold">
                   Hakkımızda
                 </div>
                 <div className="ml-4 space-y-2 mt-2">
@@ -274,7 +273,7 @@ export default function Header() {
 
               <Link
                 href="/egitimler"
-                className="block text-secondary-text hover:text-primary transition-colors py-2"
+                className="block text-secondary hover:text-primary transition-colors py-2 font-bold"
                 onClick={() => setMenuOpen(false)}
               >
                 Eğitimler
@@ -282,7 +281,7 @@ export default function Header() {
 
               <Link
                 href="/blog"
-                className="block text-secondary-text hover:text-primary transition-colors py-2"
+                className="block text-secondary hover:text-primary transition-colors py-2 font-bold"
                 onClick={() => setMenuOpen(false)}
               >
                 Blog
@@ -290,7 +289,7 @@ export default function Header() {
 
               <Link
                 href="/iletisim"
-                className="block text-secondary-text hover:text-primary transition-colors py-2"
+                className="block text-secondary hover:text-primary transition-colors py-2 font-bold"
                 onClick={() => setMenuOpen(false)}
               >
                 İletişim
@@ -300,27 +299,27 @@ export default function Header() {
             {/* Auth Buttons */}
             <div className="space-y-3">
               <button
-                className="w-full text-left text-secondary-text hover:text-primary hover:bg-gray-50 py-2 px-3 rounded transition-colors"
+                className="w-full text-left text-secondary hover:text-primary hover:bg-gray-50 py-2 px-3 rounded transition-colors font-bold"
                 onClick={() => {
                   setMenuOpen(false);
                   router.push("/cart");
                 }}
               >
-                🛒 Sepet
+                Sepetin
               </button>
               {isAuthenticated ? (
                 <>
                   <button
-                    className="w-full text-left text-secondary-text hover:text-primary hover:bg-gray-50 py-2 px-3 rounded transition-colors"
+                    className="w-full text-left text-secondary hover:text-primary hover:bg-gray-50 py-2 px-3 rounded transition-colors font-bold"
                     onClick={() => {
                       setMenuOpen(false);
                       router.push("/hesabim");
                     }}
                   >
-                    👤 Hesabım
+                    Hesabim
                   </button>
                   <button
-                    className="w-full text-left text-secondary-text hover:text-primary hover:bg-gray-50 py-2 px-3 rounded transition-colors"
+                    className="w-full text-left text-secondary hover:text-primary hover:bg-gray-50 py-2 px-3 rounded transition-colors font-bold"
                     onClick={() => {
                       handleLogout();
                       setMenuOpen(false);
@@ -332,7 +331,7 @@ export default function Header() {
               ) : (
                 <>
                   <button
-                    className="w-full text-center bg-gray-100 hover:bg-gray-200 text-secondary-text py-2 px-4 rounded-lg transition-colors mb-3"
+                    className="w-full text-center bg-gray-100 hover:bg-gray-200 text-secondary py-2 px-4 rounded-lg transition-colors mb-3"
                     onClick={() => {
                       setMenuOpen(false);
                       router.push("/auth/login");
@@ -341,7 +340,7 @@ export default function Header() {
                     Giriş Yap
                   </button>
                   <button
-                    className="w-full bg-[#16a34a] hover:bg-[#15803d] text-white py-2 px-4 rounded-lg font-medium transition-colors"
+                    className="w-full bg-primary hover:bg-primary-hover text-white py-2 px-4 rounded-lg font-medium transition-colors"
                     onClick={() => {
                       setMenuOpen(false);
                       router.push("/auth/register");

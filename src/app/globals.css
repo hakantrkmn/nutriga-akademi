@@ -8,43 +8,48 @@
 .site-root {
   --background: #ffffff;
   --background-alt: #f8fafc;
-  --foreground: #0f172a;
-  --primary: #16a34a; /* Improved contrast: was #4a7c59 */
-  --primary-hover: #15803d; /* Improved contrast: was #2d5a3f */
-  --accent: #10b981; /* Improved contrast: was #9ed2c6 */
-  --accent-hover: #059669; /* Improved contrast: was #82c3b4 */
+  --foreground: #112825;
+  --primary: #82541c;
+  --primary-hover: #a87f42;
+  --accent: #c7a361;
+  --accent-hover: #a87f42;
+  --secondary: #2b3c4a;
+  --secondary-alt: #112825;
   --border-radius: 12px;
   --border-radius-sm: 8px;
 
   background-color: var(--background);
   color: var(--foreground);
+
+  /* Hero section specific colors */
+  --hero-bg: #f5f5f5;
+  --hero-text: #112825;
+  --hero-accent-text: #82541c;
 }
 
 /* Sage/Olive Theme - Centralized Color System */
 .site-root.site-theme-sage {
   --background: #ffffff;
   --background-alt: #f1f5f9; /* slate-100 */
-  --foreground: #0f172a; /* slate-900 */
-  --primary: #16a34a; /* Improved contrast: was #4a7c59 */
-  --primary-hover: #15803d; /* Improved contrast: was #2d5a3f */
-  --accent: #10b981; /* Improved contrast: was #9ed2c6 */
-  --accent-hover: #059669; /* Improved contrast: was #82c3b4 */
-  --primary-rgb: 22, 163, 74; /* Updated for improved contrast */
-  --primary-hover-rgb: 21, 128, 61; /* Updated for improved contrast */
-  --accent-rgb: 16, 185, 129; /* Updated for improved contrast */
-  --accent-hover-rgb: 5, 150, 105; /* Updated for improved contrast */
+  --foreground: #112825; /* slate-900 */
+  --primary: #82541c; /* New Brand Color */
+  --primary-hover: #a87f42; /* New Brand Color */
+  --accent: #c7a361; /* New Brand Color */
+  --accent-hover: #a87f42; /* New Brand Color */
+  --secondary: #2b3c4a;
+  --secondary-alt: #112825;
 
   /* Extended color palette for centralized control */
-  --primary-50: #f0fdf4;
-  --primary-100: #dcfce7;
-  --primary-200: #bbf7d0;
-  --primary-300: #86efac;
-  --primary-400: #4ade80;
-  --primary-500: #22c55e;
-  --primary-600: #16a34a;
-  --primary-700: #15803d;
-  --primary-800: #166534;
-  --primary-900: #14532d;
+  --primary-50: #fbf8f5;
+  --primary-100: #f6f0e9;
+  --primary-200: #eaddd0;
+  --primary-300: #dccab7;
+  --primary-400: #c8b198;
+  --primary-500: #b5997a;
+  --primary-600: #82541c; /* Base Primary */
+  --primary-700: #6f4818;
+  --primary-800: #5c3c14;
+  --primary-900: #493010;
 
   /* Gray scale for consistent usage */
   --gray-50: #f9fafb;
@@ -59,40 +64,40 @@
   --gray-900: #111827;
 
   /* Semantic colors */
-  --success: var(--primary-600);
-  --success-light: var(--primary-100);
-  --success-text: var(--primary-800);
+  --success: #6b705c; /* New Brand Color */
+  --success-light: #f0f1ef;
+  --success-text: #3e4136;
   --warning: #f59e0b;
   --warning-light: #fef3c7;
   --warning-text: #92400e;
   --error: #ef4444;
   --error-light: #fee2e2;
   --error-text: #991b1b;
-  --info: #3b82f6;
-  --info-light: #dbeafe;
-  --info-text: #1e40af;
+  --info: #476aad; /* New Brand Color */
+  --info-light: #e8eef6;
+  --info-text: #2a3d63;
 
   /* Component specific colors */
   --card-bg: #ffffff;
   --card-border: var(--gray-200);
   --card-shadow: rgba(0, 0, 0, 0.1);
-  --button-primary-bg: var(--primary-600);
-  --button-primary-hover: var(--primary-700);
+  --button-primary-bg: var(--primary);
+  --button-primary-hover: var(--primary-hover);
   --button-secondary-bg: var(--gray-100);
   --button-secondary-hover: var(--gray-200);
-  --link-color: #16a34a; /* Improved contrast: was var(--primary-600) */
-  --link-hover: #15803d; /* Improved contrast: was var(--primary-700) */
-  --text-primary: var(--gray-900);
-  --text-secondary: #374151; /* Improved contrast: was var(--gray-600) */
-  --text-muted: #4b5563; /* Improved contrast: was var(--gray-500) */
+  --link-color: var(--primary);
+  --link-hover: var(--primary-hover);
+  --text-primary: var(--foreground);
+  --text-secondary: #2f4858; /* New Brand Color */
+  --text-muted: #6b7280; /* Improved contrast: was var(--gray-500) */
   --border-color: var(--gray-200);
   --border-hover: var(--gray-300);
 
   /* Hero section specific colors */
-  --hero-bg: var(--primary-100);
-  --hero-text: var(--gray-900);
-  --hero-text-secondary: #374151; /* Improved contrast: was var(--gray-600) */
-  --hero-accent-text: #16a34a; /* Improved contrast: was var(--primary-600) */
+  --hero-bg: #f5f5f5;
+  --hero-text: var(--foreground);
+  --hero-text-secondary: #112825; /* Improved contrast: was var(--gray-600) */
+  --hero-accent-text: #82541c; /* Improved contrast: was var(--primary-600) */
 }
 
 /* Font families bound to variables from next/font (active per theme) */
@@ -109,7 +114,11 @@
 .site-root h4,
 .site-root h5,
 .site-root h6 {
-  font-family: var(--font-heading-active), system-ui, -apple-system, Arial,
+  font-family:
+    var(--font-heading-active),
+    system-ui,
+    -apple-system,
+    Arial,
     sans-serif;
 }
 
@@ -143,7 +152,11 @@
 .site-root li,
 .site-root a,
 .site-root div {
-  font-family: var(--font-body-active), system-ui, -apple-system, Arial,
+  font-family:
+    var(--font-body-active),
+    system-ui,
+    -apple-system,
+    Arial,
     sans-serif;
 }
 
@@ -1045,8 +1058,11 @@ body.admin-layout {
 
 /* Smooth transitions - Plan uyarınca "hover efektleri yumuşak" */
 * {
-  transition: color 0.2s ease, background-color 0.2s ease,
-    border-color 0.2s ease, transform 0.2s ease;
+  transition:
+    color 0.2s ease,
+    background-color 0.2s ease,
+    border-color 0.2s ease,
+    transform 0.2s ease;
 }
 
 /* Focus states - accessibility */
@@ -1602,6 +1618,30 @@ a {
   color: #2563eb !important;
 }
 
+/* Tooltip Styles - Site Theme */
+[data-radix-tooltip-content] {
+  background: var(--secondary) !important;
+  color: white !important;
+  border: none !important;
+  border-radius: var(--border-radius-sm) !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
+  font-size: 0.875rem !important;
+  font-weight: 500 !important;
+  padding: 0.5rem 0.75rem !important;
+  max-width: 200px !important;
+  text-align: center !important;
+  z-index: 1000 !important;
+}
+
+[data-radix-tooltip-content] * {
+  color: white !important;
+}
+
+/* Tooltip Arrow */
+[data-radix-tooltip-content][data-side="left"]::before {
+  background: var(--secondary) !important;
+}
+
 /* React Burger Menu Styles */
 .bm-burger-button {
   display: none; /* We use our own button */
@@ -1627,7 +1667,7 @@ a {
 }
 
 .bm-menu {
-  background: white !important;
+  background: var(--background) !important;
   padding: 0 !important;
   font-size: 1.15em;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1) !important;

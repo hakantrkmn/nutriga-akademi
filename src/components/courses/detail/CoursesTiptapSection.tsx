@@ -17,7 +17,7 @@ export default function EgitimContent({
   setFormData,
 }: EgitimContentProps) {
   return (
-    <div className="w-full max-w-none bg-white rounded-xl p-8 shadow-sm border border-gray-100 overflow-hidden">
+    <div className="w-full max-w-none bg-background rounded-xl p-8 shadow-sm border border-border-color overflow-hidden">
       {isEditing ? (
         <div className="max-w-full overflow-hidden">
           <TipTapEditor

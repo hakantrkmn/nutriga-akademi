@@ -24,7 +24,7 @@ export default function BlogContent({ posts }: BlogContentProps) {
   };
 
   return (
-    <div className="bg-gray-50">
+    <div className="bg-background-alt">
       <div className="flex flex-col gap-0 w-full">
         <BlogHero />
         <CategoryFilter

@@ -2,9 +2,9 @@
 
 import { Button } from "@/components/ui/button";
 import { CartItem } from "@/hooks/useUserProfile";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { FiShoppingBag } from "react-icons/fi";
-import Image from "next/image";
 
 interface PurchasesSectionProps {
   purchasedItems: CartItem[];
@@ -30,17 +30,17 @@ export function PurchasesSection({ purchasedItems }: PurchasesSectionProps) {
 
   if (purchasedItems.length === 0) {
     return (
-      <div className="text-center py-12 bg-white rounded-lg border border-gray-200">
+      <div className="text-center py-12 bg-background-alt rounded-lg border border-border-color">
         <FiShoppingBag className="h-16 w-16 text-gray-300 mx-auto mb-6" />
-        <h3 className="text-lg font-semibold text-gray-900 mb-2">
+        <h3 className="text-lg font-semibold text-foreground mb-2">
           Henüz satın aldığınız eğitim bulunmuyor
         </h3>
-        <p className="text-gray-600 mb-6">
+        <p className="text-secondary mb-6">
           Nutriga Akademi&apos;nin zengin eğitim içeriklerini keşfedin ve
           profesyonel gelişiminize katkıda bulunun.
         </p>
         <Button
-          className="bg-green-600 hover:bg-green-700 text-white px-6 py-3"
+          className="bg-primary hover:bg-primary-hover text-white px-6 py-3"
           onClick={() => router.push("/egitimler")}
         >
           Eğitimleri Keşfedin
@@ -52,7 +52,7 @@ export function PurchasesSection({ purchasedItems }: PurchasesSectionProps) {
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
-        <h3 className="text-lg font-semibold text-gray-900">
+        <h3 className="text-lg font-semibold text-foreground">
           Satın Aldığım Eğitimler ({purchasedItems.length})
         </h3>
       </div>
@@ -61,7 +61,7 @@ export function PurchasesSection({ purchasedItems }: PurchasesSectionProps) {
         {purchasedItems.map((item) => (
           <div
             key={item.id}
-            className="bg-white border border-gray-200 rounded-lg p-6 hover:shadow-md transition-shadow duration-200"
+            className="bg-background border border-border-color rounded-lg p-6 hover:shadow-md transition-shadow duration-200"
           >
             {item.education.imageUrl && (
               <div className="mb-4">
@@ -76,42 +76,42 @@ export function PurchasesSection({ purchasedItems }: PurchasesSectionProps) {
             )}
 
             <div className="space-y-3">
-              <h4 className="font-semibold text-gray-900 text-lg leading-tight">
+              <h4 className="font-semibold text-foreground text-lg leading-tight">
                 {item.education.title}
               </h4>
 
               <div className="grid grid-cols-2 gap-4 text-sm">
                 <div>
-                  <span className="text-gray-500 block">Kategori</span>
-                  <span className="text-gray-900 font-medium">
+                  <span className="text-muted block">Kategori</span>
+                  <span className="text-foreground font-medium">
                     {item.education.category}
                   </span>
                 </div>
                 <div>
-                  <span className="text-gray-500 block">Seviye</span>
-                  <span className="text-gray-900 font-medium">
+                  <span className="text-muted block">Seviye</span>
+                  <span className="text-foreground font-medium">
                     {item.education.level}
                   </span>
                 </div>
                 <div>
-                  <span className="text-gray-500 block">Eğitmen</span>
-                  <span className="text-gray-900 font-medium">
+                  <span className="text-muted block">Eğitmen</span>
+                  <span className="text-foreground font-medium">
                     {item.education.instructor}
                   </span>
                 </div>
                 <div>
-                  <span className="text-gray-500 block">Fiyat</span>
-                  <span className="text-green-600 font-semibold">
+                  <span className="text-muted block">Fiyat</span>
+                  <span className="text-primary font-semibold">
                     {formatPrice(item.education.price)}
                   </span>
                 </div>
               </div>
 
-              <div className="pt-2 border-t border-gray-100">
-                <span className="text-gray-500 text-sm block">
+              <div className="pt-2 border-t border-border-color">
+                <span className="text-muted text-sm block">
                   Satın Alma Tarihi
                 </span>
-                <span className="text-gray-900 font-medium">
+                <span className="text-foreground font-medium">
                   {formatDate(item.createdAt)}
                 </span>
               </div>
@@ -124,7 +124,7 @@ export function PurchasesSection({ purchasedItems }: PurchasesSectionProps) {
         <Button
           variant="outline"
           onClick={() => router.push("/egitimler")}
-          className="border-green-600 text-green-600 hover:bg-green-50"
+          className="border-primary text-primary hover:bg-primary-50"
         >
           Daha Fazla Eğitim Keşfet
         </Button>

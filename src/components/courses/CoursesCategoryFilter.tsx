@@ -34,8 +34,8 @@ export default function CategoryFilter({
               variant={selectedCategory === category ? "default" : "outline"}
               className={`rounded-full px-6 text-sm font-medium transition-all hover:-translate-y-0.5 hover:shadow-md ${
                 selectedCategory === category
-                  ? "bg-green-600 hover:bg-green-700 text-white"
-                  : "border-green-600 text-green-600 hover:bg-green-50"
+                  ? "bg-primary hover:bg-primary-hover text-white"
+                  : "border-primary text-primary hover:bg-primary-50"
               }`}
               onClick={() => onCategoryChange(category)}
             >
@@ -46,7 +46,7 @@ export default function CategoryFilter({
 
         <div className="flex gap-4 items-center">
           <Select value={selectedLevel} onValueChange={onLevelChange}>
-            <SelectTrigger className="w-48 focus:border-green-500 focus:ring-1 focus:ring-green-500">
+            <SelectTrigger className="w-48 focus:border-primary focus:ring-1 focus:ring-primary">
               <SelectValue placeholder="Seviye seçin..." />
             </SelectTrigger>
             <SelectContent>

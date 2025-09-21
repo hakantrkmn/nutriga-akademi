@@ -35,21 +35,21 @@ export default function BlogSection({ posts }: BlogSectionProps) {
     .slice(0, 6);
 
   return (
-    <div className="py-16 md:py-20 bg-white">
+    <div className="py-16 md:py-20 bg-background">
       <div className="max-w-7xl mx-auto px-4 md:px-6">
         <div className="flex flex-col gap-12 items-center">
           {/* Section Header */}
           <div className="flex flex-col gap-4 text-center max-w-[600px]">
-            <Badge className="text-green-600 bg-green-50 px-4 py-2 rounded-full text-sm font-semibold w-fit mx-auto">
+            <Badge className="text-primary bg-primary-100 px-4 py-2 rounded-full text-sm font-semibold w-fit mx-auto">
               Blog
             </Badge>
 
-            <h2 className="text-2xl md:text-3xl font-bold text-gray-800">
+            <h2 className="text-2xl md:text-3xl font-bold text-foreground">
               En Güncel
-              <span className="block text-green-600">Beslenme İçerikleri</span>
+              <span className="block text-primary">Beslenme İçerikleri</span>
             </h2>
 
-            <p className="text-base md:text-lg text-gray-600 leading-relaxed">
+            <p className="text-base md:text-lg text-secondary leading-relaxed">
               Beslenme alanındaki son gelişmeler, uzman görüşleri ve pratik
               öneriler için blog yazılarımızı takip edin.
             </p>
@@ -61,8 +61,8 @@ export default function BlogSection({ posts }: BlogSectionProps) {
               columns === 1
                 ? "grid-cols-1"
                 : columns === 2
-                ? "grid-cols-1 md:grid-cols-2"
-                : "grid-cols-1 md:grid-cols-2 lg:grid-cols-3"
+                  ? "grid-cols-1 md:grid-cols-2"
+                  : "grid-cols-1 md:grid-cols-2 lg:grid-cols-3"
             }`}
           >
             {latestBlogPosts.map((post) => (
@@ -72,11 +72,11 @@ export default function BlogSection({ posts }: BlogSectionProps) {
 
           {/* Newsletter Section */}
           <div className="w-full max-w-2xl">
-            <div className="bg-gray-50 rounded-2xl p-8 text-center">
-              <h3 className="text-xl font-bold text-gray-800 mb-4">
+            <div className="bg-background-alt rounded-2xl p-8 text-center">
+              <h3 className="text-xl font-bold text-foreground mb-4">
                 Güncel İçeriklerden Haberdar Olun
               </h3>
-              <p className="text-gray-600 mb-6">
+              <p className="text-secondary mb-6">
                 Yeni blog yazıları ve eğitim duyuruları için e-posta listemize
                 katılın.
               </p>
@@ -84,9 +84,9 @@ export default function BlogSection({ posts }: BlogSectionProps) {
                 <Input
                   type="email"
                   placeholder="E-posta adresiniz"
-                  className="flex-1 focus:border-green-500 focus:ring-1 focus:ring-green-500"
+                  className="flex-1 focus:border-primary focus:ring-1 focus:ring-primary"
                 />
-                <Button className="bg-green-600 hover:bg-green-700 text-white px-6">
+                <Button className="bg-primary hover:bg-primary-hover text-white px-6">
                   Abone Ol
                 </Button>
               </div>
@@ -96,7 +96,7 @@ export default function BlogSection({ posts }: BlogSectionProps) {
           {/* CTA Button */}
           <div className="text-center">
             <Link href="/blog">
-              <Button className="bg-green-600 hover:bg-green-700 text-white px-8 py-3 text-lg font-semibold rounded-xl hover:-translate-y-0.5 hover:shadow-lg transition-all">
+              <Button className="bg-primary hover:bg-primary-hover text-white px-8 py-3 text-lg font-semibold rounded-xl hover:-translate-y-0.5 hover:shadow-lg transition-all">
                 Tüm Blog Yazılarını Gör
               </Button>
             </Link>

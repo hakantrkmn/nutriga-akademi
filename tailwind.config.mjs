@@ -17,6 +17,8 @@ const config = {
         "primary-hover": "var(--primary-hover)",
         accent: "var(--accent)",
         "accent-hover": "var(--accent-hover)",
+        secondary: "var(--secondary)",
+        "secondary-alt": "var(--secondary-alt)",
       },
       borderRadius: {
         DEFAULT: "var(--border-radius)",

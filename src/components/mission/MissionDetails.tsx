@@ -13,42 +13,42 @@ const missionPoints = [
     title: "Güncel Bilgi",
     description:
       "Beslenme bilimindeki en son gelişmeleri takip ederek, kanıta dayalı eğitim içerikleri sunuyoruz.",
-    color: "green.500",
+    color: "success",
   },
   {
     icon: FaChalkboardTeacher,
     title: "Kaliteli Eğitim",
     description:
       "Deneyimli uzmanlarımızla, teorik bilgiyi pratiğe dönüştüren etkili eğitim programları geliştiriyoruz.",
-    color: "orange.500",
+    color: "primary",
   },
   {
     icon: FaUsers,
     title: "Mesleki Gelişim",
     description:
       "Diyetisyenlerin kariyer yolculuğunda yanında olarak, sürekli öğrenmeyi destekliyoruz.",
-    color: "green.600",
+    color: "success",
   },
   {
     icon: FaCertificate,
     title: "Sertifikasyon",
     description:
       "Katılımcılarımıza uluslararası standartlarda geçerli sertifikalar sunarak değer katıyoruz.",
-    color: "orange.600",
+    color: "primary",
   },
   {
     icon: FaHeart,
     title: "Toplum Sağlığı",
     description:
       "Eğittiğimiz uzmanlar aracılığıyla toplumun beslenme bilincini artırmayı hedefliyoruz.",
-    color: "green.500",
+    color: "success",
   },
   {
     icon: FaLightbulb,
     title: "İnovasyon",
     description:
       "Eğitim metodolojilerinde yenilikçi yaklaşımlarla öğrenme deneyimini zenginleştiriyoruz.",
-    color: "orange.500",
+    color: "primary",
   },
 ];
 
@@ -64,14 +64,14 @@ export default function MissionDetails() {
   return (
     <>
       {/* Mission Points */}
-      <div className="py-16 bg-white">
+      <div className="py-16 bg-background">
         <div className="container mx-auto px-4 md:px-6 max-w-6xl">
           <div className="flex flex-col items-center gap-12">
             <div className="flex flex-col items-center gap-4 text-center">
-              <h2 className="text-3xl font-bold text-gray-800">
+              <h2 className="text-3xl font-bold text-foreground">
                 Misyonumuzun Temel Unsurları
               </h2>
-              <p className="text-lg text-gray-600 max-w-2xl">
+              <p className="text-lg text-secondary max-w-2xl">
                 Hedeflerimize ulaşmak için odaklandığımız ana konular
               </p>
             </div>
@@ -80,28 +80,24 @@ export default function MissionDetails() {
               {missionPoints.map((point, index) => (
                 <div
                   key={index}
-                  className="p-8 bg-gray-50 rounded-xl border border-gray-100 text-center space-y-6 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:border-green-500 h-full"
+                  className="p-8 bg-background-alt rounded-xl border border-border-color text-center space-y-6 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:border-success h-full"
                 >
                   <div
                     className={`p-4 rounded-2xl inline-block ${
-                      point.color === "green.500"
-                        ? "bg-green-50 text-green-500"
-                        : point.color === "orange.500"
-                        ? "bg-orange-50 text-orange-500"
-                        : point.color === "green.600"
-                        ? "bg-green-100 text-green-600"
-                        : "bg-orange-100 text-orange-600"
+                      point.color === "success"
+                        ? "bg-success-light text-success"
+                        : "bg-primary-100 text-primary"
                     }`}
                   >
                     <point.icon className="w-8 h-8" />
                   </div>
 
                   <div className="space-y-3">
-                    <h3 className="text-xl font-semibold text-gray-800">
+                    <h3 className="text-xl font-semibold text-foreground">
                       {point.title}
                     </h3>
 
-                    <p className="text-sm text-gray-600 leading-relaxed">
+                    <p className="text-sm text-secondary leading-relaxed">
                       {point.description}
                     </p>
                   </div>
@@ -113,14 +109,14 @@ export default function MissionDetails() {
       </div>
 
       {/* Commitments */}
-      <div className="py-16 bg-gray-50">
+      <div className="py-16 bg-background-alt">
         <div className="container mx-auto px-4 md:px-6 max-w-6xl">
           <div className="flex flex-col items-center gap-12">
             <div className="flex flex-col items-center gap-4 text-center">
-              <h2 className="text-3xl font-bold text-gray-800">
+              <h2 className="text-3xl font-bold text-foreground">
                 Taahhütlerimiz
               </h2>
-              <p className="text-lg text-gray-600 max-w-2xl">
+              <p className="text-lg text-secondary max-w-2xl">
                 Misyonumuzu gerçekleştirmek için verdiğimiz sözler
               </p>
             </div>
@@ -129,13 +125,13 @@ export default function MissionDetails() {
               {commitments.map((commitment, index) => (
                 <div
                   key={index}
-                  className="p-6 bg-white rounded-xl border border-gray-200 w-full flex items-start gap-4 transition-all duration-200 hover:border-green-200 hover:shadow-sm hover:translate-x-2"
+                  className="p-6 bg-background rounded-xl border border-border-color w-full flex items-start gap-4 transition-all duration-200 hover:border-success-light hover:shadow-sm hover:translate-x-2"
                 >
-                  <div className="bg-green-500 text-white rounded-full w-8 h-8 flex items-center justify-center text-sm font-bold flex-shrink-0">
+                  <div className="bg-success text-white rounded-full w-8 h-8 flex items-center justify-center text-sm font-bold flex-shrink-0">
                     {index + 1}
                   </div>
 
-                  <p className="text-lg text-gray-700 leading-relaxed font-medium">
+                  <p className="text-lg text-secondary leading-relaxed font-medium">
                     {commitment}
                   </p>
                 </div>

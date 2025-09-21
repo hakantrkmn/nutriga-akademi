@@ -1,15 +1,6 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import {
   Command,
   CommandEmpty,
@@ -17,17 +8,26 @@ import {
   CommandInput,
   CommandItem,
 } from "@/components/ui/command";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { DEPARTMENTS, PROFESSIONS, UNIVERSITIES } from "@/constants";
+import { EditForm, UserProfile } from "@/hooks/useUserProfile";
 import { cn } from "@/lib/utils";
 import { Check, ChevronsUpDown } from "lucide-react";
 import { useState } from "react";
 import { FiEdit, FiSave } from "react-icons/fi";
-import { EditForm, UserProfile } from "@/hooks/useUserProfile";
 
 interface ProfileEditFormProps {
   profile: UserProfile;
@@ -76,7 +76,7 @@ export function ProfileEditForm({
     <div className="space-y-6">
       <div className="flex flex-row items-center justify-between">
         <div>
-          <h3 className="text-lg font-semibold text-gray-900">
+          <h3 className="text-lg font-semibold text-foreground">
             Kişisel Bilgiler
           </h3>
         </div>
@@ -106,10 +106,10 @@ export function ProfileEditForm({
               setEditForm({ ...editForm, firstName: e.target.value })
             }
             disabled={!isEditing}
-            className={!isEditing ? "bg-gray-50" : ""}
+            className={!isEditing ? "bg-background-alt" : ""}
           />
         </div>
-        
+
         <div className="space-y-2">
           <Label htmlFor="lastName">Soyad *</Label>
           <Input
@@ -119,7 +119,7 @@ export function ProfileEditForm({
               setEditForm({ ...editForm, lastName: e.target.value })
             }
             disabled={!isEditing}
-            className={!isEditing ? "bg-gray-50" : ""}
+            className={!isEditing ? "bg-background-alt" : ""}
           />
         </div>
 
@@ -134,7 +134,9 @@ export function ProfileEditForm({
                   aria-expanded={professionOpen}
                   className="w-full justify-between"
                 >
-                  {editForm.profession ? editForm.profession : "Mesleğinizi seçin..."}
+                  {editForm.profession
+                    ? editForm.profession
+                    : "Mesleğinizi seçin..."}
                   <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                 </Button>
               </PopoverTrigger>
@@ -159,14 +161,21 @@ export function ProfileEditForm({
                             setProfessionOpen(false);
                             // Eğer öğrenci değilse öğrenci alanlarını temizle
                             if (prof !== "Öğrenci") {
-                              setEditForm(prev => ({ ...prev, university: "", department: "", class: "" }));
+                              setEditForm((prev) => ({
+                                ...prev,
+                                university: "",
+                                department: "",
+                                class: "",
+                              }));
                             }
                           }}
                         >
                           <Check
                             className={cn(
                               "mr-2 h-4 w-4",
-                              editForm.profession === prof ? "opacity-100" : "opacity-0"
+                              editForm.profession === prof
+                                ? "opacity-100"
+                                : "opacity-0"
                             )}
                           />
                           {prof}
@@ -181,7 +190,7 @@ export function ProfileEditForm({
             <Input
               value={profile.profession}
               disabled
-              className="bg-gray-50"
+              className="bg-background-alt"
             />
           )}
         </div>
@@ -195,11 +204,12 @@ export function ProfileEditForm({
               setEditForm({ ...editForm, phone: e.target.value })
             }
             disabled={!isEditing}
-            className={!isEditing ? "bg-gray-50" : ""}
+            className={!isEditing ? "bg-background-alt" : ""}
           />
         </div>
 
-        {(isEditing ? editForm.profession : profile.profession) === "Öğrenci" && (
+        {(isEditing ? editForm.profession : profile.profession) ===
+          "Öğrenci" && (
           <>
             <div className="space-y-2">
               <Label htmlFor="university">Üniversite *</Label>
@@ -213,7 +223,9 @@ export function ProfileEditForm({
                       className="w-full justify-between"
                     >
                       {editForm.university
-                        ? UNIVERSITIES.find((uni) => uni === editForm.university)
+                        ? UNIVERSITIES.find(
+                            (uni) => uni === editForm.university
+                          )
                         : "Üniversitenizi seçin..."}
                       <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                     </Button>
@@ -241,7 +253,9 @@ export function ProfileEditForm({
                             <Check
                               className={cn(
                                 "mr-2 h-4 w-4",
-                                editForm.university === uni ? "opacity-100" : "opacity-0"
+                                editForm.university === uni
+                                  ? "opacity-100"
+                                  : "opacity-0"
                               )}
                             />
                             {uni}
@@ -255,7 +269,7 @@ export function ProfileEditForm({
                 <Input
                   value={profile.university || ""}
                   disabled
-                  className="bg-gray-50"
+                  className="bg-background-alt"
                 />
               )}
             </div>
@@ -272,7 +286,9 @@ export function ProfileEditForm({
                       className="w-full justify-between"
                     >
                       {editForm.department
-                        ? DEPARTMENTS.find((dept) => dept === editForm.department)
+                        ? DEPARTMENTS.find(
+                            (dept) => dept === editForm.department
+                          )
                         : "Bölümünüzü seçin..."}
                       <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                     </Button>
@@ -300,7 +316,9 @@ export function ProfileEditForm({
                             <Check
                               className={cn(
                                 "mr-2 h-4 w-4",
-                                editForm.department === dept ? "opacity-100" : "opacity-0"
+                                editForm.department === dept
+                                  ? "opacity-100"
+                                  : "opacity-0"
                               )}
                             />
                             {dept}
@@ -314,7 +332,7 @@ export function ProfileEditForm({
                 <Input
                   value={profile.department || ""}
                   disabled
-                  className="bg-gray-50"
+                  className="bg-background-alt"
                 />
               )}
             </div>
@@ -322,7 +340,12 @@ export function ProfileEditForm({
             <div className="space-y-2">
               <Label htmlFor="class">Kaçıncı Sınıf *</Label>
               {isEditing ? (
-                <Select value={editForm.class} onValueChange={(value) => setEditForm({ ...editForm, class: value })}>
+                <Select
+                  value={editForm.class}
+                  onValueChange={(value) =>
+                    setEditForm({ ...editForm, class: value })
+                  }
+                >
                   <SelectTrigger>
                     <SelectValue placeholder="Sınıfınızı seçin" />
                   </SelectTrigger>
@@ -337,7 +360,7 @@ export function ProfileEditForm({
                 <Input
                   value={profile.class ? `${profile.class}. Sınıf` : ""}
                   disabled
-                  className="bg-gray-50"
+                  className="bg-background-alt"
                 />
               )}
             </div>
@@ -345,43 +368,41 @@ export function ProfileEditForm({
         )}
       </div>
 
-      <div className="border-t border-gray-200 pt-6">
-        <h4 className="text-lg font-medium text-gray-900 mb-4">Hesap Bilgileri</h4>
+      <div className="border-t border-border-color pt-6">
+        <h4 className="text-lg font-medium text-foreground mb-4">
+          Hesap Bilgileri
+        </h4>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div className="space-y-2">
             <Label>E-posta</Label>
             <Input
               value={profile.email}
               disabled
-              className="bg-gray-50"
+              className="bg-background-alt"
             />
-            <p className="text-xs text-gray-500">E-posta adresi değiştirilemez</p>
+            <p className="text-xs text-muted">E-posta adresi değiştirilemez</p>
           </div>
-          
+
           <div className="space-y-2">
             <Label>Üyelik Tarihi</Label>
             <Input
               value={formatDate(profile.createdAt)}
               disabled
-              className="bg-gray-50"
+              className="bg-background-alt"
             />
           </div>
         </div>
       </div>
 
       {isEditing && (
-        <div className="flex justify-end gap-3 pt-4 border-t border-gray-200">
-          <Button
-            variant="outline"
-            onClick={onCancel}
-            disabled={saving}
-          >
+        <div className="flex justify-end gap-3 pt-4 border-t border-border-color">
+          <Button variant="outline" onClick={onCancel} disabled={saving}>
             İptal
           </Button>
           <Button
             onClick={handleSave}
             disabled={saving}
-            className="bg-green-600 hover:bg-green-700"
+            className="bg-primary hover:bg-primary-hover"
           >
             <FiSave className="h-4 w-4 mr-2" />
             {saving ? "Kaydediliyor..." : "Kaydet"}

@@ -8,14 +8,7 @@ import { Award, CheckCircle, Users } from "lucide-react";
 export default function EgitimCTA({ egitim }: EgitimCTAProps) {
   return (
     <div className="mt-12 md:mt-20">
-      <Card
-        className="w-full border border-primary/20 shadow-lg hover:shadow-xl transition-all duration-300"
-        style={{
-          background:
-            "linear-gradient(90deg, rgba(var(--primary-rgb), 0.06), rgba(var(--primary-rgb), 0.12))",
-          borderRadius: "20px",
-        }}
-      >
+      <Card className="w-full border border-primary-200 shadow-lg hover:shadow-xl transition-all duration-300 bg-primary-50 rounded-2xl">
         <CardContent className="p-10 md:p-12">
           <div className="flex flex-col gap-6 text-center max-w-2xl mx-auto">
             {/* Header Section */}
@@ -27,7 +20,7 @@ export default function EgitimCTA({ egitim }: EgitimCTAProps) {
             </div>
 
             {/* Description */}
-            <p className="max-w-2xl text-lg text-gray-700 leading-relaxed font-[Inter,sans-serif]">
+            <p className="max-w-2xl text-lg text-secondary leading-relaxed font-[Inter,sans-serif]">
               Bu eğitim ile beslenme alanındaki bilginizi derinleştirin ve
               profesyonel kariyerinizde fark yaratın. Uzman eğitmenlerden
               öğrenin, sertifikanızı alın.
@@ -53,7 +46,7 @@ export default function EgitimCTA({ egitim }: EgitimCTAProps) {
             </div>
 
             {/* Features */}
-            <div className="flex gap-8 pt-4 text-sm text-gray-600 flex-wrap justify-center">
+            <div className="flex gap-8 pt-4 text-sm text-secondary flex-wrap justify-center">
               <div className="flex items-center gap-2">
                 <CheckCircle className="w-4 h-4 text-primary" />
                 <span className="font-medium">7 gün iade garantisi</span>

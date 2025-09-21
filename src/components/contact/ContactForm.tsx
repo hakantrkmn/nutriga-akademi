@@ -110,13 +110,13 @@ export default function ContactForm() {
   };
 
   return (
-    <div className="bg-white p-8 rounded-xl shadow-lg max-w-2xl w-full">
+    <div className="bg-background p-8 rounded-xl shadow-lg max-w-2xl w-full">
       <div className="flex flex-col gap-6">
         <div className="text-center">
-          <h2 className="text-xl font-semibold text-gray-800 mb-2">
+          <h2 className="text-xl font-semibold text-foreground mb-2">
             Bize Soru Sorun
           </h2>
-          <p className="text-gray-600 text-sm">
+          <p className="text-secondary text-sm">
             Sorularınız için bize mesaj gönderin, size en kısa sürede dönüş
             yapalım.
           </p>
@@ -126,7 +126,7 @@ export default function ContactForm() {
           <div className="flex flex-col gap-5">
             {/* Name Input */}
             <div className="w-full">
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="block text-sm font-medium text-foreground mb-2">
                 İsim Soyisim *
               </label>
               <Input
@@ -141,7 +141,7 @@ export default function ContactForm() {
 
             {/* Email Input */}
             <div className="w-full">
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="block text-sm font-medium text-foreground mb-2">
                 E-posta Adresi *
               </label>
               <Input
@@ -156,7 +156,7 @@ export default function ContactForm() {
 
             {/* Phone Input */}
             <div className="w-full">
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="block text-sm font-medium text-foreground mb-2">
                 Telefon Numarası *
               </label>
               <Input
@@ -171,7 +171,7 @@ export default function ContactForm() {
 
             {/* Message Textarea */}
             <div className="w-full">
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="block text-sm font-medium text-foreground mb-2">
                 Mesajınız *
               </label>
               <Textarea
@@ -187,7 +187,7 @@ export default function ContactForm() {
             {/* Submit Button */}
             <Button
               type="submit"
-              className="bg-green-500 hover:bg-green-600 text-white w-full"
+              className="bg-primary hover:bg-primary-hover text-white w-full"
               disabled={isSubmitting}
             >
               {isSubmitting ? "Gönderiliyor..." : "Mesaj Gönder"}
@@ -195,8 +195,8 @@ export default function ContactForm() {
           </div>
         </form>
 
-        <div className="pt-4 border-t border-gray-100 text-center">
-          <p className="text-sm text-gray-500">* işaretli alanlar zorunludur</p>
+        <div className="pt-4 border-t border-border-color text-center">
+          <p className="text-sm text-muted">* işaretli alanlar zorunludur</p>
         </div>
       </div>
     </div>

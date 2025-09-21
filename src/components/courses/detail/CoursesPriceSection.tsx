@@ -27,7 +27,7 @@ export default function EgitimPrice({ egitim }: EgitimPriceProps) {
 
   return (
     <div className="lg:sticky lg:top-24">
-      <Card className="w-full shadow-xl border border-gray-200 hover:shadow-2xl transition-all duration-300">
+      <Card className="w-full shadow-xl border border-border-color hover:shadow-2xl transition-all duration-300">
         <CardContent className="p-8">
           <div className="flex flex-col gap-6">
             {/* Price Section */}
@@ -35,7 +35,7 @@ export default function EgitimPrice({ egitim }: EgitimPriceProps) {
               <div className="text-5xl font-bold text-primary font-[Poppins,sans-serif]">
                 ₺{formatPrice(egitim.price)}
               </div>
-              <div className="text-sm text-gray-500 font-medium">
+              <div className="text-sm text-muted font-medium">
                 Tek seferlik ödeme
               </div>
             </div>
@@ -58,54 +58,56 @@ export default function EgitimPrice({ egitim }: EgitimPriceProps) {
             </div>
 
             {/* Divider */}
-            <div className="w-full h-px bg-gray-200" />
+            <div className="w-full h-px bg-border-color" />
 
             {/* Course Details */}
             <div className="flex flex-col gap-4 items-start w-full">
-              <h3 className="text-lg font-semibold text-gray-800 font-[Poppins,sans-serif]">
+              <h3 className="text-lg font-semibold text-foreground font-[Poppins,sans-serif]">
                 Bu Eğitim İçerir:
               </h3>
               <div className="flex flex-col gap-3 w-full">
-                <div className="flex justify-between items-center w-full p-3 bg-gray-50 rounded-lg">
+                <div className="flex justify-between items-center w-full p-3 bg-background-alt rounded-lg">
                   <div className="flex items-center gap-3">
                     <BarChart3 className="w-4 h-4 text-primary" />
-                    <span className="font-medium text-gray-700">Seviye</span>
+                    <span className="font-medium text-secondary">Seviye</span>
                   </div>
-                  <span className="font-semibold text-gray-800">
+                  <span className="font-semibold text-foreground">
                     {egitim.level}
                   </span>
                 </div>
-                <div className="flex justify-between items-center w-full p-3 bg-gray-50 rounded-lg">
+                <div className="flex justify-between items-center w-full p-3 bg-background-alt rounded-lg">
                   <div className="flex items-center gap-3">
                     <Award className="w-4 h-4 text-primary" />
-                    <span className="font-medium text-gray-700">Sertifika</span>
+                    <span className="font-medium text-secondary">
+                      Sertifika
+                    </span>
                   </div>
-                  <span className="font-semibold text-gray-800">Evet</span>
+                  <span className="font-semibold text-foreground">Evet</span>
                 </div>
               </div>
             </div>
 
             {/* Divider */}
-            <div className="w-full h-px bg-gray-200" />
+            <div className="w-full h-px bg-border-color" />
 
             {/* Features */}
             <div className="flex flex-col gap-3 items-start w-full">
               <div className="flex flex-col gap-2 items-start w-full">
                 <div className="flex items-center gap-3">
                   <CheckCircle className="w-4 h-4 text-primary" />
-                  <span className="text-sm text-gray-600 font-medium">
+                  <span className="text-sm text-secondary font-medium">
                     7 gün iade garantisi
                   </span>
                 </div>
                 <div className="flex items-center gap-3">
                   <Lock className="w-4 h-4 text-primary" />
-                  <span className="text-sm text-gray-600 font-medium">
+                  <span className="text-sm text-secondary font-medium">
                     Güvenli ödeme
                   </span>
                 </div>
                 <div className="flex items-center gap-3">
                   <Users className="w-4 h-4 text-primary" />
-                  <span className="text-sm text-gray-600 font-medium">
+                  <span className="text-sm text-secondary font-medium">
                     Sınırsız erişim
                   </span>
                 </div>

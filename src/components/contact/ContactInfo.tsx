@@ -25,24 +25,26 @@ function ContactItem({
 }: ContactItemProps) {
   // E-posta için özel stil kontrolü
   const isEmail = title === "E-posta";
-  
+
   return (
-    <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-5 hover:shadow-md transition-all duration-200 hover:border-primary-200">
+    <div className="bg-background rounded-xl shadow-sm border border-border-color p-5 hover:shadow-md transition-all duration-200 hover:border-primary-200">
       <div className="flex items-start gap-4">
         <div className="w-12 h-12 bg-gradient-to-br from-primary-100 to-primary-200 rounded-xl flex items-center justify-center flex-shrink-0">
-          <Icon className="w-6 h-6 text-primary-600" />
+          <Icon className="w-6 h-6 text-primary" />
         </div>
         <div className="flex-1 min-w-0">
-          <h3 className="text-lg font-semibold text-gray-900 mb-2">{title}</h3>
-          <div className={`text-gray-700 leading-relaxed ${
-            isEmail 
-              ? "text-sm break-all" 
-              : "break-words"
-          }`}>
+          <h3 className="text-lg font-semibold text-foreground mb-2">
+            {title}
+          </h3>
+          <div
+            className={`text-secondary leading-relaxed ${
+              isEmail ? "text-sm break-all" : "break-words"
+            }`}
+          >
             {content}
           </div>
           {subtitle && (
-            <p className="text-sm text-gray-500 mt-2 break-words">{subtitle}</p>
+            <p className="text-sm text-muted mt-2 break-words">{subtitle}</p>
           )}
         </div>
       </div>
@@ -63,10 +65,10 @@ export default function ContactInfo() {
   return (
     <div className="space-y-8">
       <div className="text-center">
-        <h2 className="text-2xl font-bold text-gray-900 mb-2">
+        <h2 className="text-2xl font-bold text-foreground mb-2">
           İletişim Bilgileri
         </h2>
-        <p className="text-gray-600">
+        <p className="text-secondary">
           Size en uygun yöntemle bizimle iletişime geçin
         </p>
       </div>
@@ -86,9 +88,9 @@ export default function ContactInfo() {
         />
       </div>
 
-      <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-100 md:col-span-2">
+      <div className="bg-background rounded-xl p-6 shadow-sm border border-border-color md:col-span-2">
         <div className="text-center">
-          <h3 className="text-lg font-semibold text-gray-900 mb-4">
+          <h3 className="text-lg font-semibold text-foreground mb-4">
             Sosyal Medyada Takip Edin
           </h3>
           <div className="flex justify-center gap-4">

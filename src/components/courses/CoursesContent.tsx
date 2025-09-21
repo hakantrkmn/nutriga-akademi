@@ -39,7 +39,7 @@ export default function EgitimlerContent({ egitimler }: EgitimlerContentProps) {
   };
 
   return (
-    <div className="bg-gray-50 w-full min-h-screen">
+    <div className="bg-background-alt w-full min-h-screen">
       <div className="flex flex-col gap-0 w-full">
         <EgitimlerHero />
         <CategoryFilter

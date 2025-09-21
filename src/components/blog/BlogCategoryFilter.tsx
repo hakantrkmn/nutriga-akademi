@@ -18,8 +18,8 @@ export default function CategoryFilter({
             variant={selectedCategory === category ? "default" : "outline"}
             className={`rounded-full px-6 text-sm font-medium transition-all hover:-translate-y-0.5 hover:shadow-md ${
               selectedCategory === category
-                ? "bg-green-600 hover:bg-green-700 text-white"
-                : "border-green-600 text-green-600 hover:bg-green-50"
+                ? "bg-primary hover:bg-primary-hover text-white"
+                : "border-primary text-primary hover:bg-primary-50"
             }`}
             onClick={() => onCategoryChange(category)}
           >

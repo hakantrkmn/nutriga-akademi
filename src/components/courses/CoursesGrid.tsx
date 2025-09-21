@@ -10,10 +10,10 @@ export default function EgitimlerGrid({ egitimler }: EgitimlerGridProps) {
     return (
       <div className="max-w-6xl mx-auto px-4 md:px-6 py-16">
         <div className="flex flex-col gap-4 text-center">
-          <p className="text-xl text-gray-600">
+          <p className="text-xl text-secondary">
             Seçtiğiniz kriterlere uygun eğitim bulunamadı.
           </p>
-          <p className="text-gray-500">
+          <p className="text-muted">
             Filtreleri değiştirerek tekrar deneyin veya tüm eğitimleri
             görüntüleyin.
           </p>
@@ -23,7 +23,7 @@ export default function EgitimlerGrid({ egitimler }: EgitimlerGridProps) {
   }
 
   return (
-    <div className="bg-gray-50 py-16">
+    <div className="bg-background-alt py-16">
       <div className="max-w-6xl mx-auto px-4 md:px-6">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 w-full">
           {egitimler.map((egitim) => (

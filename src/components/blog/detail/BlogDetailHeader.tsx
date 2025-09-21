@@ -20,29 +20,23 @@ export default function BlogDetailHeader({ post }: BlogDetailHeaderProps) {
       </Link>
 
       <div className="flex flex-col gap-6 items-start w-full">
-        <Badge
-          className="text-sm px-3 py-1 rounded-lg"
-          style={{
-            color: "var(--primary)",
-            backgroundColor: "rgba(var(--primary-rgb), 0.08)",
-          }}
-        >
+        <Badge className="text-sm px-3 py-1 rounded-lg bg-primary-100 text-primary">
           {post.category}
         </Badge>
 
-        <h1 className="text-3xl font-bold text-gray-800 leading-tight">
+        <h1 className="text-3xl font-bold text-foreground leading-tight">
           {post.title}
         </h1>
 
         <div className="flex justify-between items-center w-full flex-wrap gap-4">
-          <div className="flex items-center gap-4 text-sm text-gray-600">
+          <div className="flex items-center gap-4 text-sm text-secondary">
             <div className="flex items-center gap-2">
               <User className="w-4 h-4" />
               <span>{post.author}</span>
             </div>
           </div>
 
-          <span className="text-sm text-gray-500">
+          <span className="text-sm text-text-muted">
             {new Date(post.createdAt).toLocaleDateString("tr-TR", {
               year: "numeric",
               month: "long",

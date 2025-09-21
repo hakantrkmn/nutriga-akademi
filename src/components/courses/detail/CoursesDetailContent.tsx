@@ -14,7 +14,7 @@ export default function EgitimDetailContent({
   const [isImageError, setIsImageError] = React.useState(false);
 
   return (
-    <div className="bg-gray-50 min-h-screen">
+    <div className="bg-background-alt min-h-screen">
       {/* Header/Hero Section */}
       <EgitimDetailHero
         egitim={egitim}
