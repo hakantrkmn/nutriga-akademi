@@ -4,15 +4,23 @@ import ContractModal from "@/components/modals/ContractModal";
 import PreInfoModal from "@/components/modals/PreInfoModal";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { toaster } from "@/components/ui/toaster";
 import { useCart } from "@/hooks/useCart";
 import { Minus, Plus, Trash2 } from "lucide-react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function CartPage() {
   const router = useRouter();
@@ -23,13 +31,59 @@ export default function CartPage() {
     subtotal,
     updateQuantity,
     removeItem,
-    checkout,
   } = useCart();
+
+  // Payment result mesajını göster ve localStorage'dan adres bilgilerini yükle
+  useEffect(() => {
+    // Query parameter kontrolü
+    const urlParams = new URLSearchParams(window.location.search);
+    const paymentStatus = urlParams.get("payment");
+
+    if (paymentStatus === "failed") {
+      toaster.error("Ödeme işlemi başarısız oldu. Lütfen tekrar deneyin.");
+      // Query parameter'ı temizle
+      const url = new URL(window.location.href);
+      url.searchParams.delete("payment");
+      window.history.replaceState({}, "", url.toString());
+    }
+
+    // localStorage'dan adres bilgilerini yükle
+    const savedAddressData = localStorage.getItem("checkoutAddressData");
+    if (savedAddressData) {
+      try {
+        const addressData = JSON.parse(savedAddressData);
+        setBillingAddress(addressData.billingAddress || "");
+        setBillingCity(addressData.billingCity || "");
+        setBillingCountry(addressData.billingCountry || "Türkiye");
+        setBillingZipCode(addressData.billingZipCode || "");
+        setIsTurkishCitizen(addressData.isTurkishCitizen || false);
+        setIdentityNumber(addressData.identityNumber || "");
+        console.log("Adres bilgileri localStorage'dan yüklendi");
+      } catch (error) {
+        console.error("localStorage adres bilgileri parse edilemedi:", error);
+      }
+    }
+  }, []);
 
   const [contractAccepted, setContractAccepted] = useState(false);
   const [preInfoAccepted, setPreInfoAccepted] = useState(false);
   const [contractModalOpen, setContractModalOpen] = useState(false);
   const [preInfoModalOpen, setPreInfoModalOpen] = useState(false);
+
+  // Address form state
+  const [billingAddress, setBillingAddress] = useState("");
+  const [billingCity, setBillingCity] = useState("");
+  const [billingCountry, setBillingCountry] = useState("Türkiye");
+  const [billingZipCode, setBillingZipCode] = useState("");
+  const [isTurkishCitizen, setIsTurkishCitizen] = useState(false);
+  const [identityNumber, setIdentityNumber] = useState("");
+
+  // Form validation
+  const isAddressFormValid =
+    billingAddress.trim() !== "" &&
+    billingCity.trim() !== "" &&
+    billingCountry.trim() !== "" &&
+    (!isTurkishCitizen || (isTurkishCitizen && identityNumber.trim() !== ""));
 
   return (
     <div className="max-w-7xl mx-auto px-4 md:px-6 py-6 md:py-8">
@@ -143,6 +197,195 @@ export default function CartPage() {
           </CardContent>
         </Card>
 
+        {/* Address Form */}
+        <Card className="bg-card border-border">
+          <CardHeader className="bg-card">
+            <CardTitle className="text-foreground flex items-center gap-2">
+              <svg
+                className="w-5 h-5 text-primary"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
+                />
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
+                />
+              </svg>
+              Teslimat ve Fatura Bilgileri
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="p-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {/* Billing Address */}
+              <div className="space-y-4">
+                <h3 className="text-lg font-semibold text-foreground">
+                  Fatura Adresi
+                </h3>
+
+                <div className="space-y-3">
+                  <div>
+                    <Label htmlFor="billingAddress" className="text-foreground">
+                      Adres *
+                    </Label>
+                    <Input
+                      id="billingAddress"
+                      placeholder="Örnek: Kadıköy Mahallesi, İstanbul Cad. No:123"
+                      value={billingAddress}
+                      onChange={(e) => setBillingAddress(e.target.value)}
+                      className="mt-1"
+                    />
+                  </div>
+
+                  <div className="grid grid-cols-2 gap-3">
+                    <div>
+                      <Label htmlFor="billingCity" className="text-foreground">
+                        Şehir *
+                      </Label>
+                      <Input
+                        id="billingCity"
+                        placeholder="İstanbul"
+                        value={billingCity}
+                        onChange={(e) => setBillingCity(e.target.value)}
+                        className="mt-1"
+                      />
+                    </div>
+
+                    <div>
+                      <Label
+                        htmlFor="billingZipCode"
+                        className="text-foreground"
+                      >
+                        Posta Kodu
+                      </Label>
+                      <Input
+                        id="billingZipCode"
+                        placeholder="34700"
+                        value={billingZipCode}
+                        onChange={(e) => setBillingZipCode(e.target.value)}
+                        className="mt-1"
+                      />
+                    </div>
+                  </div>
+
+                  <div>
+                    <Label htmlFor="billingCountry" className="text-foreground">
+                      Ülke *
+                    </Label>
+                    <Select
+                      value={billingCountry}
+                      onValueChange={setBillingCountry}
+                    >
+                      <SelectTrigger className="mt-1">
+                        <SelectValue placeholder="Ülke seçin" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="Türkiye">Türkiye</SelectItem>
+                        <SelectItem value="Almanya">Almanya</SelectItem>
+                        <SelectItem value="ABD">
+                          Amerika Birleşik Devletleri
+                        </SelectItem>
+                        <SelectItem value="İngiltere">İngiltere</SelectItem>
+                        <SelectItem value="Fransa">Fransa</SelectItem>
+                        <SelectItem value="Diğer">Diğer</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+
+                  <div className="flex items-center space-x-2">
+                    <Checkbox
+                      id="isTurkishCitizen"
+                      checked={isTurkishCitizen}
+                      onCheckedChange={(checked) => {
+                        setIsTurkishCitizen(checked as boolean);
+                        if (!checked) {
+                          setIdentityNumber("");
+                        }
+                      }}
+                    />
+                    <Label
+                      htmlFor="isTurkishCitizen"
+                      className="text-sm text-muted-text cursor-pointer"
+                    >
+                      TR vatandaşıyım (TC Kimlik No zorunlu)
+                    </Label>
+                  </div>
+
+                  {isTurkishCitizen && (
+                    <div>
+                      <Label
+                        htmlFor="identityNumber"
+                        className="text-foreground"
+                      >
+                        TC Kimlik Numarası *
+                      </Label>
+                      <Input
+                        id="identityNumber"
+                        placeholder="11 haneli TC Kimlik No"
+                        value={identityNumber}
+                        onChange={(e) =>
+                          setIdentityNumber(
+                            e.target.value.replace(/\D/g, "").slice(0, 11)
+                          )
+                        }
+                        className="mt-1"
+                        maxLength={11}
+                      />
+                    </div>
+                  )}
+                </div>
+              </div>
+
+              {/* Shipping Address - Dijital ürün için aynı */}
+              <div className="space-y-4">
+                <h3 className="text-lg font-semibold text-foreground">
+                  Teslimat Adresi
+                </h3>
+                <div className="p-4 bg-info-light border border-info rounded-lg">
+                  <div className="flex items-center gap-2 text-info-text">
+                    <svg
+                      className="w-5 h-5"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                      />
+                    </svg>
+                    <span className="font-medium">Bilgi:</span>
+                  </div>
+                  <p className="text-sm text-info-text mt-1">
+                    Dijital eğitim ürünleri için teslimat adresi fatura adresi
+                    ile aynıdır. Eğitimlerinize erişim e-posta adresinize
+                    gönderilecektir.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {!isAddressFormValid && (
+              <div className="mt-4 p-3 bg-error-light border border-error rounded-lg">
+                <p className="text-sm text-error">
+                  Lütfen zorunlu alanları doldurun: Adres, Şehir, Ülke
+                  {isTurkishCitizen && " ve TC Kimlik Numarası"}
+                </p>
+              </div>
+            )}
+          </CardContent>
+        </Card>
+
         {/* Order Summary */}
         <Card className="bg-white rounded-lg shadow-sm">
           <CardContent className="p-6">
@@ -224,7 +467,10 @@ export default function CartPage() {
                 size="lg"
                 className="w-full h-12 rounded-xl bg-primary hover:bg-primary/90 text-white disabled:opacity-50"
                 disabled={
-                  items.length === 0 || !contractAccepted || !preInfoAccepted
+                  items.length === 0 ||
+                  !contractAccepted ||
+                  !preInfoAccepted ||
+                  !isAddressFormValid
                 }
                 onClick={async () => {
                   if (!isAuthenticated) {
@@ -232,13 +478,26 @@ export default function CartPage() {
                     router.push("/auth/login");
                     return;
                   }
-                  const result = await checkout();
-                  if (result.success) {
-                    router.push("/"); // Redirect to home or a success page
-                  }
+
+                  // Adres bilgilerini localStorage'a kaydet (payment sayfasında kullanmak için)
+                  const addressData = {
+                    billingAddress,
+                    billingCity,
+                    billingCountry,
+                    billingZipCode,
+                    isTurkishCitizen,
+                    identityNumber,
+                  };
+                  localStorage.setItem(
+                    "checkoutAddressData",
+                    JSON.stringify(addressData)
+                  );
+
+                  // Iyzico ödeme sayfasına yönlendir
+                  router.push("/payment");
                 }}
               >
-                {isAuthenticated ? "Satın Almaya Geç" : "Giriş Yap ve Satın Al"}
+                {isAuthenticated ? "Ödemeye Geç" : "Giriş Yap ve Öde"}
               </Button>
             </div>
           </CardContent>

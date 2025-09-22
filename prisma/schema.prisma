@@ -9,6 +9,7 @@ datasource db {
   provider  = "postgresql"
   url       = env("DATABASE_URL")
   directUrl = env("DIRECT_URL")
+  schemas   = ["public", "auth"]
 }
 
 model Egitim {
@@ -28,8 +29,10 @@ model Egitim {
 
   // Relations
   cartItems      CartItem[]
-  desiredByUsers User[]     @relation("UserDesiredEducation")
+  desiredByUsers User[]        @relation("UserDesiredEducation")
+  paymentItems   PaymentItem[]
 
+  @@schema("public")
   @@map("egitimler")
 }
 
@@ -45,6 +48,7 @@ model BlogPost {
   createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
   updatedAt DateTime @default(now()) @updatedAt @map("updated_at") @db.Timestamptz(6)
 
+  @@schema("public")
   @@map("blog_posts")
 }
 
@@ -59,6 +63,7 @@ model CartItem {
   user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   education   Egitim   @relation(fields: [educationId], references: [id], onDelete: Cascade)
 
+  @@schema("public")
   @@map("cart_items")
 }
 
@@ -80,7 +85,9 @@ model User {
   // Relations
   desiredEducation   Egitim?         @relation("UserDesiredEducation", fields: [desiredEducationId], references: [id], onDelete: SetNull)
   cartItems          CartItem[]
+  payments           Payment[]
 
+  @@schema("public")
   @@map("users")
 }
 
@@ -96,6 +103,7 @@ model HeroSlide {
   createdAt   DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
   updatedAt   DateTime @default(now()) @updatedAt @map("updated_at") @db.Timestamptz(6)
 
+  @@schema("public")
   @@map("hero_slides")
 }
 
@@ -111,5 +119,54 @@ model ContactMessage {
   createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
   updatedAt DateTime @default(now()) @updatedAt @map("updated_at") @db.Timestamptz(6)
 
+  @@schema("public")
   @@map("contact_messages")
+}
+
+model Payment {
+  id             String       @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  userId         String       @map("user_id") @db.Uuid
+  iyzicoToken    String?      @map("iyzico_token")
+  iyzicoPaymentId String?     @map("iyzico_payment_id")
+  totalAmount    Decimal      @db.Decimal(10, 2) @map("total_amount")
+  status         PaymentStatus @default(PENDING)
+  paymentMethod  String?      @map("payment_method")
+  installment    Int          @default(1)
+  conversationId String       @unique @map("conversation_id")
+  createdAt      DateTime     @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt      DateTime     @default(now()) @updatedAt @map("updated_at") @db.Timestamptz(6)
+
+  // Relations
+  user          User           @relation(fields: [userId], references: [id], onDelete: Cascade)
+  paymentItems  PaymentItem[]
+
+  @@schema("public")
+  @@map("payments")
+}
+
+model PaymentItem {
+  id          String  @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  paymentId   String  @map("payment_id") @db.Uuid
+  educationId String  @map("education_id") @db.Uuid
+  quantity    Int     @default(1)
+  unitPrice   Decimal @db.Decimal(10, 2) @map("unit_price")
+  totalPrice  Decimal @db.Decimal(10, 2) @map("total_price")
+
+  // Relations
+  payment     Payment @relation(fields: [paymentId], references: [id], onDelete: Cascade)
+  education   Egitim  @relation(fields: [educationId], references: [id], onDelete: Cascade)
+
+  @@schema("public")
+  @@map("payment_items")
+}
+
+enum PaymentStatus {
+  PENDING
+  COMPLETED
+  FAILED
+  CANCELLED
+  REFUNDED
+
+  @@schema("public")
+  @@map("payment_status")
 }

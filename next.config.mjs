@@ -5,6 +5,8 @@ const nextConfig = {
     // Enable faster builds
     esmExternals: true,
   },
+  // Next 15: externalize native Node deps for server runtime
+  serverExternalPackages: ["iyzipay"],
   // Enable compression
   compress: true,
   // Optimize images

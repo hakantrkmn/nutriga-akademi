@@ -1,3 +1,4 @@
+import PaymentSuccessToast from "@/components/common/PaymentSuccessToast";
 import BlogSection from "@/components/home/BlogSection";
 import Hero from "@/components/home/HomeHero";
 import PopularEgitimler from "@/components/home/PopularCourses";
@@ -61,6 +62,9 @@ export default async function Home({ searchParams }: HomePageProps) {
 
       {/* Popup Modal Handler */}
       <PopupHandler initialPopup={popup} />
+
+      {/* Payment Success Toast */}
+      <PaymentSuccessToast />
     </>
   );
 }

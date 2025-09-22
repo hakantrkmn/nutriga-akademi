@@ -1,9 +1,8 @@
-import { createClient } from "@/lib/supabase/server";
+import { prisma } from "@/lib/prisma";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(request: NextRequest) {
   try {
-    const supabase = await createClient();
     const { searchParams } = new URL(request.url);
     const userId = searchParams.get("userId");
 
@@ -14,54 +13,45 @@ export async function GET(request: NextRequest) {
       );
     }
 
-    // Get user's purchased items (cart items that were completed)
-    const { data: cartItems, error: cartError } = await supabase
-      .from("cart_items")
-      .select(`
-        id,
-        education_id,
-        quantity,
-        created_at,
-        egitimler (
-          id,
-          title,
-          price,
-          image_url,
-          category,
-          instructor,
-          level
-        )
-      `)
-      .eq("user_id", userId)
-      .order("created_at", { ascending: false });
-
-    if (cartError) {
-      console.error("Database error:", cartError);
-      return NextResponse.json(
-        { error: "Satın alınan eğitimler getirilemedi" },
-        { status: 500 }
-      );
-    }
-
-    // Format the response
-    const formattedData = cartItems?.map((item) => {
-      const education = Array.isArray(item.egitimler) ? item.egitimler[0] : item.egitimler;
-      return {
-        id: item.id,
-        educationId: item.education_id,
-        quantity: item.quantity,
-        createdAt: item.created_at,
-        education: {
-          id: education?.id,
-          title: education?.title,
-          price: Number(education?.price || 0),
-          imageUrl: education?.image_url,
-          category: education?.category,
-          instructor: education?.instructor,
-          level: education?.level,
+    // Get user's purchased items from payment_items (only COMPLETED payments)
+    const paymentItems = await prisma.paymentItem.findMany({
+      where: {
+        payment: {
+          userId: userId,
+          status: "COMPLETED",
         },
-      };
-    }) || [];
+      },
+      include: {
+        education: true,
+        payment: {
+          select: {
+            createdAt: true,
+          },
+        },
+      },
+      orderBy: {
+        payment: {
+          createdAt: "desc",
+        },
+      },
+    });
+
+    // Format the response to match the expected CartItem interface
+    const formattedData = paymentItems.map((item) => ({
+      id: item.id,
+      educationId: item.educationId,
+      quantity: item.quantity,
+      createdAt: item.payment.createdAt.toISOString(),
+      education: {
+        id: item.education.id,
+        title: item.education.title,
+        price: Number(item.education.price),
+        imageUrl: item.education.imageUrl || undefined,
+        category: item.education.category,
+        instructor: item.education.instructor,
+        level: item.education.level,
+      },
+    }));
 
     return NextResponse.json({
       success: true,
