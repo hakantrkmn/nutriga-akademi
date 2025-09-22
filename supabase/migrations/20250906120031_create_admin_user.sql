@@ -5,9 +5,9 @@ CREATE OR REPLACE FUNCTION is_admin_user()
 RETURNS boolean AS $$
 BEGIN
   RETURN EXISTS (
-    SELECT 1 FROM auth.users 
-    WHERE auth.users.id = auth.uid() 
-    AND auth.users.email = 'hakantrkmn61@gmail.com'
+    SELECT 1 FROM auth.users
+    WHERE auth.users.id = auth.uid()
+    AND auth.users.email = 'yeni-admin-mail@gmail.com'
   );
 END;
 $$ LANGUAGE plpgsql SECURITY DEFINER;
@@ -17,9 +17,9 @@ CREATE OR REPLACE FUNCTION public.is_admin_user()
 RETURNS boolean AS $$
 BEGIN
   RETURN EXISTS (
-    SELECT 1 FROM auth.users 
-    WHERE auth.users.id = auth.uid() 
-    AND auth.users.email = 'hakantrkmn61@gmail.com'
+    SELECT 1 FROM auth.users
+    WHERE auth.users.id = auth.uid()
+    AND auth.users.email = 'yeni-admin-mail@gmail.com'
   );
 END;
 $$ LANGUAGE plpgsql SECURITY DEFINER;
@@ -33,12 +33,12 @@ RETURNS TABLE (
 ) AS $$
 BEGIN
   RETURN QUERY
-  SELECT 
+  SELECT
     auth.users.id,
     auth.users.email,
     auth.users.created_at
-  FROM auth.users 
-  WHERE auth.users.email = 'hakantrkmn61@gmail.com';
+  FROM auth.users
+  WHERE auth.users.email = 'yeni-admin-mail@gmail.com';
 END;
 $$ LANGUAGE plpgsql SECURITY DEFINER;
 
@@ -51,11 +51,11 @@ RETURNS TABLE (
 ) AS $$
 BEGIN
   RETURN QUERY
-  SELECT 
+  SELECT
     auth.users.id,
     auth.users.email,
     auth.users.created_at
-  FROM auth.users 
-  WHERE auth.users.email = 'hakantrkmn61@gmail.com';
+  FROM auth.users
+  WHERE auth.users.email = 'yeni-admin-mail@gmail.com';
 END;
 $$ LANGUAGE plpgsql SECURITY DEFINER;
