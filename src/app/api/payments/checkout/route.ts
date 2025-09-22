@@ -371,6 +371,15 @@ export async function POST(request: NextRequest) {
       await iyzicoClient.initializeCheckoutForm(checkoutData);
 
     console.log("Iyzico response:", checkoutResult);
+    console.log(
+      "Checkout form content length:",
+      checkoutResult.checkoutFormContent?.length || 0
+    );
+    console.log(
+      "Checkout form content preview:",
+      checkoutResult.checkoutFormContent?.substring(0, 200) + "..." ||
+        "No content"
+    );
 
     if (checkoutResult.status !== "success") {
       // Payment kaydını FAILED olarak güncelle

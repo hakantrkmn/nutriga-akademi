@@ -47,7 +47,12 @@ export async function POST(request: NextRequest) {
     // Conversation ID ile payment kaydını bul
     const payment = await prisma.payment.findFirst({
       where: conversationId ? { conversationId } : { iyzicoToken: token },
-      include: { paymentItems: true, user: true },
+      include: {
+        paymentItems: {
+          include: { education: true },
+        },
+        user: true,
+      },
     });
 
     if (!payment) {
@@ -85,6 +90,10 @@ export async function POST(request: NextRequest) {
           where: { id: payment.id },
           data: {
             status: "COMPLETED",
+            paidPrice: paymentDetails.paidPrice
+              ? parseFloat(paymentDetails.paidPrice)
+              : null,
+            installment: paymentDetails.installment || 1,
             iyzicoPaymentId: paymentDetails.paymentId,
             paymentMethod: paymentDetails.paymentItems?.[0]
               ?.paymentTransactionId
@@ -110,17 +119,17 @@ export async function POST(request: NextRequest) {
           const orderDetails = payment.paymentItems.map((item) => ({
             educationId: item.educationId,
             quantity: item.quantity,
-            unitPrice: Number(item.unitPrice),
-            lineTotal: Number(item.totalPrice),
-            title: "Eğitim", // TODO: Eğitim başlığını getir
-            instructor: "Eğitmen", // TODO: Eğitmen adını getir
+            unitPrice: 0, // Fiyat bilgisi göstermiyoruz
+            lineTotal: 0, // Fiyat bilgisi göstermiyoruz
+            title: item.education.title || "Eğitim",
+            instructor: item.education.instructor || "Eğitmen",
           }));
 
           const emailResult = await sendPurchaseConfirmation({
             userEmail: payment.user.email,
             userName: `${payment.user.firstName} ${payment.user.lastName}`,
             orderDetails,
-            subtotal: Number(payment.totalAmount),
+            subtotal: 0, // Fiyat bilgisi göstermiyoruz
           });
 
           if (emailResult.success) {

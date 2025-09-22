@@ -4,20 +4,8 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { CreditCard, Loader2, XCircle } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { toast } from "sonner";
-
-interface OrderItem {
-  title: string;
-  quantity: number;
-  unitPrice: number;
-  totalPrice: number;
-}
-
-interface OrderSummary {
-  items: OrderItem[];
-  totalAmount: number;
-}
 
 interface CheckoutData {
   paymentId: string;
@@ -26,7 +14,6 @@ interface CheckoutData {
   paymentPageUrl: string;
   payWithIyzicoPageUrl: string;
   tokenExpireTime: number;
-  orderSummary: OrderSummary;
 }
 
 export default function PaymentPage() {
@@ -35,7 +22,7 @@ export default function PaymentPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  // Iyzipay formunu güvenli şekilde inject eden fonksiyon
+  // Iyzipay formunu inject eden basit fonksiyon
   const injectIyzicoForm = (formContent: string) => {
     return new Promise<void>((resolve, reject) => {
       try {
@@ -48,83 +35,70 @@ export default function PaymentPage() {
         // Önceki içeriği temizle
         placeholder.innerHTML = "";
 
-        // HTML içeriğini güvenli şekilde inject et
+        // HTML içeriğini direkt inject et
         placeholder.innerHTML = formContent;
 
-        // Script'leri bul ve yeniden çalıştır
+        // Script'leri çalıştır
         const scripts = placeholder.querySelectorAll("script");
-
-        if (scripts.length === 0) {
-          // Script yoksa direkt resolve et
-          resolve();
-          return;
-        }
-
-        let loadedScripts = 0;
-        const totalScripts = scripts.length;
-
-        const onScriptLoad = () => {
-          loadedScripts++;
-          if (loadedScripts >= totalScripts) {
-            // Tüm script'ler yüklendi, biraz bekle sonra resolve et
-            setTimeout(() => {
-              resolve();
-            }, 500);
-          }
-        };
-
-        scripts.forEach((oldScript) => {
+        scripts.forEach((script) => {
           const newScript = document.createElement("script");
-
-          // Attribute'ları kopyala
-          Array.from(oldScript.attributes).forEach((attr) => {
+          Array.from(script.attributes).forEach((attr) => {
             newScript.setAttribute(attr.name, attr.value);
           });
-
-          // Script içeriğini kopyala
-          if (oldScript.textContent) {
-            newScript.textContent = oldScript.textContent;
+          if (script.textContent) {
+            newScript.textContent = script.textContent;
           }
-
-          // Load event listener ekle
-          newScript.addEventListener("load", onScriptLoad);
-          newScript.addEventListener("error", () => {
-            console.warn(
-              "Script yükleme hatası:",
-              newScript.src || "inline script"
-            );
-            onScriptLoad(); // Hata olsa da devam et
-          });
-
-          // Eski script'i yenisiyle değiştir
-          oldScript.parentNode?.replaceChild(newScript, oldScript);
+          script.parentNode?.replaceChild(newScript, script);
         });
 
-        // Inline script'ler için timeout fallback
-        setTimeout(() => {
-          if (loadedScripts < totalScripts) {
-            console.warn("Bazı script'ler yüklenmedi, devam ediliyor...");
-            resolve();
-          }
-        }, 3000);
+        // Formun yüklenmesi için bekleme gereksiz, hemen resolve et
+        resolve();
       } catch (error) {
         reject(error);
       }
     });
   };
 
-  const checkoutInitialized = useRef(false);
+  const cleanupIyzico = useCallback(() => {
+    console.log("Cleaning up previous Iyzico script and state...");
 
-  useEffect(() => {
-    if (checkoutInitialized.current) {
-      console.log("Checkout already initialized, skipping");
-      return;
+    // 1. Manually find and remove the Iyzico iframe if it exists
+    const iframe = document.getElementById("iyzi-checkout-form");
+    if (iframe) {
+      console.log("Removing Iyzico iframe...");
+      iframe.remove();
     }
 
-    checkoutInitialized.current = true;
+    // 2. Clear the placeholder content
+    const placeholder = document.getElementById("iyzipay-checkout-form");
+    if (placeholder) {
+      placeholder.innerHTML = "";
+    }
 
+    // 3. Remove the bundle.js script from the head
+    const scripts = document.head.querySelectorAll(
+      'script[src*="iyzipay.com/checkoutform/v2/bundle.js"]'
+    );
+    scripts.forEach((script) => {
+      console.log("Removing script:", (script as HTMLScriptElement).src);
+      script.remove();
+    });
+
+    // 4. Reset the global iyziInit object
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    if ((window as any).iyziInit) {
+      console.log("Resetting window.iyziInit");
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      (window as any).iyziInit = undefined;
+    }
+  }, []);
+
+  useEffect(() => {
     const initializeCheckout = async () => {
+      cleanupIyzico(); // Clean up before initializing
+
       setLoading(true);
+      setError(null);
       try {
         console.log("Ödeme formu başlatılıyor...");
 
@@ -179,7 +153,12 @@ export default function PaymentPage() {
     };
 
     initializeCheckout();
-  }, []);
+
+    // Cleanup on unmount
+    return () => {
+      cleanupIyzico();
+    };
+  }, [cleanupIyzico]);
 
   // Checkout data değiştiğinde formu inject et
   useEffect(() => {
@@ -250,109 +229,49 @@ export default function PaymentPage() {
       {/* Header */}
 
       {/* Main Content */}
-      <div className="max-w-4xl mx-auto px-4 py-8">
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          {/* Payment Form - Iyzico */}
-          <div className="lg:col-span-2">
-            <Card className="bg-card border-border">
-              <CardHeader className="bg-card">
-                <CardTitle className="flex items-center space-x-2 text-foreground">
-                  <CreditCard className="h-5 w-5 text-primary" />
-                  <span>Ödeme Bilgileri</span>
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                {checkoutData?.checkoutFormContent ? (
-                  <div className="space-y-4">
-                    {/* Iyzico'nun checkout form div'i */}
-                    <div
-                      id="iyzipay-checkout-form"
-                      className="responsive"
-                    ></div>
+      <div className="max-w-2xl mx-auto px-4 py-8">
+        <Card className="bg-card border-border">
+          <CardHeader className="bg-card">
+            <CardTitle className="flex items-center space-x-2 text-foreground">
+              <CreditCard className="h-5 w-5 text-primary" />
+              <span>Ödeme Bilgileri</span>
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            {checkoutData?.checkoutFormContent ? (
+              <div className="space-y-4">
+                {/* Iyzico'nun checkout form div'i */}
+                <div id="iyzipay-checkout-form" className="responsive"></div>
 
-                    <div className="text-sm text-muted-text bg-info-light p-4 rounded-lg border border-info">
-                      <p className="font-medium mb-2 text-info-text">
-                        🔒 Güvenli Ödeme
-                      </p>
-                      <ul className="space-y-1">
-                        <li>• 256-bit SSL şifreleme ile korunmaktadır</li>
-                        <li>• Kredi kartı bilgileriniz kaydedilmez</li>
-                        <li>• 3D Secure güvenlik sistemi kullanılmaktadır</li>
-                      </ul>
-                    </div>
-                  </div>
-                ) : (
-                  <div className="text-center py-8">
-                    <Loader2 className="h-8 w-8 animate-spin mx-auto mb-4 text-primary" />
-                    <p>Ödeme formu yükleniyor...</p>
-                  </div>
-                )}
-              </CardContent>
-            </Card>
-          </div>
-
-          {/* Order Summary */}
-          <div className="lg:col-span-1">
-            <Card className="bg-card border-border">
-              <CardHeader className="bg-card">
-                <CardTitle className="text-foreground">Sipariş Özeti</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-4">
-                  {/* Ürünler */}
-                  <div className="space-y-2">
-                    {checkoutData?.orderSummary?.items?.map((item, index) => (
-                      <div
-                        key={index}
-                        className="flex justify-between items-center text-sm"
-                      >
-                        <div className="flex-1">
-                          <div className="font-medium text-foreground">
-                            {item.title}
-                          </div>
-                          <div className="text-muted-text">
-                            {item.quantity} adet × ₺{item.unitPrice.toFixed(2)}
-                          </div>
-                        </div>
-                        <div className="font-medium text-foreground">
-                          ₺{item.totalPrice.toFixed(2)}
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-
-                  {/* Toplam */}
-                  <div className="border-t pt-3">
-                    <div className="flex justify-between items-center font-semibold text-foreground">
-                      <span>Toplam:</span>
-                      <span>
-                        ₺{checkoutData?.orderSummary?.totalAmount?.toFixed(2)}
-                      </span>
-                    </div>
-                  </div>
-
-                  <div className="border-t pt-4">
-                    <Button
-                      onClick={handleBackToCart}
-                      variant="outline"
-                      className="w-full"
-                    >
-                      Sepete Dön
-                    </Button>
-                  </div>
-
-                  <div className="text-xs text-gray-500 bg-gray-50 p-3 rounded">
-                    <p className="font-medium mb-1">⚠️ Önemli Not:</p>
-                    <p>
-                      Ödeme tamamlandıktan sonra otomatik olarak eğitimlere
-                      erişim sağlayacaksınız.
-                    </p>
-                  </div>
+                <div className="text-sm text-muted-text bg-info-light p-4 rounded-lg border border-info">
+                  <p className="font-medium mb-2 text-info-text">
+                    🔒 Güvenli Ödeme
+                  </p>
+                  <ul className="space-y-1">
+                    <li>• 256-bit SSL şifreleme ile korunmaktadır</li>
+                    <li>• Kredi kartı bilgileriniz kaydedilmez</li>
+                    <li>• 3D Secure güvenlik sistemi kullanılmaktadır</li>
+                  </ul>
                 </div>
-              </CardContent>
-            </Card>
-          </div>
-        </div>
+
+                <div className="flex justify-center pt-4">
+                  <Button
+                    onClick={handleBackToCart}
+                    variant="outline"
+                    className="w-full max-w-xs"
+                  >
+                    Sepete Dön
+                  </Button>
+                </div>
+              </div>
+            ) : (
+              <div className="text-center py-8">
+                <Loader2 className="h-8 w-8 animate-spin mx-auto mb-4 text-primary" />
+                <p>Ödeme formu yükleniyor...</p>
+              </div>
+            )}
+          </CardContent>
+        </Card>
       </div>
     </div>
   );

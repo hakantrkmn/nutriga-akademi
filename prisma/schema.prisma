@@ -129,6 +129,7 @@ model Payment {
   iyzicoToken    String?      @map("iyzico_token")
   iyzicoPaymentId String?     @map("iyzico_payment_id")
   totalAmount    Decimal      @db.Decimal(10, 2) @map("total_amount")
+  paidPrice      Decimal?     @db.Decimal(10, 2) @map("paid_price")  // İyzipay'ın hesapladığı gerçek tutar (faizli)
   status         PaymentStatus @default(PENDING)
   paymentMethod  String?      @map("payment_method")
   installment    Int          @default(1)

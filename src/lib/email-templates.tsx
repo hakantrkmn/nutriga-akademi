@@ -56,18 +56,9 @@ export const PurchaseConfirmationEmail = ({
               <Section key={index} style={itemStyle}>
                 <Text style={itemTitle}>{item.title}</Text>
                 <Text style={itemInstructor}>Eğitmen: {item.instructor}</Text>
-                <Text style={itemDetails}>
-                  Adet: {item.quantity} × ₺{item.unitPrice.toFixed(2)} = ₺
-                  {item.lineTotal.toFixed(2)}
-                </Text>
+                <Text style={itemDetails}>Adet: {item.quantity}</Text>
               </Section>
             ))}
-
-            <Section style={totalSection}>
-              <Text style={totalText}>
-                <strong>Toplam: ₺{subtotal.toFixed(2)}</strong>
-              </Text>
-            </Section>
           </Section>
 
           <Text style={text}>

@@ -494,7 +494,7 @@ export default function CartPage() {
                   );
 
                   // Iyzico ödeme sayfasına yönlendir
-                  router.push("/payment");
+                  router.push(`/payment?t=${new Date().getTime()}`);
                 }}
               >
                 {isAuthenticated ? "Ödemeye Geç" : "Giriş Yap ve Öde"}
