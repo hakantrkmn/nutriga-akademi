@@ -13,7 +13,6 @@ import { FaInstagram } from "react-icons/fa";
 const quickLinks = [
   { name: "Eğitimler", href: "/egitimler" },
   { name: "Blog", href: "/blog" },
-  { name: "Hakkımızda", href: "/hakkimizda" },
   { name: "Misyonumuz", href: "/misyon" },
   { name: "Vizyonumuz", href: "/vizyon" },
   { name: "İletişim", href: "/iletisim" },

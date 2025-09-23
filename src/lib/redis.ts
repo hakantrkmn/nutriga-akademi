@@ -1,17 +1,24 @@
 import { createClient } from "redis";
 import { prisma } from "./prisma";
 
-const redis = await createClient({
-  url: process.env.REDIS_URL,
-}).connect();
+// Global redis connection pool
+let redisClient: ReturnType<typeof createClient> | null = null;
+
+export const getRedisClient = async () => {
+  if (!redisClient) {
+    redisClient = createClient({ url: process.env.REDIS_URL });
+    await redisClient.connect();
+  }
+  return redisClient;
+};
 
 export const getBlogPosts = async () => {
-  const blogPosts = await redis.get("blogPosts");
+  const blogPosts = await (await getRedisClient()).get("blogPosts");
   if (blogPosts) {
     return JSON.parse(blogPosts);
   } else {
     const blogPosts = await prisma.blogPost.findMany();
-    await redis.set("blogPosts", JSON.stringify(blogPosts));
+    await (await getRedisClient()).set("blogPosts", JSON.stringify(blogPosts));
     return blogPosts;
   }
 };
@@ -22,7 +29,7 @@ type RedisCartItem = { educationId: string; quantity: number };
 const cartKey = (userId: string) => `cart:${userId}`;
 
 export const cartGet = async (userId: string): Promise<RedisCartItem[]> => {
-  const raw = await redis.get(cartKey(userId));
+  const raw = await (await getRedisClient()).get(cartKey(userId));
   if (!raw) return [];
   try {
     const parsed = JSON.parse(raw) as RedisCartItem[];
@@ -33,7 +40,7 @@ export const cartGet = async (userId: string): Promise<RedisCartItem[]> => {
 };
 
 export const cartSet = async (userId: string, items: RedisCartItem[]) => {
-  await redis.set(cartKey(userId), JSON.stringify(items));
+  await (await getRedisClient()).set(cartKey(userId), JSON.stringify(items));
 };
 
 export const cartAdd = async (
@@ -71,7 +78,7 @@ export const cartRemove = async (userId: string, educationId: string) => {
   await cartSet(userId, next);
 };
 export const getCourses = async () => {
-  const courses = await redis.get("courses");
+  const courses = await (await getRedisClient()).get("courses");
   if (courses) {
     return JSON.parse(courses);
   } else {
@@ -82,7 +89,9 @@ export const getCourses = async () => {
         price: parseFloat(course.price?.toString() || "0"),
       };
     });
-    await redis.set("courses", JSON.stringify(convertedCourses));
+    await (
+      await getRedisClient()
+    ).set("courses", JSON.stringify(convertedCourses));
     return courses;
   }
   return courses;
@@ -90,7 +99,7 @@ export const getCourses = async () => {
 
 export const updateBlogPosts = async () => {
   const blogPosts = await prisma.blogPost.findMany();
-  await redis.set("blogPosts", JSON.stringify(blogPosts));
+  await (await getRedisClient()).set("blogPosts", JSON.stringify(blogPosts));
 };
 
 export const updateCourses = async () => {
@@ -101,5 +110,7 @@ export const updateCourses = async () => {
       price: parseFloat(course.price?.toString() || "0"),
     };
   });
-  await redis.set("courses", JSON.stringify(convertedCourses));
+  await (
+    await getRedisClient()
+  ).set("courses", JSON.stringify(convertedCourses));
 };

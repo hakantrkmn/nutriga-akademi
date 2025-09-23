@@ -114,7 +114,8 @@ export default function Hero({ slides }: { slides: HeroSlide[] }) {
                               alt={slide.imageAlt}
                               fill
                               className="object-cover"
-                              priority={index === 0}
+                              priority={true}
+                              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                               placeholder="blur"
                               blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAIAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAhEAACAQMDBQAAAAAAAAAAAAABAgMABAUGIWGRkqGx0f/EABUBAQEAAAAAAAAAAAAAAAAAAAMF/8QAGhEAAgIDAAAAAAAAAAAAAAAAAAECEgMRkf/aAAwDAQACEQMRAD8AltJagyeH0AthI5xdrLcNM91BF5pX2HaH9bcfaSXWGaRmknyJckliyjqTzSlT54b6bk+h0R//2Q=="
                               onError={() => {
@@ -197,15 +198,12 @@ export default function Hero({ slides }: { slides: HeroSlide[] }) {
                     eğitimlerimizle
                   </span>{" "}
                   <span className="inline-block text-gray-900 animate-float-down">
-                    birlikte burdayız...
+                    birlikte buradayız...
                   </span>
                 </h1>
               </div>
 
               {/* Alt açıklama - sürekli hafif pulse efekti */}
-              <p className="text-lg sm:text-xl md:text-2xl text-hero-secondary leading-relaxed font-medium animate-gentle-pulse">
-                İlginç eğitim içeriklerimizi hazırlıyoruz. Bizi takip edin!
-              </p>
             </div>
           </div>
         )}

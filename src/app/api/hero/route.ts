@@ -1,4 +1,5 @@
 import { prisma } from "@/lib/prisma";
+import { revalidatePath } from "next/cache";
 import { NextRequest, NextResponse } from "next/server";
 
 // GET - Tüm hero slide'ları getir
@@ -57,6 +58,7 @@ export async function POST(request: NextRequest) {
       },
     });
 
+    revalidatePath("/");
     return NextResponse.json({ success: true, data: heroSlide });
   } catch (error) {
     console.error("Hero slide oluşturma hatası:", error);

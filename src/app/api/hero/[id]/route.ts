@@ -1,4 +1,5 @@
 import { prisma } from "@/lib/prisma";
+import { revalidatePath } from "next/cache";
 import { NextRequest, NextResponse } from "next/server";
 
 // GET - Tek hero slide getir
@@ -74,6 +75,7 @@ export async function PUT(
       },
     });
 
+    revalidatePath("/");
     return NextResponse.json({ success: true, data: heroSlide });
   } catch (error) {
     console.error("Hero slide güncelleme hatası:", error);
@@ -95,6 +97,7 @@ export async function DELETE(
       where: { id },
     });
 
+    revalidatePath("/");
     return NextResponse.json({ success: true, message: "Hero slide silindi" });
   } catch (error) {
     console.error("Hero slide silme hatası:", error);

@@ -1,5 +1,6 @@
 import { prisma } from "@/lib/prisma";
 import { updateCourses } from "@/lib/redis";
+import { revalidatePath } from "next/cache";
 import { NextRequest, NextResponse } from "next/server";
 
 // GET - Tek eğitim getir
@@ -96,6 +97,13 @@ export async function PUT(
       },
     });
     updateCourses();
+    revalidatePath(`/egitimler/${id}`);
+    revalidatePath(`/egitimler`);
+    revalidatePath(`/egitimler/kategori/`);
+    revalidatePath(`/egitimler/kategori/${existingEgitim.category}`);
+    revalidatePath(`/egitimler/kategori/${existingEgitim.category}/${id}`);
+    revalidatePath(`/`);
+    revalidatePath(`/egitimler/${slug}`);
 
     return NextResponse.json({
       success: true,
@@ -136,6 +144,13 @@ export async function DELETE(
     });
 
     updateCourses();
+    revalidatePath(`/egitimler/${id}`);
+    revalidatePath(`/egitimler`);
+    revalidatePath(`/egitimler/kategori/`);
+    revalidatePath(`/egitimler/kategori/${existingEgitim.category}`);
+    revalidatePath(`/egitimler/kategori/${existingEgitim.category}/${id}`);
+    revalidatePath(`/`);
+    revalidatePath(`/egitimler/${existingEgitim.slug}`);
 
     return NextResponse.json({
       success: true,

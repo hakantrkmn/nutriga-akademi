@@ -16,7 +16,6 @@ export default function SloganSection() {
               <span className="italic font-medium text-primary-700">
                 Doğru bilgi, doğru tecrübe, doğru yaşam
               </span>
-              <span className="text-gray-600">,</span>
             </p>
           </div>
 

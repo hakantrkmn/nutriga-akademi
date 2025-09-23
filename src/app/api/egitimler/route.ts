@@ -74,10 +74,10 @@ export async function POST(request: NextRequest) {
       },
     });
 
-    updateCourses();
-    revalidatePath("/egitimler"); // Blog listesi sayfası
-    revalidatePath(`/egitimler/${slug}`); // Yeni blog detay sayfası
-    revalidatePath("/"); // Ana sayfa (blog section için)
+    await updateCourses();
+    revalidatePath("/egitimler"); // Eğitim listesi sayfası
+    revalidatePath(`/egitimler/${slug}`); // Yeni eğitim detay sayfası
+    revalidatePath("/"); // Ana sayfa (popüler eğitimler section için)
     return NextResponse.json({
       success: true,
       data: yeniEgitim,
