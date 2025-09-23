@@ -110,13 +110,29 @@ export default function PaymentPage() {
           );
         }
 
-        // Sepetten checkout başlat
+        // Sepet öğelerini localStorage'dan al
+        const cartData = localStorage.getItem("nutriga_cart");
+        if (!cartData) {
+          throw new Error(
+            "Sepet bilgileri bulunamadı. Lütfen sepet sayfasına geri dönün."
+          );
+        }
+
+        const cartItems = JSON.parse(cartData);
+        if (!cartItems || cartItems.length === 0) {
+          throw new Error("Sepetiniz boş. Lütfen sepet sayfasına geri dönün.");
+        }
+
+        console.log("Payment başlatılıyor - localStorage verileri:", cartItems);
+
+        // Sepetten checkout başlat - hem sepet hem adres bilgilerini gönder
         const response = await fetch("/api/payments/checkout", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
+            cartItems: cartItems,
             addressData: JSON.parse(addressData),
           }),
         });

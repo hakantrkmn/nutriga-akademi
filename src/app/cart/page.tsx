@@ -16,6 +16,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { toaster } from "@/components/ui/toaster";
+import { useAuth } from "@/hooks/useAuth";
 import { useCart } from "@/hooks/useCart";
 import { Minus, Plus, Trash2 } from "lucide-react";
 import Image from "next/image";
@@ -24,15 +25,8 @@ import { useEffect, useState } from "react";
 
 export default function CartPage() {
   const router = useRouter();
-  const {
-    items,
-    loading,
-    isAuthenticated,
-    subtotal,
-    updateQuantity,
-    removeItem,
-  } = useCart();
-
+  const { items, loading, subtotal, updateQuantity, removeItem } = useCart();
+  const { isAuthenticated } = useAuth();
   // Payment result mesajını göster ve localStorage'dan adres bilgilerini yükle
   useEffect(() => {
     // Query parameter kontrolü
@@ -77,6 +71,20 @@ export default function CartPage() {
   const [billingZipCode, setBillingZipCode] = useState("");
   const [isTurkishCitizen, setIsTurkishCitizen] = useState(false);
   const [identityNumber, setIdentityNumber] = useState("");
+
+  // Adres bilgilerini localStorage'a kaydet
+  const saveAddressToLocalStorage = () => {
+    const addressData = {
+      billingAddress,
+      billingCity,
+      billingCountry,
+      billingZipCode,
+      isTurkishCitizen,
+      identityNumber,
+    };
+    localStorage.setItem("checkoutAddressData", JSON.stringify(addressData));
+    console.log("Adres bilgileri localStorage'a kaydedildi");
+  };
 
   // Form validation
   const isAddressFormValid =
@@ -241,6 +249,7 @@ export default function CartPage() {
                       placeholder="Örnek: Kadıköy Mahallesi, İstanbul Cad. No:123"
                       value={billingAddress}
                       onChange={(e) => setBillingAddress(e.target.value)}
+                      onBlur={saveAddressToLocalStorage}
                       className="mt-1"
                     />
                   </div>
@@ -255,6 +264,7 @@ export default function CartPage() {
                         placeholder="İstanbul"
                         value={billingCity}
                         onChange={(e) => setBillingCity(e.target.value)}
+                        onBlur={saveAddressToLocalStorage}
                         className="mt-1"
                       />
                     </div>
@@ -271,6 +281,7 @@ export default function CartPage() {
                         placeholder="34700"
                         value={billingZipCode}
                         onChange={(e) => setBillingZipCode(e.target.value)}
+                        onBlur={saveAddressToLocalStorage}
                         className="mt-1"
                       />
                     </div>
@@ -282,7 +293,11 @@ export default function CartPage() {
                     </Label>
                     <Select
                       value={billingCountry}
-                      onValueChange={setBillingCountry}
+                      onValueChange={(value) => {
+                        setBillingCountry(value);
+                        // Kısa bir timeout ile state güncellemesini bekle ve sonra kaydet
+                        setTimeout(saveAddressToLocalStorage, 0);
+                      }}
                     >
                       <SelectTrigger className="mt-1">
                         <SelectValue placeholder="Ülke seçin" />
@@ -309,6 +324,8 @@ export default function CartPage() {
                         if (!checked) {
                           setIdentityNumber("");
                         }
+                        // Kısa bir timeout ile state güncellemesini bekle ve sonra kaydet
+                        setTimeout(saveAddressToLocalStorage, 0);
                       }}
                     />
                     <Label
@@ -336,6 +353,7 @@ export default function CartPage() {
                             e.target.value.replace(/\D/g, "").slice(0, 11)
                           )
                         }
+                        onBlur={saveAddressToLocalStorage}
                         className="mt-1"
                         maxLength={11}
                       />
@@ -478,20 +496,6 @@ export default function CartPage() {
                     router.push("/auth/login");
                     return;
                   }
-
-                  // Adres bilgilerini localStorage'a kaydet (payment sayfasında kullanmak için)
-                  const addressData = {
-                    billingAddress,
-                    billingCity,
-                    billingCountry,
-                    billingZipCode,
-                    isTurkishCitizen,
-                    identityNumber,
-                  };
-                  localStorage.setItem(
-                    "checkoutAddressData",
-                    JSON.stringify(addressData)
-                  );
 
                   // Iyzico ödeme sayfasına yönlendir
                   router.push(`/payment?t=${new Date().getTime()}`);

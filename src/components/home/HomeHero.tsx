@@ -67,111 +67,148 @@ export default function Hero({ slides }: { slides: HeroSlide[] }) {
       />
 
       <div className="max-w-7xl mx-auto px-6 md:px-8 lg:px-12 relative z-10">
-        <Carousel
-          className="w-full"
-          setApi={setApi}
-          opts={{
-            loop: true,
-            align: "start",
-            containScroll: false,
-            dragFree: false,
-            duration: 30,
-            skipSnaps: false,
-            watchDrag: false,
-          }}
-          plugins={[autoplayRef.current]}
-        >
-          <CarouselContent>
-            {slides.map((slide, index) => (
-              <CarouselItem key={index} className="basis-full">
-                <div className="grid grid-cols-1 lg:grid-cols-2 min-h-[320px] w-full">
-                  {/* Sol Yarı - Metin İçeriği */}
-                  <div className="flex items-center justify-center p-6 lg:p-8 bg-hero px-20">
-                    <div className="text-center lg:text-left max-w-lg w-full">
-                      <div className="transform transition-none">
-                        <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold leading-tight break-words">
-                          {slide.titleMain}
-                          <span className="block text-hero-accent break-words">
-                            {slide.titleHighlight}
-                          </span>
-                        </h1>
+        {slides.length > 0 ? (
+          <>
+            <Carousel
+              className="w-full"
+              setApi={setApi}
+              opts={{
+                loop: true,
+                align: "start",
+                containScroll: false,
+                dragFree: false,
+                duration: 30,
+                skipSnaps: false,
+                watchDrag: false,
+              }}
+              plugins={[autoplayRef.current]}
+            >
+              <CarouselContent>
+                {slides.map((slide, index) => (
+                  <CarouselItem key={index} className="basis-full">
+                    <div className="grid grid-cols-1 lg:grid-cols-2 min-h-[320px] w-full">
+                      {/* Sol Yarı - Metin İçeriği */}
+                      <div className="flex items-center justify-center p-6 lg:p-8 bg-hero px-20">
+                        <div className="text-center lg:text-left max-w-lg w-full">
+                          <div className="transform transition-none">
+                            <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold leading-tight break-words">
+                              {slide.titleMain}
+                              <span className="block text-hero-accent break-words">
+                                {slide.titleHighlight}
+                              </span>
+                            </h1>
 
-                        <p className="text-base sm:text-lg md:text-xl text-hero-secondary leading-relaxed break-words mt-6">
-                          {slide.description}
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Sağ Yarı - Görsel */}
-                  <div className="relative min-h-[200px] lg:min-h-full px-10">
-                    {!imageErrors[index] ? (
-                      <div className="relative w-full h-full rounded-2xl overflow-hidden">
-                        <Image
-                          src={slide.imageSrc}
-                          alt={slide.imageAlt}
-                          fill
-                          className="object-cover"
-                          priority={index === 0}
-                          placeholder="blur"
-                          blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAIAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAhEAACAQMDBQAAAAAAAAAAAAABAgMABAUGIWGRkqGx0f/EABUBAQEAAAAAAAAAAAAAAAAAAAMF/8QAGhEAAgIDAAAAAAAAAAAAAAAAAAECEgMRkf/aAAwDAQACEQMRAD8AltJagyeH0AthI5xdrLcNM91BF5pX2HaH9bcfaSXWGaRmknyJckliyjqTzSlT54b6bk+h0R//2Q=="
-                          onError={() => {
-                            setImageErrors((prev) => ({
-                              ...prev,
-                              [index]: true,
-                            }));
-                          }}
-                        />
-                        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-transparent to-primary-100/20" />
-                      </div>
-                    ) : (
-                      <div className="relative w-full h-full bg-gradient-to-br from-primary-50 to-primary-100 flex items-center justify-center rounded-2xl overflow-hidden">
-                        <div className="text-gray-500 text-center">
-                          <svg
-                            className="w-20 h-20 mx-auto mb-4"
-                            fill="currentColor"
-                            viewBox="0 0 20 20"
-                          >
-                            <path
-                              fillRule="evenodd"
-                              d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z"
-                              clipRule="evenodd"
-                            />
-                          </svg>
-                          <p className="text-lg">Görsel yüklenemedi</p>
+                            <p className="text-base sm:text-lg md:text-xl text-hero-secondary leading-relaxed break-words mt-6">
+                              {slide.description}
+                            </p>
+                          </div>
                         </div>
                       </div>
-                    )}
-                  </div>
-                </div>
-              </CarouselItem>
-            ))}
-          </CarouselContent>
-        </Carousel>
 
-        {/* Slider Indicators */}
-        <div className="flex justify-center mt-3 sm:mt-4 gap-2 sm:gap-3">
-          {slides.map((_, index) => (
-            <button
-              key={index}
-              className={`w-4 h-4 rounded-full transition-all duration-300 ${
-                current === index
-                  ? "bg-primary-600 scale-110"
-                  : "bg-gray-300 hover:bg-gray-400"
-              }`}
-              onClick={() => {
-                // Autoplay'i durdur
-                autoplayRef.current?.stop();
-                api?.scrollTo(index);
-                // 5 saniye sonra autoplay'i tekrar başlat
-                setTimeout(() => {
-                  autoplayRef.current?.play();
-                }, 5000);
+                      {/* Sağ Yarı - Görsel */}
+                      <div className="relative min-h-[200px] lg:min-h-full px-10">
+                        {!imageErrors[index] ? (
+                          <div className="relative w-full h-full rounded-2xl overflow-hidden">
+                            <Image
+                              src={slide.imageSrc}
+                              alt={slide.imageAlt}
+                              fill
+                              className="object-cover"
+                              priority={index === 0}
+                              placeholder="blur"
+                              blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAIAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAhEAACAQMDBQAAAAAAAAAAAAABAgMABAUGIWGRkqGx0f/EABUBAQEAAAAAAAAAAAAAAAAAAAMF/8QAGhEAAgIDAAAAAAAAAAAAAAAAAAECEgMRkf/aAAwDAQACEQMRAD8AltJagyeH0AthI5xdrLcNM91BF5pX2HaH9bcfaSXWGaRmknyJckliyjqTzSlT54b6bk+h0R//2Q=="
+                              onError={() => {
+                                setImageErrors((prev) => ({
+                                  ...prev,
+                                  [index]: true,
+                                }));
+                              }}
+                            />
+                            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-transparent to-primary-100/20" />
+                          </div>
+                        ) : (
+                          <div className="relative w-full h-full bg-gradient-to-br from-primary-50 to-primary-100 flex items-center justify-center rounded-2xl overflow-hidden">
+                            <div className="text-gray-500 text-center">
+                              <svg
+                                className="w-20 h-20 mx-auto mb-4"
+                                fill="currentColor"
+                                viewBox="0 0 20 20"
+                              >
+                                <path
+                                  fillRule="evenodd"
+                                  d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z"
+                                  clipRule="evenodd"
+                                />
+                              </svg>
+                              <p className="text-lg">Görsel yüklenemedi</p>
+                            </div>
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  </CarouselItem>
+                ))}
+              </CarouselContent>
+            </Carousel>
+
+            {/* Slider Indicators */}
+            <div className="flex justify-center mt-3 sm:mt-4 gap-2 sm:gap-3">
+              {slides.map((_, index) => (
+                <button
+                  key={index}
+                  className={`w-4 h-4 rounded-full transition-all duration-300 ${
+                    current === index
+                      ? "bg-primary-600 scale-110"
+                      : "bg-gray-300 hover:bg-gray-400"
+                  }`}
+                  onClick={() => {
+                    // Autoplay'i durdur
+                    autoplayRef.current?.stop();
+                    api?.scrollTo(index);
+                    // 5 saniye sonra autoplay'i tekrar başlat
+                    setTimeout(() => {
+                      autoplayRef.current?.play();
+                    }, 5000);
+                  }}
+                  aria-label={`Slide ${index + 1}'e git`}
+                />
+              ))}
+            </div>
+          </>
+        ) : (
+          <div className="flex items-center justify-center min-h-[320px] w-full relative">
+            {/* Arka plan glow efekti - sürekli animasyon */}
+            <div
+              className="absolute inset-0 rounded-full animate-background-glow"
+              style={{
+                background:
+                  "radial-gradient(circle, rgba(251, 248, 245, 0.4) 0%, transparent 70%)",
               }}
-              aria-label={`Slide ${index + 1}'e git`}
             />
-          ))}
-        </div>
+
+            <div className="text-center max-w-2xl relative z-10 animate-fade-in">
+              {/* Ana başlık - parçalara ayrılmış animasyon */}
+              <div className="mb-6">
+                <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-black leading-tight">
+                  <span className="inline-block text-gray-900 animate-float-up">
+                    Çok yakında
+                  </span>{" "}
+                  <span className="inline-block font-extrabold text-hero-accent animate-color-shift">
+                    eğitimlerimizle
+                  </span>{" "}
+                  <span className="inline-block text-gray-900 animate-float-down">
+                    birlikte burdayız...
+                  </span>
+                </h1>
+              </div>
+
+              {/* Alt açıklama - sürekli hafif pulse efekti */}
+              <p className="text-lg sm:text-xl md:text-2xl text-hero-secondary leading-relaxed font-medium animate-gentle-pulse">
+                İlginç eğitim içeriklerimizi hazırlıyoruz. Bizi takip edin!
+              </p>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );

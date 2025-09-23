@@ -4,7 +4,12 @@ import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { adminApi, type SalesReport } from "@/lib/api";
 import { useEffect, useState } from "react";
-import { FiBarChart, FiDollarSign, FiTrendingUp } from "react-icons/fi";
+import {
+  FiBarChart,
+  FiDollarSign,
+  FiTrendingUp,
+  FiXCircle,
+} from "react-icons/fi";
 
 export default function SalesReport() {
   const [data, setData] = useState<SalesReport | null>(null);
@@ -134,8 +139,7 @@ export default function SalesReport() {
                     {edu.salesCount} satış
                   </div>
                   <div className="text-sm text-gray-500">
-                    ₺
-                    {(Number(edu.price || 0) * edu.salesCount).toLocaleString()}
+                    ₺{edu.totalRevenue.toLocaleString()}
                   </div>
                 </div>
               </div>
@@ -167,10 +171,13 @@ export default function SalesReport() {
                 </div>
                 <div className="flex items-center gap-4">
                   <span className="text-gray-600">
-                    {category._count._all} eğitim
+                    {category.payment_count} ödeme
                   </span>
                   <span className="font-bold text-green-600">
-                    {category._sum.salesCount || 0} satış
+                    {category.total_quantity} satış
+                  </span>
+                  <span className="text-sm text-gray-500">
+                    ₺{Number(category.total_revenue).toLocaleString()}
                   </span>
                 </div>
               </div>
@@ -178,6 +185,74 @@ export default function SalesReport() {
           </div>
         </CardContent>
       </Card>
+
+      {/* Başarısız Ödemeler */}
+      {data.failedPayments.length > 0 && (
+        <Card>
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2">
+              <FiXCircle className="h-5 w-5" />
+              Başarısız Ödemeler
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="space-y-4">
+              {data.failedPayments.slice(0, 10).map((payment) => (
+                <div
+                  key={payment.id}
+                  className="border border-red-200 rounded-lg p-4 bg-red-50 hover:bg-red-100 transition-colors"
+                >
+                  <div className="flex items-start justify-between mb-2">
+                    <div>
+                      <h4 className="font-medium text-gray-900">
+                        {payment.userName}
+                      </h4>
+                      <p className="text-sm text-gray-600">
+                        {payment.userEmail}
+                      </p>
+                    </div>
+                    <div className="text-right">
+                      <div className="font-bold text-red-600">
+                        ₺{payment.totalAmount.toLocaleString()}
+                      </div>
+                      <div className="text-xs text-gray-500">
+                        {new Date(payment.createdAt).toLocaleDateString(
+                          "tr-TR"
+                        )}
+                      </div>
+                    </div>
+                  </div>
+
+                  {payment.reason && (
+                    <div className="mb-2">
+                      <Badge variant="destructive" className="text-xs">
+                        {payment.reason}
+                      </Badge>
+                    </div>
+                  )}
+
+                  <div className="text-sm text-gray-600">
+                    <div className="font-medium mb-1">Ürünler:</div>
+                    <ul className="list-disc list-inside space-y-1">
+                      {payment.items.map((item, index) => (
+                        <li key={index}>
+                          {item.title} (x{item.quantity})
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
+              ))}
+
+              {data.failedPayments.length > 10 && (
+                <div className="text-center text-sm text-gray-500 pt-4 border-t">
+                  Ve {data.failedPayments.length - 10} başarısız ödeme daha...
+                </div>
+              )}
+            </div>
+          </CardContent>
+        </Card>
+      )}
     </div>
   );
 }

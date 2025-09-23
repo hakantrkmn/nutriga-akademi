@@ -7,13 +7,13 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { toaster } from "@/components/ui/toaster";
-import { createClient } from "@/lib/supabase/client";
+import { useAuth } from "@/hooks/useAuth";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 export default function RegisterPage() {
   const router = useRouter();
-  const supabase = createClient();
+  const { signUp } = useAuth();
 
   // Account Info
   const [email, setEmail] = useState("");
@@ -103,16 +103,16 @@ export default function RegisterPage() {
     setLoading(true);
     try {
       // First create the auth user
-      const { data: authData, error: authError } = await supabase.auth.signUp({
+      const { data: authData, error: authError } = await signUp(
         email,
         password,
-        options: {
+        {
           data: {
             first_name: firstName.trim(),
             last_name: lastName.trim(),
           },
-        },
-      });
+        }
+      );
 
       if (authError) throw authError;
 

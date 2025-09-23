@@ -134,6 +134,7 @@ model Payment {
   paymentMethod  String?      @map("payment_method")
   installment    Int          @default(1)
   conversationId String       @unique @map("conversation_id")
+  reason         String?
   createdAt      DateTime     @default(now()) @map("created_at") @db.Timestamptz(6)
   updatedAt      DateTime     @default(now()) @updatedAt @map("updated_at") @db.Timestamptz(6)
 

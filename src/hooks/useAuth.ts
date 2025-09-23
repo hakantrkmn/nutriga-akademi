@@ -2,12 +2,15 @@
 
 import { createClient } from "@/lib/supabase/client";
 import { User } from "@supabase/supabase-js";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 export function useAuth() {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
   const supabase = createClient();
+
+  // Computed value - authentication durumunu hesapla
+  const isAuthenticated = useMemo(() => !!user, [user]);
 
   useEffect(() => {
     // Get initial session
@@ -32,13 +35,52 @@ export function useAuth() {
     return () => subscription.unsubscribe();
   }, [supabase.auth]);
 
+  const signInWithPassword = async (email: string, password: string) => {
+    const { data, error } = await supabase.auth.signInWithPassword({
+      email,
+      password,
+    });
+    return { data, error };
+  };
+
+  const signUp = async (
+    email: string,
+    password: string,
+    options?: {
+      data?: Record<string, unknown>;
+    }
+  ) => {
+    const { data, error } = await supabase.auth.signUp({
+      email,
+      password,
+      options,
+    });
+    return { data, error };
+  };
+
   const signOut = async () => {
-    await supabase.auth.signOut();
+    const { error } = await supabase.auth.signOut();
+    return { error };
+  };
+
+  const resetPassword = async (email: string) => {
+    const { error } = await supabase.auth.resetPasswordForEmail(email);
+    return { error };
   };
 
   return {
+    // State
     user,
     loading,
+    isAuthenticated,
+
+    // Methods
+    signInWithPassword,
+    signUp,
     signOut,
+    resetPassword,
+
+    // Direct access to supabase client (if needed)
+    supabase,
   };
 }

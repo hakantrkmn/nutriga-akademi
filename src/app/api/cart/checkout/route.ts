@@ -1,6 +1,5 @@
 import { sendPurchaseConfirmation } from "@/lib/email";
 import { prisma } from "@/lib/prisma";
-import { cartGet, cartSet } from "@/lib/redis";
 import { createServerClient } from "@supabase/ssr";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -62,13 +61,25 @@ export async function POST(request: NextRequest) {
         { status: 401 }
       );
 
-    // 1) Sepeti Redis'ten oku
-    const items = await cartGet(userId);
-    if (items.length === 0)
+    // 1) Request body'den localStorage'deki sepet öğelerini al
+    const body = await request.json();
+    const { cartItems } = body as {
+      cartItems: Array<{ educationId: string; quantity: number }>;
+    };
+
+    console.log("Checkout request - userId:", userId, "cartItems:", cartItems);
+
+    if (!cartItems || cartItems.length === 0)
       return NextResponse.json(
         { success: false, error: "Sepet boş" },
         { status: 400 }
       );
+
+    // localStorage format'ını Redis formatına dönüştür
+    const items = cartItems.map((item) => ({
+      educationId: item.educationId,
+      quantity: item.quantity,
+    }));
 
     // 2) DB'den ürünleri getir ve fiyat doğrulaması yap
     const products = await prisma.egitim.findMany({
@@ -123,8 +134,7 @@ export async function POST(request: NextRequest) {
         });
       }
 
-      // 5) Redis'ten sepeti temizle
-      await cartSet(userId, []);
+      // 5) Redis temizleme kaldırıldı - localStorage zaten frontend'de temizleniyor
 
       // 6) Email gönder (eğer kullanıcı email'i varsa)
       if (userEmail) {

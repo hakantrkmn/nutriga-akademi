@@ -74,9 +74,17 @@ export async function POST(request: NextRequest) {
     }
 
     const userId = await getUserId(request, response);
+    console.log(
+      "POST /api/cart - userId:",
+      userId,
+      "educationId:",
+      educationId
+    );
+
     if (!userId) {
       // Giriş yapmamış kullanıcılar için 200 döndür ama işlem yapma
       // Frontend localStorage kullanacak
+      console.log("POST /api/cart - Kullanıcı giriş yapmamış");
       return NextResponse.json({
         success: false,
         error: "Giriş gerekli",

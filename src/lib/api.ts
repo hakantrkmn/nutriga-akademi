@@ -21,22 +21,17 @@ export interface EducationSalesData {
   id: string;
   title: string;
   salesCount: number;
+  totalRevenue: number;
   price: number | null;
   category: string;
   level: string;
-  _count: {
-    cartItems: number;
-  };
 }
 
 export interface CategorySalesData {
   category: string;
-  _sum: {
-    salesCount: number;
-  };
-  _count: {
-    _all: number;
-  };
+  total_quantity: number;
+  total_revenue: string;
+  payment_count: number;
 }
 
 export interface RecentSalesData {
@@ -46,11 +41,25 @@ export interface RecentSalesData {
   };
 }
 
+export interface FailedPaymentData {
+  id: string;
+  userName: string;
+  userEmail: string;
+  totalAmount: number;
+  reason: string | null;
+  createdAt: Date;
+  items: {
+    title: string;
+    quantity: number;
+  }[];
+}
+
 export interface SalesReport {
   educationSales: EducationSalesData[];
   totalRevenue: number;
   categoryStats: CategorySalesData[];
   recentSales: RecentSalesData[];
+  failedPayments: FailedPaymentData[];
 }
 
 export interface UserPurchaseData {

@@ -1,5 +1,6 @@
 import { prisma } from "@/lib/prisma";
 import { updateCourses } from "@/lib/redis";
+import { revalidatePath } from "next/cache";
 import { NextRequest, NextResponse } from "next/server";
 
 // GET - Tüm eğitimleri listele
@@ -74,7 +75,9 @@ export async function POST(request: NextRequest) {
     });
 
     updateCourses();
-
+    revalidatePath("/egitimler"); // Blog listesi sayfası
+    revalidatePath(`/egitimler/${slug}`); // Yeni blog detay sayfası
+    revalidatePath("/"); // Ana sayfa (blog section için)
     return NextResponse.json({
       success: true,
       data: yeniEgitim,

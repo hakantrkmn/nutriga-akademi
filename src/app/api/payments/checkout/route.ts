@@ -4,6 +4,7 @@ import getIyzicoClient, {
 } from "@/lib/iyzico";
 import { prisma } from "@/lib/prisma";
 import { cartGet } from "@/lib/redis";
+// Redis import kaldırıldı - artık localStorage'dan gelen veriler kullanılıyor
 import { createServerClient } from "@supabase/ssr";
 import { NextRequest, NextResponse } from "next/server";
 import { v4 as uuidv4 } from "uuid";
@@ -57,7 +58,7 @@ export async function POST(request: NextRequest) {
     } catch {
       body = {};
     }
-    const { enabledInstallments, addressData } = (body as {
+    const { enabledInstallments, addressData, cartItems } = (body as {
       enabledInstallments?: number[];
       addressData?: {
         billingAddress: string;
@@ -67,7 +68,12 @@ export async function POST(request: NextRequest) {
         isTurkishCitizen: boolean;
         identityNumber: string;
       };
-    }) || { enabledInstallments: undefined, addressData: undefined };
+      cartItems?: Array<{ educationId: string; quantity: number }>;
+    }) || {
+      enabledInstallments: undefined,
+      addressData: undefined,
+      cartItems: undefined,
+    };
 
     const userId = await getUserId(request, response);
     console.log("User ID:", userId);
@@ -80,12 +86,21 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // 1) Sepeti Redis'ten oku
-    console.log("Getting cart items for user:", userId);
-    const cartItems = await cartGet(userId);
-    console.log("Cart items:", cartItems);
+    // 1) Sepeti oku - önce request body'den, yoksa Redis'ten
+    let processedCartItems: Array<{ educationId: string; quantity: number }>;
 
-    if (cartItems.length === 0) {
+    if (cartItems && cartItems.length > 0) {
+      // Request body'den gelen sepet öğelerini kullan
+      console.log("Using cart items from request body:", cartItems);
+      processedCartItems = cartItems;
+    } else {
+      // Eski yöntem: Redis'ten oku
+      console.log("Getting cart items from Redis for user:", userId);
+      processedCartItems = await cartGet(userId);
+      console.log("Cart items from Redis:", processedCartItems);
+    }
+
+    if (!processedCartItems || processedCartItems.length === 0) {
       console.log("Cart is empty");
       return NextResponse.json(
         { success: false, error: "Sepet boş" },
@@ -95,10 +110,10 @@ export async function POST(request: NextRequest) {
 
     // 2) DB'den ürünleri getir ve fiyat doğrulaması yap
     const products = await prisma.egitim.findMany({
-      where: { id: { in: cartItems.map((i) => i.educationId) } },
+      where: { id: { in: processedCartItems.map((i) => i.educationId) } },
     });
 
-    const details = cartItems.map((item) => {
+    const details = processedCartItems.map((item) => {
       const product = products.find((p) => p.id === item.educationId);
       const unitPrice = Number(product?.price ?? 0);
       const totalPrice = unitPrice * item.quantity;
@@ -159,144 +174,28 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // 6) Önce aynı user için PENDING payment var mı kontrol et, yoksa FAILED olanı kullan
-    let payment = await prisma.payment.findFirst({
-      where: {
+    // 6) Her denemede YENİ bir payment kaydı oluştur (reuse yok)
+    const conversationId = uuidv4();
+    const payment = await prisma.payment.create({
+      data: {
         userId,
+        totalAmount,
         status: "PENDING",
-      },
-      include: {
-        paymentItems: true,
-      },
-    });
-
-    // Eğer PENDING yoksa, FAILED olanı kontrol et
-    if (!payment) {
-      const failedPayment = await prisma.payment.findFirst({
-        where: {
-          userId,
-          status: "FAILED",
-        },
-        include: {
-          paymentItems: true,
-        },
-        orderBy: {
-          createdAt: "desc", // En son FAILED olanı al
-        },
-      });
-
-      if (failedPayment) {
-        // FAILED payment'ın sepetini kontrol et
-        const currentCartItems = details;
-        const existingItems = failedPayment.paymentItems;
-
-        const currentTotal = currentCartItems.reduce(
-          (sum, item) => sum + item.totalPrice,
-          0
-        );
-        const existingTotal = existingItems.reduce(
-          (sum, item) => sum + Number(item.totalPrice),
-          0
-        );
-
-        // Eğer sepet aynıysa FAILED payment'ı PENDING'e çevir ve kullan
-        if (
-          currentTotal === existingTotal &&
-          currentCartItems.length === existingItems.length
-        ) {
-          console.log(
-            "Using failed payment and resetting to PENDING:",
-            failedPayment.id
-          );
-          payment = await prisma.payment.update({
-            where: { id: failedPayment.id },
-            data: { status: "PENDING" },
-            include: { paymentItems: true },
-          });
-        }
-      }
-    }
-
-    let conversationId: string;
-
-    if (payment) {
-      // Mevcut PENDING payment'ı kullan
-      console.log("Using existing PENDING payment:", payment!.id);
-      // Her zaman yeni conversationId oluştur (webhook conversationId null gönderebiliyor)
-      conversationId = uuidv4();
-
-      // Sepeti kontrol et - eğer değiştiyse payment items'ı güncelle
-      const currentCartItems = details;
-      const existingItems = payment.paymentItems;
-
-      // Basit kontrol: item sayısı ve toplam tutar aynı mı?
-      const currentTotal = currentCartItems.reduce(
-        (sum, item) => sum + item.totalPrice,
-        0
-      );
-      const existingTotal = existingItems.reduce(
-        (sum, item) => sum + Number(item.totalPrice),
-        0
-      );
-
-      if (
-        currentTotal !== existingTotal ||
-        currentCartItems.length !== existingItems.length
-      ) {
-        console.log("Cart changed, updating payment items");
-
-        // Eski payment items'ları sil
-        await prisma.paymentItem.deleteMany({
-          where: { paymentId: payment!.id },
-        });
-
-        // Yeni payment items'ları oluştur
-        await prisma.paymentItem.createMany({
-          data: details.map((detail) => ({
-            paymentId: payment!.id,
+        conversationId,
+        paymentItems: {
+          create: details.map((detail) => ({
             educationId: detail.educationId,
             quantity: detail.quantity,
             unitPrice: detail.unitPrice,
             totalPrice: detail.totalPrice,
           })),
-        });
-
-        // Payment toplamını güncelle
-        await prisma.payment.update({
-          where: { id: payment!.id },
-          data: { totalAmount },
-        });
-
-        // Güncellenmiş payment'ı tekrar çek
-        payment = await prisma.payment.findFirst({
-          where: { id: payment!.id },
-          include: { paymentItems: true },
-        });
-      }
-    } else {
-      // Yeni payment oluştur
-      conversationId = uuidv4();
-      payment = await prisma.payment.create({
-        data: {
-          userId,
-          totalAmount,
-          status: "PENDING",
-          conversationId,
-          paymentItems: {
-            create: details.map((detail) => ({
-              educationId: detail.educationId,
-              quantity: detail.quantity,
-              unitPrice: detail.unitPrice,
-              totalPrice: detail.totalPrice,
-            })),
-          },
         },
-        include: {
-          paymentItems: true,
-        },
-      });
-      console.log("Created new PENDING payment:", payment!.id);
-    }
+      },
+      include: {
+        paymentItems: true,
+      },
+    });
+    console.log("Created new PENDING payment attempt:", payment.id);
 
     // 8) Iyzico checkout form başlat
     console.log("Initializing Iyzico client");
@@ -382,10 +281,17 @@ export async function POST(request: NextRequest) {
     );
 
     if (checkoutResult.status !== "success") {
-      // Payment kaydını FAILED olarak güncelle
+      // Payment kaydını FAILED olarak güncelle ve reason ekle
       await prisma.payment.update({
-        where: { id: payment!.id },
-        data: { status: "FAILED" },
+        where: { id: payment.id },
+        data: {
+          status: "FAILED",
+          reason:
+            checkoutResult.errorMessage ||
+            (checkoutResult.errorCode
+              ? `Error ${checkoutResult.errorCode}`
+              : "Checkout form initialization failed"),
+        },
       });
 
       return NextResponse.json(
@@ -400,7 +306,7 @@ export async function POST(request: NextRequest) {
 
     // 9) Payment kaydını güncelle (token ile)
     await prisma.payment.update({
-      where: { id: payment!.id },
+      where: { id: payment.id },
       data: {
         iyzicoToken: checkoutResult.token,
       },
@@ -410,7 +316,7 @@ export async function POST(request: NextRequest) {
       success: true,
       message: "Ödeme formu başarıyla başlatıldı",
       data: {
-        paymentId: payment!.id,
+        paymentId: payment.id,
         token: checkoutResult.token,
         checkoutFormContent: checkoutResult.checkoutFormContent,
         paymentPageUrl: checkoutResult.paymentPageUrl,

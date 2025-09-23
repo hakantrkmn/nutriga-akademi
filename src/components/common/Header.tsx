@@ -7,8 +7,8 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { useCart } from "@/hooks/useCart";
-import { createClient } from "@/lib/supabase/client";
+import { toaster } from "@/components/ui/toaster";
+import { useAuth } from "@/hooks/useAuth";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -20,8 +20,7 @@ export default function Header() {
   const [isMobile, setIsMobile] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const router = useRouter();
-  const supabase = createClient();
-  const { isAuthenticated } = useCart();
+  const { isAuthenticated, signOut } = useAuth();
   useEffect(() => {
     const handleClick = (e: MouseEvent) => {
       const target = e.target as HTMLElement;
@@ -46,13 +45,6 @@ export default function Header() {
     return () => document.removeEventListener("click", handleClick);
   }, []);
   useEffect(() => {
-    const init = async () => {
-      await supabase.auth.getUser();
-    };
-    init();
-
-    const { data: sub } = supabase.auth.onAuthStateChange(() => {});
-
     // Check if mobile
     const checkMobile = () => {
       setIsMobile(window.innerWidth < 1024);
@@ -61,14 +53,22 @@ export default function Header() {
     window.addEventListener("resize", checkMobile);
 
     return () => {
-      sub.subscription.unsubscribe();
       window.removeEventListener("resize", checkMobile);
     };
-  }, [supabase]);
+  }, []);
 
   const handleLogout = async () => {
-    await supabase.auth.signOut();
+    await signOut();
     router.replace("/");
+  };
+
+  const handleCartClick = () => {
+    if (!isAuthenticated) {
+      toaster.success("Satın almak için giriş yapmalısın");
+      router.push("/auth/login");
+      return;
+    }
+    router.push("/cart");
   };
 
   const NavItems = ({ onItemClick }: { onItemClick?: () => void }) => (
@@ -167,7 +167,7 @@ export default function Header() {
             <Button
               variant="ghost"
               className="text-white hover:text-accent hover:bg-transparent text-base font-bold h-auto px-0 py-0"
-              onClick={() => router.push("/cart")}
+              onClick={handleCartClick}
             >
               Sepetin
             </Button>
@@ -302,7 +302,7 @@ export default function Header() {
                 className="w-full text-left text-secondary hover:text-primary hover:bg-gray-50 py-2 px-3 rounded transition-colors font-bold"
                 onClick={() => {
                   setMenuOpen(false);
-                  router.push("/cart");
+                  handleCartClick();
                 }}
               >
                 Sepetin

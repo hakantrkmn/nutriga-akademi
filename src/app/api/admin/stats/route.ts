@@ -21,8 +21,10 @@ export async function GET() {
 
     const userCount = users?.users.length || 0;
 
-    // Toplam satış sayısını hesapla (cart_items tablosundan)
-    const totalSales = await prisma.cartItem.count();
+    // Toplam satış sayısını hesapla (başarılı ödemeler)
+    const totalSales = await prisma.payment.count({
+      where: { status: "COMPLETED" },
+    });
 
     return NextResponse.json({
       success: true,

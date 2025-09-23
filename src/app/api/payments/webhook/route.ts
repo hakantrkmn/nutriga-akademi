@@ -44,9 +44,9 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Conversation ID ile payment kaydını bul
-    const payment = await prisma.payment.findFirst({
-      where: conversationId ? { conversationId } : { iyzicoToken: token },
+    // Önce token ile payment kaydını bul; yoksa conversationId ile dene
+    let payment = await prisma.payment.findFirst({
+      where: { iyzicoToken: token },
       include: {
         paymentItems: {
           include: { education: true },
@@ -54,6 +54,18 @@ export async function POST(request: NextRequest) {
         user: true,
       },
     });
+
+    if (!payment && conversationId) {
+      payment = await prisma.payment.findFirst({
+        where: { conversationId },
+        include: {
+          paymentItems: {
+            include: { education: true },
+          },
+          user: true,
+        },
+      });
+    }
 
     if (!payment) {
       console.error("Payment not found for conversationId:", conversationId);
@@ -77,10 +89,58 @@ export async function POST(request: NextRequest) {
 
       if (paymentDetails.status !== "success") {
         console.error("Iyzico payment verification failed:", paymentDetails);
-        return NextResponse.json(
-          { success: false, error: "Payment verification failed" },
-          { status: 400 }
-        );
+
+        // Hata mesajını kullanıcıya gösteren HTML
+        const htmlErrorVerification = `
+          <!DOCTYPE html>
+          <html>
+          <head>
+            <meta charset="utf-8" />
+            <title>Ödeme Doğrulama Hatası</title>
+            <script src="/payment-result.js"></script>
+          </head>
+          <body>
+            <script>
+              window.PaymentResult.render({
+                type: 'error',
+                title: 'Ödeme Başarısız',
+                message: ${JSON.stringify(
+                  paymentDetails.errorMessage || "Ödeme doğrulaması başarısız"
+                )},
+                redirectUrl: '/cart?payment=failed',
+                redirectDelayMs: 3000
+              });
+            </script>
+          </body>
+          </html>
+        `;
+
+        // DB'de reason alanını güncelle
+        try {
+          await prisma.payment.update({
+            where: { id: payment.id },
+            data: {
+              status: "FAILED",
+              reason:
+                paymentDetails.errorMessage ||
+                (paymentDetails.errorCode
+                  ? `Error ${paymentDetails.errorCode}`
+                  : "Payment verification failed"),
+            },
+          });
+        } catch (e) {
+          console.error(
+            "Failed to update payment failure reason (verification)",
+            e
+          );
+        }
+
+        return new Response(htmlErrorVerification, {
+          status: 200,
+          headers: {
+            "Content-Type": "text/html; charset=utf-8",
+          },
+        });
       }
 
       // Ödeme başarılı ise
@@ -99,6 +159,7 @@ export async function POST(request: NextRequest) {
               ?.paymentTransactionId
               ? "credit_card"
               : "other",
+            reason: null,
           },
         });
 
@@ -169,8 +230,8 @@ export async function POST(request: NextRequest) {
             </style>
           </head>
           <body class="bg-[var(--background)] min-h-screen flex items-center justify-center">
-            <div class="bg-[var(--background)] p-8 rounded-lg shadow-lg text-center max-w-md border border-gray-200">
-              <div class="text-[var(--success)] text-6xl mb-4">✓</div>
+            <div class="bg-[var(--background)] p-4 sm:p-8 rounded-lg shadow-lg text-center max-w-sm sm:max-w-md border border-gray-200">
+              <div class="text-[var(--success)] text-5xl sm:text-6xl mb-4">✓</div>
               <h1 class="text-2xl font-bold text-[var(--success-text)] mb-2">Ödeme Başarılı!</h1>
               <p class="text-[var(--gray-600)] mb-4">Eğitimlerinize erişim sağlandı.</p>
               <button onclick="redirectToHome()" class="bg-[var(--primary)] text-white px-6 py-2 rounded hover:bg-[var(--primary-hover)]">
@@ -198,47 +259,39 @@ export async function POST(request: NextRequest) {
         // Ödeme başarısız ise
         await prisma.payment.update({
           where: { id: payment.id },
-          data: { status: "FAILED" },
+          data: {
+            status: "FAILED",
+            reason:
+              paymentDetails.errorMessage ||
+              (paymentDetails.errorCode
+                ? `Error ${paymentDetails.errorCode}`
+                : "Payment failed"),
+          },
         });
 
         console.log("Payment failed:", payment.id);
 
         // Başarısız ödeme için HTML yanıt ver
+        const userErrorMessage =
+          paymentDetails.errorMessage ||
+          "Ödeme işlemi tamamlanamadı. Lütfen tekrar deneyin.";
         const htmlErrorResponse = `
           <!DOCTYPE html>
           <html>
           <head>
+            <meta charset="utf-8" />
             <title>Ödeme Başarısız</title>
-            <script src="https://cdn.tailwindcss.com"></script>
-            <style>
-              :root {
-                --background: #ffffff;
-                --foreground: #112825;
-                --primary: #82541c;
-                --primary-hover: #a87f42;
-                --error: #ef4444;
-                --error-light: #fee2e2;
-                --error-text: #991b1b;
-                --gray-600: #4b5563;
-                --gray-100: #f3f4f6;
-              }
-            </style>
+            <script src="/payment-result.js"></script>
           </head>
-          <body class="bg-[var(--background)] min-h-screen flex items-center justify-center">
-            <div class="bg-[var(--background)] p-8 rounded-lg shadow-lg text-center max-w-md border border-gray-200">
-              <div class="text-[var(--error)] text-6xl mb-4">✗</div>
-              <h1 class="text-2xl font-bold text-[var(--error-text)] mb-2">Ödeme Başarısız</h1>
-              <p class="text-[var(--gray-600)] mb-4">Ödeme işlemi tamamlanamadı. Lütfen tekrar deneyin.</p>
-              <button onclick="redirectToCart()" class="bg-[var(--primary)] text-white px-6 py-2 rounded hover:bg-[var(--primary-hover)]">
-                Sepete Dön
-              </button>
-            </div>
+          <body>
             <script>
-              function redirectToCart() {
-                window.top.location.href = '/cart?payment=failed';
-              }
-              // 3 saniye sonra otomatik yönlendir
-              setTimeout(redirectToCart, 3000);
+              window.PaymentResult.render({
+                type: 'error',
+                title: 'Ödeme Başarısız',
+                message: ${JSON.stringify(userErrorMessage)},
+                redirectUrl: '/cart?payment=failed',
+                redirectDelayMs: 3000
+              });
             </script>
           </body>
           </html>

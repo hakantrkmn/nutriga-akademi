@@ -8,31 +8,51 @@ export const runtime = "nodejs";
 // GET - Kullanıcı raporları
 export async function GET() {
   try {
-    // Kullanıcıların satın alma istatistikleri
-    const userPurchaseStats = await prisma.user.findMany({
-      select: {
-        id: true,
-        firstName: true,
-        lastName: true,
-        email: true,
-        profession: true,
-        createdAt: true,
-        _count: {
-          select: {
-            cartItems: true, // Kaç satın alma yapmış
-          },
-        },
-      },
-      orderBy: {
-        cartItems: {
-          _count: "desc",
-        },
-      },
-      take: 20, // En aktif ilk 20 kullanıcı
-    });
+    // Kullanıcıların gerçek satın alma istatistikleri (başarılı ödemeler)
+    const userPurchaseStatsRaw = await prisma.$queryRaw`
+      SELECT
+        u.id,
+        u.first_name,
+        u.last_name,
+        u.email,
+        u.profession,
+        u.created_at,
+        COUNT(DISTINCT p.id) as purchase_count
+      FROM users u
+      LEFT JOIN payments p ON u.id = p.user_id AND p.status = 'COMPLETED'
+      GROUP BY u.id, u.first_name, u.last_name, u.email, u.profession, u.created_at
+      HAVING COUNT(DISTINCT p.id) > 0
+      ORDER BY purchase_count DESC
+      LIMIT 20
+    `;
 
-    // Toplam satın alma sayısı
-    const totalPurchases = await prisma.cartItem.count();
+    // BigInt'leri Number'a çevir ve formatla
+    const userPurchaseStats = (
+      userPurchaseStatsRaw as Array<{
+        id: string;
+        first_name: string;
+        last_name: string;
+        email: string;
+        profession: string;
+        created_at: Date;
+        purchase_count: bigint;
+      }>
+    ).map((item) => ({
+      id: item.id,
+      firstName: item.first_name,
+      lastName: item.last_name,
+      email: item.email,
+      profession: item.profession,
+      createdAt: item.created_at,
+      _count: {
+        cartItems: Number(item.purchase_count), // Gerçek satın alma sayısı
+      },
+    }));
+
+    // Toplam başarılı satın alma sayısı
+    const totalPurchases = await prisma.payment.count({
+      where: { status: "COMPLETED" },
+    });
 
     // Kullanıcı meslek dağılımı
     const professionStats = await prisma.user.groupBy({
@@ -75,70 +95,50 @@ export async function GET() {
       console.error("Auth kullanıcıları alınırken hata:", error);
     }
 
-    // Kullanıcıların toplam harcaması (cart items üzerinden)
-    const userSpending = await prisma.cartItem.groupBy({
-      by: ["userId"],
-      _sum: {
-        quantity: true,
+    // Kullanıcıların gerçek harcamaları (başarılı ödemeler üzerinden)
+    const userSpendingRaw = await prisma.$queryRaw`
+      SELECT
+        u.id as user_id,
+        u.first_name,
+        u.last_name,
+        u.email,
+        u.profession,
+        COUNT(DISTINCT p.id) as total_purchases,
+        SUM(p.total_amount) as total_spent,
+        SUM(pi.quantity) as total_items
+      FROM users u
+      LEFT JOIN payments p ON u.id = p.user_id AND p.status = 'COMPLETED'
+      LEFT JOIN payment_items pi ON p.id = pi.payment_id
+      GROUP BY u.id, u.first_name, u.last_name, u.email, u.profession
+      HAVING COUNT(DISTINCT p.id) > 0
+      ORDER BY total_spent DESC
+      LIMIT 20
+    `;
+
+    // BigInt'leri Number'a çevir ve formatla
+    const userSpendingWithDetails = (
+      userSpendingRaw as Array<{
+        user_id: string;
+        first_name: string;
+        last_name: string;
+        email: string;
+        profession: string;
+        total_purchases: bigint;
+        total_spent: string;
+        total_items: bigint;
+      }>
+    ).map((item) => ({
+      userId: item.user_id,
+      userDetails: {
+        firstName: item.first_name,
+        lastName: item.last_name,
+        email: item.email,
+        profession: item.profession,
       },
-      _count: {
-        _all: true,
-      },
-      orderBy: {
-        _count: {
-          id: "desc",
-        },
-      },
-      take: 20,
-    });
-
-    // Her kullanıcının toplam harcamasını hesapla
-    const userSpendingWithDetails = await Promise.all(
-      userSpending.map(
-        async (user: {
-          userId: string;
-          _count: { _all: number };
-          _sum: { quantity: number | null };
-        }) => {
-          const userDetails = await prisma.user.findUnique({
-            where: { id: user.userId },
-            select: {
-              firstName: true,
-              lastName: true,
-              email: true,
-              profession: true,
-            },
-          });
-
-          // Kullanıcının satın aldığı eğitimlerin toplam fiyatını hesapla
-          const userCartItems = await prisma.cartItem.findMany({
-            where: { userId: user.userId },
-            include: {
-              education: {
-                select: {
-                  price: true,
-                },
-              },
-            },
-          });
-
-          const totalSpent = userCartItems.reduce((sum, item) => {
-            const price = Number(item.education?.price || 0);
-            return sum + price * item.quantity;
-          }, 0);
-
-          return {
-            userId: user.userId,
-            userDetails,
-            totalPurchases: user._count
-              ? (user._count as { _all?: number })._all || 0
-              : 0,
-            totalSpent,
-            totalItems: user._sum?.quantity || 0,
-          };
-        }
-      )
-    );
+      totalPurchases: Number(item.total_purchases),
+      totalSpent: Number(item.total_spent),
+      totalItems: Number(item.total_items),
+    }));
 
     return NextResponse.json({
       success: true,
