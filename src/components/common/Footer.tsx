@@ -7,6 +7,7 @@ import {
   COMPANY_WORK_HOURS,
 } from "@/constants";
 // Chakra UI imports removed - using Tailwind CSS
+import Image from "next/image";
 import Link from "next/link";
 import { FaInstagram } from "react-icons/fa";
 
@@ -16,6 +17,7 @@ const quickLinks = [
   { name: "Misyonumuz", href: "/misyon" },
   { name: "Vizyonumuz", href: "/vizyon" },
   { name: "İletişim", href: "/iletisim" },
+  { name: "Hakkımızda", href: "/hakkimizda" },
   { name: "Ana Sayfa", href: "/" },
 ];
 
@@ -153,6 +155,15 @@ export default function Footer() {
             <p className="text-sm text-gray-400">
               © {currentYear} Nutriga Akademi. Tüm hakları saklıdır.
             </p>
+
+            <div className="mt-4 flex justify-center">
+              <Image
+                src="/images/iyzico/logo_band_white.svg"
+                alt="Iyzico"
+                width={200}
+                height={40}
+              />
+            </div>
           </div>
         </div>
       </div>

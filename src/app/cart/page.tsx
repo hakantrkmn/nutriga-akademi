@@ -481,6 +481,16 @@ export default function CartPage() {
                 </label>
               </div>
 
+              <div className="flex justify-center py-4">
+                <Image
+                  src="/images/iyzico/iyzico_ile_ode_colored_horizontal.png"
+                  alt="Iyzico ile Öde"
+                  width={180}
+                  height={54}
+                  className="object-contain"
+                />
+              </div>
+
               <Button
                 size="lg"
                 className="w-full h-12 rounded-xl bg-primary hover:bg-primary/90 text-white disabled:opacity-50"

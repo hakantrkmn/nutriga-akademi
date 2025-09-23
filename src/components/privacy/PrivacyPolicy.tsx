@@ -1,3 +1,4 @@
+import { COMPANY_EMAIL, COMPANY_PHONE } from "@/constants";
 import {
   HiDocumentText,
   HiLockClosed,
@@ -52,11 +53,6 @@ const dataCategories = [
     examples: "Katıldığı eğitimler, sertifikalar",
     purpose: "Eğitim takibi ve sertifika düzenleme",
   },
-  {
-    category: "Teknik Veriler",
-    examples: "IP adresi, tarayıcı bilgileri",
-    purpose: "Güvenlik ve hizmet kalitesi",
-  },
 ];
 
 export default function PrivacyPolicy() {
@@ -87,10 +83,10 @@ export default function PrivacyPolicy() {
                     section.color === "green.500"
                       ? "bg-green-50 text-green-500"
                       : section.color === "orange.500"
-                      ? "bg-orange-50 text-orange-500"
-                      : section.color === "blue.500"
-                      ? "bg-blue-50 text-blue-500"
-                      : "bg-purple-50 text-purple-500"
+                        ? "bg-orange-50 text-orange-500"
+                        : section.color === "blue.500"
+                          ? "bg-blue-50 text-blue-500"
+                          : "bg-purple-50 text-purple-500"
                   }`}
                 >
                   <section.icon className="w-8 h-8" />
@@ -211,11 +207,11 @@ export default function PrivacyPolicy() {
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center text-sm text-gray-700">
               <div className="flex items-center gap-2">
                 <span className="font-semibold">E-posta:</span>
-                <span>kvkk@nutrigaakademi.com</span>
+                <span>{COMPANY_EMAIL}</span>
               </div>
               <div className="flex items-center gap-2">
                 <span className="font-semibold">Telefon:</span>
-                <span>+90 (216) 555 00 00</span>
+                <span> {COMPANY_PHONE}</span>
               </div>
             </div>
             <p className="text-sm text-gray-500 mt-4">

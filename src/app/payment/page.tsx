@@ -3,8 +3,9 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { CreditCard, Loader2, XCircle } from "lucide-react";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
 
 interface CheckoutData {
@@ -21,6 +22,7 @@ export default function PaymentPage() {
   const [checkoutData, setCheckoutData] = useState<CheckoutData | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const initialized = useRef(false);
 
   // Iyzipay formunu inject eden basit fonksiyon
   const injectIyzicoForm = (formContent: string) => {
@@ -168,7 +170,10 @@ export default function PaymentPage() {
       }
     };
 
-    initializeCheckout();
+    if (!initialized.current) {
+      initialized.current = true;
+      initializeCheckout();
+    }
 
     // Cleanup on unmount
     return () => {
@@ -256,6 +261,15 @@ export default function PaymentPage() {
           <CardContent>
             {checkoutData?.checkoutFormContent ? (
               <div className="space-y-4">
+                <div className="flex justify-center mb-6">
+                  <Image
+                    src="/images/iyzico/iyzico_ile_ode_colored_horizontal.png"
+                    alt="Iyzico ile Öde"
+                    width={200}
+                    height={60}
+                    className="object-contain"
+                  />
+                </div>
                 {/* Iyzico'nun checkout form div'i */}
                 <div id="iyzipay-checkout-form" className="responsive"></div>
 
