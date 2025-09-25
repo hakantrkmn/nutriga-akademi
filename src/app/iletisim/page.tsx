@@ -28,7 +28,7 @@ export const metadata: Metadata = {
     siteName: "Nutriga Akademi",
     images: [
       {
-        url: "/images/og-iletisim.jpg",
+        url: "/images/og-image.jpg",
         width: 1200,
         height: 630,
         alt: "Nutriga Akademi İletişim - Beslenme Eğitimleri Danışmanlığı",
@@ -42,7 +42,7 @@ export const metadata: Metadata = {
     title: "İletişim - Nutriga Akademi",
     description:
       "Beslenme eğitimlerimiz, kurslarımız ve hizmetlerimiz hakkında sorularınızı bize sorun. Uzman ekibimizden destek alın.",
-    images: ["/images/og-iletisim.jpg"],
+    images: ["/images/og-image.jpg"],
   },
   alternates: {
     canonical: "https://nutrigaakademi.com/iletisim",

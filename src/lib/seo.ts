@@ -17,7 +17,7 @@ export function generateMetadata(config: SEOConfig): Metadata {
     title,
     description,
     keywords = [],
-    image = "/images/og-default.jpg",
+    image = "/images/og-image.jpg",
     url,
     type = "website",
     publishedTime,

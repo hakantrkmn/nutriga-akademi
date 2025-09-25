@@ -27,7 +27,7 @@ export const metadata: Metadata = {
     siteName: "Nutriga Akademi",
     images: [
       {
-        url: "/images/og-vizyon.jpg",
+        url: "/images/og-image.jpg",
         width: 1200,
         height: 630,
         alt: "Nutriga Akademi Vizyonu - Beslenme Okuryazarlığında Liderlik",
@@ -41,7 +41,7 @@ export const metadata: Metadata = {
     title: "Vizyonumuz - Nutriga Akademi",
     description:
       "Beslenme eğitiminin gücünü herkes için erişilebilir kılarak, yenilikçi ve interaktif yöntemlerle bireyleri beslenme okuryazarı yapan lider bir eğitim ekosistemi olmak.",
-    images: ["/images/og-vizyon.jpg"],
+    images: ["/images/og-image.jpg"],
   },
   alternates: {
     canonical: "https://nutrigaakademi.com/vizyon",

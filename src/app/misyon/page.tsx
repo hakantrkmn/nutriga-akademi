@@ -27,7 +27,7 @@ export const metadata: Metadata = {
     siteName: "Nutriga Akademi",
     images: [
       {
-        url: "/images/og-misyon.jpg",
+        url: "/images/og-image.jpg",
         width: 1200,
         height: 630,
         alt: "Nutriga Akademi Misyonu - Beslenme Eğitiminde Değer Yaratma",
@@ -41,7 +41,7 @@ export const metadata: Metadata = {
     title: "Misyonumuz - Nutriga Akademi",
     description:
       "Bilimsel temelli, erişilebilir beslenme eğitimleriyle bireylerin yaşamına sürdürülebilir ve dönüştürücü değer katmak.",
-    images: ["/images/og-misyon.jpg"],
+    images: ["/images/og-image.jpg"],
   },
   alternates: {
     canonical: "https://nutrigaakademi.com/misyon",

@@ -29,7 +29,7 @@ export const metadata: Metadata = {
     siteName: "Nutriga Akademi",
     images: [
       {
-        url: "/images/og-iptal.jpg",
+        url: "/images/og-image.jpg",
         width: 1200,
         height: 630,
         alt: "Nutriga Akademi İptal ve İade Politikası - Eğitim İptal ve İade Şartları",
@@ -43,7 +43,7 @@ export const metadata: Metadata = {
     title: "İptal ve İade Politikası - Nutriga Akademi",
     description:
       "Nutriga Akademi'nin iptal ve iade politikası hakkında detaylı bilgi edinin. Beslenme eğitimi kursları ve hizmetlerinin iptal ve iade şartları.",
-    images: ["/images/og-iptal.jpg"],
+    images: ["/images/og-image.jpg"],
   },
   alternates: {
     canonical: "https://nutrigaakademi.com/iptal-ve-iade",

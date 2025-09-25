@@ -27,7 +27,7 @@ export const metadata: Metadata = {
     siteName: "Nutriga Akademi",
     images: [
       {
-        url: "/images/og-gizlilik.jpg",
+        url: "/images/og-image.jpg",
         width: 1200,
         height: 630,
         alt: "Nutriga Akademi Gizlilik Sözleşmesi - KVKK ve Veri Güvenliği",
@@ -41,7 +41,7 @@ export const metadata: Metadata = {
     title: "Gizlilik Sözleşmesi - Nutriga Akademi",
     description:
       "Nutriga Akademi'nin gizlilik sözleşmesi ve kişisel verilerin korunması hakkında detaylı bilgi edinin. KVKK uyumlu veri güvenliği politikalarımız.",
-    images: ["/images/og-gizlilik.jpg"],
+    images: ["/images/og-image.jpg"],
   },
   alternates: {
     canonical: "https://nutrigaakademi.com/gizlilik-sozlesmesi",

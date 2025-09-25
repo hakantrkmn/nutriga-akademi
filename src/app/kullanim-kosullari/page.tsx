@@ -27,7 +27,7 @@ export const metadata: Metadata = {
     siteName: "Nutriga Akademi",
     images: [
       {
-        url: "/images/og-kullanim.jpg",
+        url: "/images/og-image.jpg",
         width: 1200,
         height: 630,
         alt: "Nutriga Akademi Kullanım Koşulları - Platform Kullanım Şartları",
@@ -41,7 +41,7 @@ export const metadata: Metadata = {
     title: "Kullanım Koşulları - Nutriga Akademi",
     description:
       "Nutriga Akademi'nin kullanım koşulları ve üyelik şartları hakkında detaylı bilgi edinin. Platform kullanımı ile ilgili tüm kuralları öğrenin.",
-    images: ["/images/og-kullanim.jpg"],
+    images: ["/images/og-image.jpg"],
   },
   alternates: {
     canonical: "https://nutrigaakademi.com/kullanim-kosullari",
