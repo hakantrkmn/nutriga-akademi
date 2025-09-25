@@ -2,10 +2,12 @@
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
+import { useCart } from "@/hooks/useCart";
 import { EgitimCTAProps } from "@/types";
 import { Award, CheckCircle, Users } from "lucide-react";
 
 export default function EgitimCTA({ egitim }: EgitimCTAProps) {
+  const { addItem, loading } = useCart();
   return (
     <div className="mt-12 md:mt-20">
       <Card className="w-full border border-primary-200 shadow-lg hover:shadow-xl transition-all duration-300 bg-primary-50 rounded-2xl">
@@ -31,17 +33,11 @@ export default function EgitimCTA({ egitim }: EgitimCTAProps) {
               <Button
                 size="lg"
                 className="px-10 py-7 rounded-xl text-base font-semibold bg-primary hover:bg-primary/90 hover:-translate-y-0.5 hover:shadow-xl transition-all duration-300"
-                onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+                onClick={() => addItem(egitim.id)}
               >
-                Hemen Başla - ₺{egitim.price?.toString()}
-              </Button>
-
-              <Button
-                variant="outline"
-                size="lg"
-                className="px-8 py-7 rounded-xl text-base font-semibold border-accent text-accent hover:bg-accent/10 hover:-translate-y-0.5 transition-all duration-300"
-              >
-                Detayları İncele
+                {loading
+                  ? "Ekleniyor..."
+                  : "Hemen Başla - ₺" + egitim.price?.toString()}
               </Button>
             </div>
 

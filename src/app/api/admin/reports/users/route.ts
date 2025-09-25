@@ -95,7 +95,7 @@ export async function GET() {
       console.error("Auth kullanıcıları alınırken hata:", error);
     }
 
-    // Kullanıcıların gerçek harcamaları (başarılı ödemeler üzerinden)
+    // Kullanıcıların gerçek harcamaları (sadece payments tablosundan)
     const userSpendingRaw = await prisma.$queryRaw`
       SELECT
         u.id as user_id,
@@ -104,11 +104,9 @@ export async function GET() {
         u.email,
         u.profession,
         COUNT(DISTINCT p.id) as total_purchases,
-        SUM(p.total_amount) as total_spent,
-        SUM(pi.quantity) as total_items
+        SUM(p.paid_price) as total_spent
       FROM users u
-      LEFT JOIN payments p ON u.id = p.user_id AND p.status = 'COMPLETED'
-      LEFT JOIN payment_items pi ON p.id = pi.payment_id
+      LEFT JOIN payments p ON u.id = p.user_id AND p.status = 'COMPLETED' AND p.paid_price IS NOT NULL
       GROUP BY u.id, u.first_name, u.last_name, u.email, u.profession
       HAVING COUNT(DISTINCT p.id) > 0
       ORDER BY total_spent DESC
@@ -125,7 +123,6 @@ export async function GET() {
         profession: string;
         total_purchases: bigint;
         total_spent: string;
-        total_items: bigint;
       }>
     ).map((item) => ({
       userId: item.user_id,
@@ -137,7 +134,7 @@ export async function GET() {
       },
       totalPurchases: Number(item.total_purchases),
       totalSpent: Number(item.total_spent),
-      totalItems: Number(item.total_items),
+      totalItems: Number(item.total_purchases), // Ödeme sayısı = satın alınan ürün sayısı olarak kabul ediyoruz
     }));
 
     return NextResponse.json({

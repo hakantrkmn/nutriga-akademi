@@ -1,4 +1,5 @@
 import BlogDetailContent from "@/components/blog/detail/BlogDetailContent";
+import { generateBlogMetadata } from "@/lib/og-image-generator";
 import { prisma } from "@/lib/prisma";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
@@ -41,16 +42,30 @@ export async function generateMetadata({
       };
     }
 
-    return {
-      title: `${postOriginal.title} | Nutriga Akademi`,
-      description: postOriginal.excerpt,
-    };
+    // Blog yazısının kendi görseli varsa onu kullan, yoksa default blog görselini kullan
+    return generateBlogMetadata({
+      title: postOriginal.title,
+      description:
+        postOriginal.excerpt ||
+        "Beslenme uzmanlarından güncel makaleler ve sağlıklı yaşam ipuçları.",
+      slug: postOriginal.slug,
+      createdAt: postOriginal.createdAt.toISOString(),
+      updatedAt: postOriginal.updatedAt.toISOString(),
+      image: postOriginal.imageUrl || undefined, // Blog yazısının kendi görseli
+    });
   }
 
-  return {
-    title: `${post.title} | Nutriga Akademi`,
-    description: post.excerpt,
-  };
+  // Blog yazısının kendi görseli varsa onu kullan, yoksa default blog görselini kullan
+  return generateBlogMetadata({
+    title: post.title,
+    description:
+      post.excerpt ||
+      "Beslenme uzmanlarından güncel makaleler ve sağlıklı yaşam ipuçları.",
+    slug: post.slug,
+    createdAt: post.createdAt.toISOString(),
+    updatedAt: post.updatedAt.toISOString(),
+    image: post.imageUrl || undefined, // Blog yazısının kendi görseli
+  });
 }
 
 export default async function BlogDetailPage({ params }: BlogDetailPageProps) {

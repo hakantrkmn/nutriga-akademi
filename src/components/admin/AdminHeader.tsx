@@ -46,14 +46,16 @@ export default function AdminHeader() {
     <header className="bg-white border-b border-gray-200 px-2 md:px-6 py-1.5 md:py-2 sticky top-0 z-50 shadow-sm">
       <div className="flex justify-between items-center w-full min-w-0">
         {/* Sol taraf - Logo */}
-        <div className="flex items-center gap-2 md:gap-3 flex-shrink-0 min-w-0">
-          <h1 className="text-sm md:text-xl font-bold text-gray-900 leading-tight truncate">
-            Nutriga Akademi
-          </h1>
-          <span className="text-xs text-gray-500 bg-gray-100 px-1.5 md:px-2 py-1 rounded-full hidden sm:block">
-            Admin
-          </span>
-        </div>
+        <Link href="/">
+          <div className="flex items-center gap-2 md:gap-3 flex-shrink-0 min-w-0">
+            <h1 className="text-sm md:text-xl font-bold text-gray-900 leading-tight truncate">
+              Nutriga Akademi
+            </h1>
+            <span className="text-xs text-gray-500 bg-gray-100 px-1.5 md:px-2 py-1 rounded-full hidden sm:block">
+              Admin
+            </span>
+          </div>
+        </Link>
 
         {/* Orta - Navigation (Desktop) */}
         <div className="hidden md:flex gap-1">

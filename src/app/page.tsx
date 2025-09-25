@@ -3,6 +3,7 @@ import { PopupHandler } from "@/components/home/PopupHandler";
 import SloganSection from "@/components/home/SloganSection";
 import { prisma } from "@/lib/prisma";
 import { getBlogPosts, getCourses } from "@/lib/redis";
+import type { Metadata } from "next";
 import dynamic from "next/dynamic";
 
 // Lazy loaded components for better performance
@@ -32,6 +33,55 @@ const PopularEgitimler = dynamic(
 // ISR - Incremental Static Regeneration
 // Sayfa 1 saatte bir yeniden generate edilir
 export const revalidate = 3600; // 1 saat = 3600 saniye
+
+// Ana sayfa için özel SEO metadata
+export const metadata: Metadata = {
+  title: "Nutriga Akademi - Diyetisyen Eğitimleri ve Beslenme Kursları",
+  description:
+    "Profesyonel diyetisyenler için kapsamlı beslenme eğitimleri. Klinik beslenme, sporcu beslenmesi, pediatrik beslenme kursları. Sertifikalı eğitim programları ile kariyerinizi geliştirin.",
+  keywords: [
+    "diyetisyen eğitimleri",
+    "beslenme kursları",
+    "klinik beslenme",
+    "sporcu beslenmesi",
+    "pediatrik beslenme",
+    "beslenme uzmanı",
+    "diyetisyen sertifikası",
+    "beslenme danışmanlığı",
+    "online beslenme eğitimi",
+    "beslenme bilimleri",
+    "beslenme ve diyetetik",
+    "beslenme terapisi",
+    "beslenme koçluğu",
+  ],
+  openGraph: {
+    title: "Nutriga Akademi - Diyetisyen Eğitimleri ve Beslenme Kursları",
+    description:
+      "Profesyonel diyetisyenler için kapsamlı beslenme eğitimleri. Klinik beslenme, sporcu beslenmesi, pediatrik beslenme kursları.",
+    url: "https://nutrigaakademi.com",
+    siteName: "Nutriga Akademi",
+    images: [
+      {
+        url: "/images/og-image.jpg",
+        width: 1200,
+        height: 630,
+        alt: "Nutriga Akademi Ana Sayfa - Diyetisyen Eğitimleri",
+      },
+    ],
+    locale: "tr_TR",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Nutriga Akademi - Diyetisyen Eğitimleri",
+    description:
+      "Profesyonel diyetisyenler için kapsamlı beslenme eğitimleri ve kursları.",
+    images: ["/images/og-image.jpg"],
+  },
+  alternates: {
+    canonical: "https://nutrigaakademi.com",
+  },
+};
 
 // Static data generation for better performance
 export async function generateStaticParams() {

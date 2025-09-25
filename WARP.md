@@ -83,6 +83,12 @@ npm run db:seed
   - Users can have cart items and desired education preferences
   - Education items can be in multiple carts and desired by multiple users
   - Contact messages for inquiry management
+  - Payment system with support for installments and multiple items
+- **Payment Integration**: 
+  - Iyzipay integration for Turkish payment processing
+  - Support for installment payments and various payment methods
+  - Comprehensive payment status tracking (PENDING, COMPLETED, FAILED, etc.)
+  - Payment items linked to specific education courses
 
 #### API Route Organization
 ```
@@ -91,11 +97,20 @@ npm run db:seed
 ├── auth/register/        # User registration with profile creation
 ├── blog/                 # Blog CRUD operations
 ├── cart/                 # Shopping cart management
+│   └── checkout/         # Cart checkout processing
 ├── contact/              # Contact form submissions
-├── courses/egitimler/    # Education/course management
+├── courses/              # Course management (legacy endpoint)
+├── egitimler/            # Education/course management (primary)
 ├── hero/                 # Homepage slider management
+├── payments/             # Payment processing
+│   ├── checkout/         # Iyzipay payment initialization
+│   └── webhook/          # Payment webhook handling
+├── revalidate/           # ISR cache revalidation
 ├── upload/               # File upload handling
-└── user/profile/         # User profile management
+└── user/                 # User management
+    ├── messages/         # User message history
+    ├── profile-full/     # Complete profile retrieval
+    └── profile-update/   # Profile update operations
 ```
 
 #### Component Architecture
@@ -115,6 +130,8 @@ npm run db:seed
 - `/src/components/admin/TipTapEditor.tsx` - Main rich text editor component
 - `/src/components/common/TipTapWrapper.tsx` - Read-only content renderer
 - `/prisma/schema.prisma` - Database schema with all models and relationships
+- `/next.config.mjs` - Optimized webpack config with custom chunk splitting for TipTap and Radix UI
+- `/src/app/api/payments/` - Payment processing endpoints using Iyzipay integration
 
 ### Development Best Practices
 - **Path Aliases**: Use `@/*` imports for src directory

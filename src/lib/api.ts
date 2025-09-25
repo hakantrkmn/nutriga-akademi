@@ -17,23 +17,6 @@ export interface AdminStats {
 }
 
 // Detaylı rapor interface'leri
-export interface EducationSalesData {
-  id: string;
-  title: string;
-  salesCount: number;
-  totalRevenue: number;
-  price: number | null;
-  category: string;
-  level: string;
-}
-
-export interface CategorySalesData {
-  category: string;
-  total_quantity: number;
-  total_revenue: string;
-  payment_count: number;
-}
-
 export interface RecentSalesData {
   createdAt: Date;
   _count: {
@@ -48,16 +31,10 @@ export interface FailedPaymentData {
   totalAmount: number;
   reason: string | null;
   createdAt: Date;
-  items: {
-    title: string;
-    quantity: number;
-  }[];
 }
 
 export interface SalesReport {
-  educationSales: EducationSalesData[];
   totalRevenue: number;
-  categoryStats: CategorySalesData[];
   recentSales: RecentSalesData[];
   failedPayments: FailedPaymentData[];
 }

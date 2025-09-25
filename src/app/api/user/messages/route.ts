@@ -30,16 +30,17 @@ export async function GET(request: NextRequest) {
     }
 
     // Format the response
-    const formattedData = messages?.map((message) => ({
-      id: message.id,
-      name: message.name,
-      email: message.email,
-      phone: message.phone,
-      message: message.message,
-      status: message.status,
-      isRead: message.is_read,
-      createdAt: message.created_at,
-    })) || [];
+    const formattedData =
+      messages?.map((message) => ({
+        id: message.id,
+        name: message.name,
+        email: message.email,
+        phone: message.phone,
+        message: message.message,
+        status: message.status,
+        isRead: message.is_read,
+        createdAt: message.created_at,
+      })) || [];
 
     return NextResponse.json({
       success: true,

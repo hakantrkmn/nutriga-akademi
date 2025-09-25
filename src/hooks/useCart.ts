@@ -86,6 +86,7 @@ export function useCart() {
 
   // Sepete ürün ekle - sadece localStorage kullan
   const addItem = async (educationId: string, quantity = 1) => {
+    setLoading(true);
     const localItems = getLocalCart();
     const existingIndex = localItems.findIndex(
       (item) => item.educationId === educationId
@@ -100,6 +101,7 @@ export function useCart() {
     setLocalCart(localItems);
     await loadCart();
     toaster.success("Sepete eklendi");
+    setLoading(false);
     return true;
   };
 

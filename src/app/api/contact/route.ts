@@ -1,9 +1,9 @@
-import { createClient } from "@/lib/supabase/server";
+import { createSupabaseAdmin } from "@/lib/supabase";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(request: NextRequest) {
   try {
-    const supabase = await createClient();
+    const supabase = createSupabaseAdmin();
     const { name, email, phone, message, userId } = await request.json();
 
     // Validate required fields
@@ -48,7 +48,7 @@ export async function POST(request: NextRequest) {
 
 export async function GET(request: NextRequest) {
   try {
-    const supabase = await createClient();
+    const supabase = createSupabaseAdmin();
     const { searchParams } = new URL(request.url);
     const status = searchParams.get("status");
     const limit = parseInt(searchParams.get("limit") || "50");
@@ -95,7 +95,7 @@ export async function GET(request: NextRequest) {
 
 export async function PUT(request: NextRequest) {
   try {
-    const supabase = await createClient();
+    const supabase = createSupabaseAdmin();
     const requestData = await request.json();
     const { id, status, isRead, is_read } = requestData;
 

@@ -1,5 +1,6 @@
 import { prisma } from "@/lib/prisma";
 import { updateCourses } from "@/lib/redis";
+import { getServerSupabase } from "@/utils";
 import { revalidatePath } from "next/cache";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -80,7 +81,17 @@ export async function PUT(
         );
       }
     }
-
+    const response = NextResponse.next();
+    const supabase = await getServerSupabase(request, response);
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
+    if (user?.email !== process.env.NEXT_PUBLIC_ADMIN_EMAIL) {
+      return NextResponse.json(
+        { success: false, error: "Eğitim güncellenemedi: Yetkisiz erişim" },
+        { status: 403 }
+      );
+    }
     const guncellenenEgitim = await prisma.egitim.update({
       where: { id },
       data: {
@@ -126,7 +137,7 @@ export async function DELETE(
 ) {
   try {
     const { id } = await params;
-
+    const response = NextResponse.next();
     // Eğitimin var olup olmadığını kontrol et
     const existingEgitim = await prisma.egitim.findUnique({
       where: { id },
@@ -138,10 +149,32 @@ export async function DELETE(
         { status: 404 }
       );
     }
+    const supabase = await getServerSupabase(request, response);
+    const { error: deleteError, count } = await supabase
+      .from("egitimler")
+      .delete()
+      .eq("id", id);
+    console.log("Delete result:", { deleteError, count });
 
-    await prisma.egitim.delete({
-      where: { id },
-    });
+    // RLS nedeniyle hiçbir kayıt silinemedi (yetkilendirme hatası)
+    // Supabase bazen count: null, bazen count: 0 dönebilir
+    if ((count === 0 || count === null) && !deleteError) {
+      return NextResponse.json(
+        {
+          success: false,
+          error: "Eğitim silinemedi: Yönetici yetkisi gerekli",
+        },
+        { status: 403 }
+      );
+    }
+
+    if (deleteError) {
+      console.error("Supabase delete hatası:", deleteError);
+      return NextResponse.json(
+        { success: false, error: "Eğitim silinemedi: " + deleteError.message },
+        { status: 500 }
+      );
+    }
 
     updateCourses();
     revalidatePath(`/egitimler/${id}`);

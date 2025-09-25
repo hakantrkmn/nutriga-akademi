@@ -145,11 +145,6 @@ export default function Footer() {
                   Kullanım Koşulları
                 </span>
               </Link>
-              <Link href="/cerez-politikasi">
-                <span className="hover:text-primary-400 cursor-pointer transition-colors">
-                  Çerez Politikası
-                </span>
-              </Link>
             </div>
 
             <p className="text-sm text-gray-400">

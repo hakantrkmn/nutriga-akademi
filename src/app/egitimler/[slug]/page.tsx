@@ -1,5 +1,6 @@
 import EgitimDetailContent from "@/components/courses/detail/CoursesDetailContent";
 import { COMPANY_NAME } from "@/constants";
+import { generateCourseMetadata } from "@/lib/og-image-generator";
 import { prisma } from "@/lib/prisma";
 import { EgitimDetailPageProps } from "@/types";
 import { convertEgitimToDecimal } from "@/utils";
@@ -24,10 +25,17 @@ export async function generateMetadata({
     };
   }
 
-  return {
-    title: `${egitim?.title || ""} | ` + COMPANY_NAME,
-    description: egitim.description,
-  };
+  // Kursun kendi görseli varsa onu kullan, yoksa default kurs görselini kullan
+  return generateCourseMetadata({
+    title: egitim.title,
+    description:
+      egitim.description ||
+      "Profesyonel diyetisyenler için kapsamlı beslenme eğitimleri.",
+    slug: egitim.slug,
+    price: Number(egitim.price) || 0,
+    updatedAt: egitim.updatedAt.toISOString(),
+    image: egitim.imageUrl || undefined, // Kursun kendi görseli
+  });
 }
 
 export default async function EgitimDetailPage({
