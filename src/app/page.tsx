@@ -38,7 +38,7 @@ export const revalidate = 3600; // 1 saat = 3600 saniye
 export const metadata: Metadata = {
   title: "Nutriga Akademi - Diyetisyen Eğitimleri ve Beslenme Kursları",
   description:
-    "Profesyonel diyetisyenler için kapsamlı beslenme eğitimleri. Klinik beslenme, sporcu beslenmesi, pediatrik beslenme kursları. Sertifikalı eğitim programları ile kariyerinizi geliştirin.",
+    "Nutriga Akademi, tüm sağlık profesyonellerine ve adaylarına yönelik bilimsel temellere dayanan teorik ve pratik eğitimleri, alanında uzman eğitmenler aracılığıyla buluşturan bir eğitim platformudur.",
   keywords: [
     "diyetisyen eğitimleri",
     "beslenme kursları",
@@ -57,7 +57,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Nutriga Akademi - Diyetisyen Eğitimleri ve Beslenme Kursları",
     description:
-      "Profesyonel diyetisyenler için kapsamlı beslenme eğitimleri. Klinik beslenme, sporcu beslenmesi, pediatrik beslenme kursları.",
+      "Nutriga Akademi, tüm sağlık profesyonellerine ve adaylarına yönelik bilimsel temellere dayanan teorik ve pratik eğitimleri, alanında uzman eğitmenler aracılığıyla buluşturan bir eğitim platformudur.",
     url: "https://nutrigaakademi.com",
     siteName: "Nutriga Akademi",
     images: [
@@ -75,7 +75,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Nutriga Akademi - Diyetisyen Eğitimleri",
     description:
-      "Profesyonel diyetisyenler için kapsamlı beslenme eğitimleri ve kursları.",
+      "Nutriga Akademi, tüm sağlık profesyonellerine ve adaylarına yönelik bilimsel temellere dayanan teorik ve pratik eğitimleri, alanında uzman eğitmenler aracılığıyla buluşturan bir eğitim platformudur.",
     images: ["/images/og-image.jpg"],
   },
   alternates: {

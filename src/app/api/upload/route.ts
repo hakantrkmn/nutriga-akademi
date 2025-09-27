@@ -1,5 +1,6 @@
 import { createClient } from "@/lib/supabase/server";
 import { NextRequest, NextResponse } from "next/server";
+import sharp from "sharp";
 
 export async function POST(request: NextRequest) {
   try {
@@ -38,15 +39,92 @@ export async function POST(request: NextRequest) {
 
     // Benzersiz dosya adı oluştur
     const timestamp = Date.now();
-    const fileName = `${timestamp}-${file.name}`;
-    const filePath = `uploads/${fileName}`;
+    const originalFileName = file.name.replace(/\.[^/.]+$/, ""); // uzantıyı kaldır
+
+    let fileName: string;
+    let filePath: string;
+    let optimizedBuffer: Buffer;
+    const originalSize = file.size;
+
+    // SVG dosyalar için farklı işlem
+    if (file.type === "image/svg+xml") {
+      fileName = `${timestamp}-${originalFileName}.svg`;
+      filePath = `uploads/${fileName}`;
+      const arrayBuffer = await file.arrayBuffer();
+      optimizedBuffer = Buffer.from(arrayBuffer);
+    } else {
+      fileName = `${timestamp}-${originalFileName}.webp`;
+      filePath = `uploads/${fileName}`;
+    }
+
+    // Görsel optimizasyonu (sadece görsel dosyalar için, SVG hariç)
+    if (file.type.startsWith("image/") && file.type !== "image/svg+xml") {
+      try {
+        const arrayBuffer = await file.arrayBuffer();
+        const buffer = Buffer.from(arrayBuffer);
+
+        // Sharp ile optimizasyon
+        const sharpInstance = sharp(buffer);
+
+        // Görsel bilgilerini al
+        const metadata = await sharpInstance.metadata();
+        const { width = 1200, height = 800 } = metadata;
+
+        // Maksimum boyutları belirle (eğitim görselleri için)
+        const maxWidth = 1200;
+        const maxHeight = 800;
+
+        // Boyutu korurken en uygun ölçeklendirme
+        let newWidth = width;
+        let newHeight = height;
+
+        if (width > maxWidth || height > maxHeight) {
+          const aspectRatio = width / height;
+
+          if (width > height) {
+            newWidth = Math.min(width, maxWidth);
+            newHeight = Math.round(newWidth / aspectRatio);
+          } else {
+            newHeight = Math.min(height, maxHeight);
+            newWidth = Math.round(newHeight * aspectRatio);
+          }
+        }
+
+        // WebP formatına çevir ve optimize et
+        optimizedBuffer = await sharpInstance
+          .resize(newWidth, newHeight, {
+            fit: "inside",
+            withoutEnlargement: true,
+          })
+          .webp({
+            quality: 85, // Kalite ayarı
+            effort: 4, // Daha iyi sıkıştırma için
+          })
+          .toBuffer();
+
+        console.log(
+          `Görsel optimize edildi: ${originalSize} -> ${optimizedBuffer.length} bytes`
+        );
+      } catch (error) {
+        console.error("Görsel optimizasyonu başarısız:", error);
+        // Optimizasyon başarısız olursa orijinal dosyayı kullan
+        const arrayBuffer = await file.arrayBuffer();
+        optimizedBuffer = Buffer.from(arrayBuffer);
+      }
+    } else {
+      // Görsel değilse (SVG vb.) orijinal dosyayı kullan
+      const arrayBuffer = await file.arrayBuffer();
+      optimizedBuffer = Buffer.from(arrayBuffer);
+    }
 
     // Supabase Storage'a yükle
     const { error: uploadError } = await supabase.storage
       .from("public-files")
-      .upload(filePath, file, {
-        cacheControl: "3600",
+      .upload(filePath, optimizedBuffer, {
+        cacheControl: "31536000", // 1 yıl cache
         upsert: false,
+        contentType:
+          file.type === "image/svg+xml" ? "image/svg+xml" : "image/webp",
       });
 
     if (uploadError) {
@@ -66,10 +144,16 @@ export async function POST(request: NextRequest) {
       success: true,
       url: publicUrl,
       fileName: fileName,
-      fileSize: file.size,
-      fileType: file.type,
+      fileSize: optimizedBuffer.length,
+      originalSize: originalSize,
+      fileType:
+        file.type.startsWith("image/") && file.type !== "image/svg+xml"
+          ? "image/webp"
+          : file.type,
       originalName: file.name,
       uploadDate: new Date().toISOString(),
+      optimized:
+        file.type.startsWith("image/") && file.type !== "image/svg+xml",
     });
   } catch (error) {
     console.error("Dosya yükleme hatası:", error);

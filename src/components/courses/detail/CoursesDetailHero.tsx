@@ -3,15 +3,23 @@
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { EgitimDetailHeroProps } from "@/types";
-import { ArrowLeft, Image as ImageIcon, User, Users } from "lucide-react";
+import {
+  ArrowLeft,
+  Image as ImageIcon,
+  Loader2,
+  User,
+  Users,
+} from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import { useState } from "react";
 
 export default function EgitimDetailHero({
   egitim,
   isImageError,
   setIsImageError,
 }: EgitimDetailHeroProps) {
+  const [isImageLoading, setIsImageLoading] = useState(true);
   return (
     <div className="border-b border-border-color shadow-sm bg-background-alt">
       <div className="max-w-7xl mx-auto px-4 md:px-6 py-8 md:py-12">
@@ -75,15 +83,31 @@ export default function EgitimDetailHero({
           </div>
 
           {/* Image Section */}
-          <div className="h-72 md:h-96 w-full bg-background-alt rounded-2xl overflow-hidden shadow-xl border border-border-color hover:shadow-2xl hover:-translate-y-0.5 transition-all duration-300">
+          <div className="h-72 md:h-96 w-full bg-background-alt rounded-2xl overflow-hidden shadow-xl border border-border-color hover:shadow-2xl hover:-translate-y-0.5 transition-all duration-300 flex items-center justify-center">
+            {isImageLoading && !isImageError && (
+              <div className="h-full w-full flex flex-col items-center justify-center bg-background-alt text-muted gap-4">
+                <Loader2 className="w-8 h-8 animate-spin text-primary" />
+                <span className="text-sm font-medium">
+                  Görsel yükleniyor...
+                </span>
+              </div>
+            )}
             {!isImageError ? (
               <Image
                 src={egitim.imageUrl || "/images/egitim-default.jpg"}
                 alt={egitim.title}
                 width={400}
                 height={400}
-                className="w-full h-full object-cover"
-                onError={() => setIsImageError(true)}
+                className={`max-w-full max-h-full object-contain transition-opacity duration-300 ${
+                  isImageLoading ? "opacity-0" : "opacity-100"
+                }`}
+                onLoad={() => setIsImageLoading(false)}
+                onError={() => {
+                  setIsImageError(true);
+                  setIsImageLoading(false);
+                }}
+                priority={false}
+                quality={85}
               />
             ) : (
               <div className="h-full w-full flex flex-col items-center justify-center bg-background-alt text-muted gap-4">

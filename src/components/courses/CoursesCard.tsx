@@ -45,7 +45,7 @@ export default function EgitimCard({ egitim }: EgitimCardProps) {
           </Badge>
         </div>
 
-        <CardContent className="p-6">
+        <CardContent className="p-6 flex flex-col min-h-[400px]">
           <div className="flex flex-col gap-4 h-full">
             <div className="flex justify-between items-center w-full">
               <Badge className="text-primary bg-primary-50 text-xs px-2 py-1 rounded-md">
@@ -56,11 +56,11 @@ export default function EgitimCard({ egitim }: EgitimCardProps) {
               </span>
             </div>
 
-            <h3 className="text-lg font-semibold text-foreground leading-tight line-clamp-2">
+            <h3 className="text-lg font-semibold text-foreground leading-tight line-clamp-2 min-h-[3.5rem]">
               {egitim.title}
             </h3>
 
-            <p className="text-sm text-secondary leading-relaxed flex-1 line-clamp-3">
+            <p className="text-sm text-secondary leading-relaxed line-clamp-4">
               {egitim.description}
             </p>
 

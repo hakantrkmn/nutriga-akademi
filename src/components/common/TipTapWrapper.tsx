@@ -139,12 +139,11 @@ const processContent = (content: string | object): string => {
     // JSON string olup olmadığını kontrol et
     try {
       let tet = null;
-      const parsedContent = JSON.parse(content);
-      if (typeof parsedContent === "string") {
-        tet = JSON.parse(parsedContent);
-      } else {
-        tet = parsedContent;
+      let parsedContent = JSON.parse(content);
+      while (typeof parsedContent === "string") {
+        parsedContent = JSON.parse(parsedContent);
       }
+      tet = parsedContent;
 
       // Boş paragrafları koru
       tet = preserveEmptyParagraphs(tet);

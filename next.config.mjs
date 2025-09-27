@@ -21,6 +21,14 @@ const nextConfig = {
         pathname: "/**",
       },
     ],
+    // Increase timeout for large images
+    dangerouslyAllowSVG: false,
+    contentDispositionType: "attachment",
+    contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
+    // Custom loader config for better error handling
+    loader: "default",
+    // Increase timeout for slow connections
+    minimumCacheTTL: 60,
   },
   webpack: (config, { dev, isServer }) => {
     // Development optimizations

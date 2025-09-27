@@ -14,9 +14,9 @@ export const getHTMLContent = (content: string | object | null | undefined) => {
   if (!content) return "";
   if (typeof content === "object") return content;
   try {
-    const jsonContent = JSON.parse(content as unknown as string);
-    if (typeof jsonContent === "string") {
-      return JSON.parse(jsonContent);
+    let jsonContent = JSON.parse(content as unknown as string);
+    while (typeof jsonContent === "string") {
+      jsonContent = JSON.parse(jsonContent);
     }
     return jsonContent;
   } catch (error) {
