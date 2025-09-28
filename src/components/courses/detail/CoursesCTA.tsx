@@ -49,11 +49,11 @@ export default function EgitimCTA({ egitim }: EgitimCTAProps) {
               </div>
               <div className="flex items-center gap-2">
                 <Users className="w-4 h-4 text-primary" />
-                <span className="font-medium">Sınırsız erişim</span>
+                <span className="font-medium">Süreli Erişim Linki</span>
               </div>
               <div className="flex items-center gap-2">
                 <Award className="w-4 h-4 text-primary" />
-                <span className="font-medium">Sertifika dahil</span>
+                <span className="font-medium">Katılım Belgesi dahil</span>
               </div>
             </div>
           </div>

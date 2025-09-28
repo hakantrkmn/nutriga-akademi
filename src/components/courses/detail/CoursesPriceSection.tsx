@@ -79,7 +79,7 @@ export default function EgitimPrice({ egitim }: EgitimPriceProps) {
                   <div className="flex items-center gap-3">
                     <Award className="w-4 h-4 text-primary" />
                     <span className="font-medium text-secondary">
-                      Sertifika
+                      Katılım Belgesi
                     </span>
                   </div>
                   <span className="font-semibold text-foreground">Evet</span>
@@ -108,7 +108,7 @@ export default function EgitimPrice({ egitim }: EgitimPriceProps) {
                 <div className="flex items-center gap-3">
                   <Users className="w-4 h-4 text-primary" />
                   <span className="text-sm text-secondary font-medium">
-                    Sınırsız erişim
+                    Süreli Erişim Linki
                   </span>
                 </div>
               </div>
