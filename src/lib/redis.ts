@@ -17,7 +17,9 @@ export const getBlogPosts = async () => {
   if (blogPosts) {
     return JSON.parse(blogPosts);
   } else {
-    const blogPosts = await prisma.blogPost.findMany();
+    const blogPosts = await prisma.blogPost.findMany({
+      where: { isActive: true },
+    });
     await (await getRedisClient()).set("blogPosts", JSON.stringify(blogPosts));
     return blogPosts;
   }
@@ -82,7 +84,9 @@ export const getCourses = async () => {
   if (courses) {
     return JSON.parse(courses);
   } else {
-    const courses = await prisma.egitim.findMany();
+    const courses = await prisma.egitim.findMany({
+      where: { isActive: true },
+    });
     const convertedCourses = courses.map((course) => {
       return {
         ...course,
@@ -98,12 +102,16 @@ export const getCourses = async () => {
 };
 
 export const updateBlogPosts = async () => {
-  const blogPosts = await prisma.blogPost.findMany();
+  const blogPosts = await prisma.blogPost.findMany({
+    where: { isActive: true },
+  });
   await (await getRedisClient()).set("blogPosts", JSON.stringify(blogPosts));
 };
 
 export const updateCourses = async () => {
-  const courses = await prisma.egitim.findMany();
+  const courses = await prisma.egitim.findMany({
+    where: { isActive: true },
+  });
   const convertedCourses = courses.map((course) => {
     return {
       ...course,

@@ -147,6 +147,12 @@ export const egitimlerApi = {
     apiCall<void>(`/egitimler/${id}`, {
       method: "DELETE",
     }),
+
+  // Eğitim aktif/pasif durumunu değiştir
+  toggleActive: (id: string): Promise<ApiResponse<Egitim>> =>
+    apiCall<Egitim>(`/egitimler/${id}/toggle-active`, {
+      method: "PATCH",
+    }),
 };
 
 // Blog Posts API

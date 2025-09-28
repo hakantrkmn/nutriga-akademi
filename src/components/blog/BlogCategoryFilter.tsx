@@ -1,7 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { blogCategories } from "@/data/dummyBlogData";
+import { BLOG_CATEGORIES } from "@/constants";
 import { CategoryFilterProps } from "@/types";
 
 export default function CategoryFilter({
@@ -11,7 +11,7 @@ export default function CategoryFilter({
   return (
     <div className="max-w-6xl mx-auto px-4 md:px-6 py-8">
       <div className="flex gap-3 flex-wrap justify-center items-center">
-        {blogCategories.map((category) => (
+        {BLOG_CATEGORIES.map((category) => (
           <Button
             key={category}
             size="sm"

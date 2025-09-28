@@ -3,7 +3,7 @@ import { updateCourses } from "@/lib/redis";
 import { revalidatePath } from "next/cache";
 import { NextRequest, NextResponse } from "next/server";
 
-// GET - Tüm eğitimleri listele
+// GET - Tüm eğitimleri listele (admin için tümü, normal kullanıcılar için aktif olanları)
 export async function GET() {
   try {
     const egitimler = await prisma.egitim.findMany({

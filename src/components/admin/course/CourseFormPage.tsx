@@ -23,6 +23,7 @@ export default function EgitimFormPage({ egitimId }: { egitimId?: string }) {
     title: "",
     description: "",
     content: null as object | null,
+    isActive: true,
     imageUrl: "",
     slug: "",
     price: 299,

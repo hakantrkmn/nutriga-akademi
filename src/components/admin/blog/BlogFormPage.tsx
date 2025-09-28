@@ -22,6 +22,7 @@ export default function BlogFormPage({ blogId }: { blogId?: string }) {
   const [formData, setFormData] = useState<BlogPost>({
     title: "",
     excerpt: "",
+    isActive: true,
     content: null as object | null,
     slug: "",
     category: "Genel",
@@ -229,8 +230,8 @@ export default function BlogFormPage({ blogId }: { blogId?: string }) {
                     {loading
                       ? "Kaydediliyor..."
                       : isEditing
-                      ? "Güncelle"
-                      : "Kaydet"}
+                        ? "Güncelle"
+                        : "Kaydet"}
                   </Button>
                 </div>
               </div>

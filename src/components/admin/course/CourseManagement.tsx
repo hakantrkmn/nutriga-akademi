@@ -16,7 +16,7 @@ import { egitimlerApi } from "@/lib/api";
 import { Egitim } from "@/types";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { FiEdit, FiPlus, FiTrash2 } from "react-icons/fi";
+import { FiEdit, FiEye, FiEyeOff, FiPlus, FiTrash2 } from "react-icons/fi";
 
 export default function EgitimlerManagement() {
   const router = useRouter();
@@ -56,6 +56,25 @@ export default function EgitimlerManagement() {
   const handleEditEgitim = (egitim: Egitim) => {
     if (egitim.id) {
       router.push(`/admin/egitimler/course/${egitim.id}`);
+    }
+  };
+
+  // Eğitim aktif/pasif durumunu değiştir
+  const handleToggleActive = async (id: string) => {
+    try {
+      const response = await egitimlerApi.toggleActive(id);
+
+      if (response.success) {
+        await loadEgitimler(); // Listeyi yenile
+        const yeniDurum = response.data?.isActive ? "aktif" : "pasif";
+        toaster.success(`Eğitim ${yeniDurum} yapıldı`);
+      } else {
+        toaster.error("Eğitim durumu değiştirilemedi");
+        console.error("Eğitim durumu değiştirilemedi");
+      }
+    } catch (error) {
+      toaster.error("Eğitim durumu değiştirilirken bir hata oluştu");
+      console.error("Eğitim durumu değiştirilirken hata:", error);
     }
   };
 
@@ -149,6 +168,9 @@ export default function EgitimlerManagement() {
                     Kategori
                   </TableHead>
                   <TableHead className="text-gray-700 font-semibold text-sm py-4 px-6">
+                    Durum
+                  </TableHead>
+                  <TableHead className="text-gray-700 font-semibold text-sm py-4 px-6">
                     Fiyat
                   </TableHead>
                   <TableHead className="text-gray-700 font-semibold text-sm py-4 px-6">
@@ -165,7 +187,7 @@ export default function EgitimlerManagement() {
               <TableBody>
                 {egitimler.length === 0 ? (
                   <TableRow>
-                    <TableCell colSpan={6} className="text-center py-12">
+                    <TableCell colSpan={7} className="text-center py-12">
                       <div className="space-y-3">
                         <p className="text-gray-500 text-lg">
                           Henüz eğitim eklenmemiş
@@ -208,6 +230,18 @@ export default function EgitimlerManagement() {
                         )}
                       </TableCell>
                       <TableCell className="py-4 px-6">
+                        <Badge
+                          variant="secondary"
+                          className={
+                            egitim.isActive
+                              ? "bg-green-100 text-green-800"
+                              : "bg-red-100 text-red-800"
+                          }
+                        >
+                          {egitim.isActive ? "Aktif" : "Pasif"}
+                        </Badge>
+                      </TableCell>
+                      <TableCell className="py-4 px-6">
                         {egitim.price ? (
                           <p className="font-medium text-green-600">
                             ₺{egitim.price?.toString()}
@@ -239,6 +273,25 @@ export default function EgitimlerManagement() {
                             className="border-blue-300 text-blue-600 hover:bg-blue-50"
                           >
                             <FiEdit className="h-4 w-4" />
+                          </Button>
+                          <Button
+                            size="sm"
+                            variant="outline"
+                            onClick={() =>
+                              egitim.id && handleToggleActive(egitim.id)
+                            }
+                            className={
+                              egitim.isActive
+                                ? "border-orange-300 text-orange-600 hover:bg-orange-50"
+                                : "border-green-300 text-green-600 hover:bg-green-50"
+                            }
+                            title={egitim.isActive ? "Pasif yap" : "Aktif yap"}
+                          >
+                            {egitim.isActive ? (
+                              <FiEyeOff className="h-4 w-4" />
+                            ) : (
+                              <FiEye className="h-4 w-4" />
+                            )}
                           </Button>
                           <Button
                             size="sm"

@@ -3,13 +3,7 @@
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { EgitimDetailHeroProps } from "@/types";
-import {
-  ArrowLeft,
-  Image as ImageIcon,
-  Loader2,
-  User,
-  Users,
-} from "lucide-react";
+import { ArrowLeft, Image as ImageIcon, Loader2, User } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
@@ -70,13 +64,6 @@ export default function EgitimDetailHero({
                 <span className="font-medium">
                   Eğitmen:{" "}
                   <span className="text-foreground">{egitim.instructor}</span>
-                </span>
-              </div>
-              <div className="flex items-center gap-2">
-                <Users className="w-4 h-4 text-primary" />
-                <span className="font-medium">
-                  <span className="text-foreground">{egitim.salesCount}</span>{" "}
-                  öğrenci
                 </span>
               </div>
             </div>
