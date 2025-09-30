@@ -12,8 +12,9 @@ import {
   COMPANY_WHATSAPP_NUMBER,
 } from "@/constants";
 import { useEffect, useState } from "react";
+// SEO and accessibility improvements for contact buttons
 
-// Custom filled SVG icons
+// Custom filled SVG icons with accessibility
 const FilledWhatsAppIcon = () => (
   <svg
     width="50"
@@ -22,6 +23,9 @@ const FilledWhatsAppIcon = () => (
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
     style={{ transform: "scale(0.8)", transformOrigin: "12px 12px" }}
+    role="img"
+    aria-label="WhatsApp iletişim ikonu"
+    aria-hidden="false"
   >
     <circle cx="12" cy="12" r="10" fill="#25D366" />
     <path
@@ -39,6 +43,9 @@ const FilledInstagramIcon = () => (
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
     style={{ transform: "scale(0.8)", transformOrigin: "12px 12px" }}
+    role="img"
+    aria-label="Instagram sosyal medya ikonu"
+    aria-hidden="false"
   >
     <rect x="1" y="1" width="22" height="22" rx="10" fill="#E4405F" />
     <path
@@ -64,51 +71,84 @@ export default function ContactButton() {
     const whatsappUrl = `https://wa.me/${COMPANY_WHATSAPP_NUMBER}?text=${encodeURIComponent(
       COMPANY_WHATSAPP_MESSAGE
     )}`;
-    window.open(whatsappUrl, "_blank");
+    window.open(whatsappUrl, "_blank", "noopener,noreferrer");
   };
 
   const handleInstagramClick = () => {
     const instagramUrl = `https://www.instagram.com/${COMPANY_INSTAGRAM_USERNAME}`;
-    window.open(instagramUrl, "_blank");
+    window.open(instagramUrl, "_blank", "noopener,noreferrer");
   };
 
   if (!isVisible) return null;
 
   return (
-    <TooltipProvider>
-      <div className="fixed bottom-6 right-6 z-40 flex flex-col gap-3 animate-fade-in">
-        {/* Ana Buton */}
+    <>
+      {/* JSON-LD Structured Data for Contact Information */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Organization",
+            "name": "Nutriga Akademi",
+            "contactPoint": [
+              {
+                "@type": "ContactPoint",
+                "telephone": `+90${COMPANY_WHATSAPP_NUMBER}`,
+                "contactType": "customer service",
+                "availableLanguage": "Turkish",
+                "url": `https://wa.me/${COMPANY_WHATSAPP_NUMBER}`,
+                "description": "WhatsApp üzerinden beslenme danışmanlığı"
+              }
+            ],
+            "sameAs": [
+              `https://www.instagram.com/${COMPANY_INSTAGRAM_USERNAME}`
+            ]
+          })
+        }}
+      />
 
-        {/* WhatsApp Butonu */}
-        <Tooltip>
-          <TooltipTrigger asChild>
-            <a
-              onClick={handleWhatsAppClick}
-              className="cursor-pointer transition-all duration-300 hover:scale-110 hover:opacity-80 animate-slide-up"
-            >
-              <FilledWhatsAppIcon />
-            </a>
-          </TooltipTrigger>
-          <TooltipContent side="left">
-            <p>WhatsApp ile Yazın</p>
-          </TooltipContent>
-        </Tooltip>
+      <TooltipProvider>
+        <nav
+          className="fixed bottom-6 right-6 z-40 flex flex-col gap-3 animate-fade-in"
+          aria-label="İletişim kanalları"
+          role="navigation"
+        >
+          {/* WhatsApp Butonu */}
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <button
+                onClick={handleWhatsAppClick}
+                className="cursor-pointer transition-all duration-300 hover:scale-110 hover:opacity-80 animate-slide-up focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 rounded-full"
+                aria-label={`WhatsApp ile iletişime geçin: ${COMPANY_WHATSAPP_MESSAGE}`}
+                type="button"
+              >
+                <FilledWhatsAppIcon />
+              </button>
+            </TooltipTrigger>
+            <TooltipContent side="left">
+              <p>WhatsApp ile Yazın</p>
+            </TooltipContent>
+          </Tooltip>
 
-        {/* Instagram Butonu */}
-        <Tooltip>
-          <TooltipTrigger asChild>
-            <a
-              onClick={handleInstagramClick}
-              className="cursor-pointer transition-all duration-300 hover:scale-110 hover:opacity-80 animate-slide-up-delayed"
-            >
-              <FilledInstagramIcon />
-            </a>
-          </TooltipTrigger>
-          <TooltipContent side="left">
-            <p>Instagram&apos;dan Takip Edin</p>
-          </TooltipContent>
-        </Tooltip>
-      </div>
-    </TooltipProvider>
+          {/* Instagram Butonu */}
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <button
+                onClick={handleInstagramClick}
+                className="cursor-pointer transition-all duration-300 hover:scale-110 hover:opacity-80 animate-slide-up-delayed focus:outline-none focus:ring-2 focus:ring-pink-500 focus:ring-offset-2 rounded-full"
+                aria-label="Instagram hesabımızı ziyaret edin ve takip edin"
+                type="button"
+              >
+                <FilledInstagramIcon />
+              </button>
+            </TooltipTrigger>
+            <TooltipContent side="left">
+              <p>Instagram&apos;dan Takip Edin</p>
+            </TooltipContent>
+          </Tooltip>
+        </nav>
+      </TooltipProvider>
+    </>
   );
 }
