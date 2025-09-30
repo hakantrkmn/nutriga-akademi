@@ -3,7 +3,7 @@ const nextConfig = {
   reactStrictMode: false,
   // Remove console.log in production automatically
   compiler: {
-    removeConsole: process.env.NODE_ENV === 'production',
+    removeConsole: process.env.NODE_ENV === "production",
   },
   experimental: {
     optimizePackageImports: ["react-icons"],
