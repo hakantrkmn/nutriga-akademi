@@ -1,10 +1,12 @@
-import type { Metadata } from "next";
-import { Inter, Nunito, Poppins, Source_Sans_3 } from "next/font/google";
-import "./globals.css";
-
 import StructuredData from "@/components/seo/StructuredData";
 import { Toaster } from "@/components/ui/toaster";
+import { Analytics } from "@vercel/analytics/next";
+import { SpeedInsights } from "@vercel/speed-insights/next";
+import type { Metadata } from "next";
+import { Inter, Nunito, Poppins, Source_Sans_3 } from "next/font/google";
 import ConditionalLayout from "./conditionalLayout";
+import "./globals.css";
+
 const poppins = Poppins({
   subsets: ["latin"],
   weight: ["400", "500", "600", "700"],
@@ -122,6 +124,8 @@ export default function RootLayout({
       >
         <ConditionalLayout>{children}</ConditionalLayout>
         <Toaster />
+        <SpeedInsights />
+        <Analytics />
       </body>
     </html>
   );
