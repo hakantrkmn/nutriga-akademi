@@ -51,7 +51,7 @@ export default function BlogDetailHeader({ post }: BlogDetailHeaderProps) {
         alt={post.title}
         width={800}
         height={400}
-        className="w-full h-[400px] object-cover rounded-xl"
+        className="w-full h-auto max-h-[400px] object-contain rounded-xl bg-gray-50"
       />
     </>
   );
