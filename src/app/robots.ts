@@ -17,6 +17,6 @@ export default function robots(): MetadataRoute.Robots {
         "/uploads/",
       ],
     },
-    sitemap: "https://nutrigaakademi.com/sitemap.xml",
+    sitemap: "https://www.nutrigaakademi.com/sitemap.xml",
   };
 }

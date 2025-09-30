@@ -19,8 +19,8 @@ export default function StructuredData({ type, data }: StructuredDataProps) {
           "@context": "https://schema.org",
           "@type": "Organization",
           name: COMPANY_NAME,
-          url: "https://nutrigaakademi.com",
-          logo: "https://nutrigaakademi.com/nutrig_akademi_logo.svg",
+          url: "https://www.nutrigaakademi.com",
+          logo: "https://www.nutrigaakademi.com/nutrig_akademi_logo.svg",
           description:
             "Profesyonel diyetisyenler için kapsamlı beslenme eğitimleri ve kursları.",
           address: {
@@ -65,7 +65,7 @@ export default function StructuredData({ type, data }: StructuredDataProps) {
           provider: {
             "@type": "Organization",
             name: COMPANY_NAME,
-            url: "https://nutrigaakademi.com",
+            url: "https://www.nutrigaakademi.com",
           },
           courseMode: "online",
           educationalLevel: "professional",
@@ -93,7 +93,7 @@ export default function StructuredData({ type, data }: StructuredDataProps) {
             name: COMPANY_NAME,
             logo: {
               "@type": "ImageObject",
-              url: "https://nutrigaakademi.com/nutrig_akademi_logo.svg",
+              url: "https://www.nutrigaakademi.com/nutrig_akademi_logo.svg",
             },
           },
           datePublished: data.createdAt,
@@ -101,7 +101,7 @@ export default function StructuredData({ type, data }: StructuredDataProps) {
           image: data.image,
           mainEntityOfPage: {
             "@type": "WebPage",
-            "@id": `https://nutrigaakademi.com/blog/${data.slug}`,
+            "@id": `https://www.nutrigaakademi.com/blog/${data.slug}`,
           },
         };
 
@@ -110,7 +110,7 @@ export default function StructuredData({ type, data }: StructuredDataProps) {
           "@context": "https://schema.org",
           "@type": "WebSite",
           name: COMPANY_NAME,
-          url: "https://nutrigaakademi.com",
+            url: "https://www.nutrigaakademi.com",
           description:
             "Profesyonel diyetisyenler için kapsamlı beslenme eğitimleri ve kursları.",
           potentialAction: {
@@ -118,14 +118,14 @@ export default function StructuredData({ type, data }: StructuredDataProps) {
             target: {
               "@type": "EntryPoint",
               urlTemplate:
-                "https://nutrigaakademi.com/search?q={search_term_string}",
+                "https://www.nutrigaakademi.com/search?q={search_term_string}",
             },
             "query-input": "required name=search_term_string",
           },
           publisher: {
             "@type": "Organization",
             name: COMPANY_NAME,
-            url: "https://nutrigaakademi.com",
+            url: "https://www.nutrigaakademi.com",
           },
         };
 

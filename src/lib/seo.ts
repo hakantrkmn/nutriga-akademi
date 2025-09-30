@@ -25,7 +25,7 @@ export function generateMetadata(config: SEOConfig): Metadata {
     author = "Nutriga Akademi",
   } = config;
 
-  const baseUrl = "https://nutrigaakademi.com";
+  const baseUrl = "https://www.nutrigaakademi.com";
   const fullUrl = url ? `${baseUrl}${url}` : baseUrl;
   const fullImageUrl = image.startsWith("http") ? image : `${baseUrl}${image}`;
 

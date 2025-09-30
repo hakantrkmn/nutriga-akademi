@@ -4,7 +4,7 @@ export function generateOGImageUrl(
   type: "blog" | "course" | "default",
   customImage?: string
 ): string {
-  const baseUrl = "https://nutrigaakademi.com";
+  const baseUrl = "https://www.nutrigaakademi.com";
 
   // Eğer özel görsel varsa onu kullan (blog/course'un kendi görseli)
   if (customImage) {

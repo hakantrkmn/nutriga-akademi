@@ -36,7 +36,7 @@ const sourceSans3 = Source_Sans_3({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://nutrigaakademi.com"),
+  metadataBase: new URL("https://www.nutrigaakademi.com"),
   title: {
     default: "Nutriga Akademi - Diyetisyen Eğitimleri ve Beslenme Kursları",
     template: "%s | Nutriga Akademi",

@@ -12,7 +12,7 @@ interface Course {
 }
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const baseUrl = "https://nutrigaakademi.com";
+  const baseUrl = "https://www.nutrigaakademi.com";
 
   // Static sayfalar
   const staticPages = [
