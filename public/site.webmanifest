@@ -1,0 +1,23 @@
+{
+  "name": "Nutriga Akademi",
+  "short_name": "Nutriga",
+  "description": "Diyetisyen Eğitimleri ve Beslenme Kursları",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#82541c",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/nutrig_akademi_logo.svg",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}

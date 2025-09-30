@@ -90,10 +90,20 @@ export const metadata: Metadata = {
     },
   },
   icons: {
-    icon: "/favicon.ico",
-    shortcut: "/favicon.ico",
-    apple: "/favicon.ico",
+    icon: [
+      { url: "/favicon.svg", type: "image/svg+xml" },
+      { url: "/favicon.ico", sizes: "32x32", type: "image/x-icon" },
+    ],
+    shortcut: "/favicon.svg",
+    apple: [
+      {
+        url: "/nutrig_akademi_logo.svg",
+        sizes: "180x180",
+        type: "image/svg+xml",
+      },
+    ],
   },
+  manifest: "/site.webmanifest",
 };
 
 export default function RootLayout({
@@ -106,6 +116,15 @@ export default function RootLayout({
       <head>
         <StructuredData type="Organization" data={{}} />
         <StructuredData type="WebSite" data={{}} />
+        {/* Additional meta tags for better Google indexing */}
+        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+        <link rel="alternate icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="apple-touch-icon" href="/nutrig_akademi_logo.svg" />
+        <link rel="manifest" href="/site.webmanifest" />
+        <meta name="theme-color" content="#82541c" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+        <meta name="apple-mobile-web-app-title" content="Nutriga Akademi" />
       </head>
       <body
         className={`${nunito.variable} ${sourceSans3.variable} antialiased`}
