@@ -110,7 +110,7 @@ export default function StructuredData({ type, data }: StructuredDataProps) {
           "@context": "https://schema.org",
           "@type": "WebSite",
           name: COMPANY_NAME,
-            url: "https://www.nutrigaakademi.com",
+          url: "https://www.nutrigaakademi.com",
           description:
             "Profesyonel diyetisyenler için kapsamlı beslenme eğitimleri ve kursları.",
           potentialAction: {
