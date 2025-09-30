@@ -3,24 +3,11 @@ import { Toaster } from "@/components/ui/toaster";
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import type { Metadata } from "next";
-import { Inter, Nunito, Poppins, Source_Sans_3 } from "next/font/google";
+import { Nunito, Source_Sans_3 } from "next/font/google";
 import ConditionalLayout from "./conditionalLayout";
 import "./globals.css";
 
-const poppins = Poppins({
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
-  variable: "--font-poppins",
-  display: "swap",
-});
-
-const inter = Inter({
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
-  variable: "--font-inter",
-  display: "swap",
-});
-
+// Nunito - Used for headings (h1, h2, h3, etc.)
 const nunito = Nunito({
   subsets: ["latin"],
   weight: ["400", "600", "700"],
@@ -28,6 +15,7 @@ const nunito = Nunito({
   display: "swap",
 });
 
+// Source Sans 3 - Used for body text
 const sourceSans3 = Source_Sans_3({
   subsets: ["latin"],
   weight: ["400", "500", "600", "700"],
@@ -120,7 +108,7 @@ export default function RootLayout({
         <StructuredData type="WebSite" data={{}} />
       </head>
       <body
-        className={`${poppins.variable} ${inter.variable} ${nunito.variable} ${sourceSans3.variable} antialiased`}
+        className={`${nunito.variable} ${sourceSans3.variable} antialiased`}
       >
         <ConditionalLayout>{children}</ConditionalLayout>
         <Toaster />

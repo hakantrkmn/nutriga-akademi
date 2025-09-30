@@ -90,21 +90,19 @@ export default function ContactButton() {
           __html: JSON.stringify({
             "@context": "https://schema.org",
             "@type": "Organization",
-            "name": "Nutriga Akademi",
-            "contactPoint": [
+            name: "Nutriga Akademi",
+            contactPoint: [
               {
                 "@type": "ContactPoint",
-                "telephone": `+90${COMPANY_WHATSAPP_NUMBER}`,
-                "contactType": "customer service",
-                "availableLanguage": "Turkish",
-                "url": `https://wa.me/${COMPANY_WHATSAPP_NUMBER}`,
-                "description": "WhatsApp üzerinden beslenme danışmanlığı"
-              }
+                telephone: `+90${COMPANY_WHATSAPP_NUMBER}`,
+                contactType: "customer service",
+                availableLanguage: "Turkish",
+                url: `https://wa.me/${COMPANY_WHATSAPP_NUMBER}`,
+                description: "WhatsApp üzerinden beslenme danışmanlığı",
+              },
             ],
-            "sameAs": [
-              `https://www.instagram.com/${COMPANY_INSTAGRAM_USERNAME}`
-            ]
-          })
+            sameAs: [`https://www.instagram.com/${COMPANY_INSTAGRAM_USERNAME}`],
+          }),
         }}
       />
 

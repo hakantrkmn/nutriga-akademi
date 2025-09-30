@@ -83,35 +83,6 @@ export const metadata: Metadata = {
   },
 };
 
-// Static data generation for better performance
-export async function generateStaticParams() {
-  const [blogPosts, courses, heroSlides] = await Promise.all([
-    getBlogPosts(),
-    getCourses(),
-    prisma.heroSlide.findMany({
-      where: { isActive: true },
-      orderBy: { sortOrder: "asc" },
-    }),
-  ]);
-
-  return [
-    {
-      blogPosts: JSON.stringify(blogPosts),
-      courses: JSON.stringify(courses),
-      heroSlides: JSON.stringify(heroSlides),
-    },
-  ];
-}
-
-// Helper function to parse static data
-const parseStaticData = (data: string) => {
-  try {
-    return JSON.parse(data);
-  } catch {
-    return null;
-  }
-};
-
 // Server Component'ta search params almak için
 interface HomePageProps {
   searchParams: Promise<{
@@ -123,23 +94,16 @@ interface HomePageProps {
 }
 
 export default async function Home({ searchParams }: HomePageProps) {
-  // Try to use static data first, fallback to live data
-  const staticData = await generateStaticParams().then((params) => params[0]);
-
-  const fetchedBlogPosts =
-    parseStaticData(staticData.blogPosts) || (await getBlogPosts());
-  const fetchedCourses =
-    parseStaticData(staticData.courses) || (await getCourses());
-  const fetchedHeroSlides =
-    parseStaticData(staticData.heroSlides) ||
-    (await prisma.heroSlide.findMany({
-      where: {
-        isActive: true,
-      },
-      orderBy: {
-        sortOrder: "asc",
-      },
-    }));
+  // Fetch data in parallel for better performance
+  const [fetchedBlogPosts, fetchedCourses, fetchedHeroSlides] =
+    await Promise.all([
+      getBlogPosts(),
+      getCourses(),
+      prisma.heroSlide.findMany({
+        where: { isActive: true },
+        orderBy: { sortOrder: "asc" },
+      }),
+    ]);
 
   // GET parametrelerini await ile al (Next.js 15)
   const searchParamsResolved = await searchParams;
