@@ -86,9 +86,9 @@ export default function Hero({ slides }: { slides: HeroSlide[] }) {
               <CarouselContent>
                 {slides.map((slide, index) => (
                   <CarouselItem key={index} className="basis-full">
-                    <div className="grid grid-cols-1 lg:grid-cols-2 min-h-[320px] w-full">
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 w-full">
                       {/* Sol Yarı - Metin İçeriği */}
-                      <div className="flex items-center justify-center p-6 lg:p-8 bg-hero px-20">
+                      <div className="flex items-center justify-center p-6 lg:p-8 bg-hero px-20 min-h-[280px] lg:min-h-[320px]">
                         <div className="text-center lg:text-left max-w-lg w-full">
                           <div className="transform transition-none">
                             <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold leading-tight break-words">
@@ -106,14 +106,14 @@ export default function Hero({ slides }: { slides: HeroSlide[] }) {
                       </div>
 
                       {/* Sağ Yarı - Görsel */}
-                      <div className="relative min-h-[200px] lg:min-h-full px-10">
+                      <div className="relative min-h-[280px] lg:min-h-[320px] px-10 flex items-center justify-center">
                         {!imageErrors[index] ? (
-                          <div className="relative w-full h-full rounded-2xl overflow-hidden">
+                          <div className="relative w-full h-full max-w-full max-h-full rounded-2xl overflow-hidden bg-white/50 flex items-center justify-center">
                             <Image
                               src={slide.imageSrc}
                               alt={slide.imageAlt}
                               fill
-                              className="object-cover"
+                              className="object-contain"
                               priority={true}
                               sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                               placeholder="blur"
@@ -177,7 +177,7 @@ export default function Hero({ slides }: { slides: HeroSlide[] }) {
             </div>
           </>
         ) : (
-          <div className="flex items-center justify-center min-h-[320px] w-full relative">
+          <div className="flex items-center justify-center min-h-[280px] lg:min-h-[320px] w-full relative">
             {/* Arka plan glow efekti - sürekli animasyon */}
             <div
               className="absolute inset-0 rounded-full animate-background-glow"

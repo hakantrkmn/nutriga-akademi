@@ -6,7 +6,9 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { toaster } from "@/components/ui/toaster";
-import { useState } from "react";
+import Image from "next/image";
+import { useRef, useState } from "react";
+import { FiUpload, FiX } from "react-icons/fi";
 
 interface HeroSlide {
   id?: string;
@@ -41,12 +43,54 @@ export default function HeroForm({
   });
 
   const [isLoading, setIsLoading] = useState(false);
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const [previewUrl, setPreviewUrl] = useState<string | null>(
+    heroSlide?.imageSrc || null
+  );
+  const [isUploading, setIsUploading] = useState(false);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    // Görsel kontrolü
+    if (!formData.imageSrc && !selectedFile) {
+      toaster.error("Lütfen bir görsel seçin veya URL girin");
+      return;
+    }
+
     setIsLoading(true);
 
     try {
+      // Eğer dosya seçiliyse önce upload et
+      let finalImageSrc = formData.imageSrc;
+      if (selectedFile) {
+        const formDataUpload = new FormData();
+        formDataUpload.append("file", selectedFile);
+
+        const uploadResponse = await fetch("/api/upload", {
+          method: "POST",
+          body: formDataUpload,
+        });
+
+        const uploadResult = await uploadResponse.json();
+
+        if (uploadResult.success) {
+          finalImageSrc = uploadResult.url;
+          toaster.success("Görsel başarıyla yüklendi");
+        } else {
+          toaster.error(
+            uploadResult.error || "Görsel yüklenirken bir hata oluştu"
+          );
+          return;
+        }
+      }
+
+      const submitData = {
+        ...formData,
+        imageSrc: finalImageSrc,
+      };
+
       const url = heroSlide?.id ? `/api/hero/${heroSlide.id}` : "/api/hero";
       const method = heroSlide?.id ? "PUT" : "POST";
 
@@ -55,7 +99,7 @@ export default function HeroForm({
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify(submitData),
       });
 
       const result = await response.json();
@@ -84,6 +128,75 @@ export default function HeroForm({
       ...prev,
       [field]: value,
     }));
+
+    // imageSrc değiştiğinde preview'i güncelle
+    if (field === "imageSrc") {
+      setPreviewUrl(value as string);
+      setSelectedFile(null); // URL girildiğinde seçili dosyayı temizle
+    }
+  };
+
+  const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      setSelectedFile(file);
+      setFormData((prev) => ({
+        ...prev,
+        imageSrc: "", // Dosya seçildiğinde URL'i temizle
+      }));
+
+      // Önizleme oluştur
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        setPreviewUrl(e.target?.result as string);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const handleUpload = async () => {
+    if (!selectedFile) return;
+
+    setIsUploading(true);
+    try {
+      const formDataUpload = new FormData();
+      formDataUpload.append("file", selectedFile);
+
+      const response = await fetch("/api/upload", {
+        method: "POST",
+        body: formDataUpload,
+      });
+
+      const result = await response.json();
+
+      if (result.success) {
+        setFormData((prev) => ({
+          ...prev,
+          imageSrc: result.url,
+        }));
+        setSelectedFile(null);
+        toaster.success("Görsel başarıyla yüklendi");
+      } else {
+        toaster.error(result.error || "Görsel yüklenirken bir hata oluştu");
+      }
+    } catch (error) {
+      console.error("Upload error:", error);
+      toaster.error("Görsel yüklenirken bir hata oluştu");
+    } finally {
+      setIsUploading(false);
+    }
+  };
+
+  const clearFile = () => {
+    setSelectedFile(null);
+    setPreviewUrl(null);
+    setFormData((prev) => ({
+      ...prev,
+      imageSrc: "",
+    }));
+    if (fileInputRef.current) {
+      fileInputRef.current.value = "";
+    }
   };
 
   return (
@@ -133,15 +246,81 @@ export default function HeroForm({
             />
           </div>
 
-          <div className="space-y-2">
-            <Label htmlFor="imageSrc">Resim URL</Label>
-            <Input
-              id="imageSrc"
-              value={formData.imageSrc}
-              onChange={(e) => handleInputChange("imageSrc", e.target.value)}
-              placeholder="https://example.com/image.jpg"
-              required
-            />
+          {/* Görsel Yükleme Bölümü */}
+          <div className="space-y-4">
+            <Label>Görsel</Label>
+
+            {/* Görsel Önizlemesi */}
+            {previewUrl && (
+              <div className="relative">
+                <div className="w-full max-w-md h-48 relative rounded-lg border overflow-hidden">
+                  <Image
+                    src={previewUrl}
+                    alt="Önizleme"
+                    fill
+                    className="object-cover"
+                    sizes="(max-width: 768px) 100vw, 448px"
+                  />
+                </div>
+                <Button
+                  type="button"
+                  variant="destructive"
+                  size="sm"
+                  className="absolute top-2 right-2 z-10"
+                  onClick={clearFile}
+                >
+                  <FiX className="h-4 w-4" />
+                </Button>
+              </div>
+            )}
+
+            {/* Dosya Yükleme */}
+            <div className="space-y-2">
+              <Label htmlFor="fileInput">Dosya Seç</Label>
+              <div className="flex gap-2">
+                <Input
+                  ref={fileInputRef}
+                  id="fileInput"
+                  type="file"
+                  accept="image/*"
+                  onChange={handleFileSelect}
+                  className="flex-1"
+                />
+                <Button
+                  type="button"
+                  variant="outline"
+                  onClick={handleUpload}
+                  disabled={!selectedFile || isUploading}
+                >
+                  {isUploading ? (
+                    "Yükleniyor..."
+                  ) : (
+                    <>
+                      <FiUpload className="mr-2 h-4 w-4" />
+                      Yükle
+                    </>
+                  )}
+                </Button>
+              </div>
+              {selectedFile && (
+                <p className="text-sm text-gray-600">
+                  Seçilen dosya: {selectedFile.name} (
+                  {(selectedFile.size / 1024 / 1024).toFixed(2)} MB)
+                </p>
+              )}
+            </div>
+
+            {/* URL Input */}
+            <div className="space-y-2">
+              <Label htmlFor="imageSrc">veya Resim URL Gir</Label>
+              <Input
+                id="imageSrc"
+                value={formData.imageSrc}
+                onChange={(e) => handleInputChange("imageSrc", e.target.value)}
+                placeholder="https://example.com/image.jpg"
+                disabled={!!selectedFile}
+              />
+            </div>
           </div>
 
           <div className="space-y-2">
@@ -187,12 +366,15 @@ export default function HeroForm({
             <Button type="button" variant="outline" onClick={onCancel}>
               İptal
             </Button>
-            <Button type="submit" disabled={isLoading}>
+            <Button
+              type="submit"
+              disabled={isLoading || (!formData.imageSrc && !selectedFile)}
+            >
               {isLoading
                 ? "Kaydediliyor..."
                 : heroSlide?.id
-                ? "Güncelle"
-                : "Oluştur"}
+                  ? "Güncelle"
+                  : "Oluştur"}
             </Button>
           </div>
         </form>
