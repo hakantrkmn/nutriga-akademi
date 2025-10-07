@@ -93,6 +93,8 @@ export const metadata: Metadata = {
     icon: [
       { url: "/favicon.svg", type: "image/svg+xml" },
       { url: "/favicon.ico", sizes: "32x32", type: "image/x-icon" },
+      { url: "/icon-192.png", sizes: "192x192", type: "image/png" },
+      { url: "/icon-512.png", sizes: "512x512", type: "image/png" },
     ],
     shortcut: "/favicon.svg",
     apple: [
@@ -119,8 +121,22 @@ export default function RootLayout({
         {/* Additional meta tags for better Google indexing */}
         <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
         <link rel="alternate icon" type="image/x-icon" href="/favicon.ico" />
+        <link
+          rel="icon"
+          type="image/png"
+          sizes="192x192"
+          href="/icon-192.png"
+        />
+        <link
+          rel="icon"
+          type="image/png"
+          sizes="512x512"
+          href="/icon-512.png"
+        />
         <link rel="apple-touch-icon" href="/nutrig_akademi_logo.svg" />
         <link rel="manifest" href="/site.webmanifest" />
+        {/* Google Site Icon for search results */}
+        <meta name="google-site-verification" content="" />
         <meta name="theme-color" content="#82541c" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="default" />
