@@ -1,24 +1,27 @@
 "use client";
 
 import { RegisterModal } from "@/components/modals/RegisterModal";
+import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
-interface PopupHandlerProps {
-  initialPopup?: string;
-}
-
-export function PopupHandler({ initialPopup }: PopupHandlerProps) {
+function PopupHandlerInner() {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const searchParams = useSearchParams();
 
   useEffect(() => {
     // Sayfa yüklendiğinde popup=true varsa modal'ı aç
-    if (initialPopup === "true") {
+    const popup = searchParams.get("popup");
+    if (popup === "true") {
       console.log("🎯 POPUP MODAL açılıyor...");
       setIsModalOpen(true);
     }
-  }, [initialPopup]);
+  }, [searchParams]);
 
   return (
     <RegisterModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
   );
+}
+
+export function PopupHandler() {
+  return <PopupHandlerInner />;
 }

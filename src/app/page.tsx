@@ -5,6 +5,7 @@ import { prisma } from "@/lib/prisma";
 import { getBlogPosts, getCourses } from "@/lib/redis";
 import type { Metadata } from "next";
 import dynamic from "next/dynamic";
+import { Suspense } from "react";
 
 // Lazy loaded components for better performance
 const Hero = dynamic(() => import("@/components/home/HomeHero"), {
@@ -84,16 +85,9 @@ export const metadata: Metadata = {
 };
 
 // Server Component'ta search params almak için
-interface HomePageProps {
-  searchParams: Promise<{
-    popup?: string;
-    modal?: string;
-    show?: string;
-    [key: string]: string | undefined;
-  }>;
-}
+//
 
-export default async function Home({ searchParams }: HomePageProps) {
+export default async function Home() {
   // Fetch data in parallel for better performance
   const [fetchedBlogPosts, fetchedCourses, fetchedHeroSlides] =
     await Promise.all([
@@ -105,23 +99,7 @@ export default async function Home({ searchParams }: HomePageProps) {
       }),
     ]);
 
-  // GET parametrelerini await ile al (Next.js 15)
-  const searchParamsResolved = await searchParams;
-  const popup = searchParamsResolved.popup;
-  const modal = searchParamsResolved.modal;
-  const show = searchParamsResolved.show;
-
-  console.log("Server-side GET Parametreleri:", {
-    popup,
-    modal,
-    show,
-    allParams: searchParamsResolved,
-  });
-
-  // popup=true varsa log yaz
-  if (popup === "true") {
-    console.log("🎯 POPUP parametresi TRUE tespit edildi!");
-  }
+  //
 
   return (
     <>
@@ -131,10 +109,14 @@ export default async function Home({ searchParams }: HomePageProps) {
       <BlogSection posts={fetchedBlogPosts} />
 
       {/* Popup Modal Handler */}
-      <PopupHandler initialPopup={popup} />
+      <Suspense fallback={null}>
+        <PopupHandler />
+      </Suspense>
 
       {/* Payment Success Toast */}
-      <PaymentSuccessToast />
+      <Suspense fallback={null}>
+        <PaymentSuccessToast />
+      </Suspense>
     </>
   );
 }
