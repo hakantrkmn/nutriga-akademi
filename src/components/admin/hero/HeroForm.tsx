@@ -17,6 +17,7 @@ interface HeroSlide {
   description: string;
   imageSrc: string;
   imageAlt: string;
+  linkUrl?: string | null;
   isActive: boolean;
   sortOrder: number;
 }
@@ -38,6 +39,7 @@ export default function HeroForm({
     description: heroSlide?.description || "",
     imageSrc: heroSlide?.imageSrc || "",
     imageAlt: heroSlide?.imageAlt || "",
+    linkUrl: heroSlide?.linkUrl ?? "",
     isActive: heroSlide?.isActive ?? true,
     sortOrder: heroSlide?.sortOrder || 0,
   });
@@ -89,6 +91,7 @@ export default function HeroForm({
       const submitData = {
         ...formData,
         imageSrc: finalImageSrc,
+        linkUrl: formData.linkUrl ? formData.linkUrl : null,
       };
 
       const url = heroSlide?.id ? `/api/hero/${heroSlide.id}` : "/api/hero";
@@ -232,6 +235,16 @@ export default function HeroForm({
                 required
               />
             </div>
+          </div>
+
+          <div className="space-y-2">
+            <Label htmlFor="linkUrl">Opsiyonel Link</Label>
+            <Input
+              id="linkUrl"
+              value={formData.linkUrl ?? ""}
+              onChange={(e) => handleInputChange("linkUrl", e.target.value)}
+              placeholder="https://ornek.com/sayfa veya /egitimler/slug"
+            />
           </div>
 
           <div className="space-y-2">

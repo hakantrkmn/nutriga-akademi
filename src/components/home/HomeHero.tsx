@@ -108,25 +108,52 @@ export default function Hero({ slides }: { slides: HeroSlide[] }) {
                       {/* Sağ Yarı - Görsel */}
                       <div className="relative min-h-[280px] lg:min-h-[320px] px-10 flex items-center justify-center">
                         {!imageErrors[index] ? (
-                          <div className="relative w-full h-full max-w-full max-h-full rounded-2xl overflow-hidden bg-white/50 flex items-center justify-center">
-                            <Image
-                              src={slide.imageSrc}
-                              alt={slide.imageAlt}
-                              fill
-                              className="object-contain"
-                              priority={true}
-                              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                              placeholder="blur"
-                              blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAIAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAhEAACAQMDBQAAAAAAAAAAAAABAgMABAUGIWGRkqGx0f/EABUBAQEAAAAAAAAAAAAAAAAAAAMF/8QAGhEAAgIDAAAAAAAAAAAAAAAAAAECEgMRkf/aAAwDAQACEQMRAD8AltJagyeH0AthI5xdrLcNM91BF5pX2HaH9bcfaSXWGaRmknyJckliyjqTzSlT54b6bk+h0R//2Q=="
-                              onError={() => {
-                                setImageErrors((prev) => ({
-                                  ...prev,
-                                  [index]: true,
-                                }));
-                              }}
-                            />
-                            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-transparent to-primary-100/20" />
-                          </div>
+                          <>
+                            {slide.linkUrl ? (
+                              <a
+                                href={slide.linkUrl}
+                                className="relative w-full h-full max-w-full max-h-full rounded-2xl overflow-hidden bg-white/50 flex items-center justify-center"
+                              >
+                                <Image
+                                  src={slide.imageSrc}
+                                  alt={slide.imageAlt}
+                                  fill
+                                  className="object-contain"
+                                  priority={true}
+                                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                                  placeholder="blur"
+                                  blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAIAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAhEAACAQMDBQAAAAAAAAAAAAABAgMABAUGIWGRkqGx0f/EABUBAQEAAAAAAAAAAAAAAAAAAAMF/8QAGhEAAgIDAAAAAAAAAAAAAAAAAAECEgMRkf/aAAwDAQACEQMRAD8AltJagyeH0AthI5xdrLcNM91BF5pX2HaH9bcfaSXWGaRmknyJckliyjqTzSlT54b6bk+h0R//2Q=="
+                                  onError={() => {
+                                    setImageErrors((prev) => ({
+                                      ...prev,
+                                      [index]: true,
+                                    }));
+                                  }}
+                                />
+                                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-transparent to-primary-100/20" />
+                              </a>
+                            ) : (
+                              <div className="relative w-full h-full max-w-full max-h-full rounded-2xl overflow-hidden bg-white/50 flex items-center justify-center">
+                                <Image
+                                  src={slide.imageSrc}
+                                  alt={slide.imageAlt}
+                                  fill
+                                  className="object-contain"
+                                  priority={true}
+                                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                                  placeholder="blur"
+                                  blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAIAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAhEAACAQMDBQAAAAAAAAAAAAABAgMABAUGIWGRkqGx0f/EABUBAQEAAAAAAAAAAAAAAAAAAAMF/8QAGhEAAgIDAAAAAAAAAAAAAAAAAAECEgMRkf/aAAwDAQACEQMRAD8AltJagyeH0AthI5xdrLcNM91BF5pX2HaH9bcfaSXWGaRmknyJckliyjqTzSlT54b6bk+h0R//2Q=="
+                                  onError={() => {
+                                    setImageErrors((prev) => ({
+                                      ...prev,
+                                      [index]: true,
+                                    }));
+                                  }}
+                                />
+                                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-transparent to-primary-100/20" />
+                              </div>
+                            )}
+                          </>
                         ) : (
                           <div className="relative w-full h-full bg-gradient-to-br from-primary-50 to-primary-100 flex items-center justify-center rounded-2xl overflow-hidden">
                             <div className="text-gray-500 text-center">

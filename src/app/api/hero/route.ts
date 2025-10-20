@@ -30,6 +30,7 @@ export async function POST(request: NextRequest) {
       imageSrc,
       imageAlt,
       sortOrder,
+      linkUrl,
     } = body;
 
     // Gerekli alanları kontrol et
@@ -53,6 +54,7 @@ export async function POST(request: NextRequest) {
         description,
         imageSrc,
         imageAlt,
+        linkUrl: linkUrl || null,
         sortOrder: sortOrder || 0,
         isActive: true,
       },

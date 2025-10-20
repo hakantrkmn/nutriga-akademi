@@ -100,6 +100,7 @@ model HeroSlide {
   description String
   imageSrc    String   @map("image_src")
   imageAlt    String   @map("image_alt")
+  linkUrl     String?  @map("link_url")
   isActive    Boolean  @default(true) @map("is_active")
   sortOrder   Int      @default(0) @map("sort_order")
   createdAt   DateTime @default(now()) @map("created_at") @db.Timestamptz(6)

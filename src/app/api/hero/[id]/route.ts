@@ -46,6 +46,7 @@ export async function PUT(
       imageAlt,
       isActive,
       sortOrder,
+      linkUrl,
     } = body;
 
     // Gerekli alanları kontrol et
@@ -70,6 +71,7 @@ export async function PUT(
         description,
         imageSrc,
         imageAlt,
+        linkUrl: linkUrl || null,
         isActive: isActive !== undefined ? isActive : true,
         sortOrder: sortOrder || 0,
       },
