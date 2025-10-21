@@ -1,3 +1,4 @@
+import { sendNewUserNotificationToAdmin } from "@/lib/gmail-smtp";
 import { prisma } from "@/lib/prisma";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -43,6 +44,44 @@ export async function POST(request: NextRequest) {
     const user = await prisma.user.create({
       data: userData,
     });
+
+    // Gmail SMTP ile admin'e bildirim gönder
+    try {
+      const registrationDate = new Date().toLocaleDateString("tr-TR", {
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+        hour: "2-digit",
+        minute: "2-digit",
+      });
+
+      const adminNotificationResult = await sendNewUserNotificationToAdmin({
+        userName: `${userData.firstName} ${userData.lastName}`,
+        userEmail: userData.email,
+        profession: userData.profession,
+        university: userData.university || undefined,
+        department: userData.department || undefined,
+        class: userData.class || undefined,
+        phone: userData.phone || undefined,
+        registrationDate,
+      });
+
+      if (adminNotificationResult.success) {
+        console.log(
+          "Admin bildirimi başarıyla gönderildi:",
+          adminNotificationResult.messageId
+        );
+      } else {
+        console.error(
+          "Admin bildirimi gönderme hatası:",
+          adminNotificationResult.error
+        );
+        // Admin bildirimi hatası kullanıcı kaydını etkilemez
+      }
+    } catch (emailError) {
+      console.error("Admin bildirimi sırasında hata:", emailError);
+      // Email hatası kullanıcı kaydını etkilemez
+    }
 
     return NextResponse.json({
       success: true,
