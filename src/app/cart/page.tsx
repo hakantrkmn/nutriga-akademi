@@ -1,6 +1,7 @@
 "use client";
 
 import ContractModal from "@/components/modals/ContractModal";
+import OrderConfirmationModal from "@/components/modals/OrderConfirmationModal";
 import PreInfoModal from "@/components/modals/PreInfoModal";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -63,6 +64,8 @@ export default function CartPage() {
   const [preInfoAccepted, setPreInfoAccepted] = useState(false);
   const [contractModalOpen, setContractModalOpen] = useState(false);
   const [preInfoModalOpen, setPreInfoModalOpen] = useState(false);
+  const [orderConfirmationModalOpen, setOrderConfirmationModalOpen] =
+    useState(false);
 
   // Address form state
   const [billingAddress, setBillingAddress] = useState("");
@@ -507,8 +510,8 @@ export default function CartPage() {
                     return;
                   }
 
-                  // Iyzico ödeme sayfasına yönlendir
-                  router.push(`/payment?t=${new Date().getTime()}`);
+                  // Onay modalını aç
+                  setOrderConfirmationModalOpen(true);
                 }}
               >
                 {isAuthenticated ? "Ödemeye Geç" : "Giriş Yap ve Öde"}
@@ -517,6 +520,22 @@ export default function CartPage() {
           </CardContent>
         </Card>
       </div>
+
+      {/* Order Confirmation Modal */}
+      <OrderConfirmationModal
+        isOpen={orderConfirmationModalOpen}
+        onOpenChange={setOrderConfirmationModalOpen}
+        onConfirm={() => {
+          setOrderConfirmationModalOpen(false);
+          // Iyzico ödeme sayfasına yönlendir
+          router.push(`/payment?t=${new Date().getTime()}`);
+        }}
+        onCancel={() => {
+          setOrderConfirmationModalOpen(false);
+        }}
+        items={items}
+        subtotal={subtotal}
+      />
     </div>
   );
 }
