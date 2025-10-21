@@ -26,7 +26,15 @@ import { useEffect, useState } from "react";
 
 export default function CartPage() {
   const router = useRouter();
-  const { items, loading, subtotal, updateQuantity, removeItem } = useCart();
+  const {
+    items,
+    loading,
+    subtotal,
+    discount,
+    totalWithDiscount,
+    updateQuantity,
+    removeItem,
+  } = useCart();
   const { isAuthenticated } = useAuth();
   // Payment result mesajını göster ve localStorage'dan adres bilgilerini yükle
   useEffect(() => {
@@ -106,6 +114,41 @@ export default function CartPage() {
             Ürünlerini gözden geçir ve satın almaya geç
           </p>
         </div>
+
+        {/* Discount Info */}
+        {discount > 0 && (
+          <Card className="bg-green-50 border-green-200">
+            <CardContent className="p-4">
+              <div className="flex items-center gap-3">
+                <div className="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center">
+                  <svg
+                    className="w-5 h-5 text-green-600"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M5 13l4 4L19 7"
+                    />
+                  </svg>
+                </div>
+                <div>
+                  <h3 className="font-semibold text-green-800">
+                    Tebrikler! İndirim Kazandınız
+                  </h3>
+                  <p className="text-sm text-green-700">
+                    4 adet aynı eğitim için{" "}
+                    <span className="font-bold">₺{discount}</span> indirim
+                    kazandınız!
+                  </p>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        )}
 
         {/* Cart Items */}
         <Card className="bg-white rounded-lg shadow-sm">
@@ -188,9 +231,16 @@ export default function CartPage() {
                       </div>
 
                       {/* Price */}
-                      <span className="font-semibold text-gray-900 min-w-[96px] text-right">
-                        ₺{Number(it.education?.price ?? 0) * it.quantity}
-                      </span>
+                      <div className="text-right min-w-[96px]">
+                        <span className="font-semibold text-gray-900">
+                          ₺{Number(it.education?.price ?? 0) * it.quantity}
+                        </span>
+                        {it.quantity >= 4 && (
+                          <div className="text-xs text-green-600 font-medium">
+                            İndirimli!
+                          </div>
+                        )}
+                      </div>
 
                       {/* Remove Button */}
                       <Button
@@ -415,6 +465,16 @@ export default function CartPage() {
                 <span className="text-gray-600">Ara toplam</span>
                 <span className="font-semibold">₺{subtotal}</span>
               </div>
+              {discount > 0 && (
+                <div className="flex justify-between">
+                  <span className="text-green-600 font-medium">
+                    4 Adet İndirimi
+                  </span>
+                  <span className="font-semibold text-green-600">
+                    -₺{discount}
+                  </span>
+                </div>
+              )}
               <div className="flex justify-between">
                 <span className="text-gray-600">KDV</span>
                 <span className="font-semibold">Dahil</span>
@@ -422,7 +482,9 @@ export default function CartPage() {
               <div className="h-px bg-gray-200" />
               <div className="flex justify-between">
                 <span className="font-bold text-gray-800">Toplam</span>
-                <span className="font-bold text-primary">₺{subtotal}</span>
+                <span className="font-bold text-primary">
+                  ₺{totalWithDiscount}
+                </span>
               </div>
 
               {/* Contract Agreement */}
@@ -474,7 +536,7 @@ export default function CartPage() {
                       setPreInfoAccepted(true);
                       setPreInfoModalOpen(false);
                     }}
-                    subtotal={subtotal}
+                    subtotal={totalWithDiscount}
                   >
                     <span className="text-primary hover:underline font-medium">
                       Ön Bilgilendirme Formu
@@ -534,7 +596,7 @@ export default function CartPage() {
           setOrderConfirmationModalOpen(false);
         }}
         items={items}
-        subtotal={subtotal}
+        subtotal={totalWithDiscount}
       />
     </div>
   );

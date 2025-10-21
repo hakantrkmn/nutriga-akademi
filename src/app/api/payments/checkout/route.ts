@@ -129,10 +129,26 @@ export async function POST(request: NextRequest) {
       };
     });
 
-    const totalAmount = details.reduce(
+    // İndirim hesaplama - 4 adet aynı eğitim için 400 TL indirim
+    const calculateDiscount = (items: typeof details) => {
+      const itemsWithDiscount = items.filter((item) => item.quantity >= 4);
+
+      if (itemsWithDiscount.length > 0) {
+        return itemsWithDiscount.reduce((totalDiscount, item) => {
+          const discountCount = Math.floor(item.quantity / 4);
+          return totalDiscount + discountCount * 400;
+        }, 0);
+      }
+
+      return 0;
+    };
+
+    const discount = calculateDiscount(details);
+    const subtotal = details.reduce(
       (sum, detail) => sum + detail.totalPrice,
       0
     );
+    const totalAmount = Math.max(0, subtotal - discount);
     const allValid = details.every((d) => d.exists && d.unitPrice > 0);
 
     if (!allValid) {
@@ -253,14 +269,26 @@ export async function POST(request: NextRequest) {
         address: addressData.billingAddress,
         zipCode: addressData.billingZipCode,
       },
-      basketItems: details.map((detail, index) => ({
-        id: `BI${index + 1}`,
-        name: detail.title,
-        category1: "Eğitim",
-        category2: "Online Kurs",
-        itemType: "VIRTUAL",
-        price: detail.totalPrice.toFixed(2),
-      })),
+      basketItems: details.map((detail, index) => {
+        // Bu item için indirim hesapla
+        let itemDiscount = 0;
+        if (detail.quantity >= 4) {
+          const discountCount = Math.floor(detail.quantity / 4);
+          itemDiscount = discountCount * 400;
+        }
+
+        // İndirimli fiyat
+        const discountedPrice = Math.max(0, detail.totalPrice - itemDiscount);
+
+        return {
+          id: `BI${index + 1}`,
+          name: detail.title,
+          category1: "Eğitim",
+          category2: "Online Kurs",
+          itemType: "VIRTUAL",
+          price: discountedPrice.toFixed(2),
+        };
+      }),
     };
 
     console.log("Checkout data prepared:", checkoutData);

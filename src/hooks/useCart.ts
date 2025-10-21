@@ -79,6 +79,27 @@ export function useCart() {
     }, 0);
   }, [items]);
 
+  // 4 adet aynı eğitim için 400 TL indirim hesaplama
+  const discount = useMemo(() => {
+    // Aynı eğitimden 4 adet olanları bul
+    const itemsWithDiscount = items.filter((item) => item.quantity >= 4);
+
+    if (itemsWithDiscount.length > 0) {
+      // Her 4 adet için 400 TL indirim
+      return itemsWithDiscount.reduce((totalDiscount, item) => {
+        const discountCount = Math.floor(item.quantity / 4);
+        return totalDiscount + discountCount * 400;
+      }, 0);
+    }
+
+    return 0;
+  }, [items]);
+
+  // İndirimli toplam
+  const totalWithDiscount = useMemo(() => {
+    return Math.max(0, subtotal - discount);
+  }, [subtotal, discount]);
+
   // Sepete ürün ekle - sadece localStorage kullan
   const addItem = async (educationId: string, quantity = 1) => {
     setLoading(true);
@@ -135,6 +156,8 @@ export function useCart() {
     items,
     loading,
     subtotal,
+    discount,
+    totalWithDiscount,
     addItem,
     updateQuantity,
     removeItem,
