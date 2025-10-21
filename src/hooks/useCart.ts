@@ -1,8 +1,8 @@
 import { toaster } from "@/components/ui/toaster";
 import { CartItemDTO } from "@/lib/api";
 import { Egitim } from "@/types";
+import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useMemo, useState } from "react";
-import { useAuth } from "./useAuth";
 
 // LocalStorage için kullanılan tip
 interface LocalCartItem {
@@ -29,15 +29,10 @@ const setLocalCart = (items: LocalCartItem[]) => {
   localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(items));
 };
 
-const clearLocalCart = () => {
-  if (typeof window === "undefined") return;
-  localStorage.removeItem(CART_STORAGE_KEY);
-};
-
 export function useCart() {
   const [items, setItems] = useState<CartItemDTO[]>([]);
   const [loading, setLoading] = useState(true);
-  const { isAuthenticated, supabase } = useAuth();
+  const router = useRouter();
 
   // Sepeti yükle - her zaman localStorage'dan
   const loadCart = useCallback(async () => {
@@ -69,7 +64,7 @@ export function useCart() {
       setItems([]);
     }
     setLoading(false);
-  }, [isAuthenticated]);
+  }, []);
 
   // İlk yükleme
   useEffect(() => {
@@ -102,6 +97,10 @@ export function useCart() {
     await loadCart();
     toaster.success("Sepete eklendi");
     setLoading(false);
+
+    // Sepete ekleme işlemi tamamlandıktan sonra cart sayfasına yönlendir
+    router.push("/cart");
+
     return true;
   };
 
