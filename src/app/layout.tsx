@@ -1,5 +1,6 @@
 import StructuredData from "@/components/seo/StructuredData";
 import { Toaster } from "@/components/ui/toaster";
+import { GoogleAnalytics } from "@next/third-parties/google";
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import type { Metadata } from "next";
@@ -149,6 +150,7 @@ export default function RootLayout({
         <Toaster />
         <SpeedInsights />
         <Analytics />
+        <GoogleAnalytics gaId="G-J6R617PEJH" />
       </body>
     </html>
   );
