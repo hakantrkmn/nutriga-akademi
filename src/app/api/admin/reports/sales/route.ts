@@ -63,6 +63,32 @@ export async function GET() {
       take: 20, // Son 20 başarısız ödeme
     });
 
+    // Başarılı ödemeler
+    const successfulPayments = await prisma.payment.findMany({
+      where: {
+        status: "COMPLETED",
+      },
+      select: {
+        id: true,
+        totalAmount: true,
+        paidPrice: true,
+        installment: true,
+        paymentMethod: true,
+        createdAt: true,
+        user: {
+          select: {
+            firstName: true,
+            lastName: true,
+            email: true,
+          },
+        },
+      },
+      orderBy: {
+        createdAt: "desc",
+      },
+      take: 20, // Son 20 başarılı ödeme
+    });
+
     // Başarısız ödemeleri formatla
     const formattedFailedPayments = failedPayments.map((payment) => ({
       id: payment.id,
@@ -73,12 +99,25 @@ export async function GET() {
       createdAt: payment.createdAt,
     }));
 
+    // Başarılı ödemeleri formatla
+    const formattedSuccessfulPayments = successfulPayments.map((payment) => ({
+      id: payment.id,
+      userName: `${payment.user.firstName} ${payment.user.lastName}`,
+      userEmail: payment.user.email,
+      totalAmount: Number(payment.totalAmount),
+      paidPrice: Number(payment.paidPrice),
+      installment: payment.installment,
+      paymentMethod: payment.paymentMethod,
+      createdAt: payment.createdAt,
+    }));
+
     return NextResponse.json({
       success: true,
       data: {
         totalRevenue,
         recentSales,
         failedPayments: formattedFailedPayments,
+        successfulPayments: formattedSuccessfulPayments,
       },
     });
   } catch (error) {

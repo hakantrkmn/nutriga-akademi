@@ -4,7 +4,12 @@ import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { adminApi, type SalesReport } from "@/lib/api";
 import { useEffect, useState } from "react";
-import { FiDollarSign, FiTrendingUp, FiXCircle } from "react-icons/fi";
+import {
+  FiCheckCircle,
+  FiDollarSign,
+  FiTrendingUp,
+  FiXCircle,
+} from "react-icons/fi";
 
 export default function SalesReport() {
   const [data, setData] = useState<SalesReport | null>(null);
@@ -82,6 +87,63 @@ export default function SalesReport() {
         </Card>
       </div>
 
+      {/* Başarılı Ödemeler */}
+      {data.successfulPayments.length > 0 && (
+        <Card>
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2">
+              <FiCheckCircle className="h-5 w-5 text-green-600" />
+              Başarılı Ödemeler
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="max-h-96 overflow-y-auto space-y-4 pr-2">
+              {data.successfulPayments.map((payment) => (
+                <div
+                  key={payment.id}
+                  className="border border-green-200 rounded-lg p-4 bg-green-50 hover:bg-green-100 transition-colors"
+                >
+                  <div className="flex items-start justify-between mb-2">
+                    <div>
+                      <h4 className="font-medium text-gray-900">
+                        {payment.userName}
+                      </h4>
+                      <p className="text-sm text-gray-600">
+                        {payment.userEmail}
+                      </p>
+                    </div>
+                    <div className="text-right">
+                      <div className="font-bold text-green-600">
+                        ₺{payment.paidPrice.toLocaleString()}
+                      </div>
+                      <div className="text-xs text-gray-500">
+                        {new Date(payment.createdAt).toLocaleDateString(
+                          "tr-TR"
+                        )}
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="flex items-center gap-2 mb-2">
+                    <Badge
+                      variant="default"
+                      className="text-xs bg-blue-100 text-blue-800 border-blue-200"
+                    >
+                      {payment.installment} Taksit
+                    </Badge>
+                    {payment.totalAmount !== payment.paidPrice && (
+                      <Badge variant="outline" className="text-xs">
+                        Orijinal: ₺{payment.totalAmount.toLocaleString()}
+                      </Badge>
+                    )}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </CardContent>
+        </Card>
+      )}
+
       {/* Başarısız Ödemeler */}
       {data.failedPayments.length > 0 && (
         <Card>
@@ -92,8 +154,8 @@ export default function SalesReport() {
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="space-y-4">
-              {data.failedPayments.slice(0, 10).map((payment) => (
+            <div className="max-h-96 overflow-y-auto space-y-4 pr-2">
+              {data.failedPayments.map((payment) => (
                 <div
                   key={payment.id}
                   className="border border-red-200 rounded-lg p-4 bg-red-50 hover:bg-red-100 transition-colors"
@@ -128,12 +190,6 @@ export default function SalesReport() {
                   )}
                 </div>
               ))}
-
-              {data.failedPayments.length > 10 && (
-                <div className="text-center text-sm text-gray-500 pt-4 border-t">
-                  Ve {data.failedPayments.length - 10} başarısız ödeme daha...
-                </div>
-              )}
             </div>
           </CardContent>
         </Card>

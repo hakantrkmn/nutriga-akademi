@@ -33,10 +33,22 @@ export interface FailedPaymentData {
   createdAt: Date;
 }
 
+export interface SuccessfulPaymentData {
+  id: string;
+  userName: string;
+  userEmail: string;
+  totalAmount: number;
+  paidPrice: number;
+  installment: number;
+  paymentMethod: string | null;
+  createdAt: Date;
+}
+
 export interface SalesReport {
   totalRevenue: number;
   recentSales: RecentSalesData[];
   failedPayments: FailedPaymentData[];
+  successfulPayments: SuccessfulPaymentData[];
 }
 
 export interface UserPurchaseData {
