@@ -22,11 +22,12 @@ export async function generateMetadata({
   if (!egitim) {
     return {
       title: "Eğitim bulunamadı | " + COMPANY_NAME,
+      robots: { index: false, follow: false },
     };
   }
 
   // Kursun kendi görseli varsa onu kullan, yoksa default kurs görselini kullan
-  return generateCourseMetadata({
+  const meta = generateCourseMetadata({
     title: egitim.title,
     description:
       egitim.description ||
@@ -36,6 +37,14 @@ export async function generateMetadata({
     updatedAt: egitim.updatedAt.toISOString(),
     image: egitim.imageUrl || undefined, // Kursun kendi görseli
   });
+
+  return {
+    ...meta,
+    alternates: {
+      canonical: `https://www.nutrigaakademi.com/egitimler/${egitim.slug}`,
+    },
+    robots: { index: true, follow: true },
+  };
 }
 
 export default async function EgitimDetailPage({

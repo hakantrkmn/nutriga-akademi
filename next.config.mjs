@@ -1,6 +1,21 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: false,
+  async redirects() {
+    return [
+      {
+        source: "/:path*",
+        has: [
+          {
+            type: "host",
+            value: "nutrigaakademi.com",
+          },
+        ],
+        destination: "https://www.nutrigaakademi.com/:path*",
+        permanent: true,
+      },
+    ];
+  },
   // Remove console.log in production automatically
   compiler: {
     removeConsole: process.env.NODE_ENV === "production",

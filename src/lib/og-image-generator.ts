@@ -39,7 +39,7 @@ export function generateBlogMetadata(post: {
     openGraph: {
       title: post.title,
       description: post.description,
-      url: `https://nutrigaakademi.com/blog/${post.slug}`,
+      url: `https://www.nutrigaakademi.com/blog/${post.slug}`,
       siteName: "Nutriga Akademi",
       images: [
         {
@@ -80,7 +80,7 @@ export function generateCourseMetadata(course: {
     openGraph: {
       title: course.title,
       description: course.description,
-      url: `https://nutrigaakademi.com/egitimler/${course.slug}`,
+      url: `https://www.nutrigaakademi.com/egitimler/${course.slug}`,
       siteName: "Nutriga Akademi",
       images: [
         {

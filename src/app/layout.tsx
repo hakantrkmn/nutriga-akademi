@@ -58,7 +58,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "tr_TR",
-    url: "https://nutrigaakademi.com",
+    url: "https://www.nutrigaakademi.com",
     title: "Nutriga Akademi - Diyetisyen Eğitimleri ve Beslenme Kursları",
     description:
       "Profesyonel diyetisyenler için kapsamlı beslenme eğitimleri. Klinik beslenme, sporcu beslenmesi, pediatrik beslenme kursları.",

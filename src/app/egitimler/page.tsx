@@ -27,7 +27,7 @@ export const metadata: Metadata = {
     title: "Diyetisyen Eğitimleri ve Beslenme Kursları | Nutriga Akademi",
     description:
       "Profesyonel diyetisyenler için kapsamlı beslenme eğitimleri. Klinik beslenme, sporcu beslenmesi, pediatrik beslenme kursları.",
-    url: "https://nutrigaakademi.com/egitimler",
+    url: "https://www.nutrigaakademi.com/egitimler",
     siteName: "Nutriga Akademi",
     images: [
       {
@@ -48,7 +48,7 @@ export const metadata: Metadata = {
     images: ["/images/og-image.jpg"],
   },
   alternates: {
-    canonical: "https://nutrigaakademi.com/egitimler",
+    canonical: "https://www.nutrigaakademi.com/egitimler",
   },
 };
 
