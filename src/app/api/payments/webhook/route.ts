@@ -1,7 +1,6 @@
 import { sendPurchaseConfirmation } from "@/lib/email";
 import getIyzicoClient from "@/lib/iyzico";
 import { prisma } from "@/lib/prisma";
-import { cartSet } from "@/lib/redis";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(request: NextRequest) {
@@ -205,8 +204,7 @@ export async function POST(request: NextRequest) {
           console.error("Email sending error:", emailError);
         }
 
-        // Sepeti temizle (sadece başarılı ödeme sonrası)
-        await cartSet(payment.userId, []);
+        // Not: Sepeti temizleme işlemi client tarafında localStorage üzerinden yapılır
 
         // Başarılı ödeme için HTML yanıt ver, yönlendirme yap
         const htmlResponse = `

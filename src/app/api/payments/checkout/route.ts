@@ -3,8 +3,7 @@ import getIyzicoClient, {
   Locale,
 } from "@/lib/iyzico";
 import { prisma } from "@/lib/prisma";
-import { cartGet } from "@/lib/redis";
-// Redis import kaldırıldı - artık localStorage'dan gelen veriler kullanılıyor
+// Not: Sepet verisi client tarafındaki localStorage'dan request body ile gelir
 import { createServerClient } from "@supabase/ssr";
 import { NextRequest, NextResponse } from "next/server";
 import { v4 as uuidv4 } from "uuid";
@@ -86,19 +85,9 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // 1) Sepeti oku - önce request body'den, yoksa Redis'ten
-    let processedCartItems: Array<{ educationId: string; quantity: number }>;
-
-    if (cartItems && cartItems.length > 0) {
-      // Request body'den gelen sepet öğelerini kullan
-      console.log("Using cart items from request body:", cartItems);
-      processedCartItems = cartItems;
-    } else {
-      // Eski yöntem: Redis'ten oku
-      console.log("Getting cart items from Redis for user:", userId);
-      processedCartItems = await cartGet(userId);
-      console.log("Cart items from Redis:", processedCartItems);
-    }
+    // 1) Sepeti oku - sadece request body'den
+    const processedCartItems: Array<{ educationId: string; quantity: number }> =
+      Array.isArray(cartItems) ? cartItems : [];
 
     if (!processedCartItems || processedCartItems.length === 0) {
       console.log("Cart is empty");
