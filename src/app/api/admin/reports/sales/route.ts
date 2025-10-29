@@ -86,7 +86,7 @@ export async function GET() {
       orderBy: {
         createdAt: "desc",
       },
-      take: 20, // Son 20 başarılı ödeme
+      // Tüm başarılı ödemeler gösterilsin
     });
 
     // Başarısız ödemeleri formatla
