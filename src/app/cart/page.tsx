@@ -140,9 +140,14 @@ export default function CartPage() {
                     Tebrikler! İndirim Kazandınız
                   </h3>
                   <p className="text-sm text-green-700">
-                    4 adet aynı eğitim için{" "}
-                    <span className="font-bold">₺{discount}</span> indirim
-                    kazandınız!
+                    4 adet ve üstünde her adet için 100 TL indirim{" "}
+                    {items.some((it) => it.quantity === 10) && (
+                      <span className="font-bold">
+                        (+10 adet özel 300 TL ekstra)
+                      </span>
+                    )}{" "}
+                    - Toplam <span className="font-bold">₺{discount}</span>{" "}
+                    indirim kazandınız!
                   </p>
                 </div>
               </div>
@@ -468,7 +473,12 @@ export default function CartPage() {
               {discount > 0 && (
                 <div className="flex justify-between">
                   <span className="text-green-600 font-medium">
-                    4 Adet İndirimi
+                    Toplu Alım İndirimi
+                    {items.some((it) => it.quantity === 10) && (
+                      <span className="text-xs block text-green-500">
+                        (10 adet özel +300 TL dahil)
+                      </span>
+                    )}
                   </span>
                   <span className="font-semibold text-green-600">
                     -₺{discount}

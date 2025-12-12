@@ -79,20 +79,27 @@ export function useCart() {
     }, 0);
   }, [items]);
 
-  // 4 adet aynı eğitim için 400 TL indirim hesaplama
+  // 4 adet ve üstünde her adet için 100 TL indirim hesaplama
+  // 10 adet özel: +300 TL ekstra indirim
   const discount = useMemo(() => {
-    // Aynı eğitimden 4 adet olanları bul
-    const itemsWithDiscount = items.filter((item) => item.quantity >= 4);
+    return items.reduce((totalDiscount, item) => {
+      const { quantity } = item;
 
-    if (itemsWithDiscount.length > 0) {
-      // Her 4 adet için 400 TL indirim
-      return itemsWithDiscount.reduce((totalDiscount, item) => {
-        const discountCount = Math.floor(item.quantity / 4);
-        return totalDiscount + discountCount * 400;
-      }, 0);
-    }
+      // 4 adet altında indirim yok
+      if (quantity < 4) {
+        return totalDiscount;
+      }
 
-    return 0;
+      // Her adet için 100 TL indirim
+      let itemDiscount = quantity * 100;
+
+      // 10 adet özel: +300 TL ekstra indirim
+      if (quantity === 10) {
+        itemDiscount += 300;
+      }
+
+      return totalDiscount + itemDiscount;
+    }, 0);
   }, [items]);
 
   // İndirimli toplam

@@ -118,18 +118,27 @@ export async function POST(request: NextRequest) {
       };
     });
 
-    // İndirim hesaplama - 4 adet aynı eğitim için 400 TL indirim
+    // İndirim hesaplama - 4 adet ve üstünde her adet için 100 TL indirim
+    // 10 adet özel: +300 TL ekstra indirim
     const calculateDiscount = (items: typeof details) => {
-      const itemsWithDiscount = items.filter((item) => item.quantity >= 4);
+      return items.reduce((totalDiscount, item) => {
+        const { quantity } = item;
 
-      if (itemsWithDiscount.length > 0) {
-        return itemsWithDiscount.reduce((totalDiscount, item) => {
-          const discountCount = Math.floor(item.quantity / 4);
-          return totalDiscount + discountCount * 400;
-        }, 0);
-      }
+        // 4 adet altında indirim yok
+        if (quantity < 4) {
+          return totalDiscount;
+        }
 
-      return 0;
+        // Her adet için 100 TL indirim
+        let itemDiscount = quantity * 100;
+
+        // 10 adet özel: +300 TL ekstra indirim
+        if (quantity === 10) {
+          itemDiscount += 300;
+        }
+
+        return totalDiscount + itemDiscount;
+      }, 0);
     };
 
     const discount = calculateDiscount(details);
@@ -262,8 +271,13 @@ export async function POST(request: NextRequest) {
         // Bu item için indirim hesapla
         let itemDiscount = 0;
         if (detail.quantity >= 4) {
-          const discountCount = Math.floor(detail.quantity / 4);
-          itemDiscount = discountCount * 400;
+          // Her adet için 100 TL indirim
+          itemDiscount = detail.quantity * 100;
+
+          // 10 adet özel: +300 TL ekstra indirim
+          if (detail.quantity === 10) {
+            itemDiscount += 300;
+          }
         }
 
         // İndirimli fiyat
