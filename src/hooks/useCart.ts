@@ -132,7 +132,7 @@ export function useCart() {
     return true;
   };
 
-  const updateQuantity = async (id: string, qty: number) => {
+  const updateQuantity = (id: string, qty: number) => {
     const localItems = getLocalCart();
     const itemIndex = localItems.findIndex((item) => item.educationId === id);
 
@@ -143,19 +143,30 @@ export function useCart() {
         localItems[itemIndex].quantity = qty;
       }
       setLocalCart(localItems);
-      await loadCart();
-      toaster.success("Sepet güncellendi");
+
+      // State'i direkt güncelle - API çağrısı yapmaya gerek yok
+      setItems((prevItems) => {
+        if (qty <= 0) {
+          return prevItems.filter((item) => item.id !== id);
+        }
+        return prevItems.map((item) =>
+          item.id === id ? { ...item, quantity: qty } : item
+        );
+      });
+
       return true;
     }
     return false;
   };
 
-  const removeItem = async (id: string) => {
+  const removeItem = (id: string) => {
     const localItems = getLocalCart();
     const filteredItems = localItems.filter((item) => item.educationId !== id);
     setLocalCart(filteredItems);
-    await loadCart();
-    toaster.success("Ürün sepetten kaldırıldı");
+
+    // State'i direkt güncelle - API çağrısı yapmaya gerek yok
+    setItems((prevItems) => prevItems.filter((item) => item.id !== id));
+
     return true;
   };
 
