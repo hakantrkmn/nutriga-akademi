@@ -7,7 +7,7 @@ import { Label } from "@/components/ui/label";
 import { toaster } from "@/components/ui/toaster";
 import { createClient } from "@/lib/supabase/client";
 import { useRouter, useSearchParams } from "next/navigation";
-import { Suspense, useEffect, useState } from "react";
+import { Suspense, useEffect, useLayoutEffect, useState } from "react";
 
 function ResetPasswordContent() {
   const router = useRouter();
@@ -20,6 +20,37 @@ function ResetPasswordContent() {
   const [validating, setValidating] = useState(true);
   const [isValidToken, setIsValidToken] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
+
+  // ÖNEMLİ: useLayoutEffect, DOM güncellemesinden ÖNCE çalışır
+  // Bu sayede sayfa render olmadan önce query parameter'dan token'ı hash'e çevirebiliriz
+  // Bu, farklı tarayıcılarda çalışması için kritik
+  useLayoutEffect(() => {
+    if (typeof window !== "undefined") {
+      const url = new URL(window.location.href);
+      const token = url.searchParams.get("token");
+      const type = url.searchParams.get("type");
+
+      // Eğer query parameter'da token varsa ve hash'te yoksa, hemen hash'e çevir
+      // Bu, Supabase verify endpoint'inden gelen linkler için kritik
+      if (
+        token &&
+        type === "recovery" &&
+        !window.location.hash.includes("access_token")
+      ) {
+        console.log(
+          "Token query parameter'dan alındı, hash'e çevriliyor (render öncesi)..."
+        );
+
+        // Query parameter'ları temizle, hash ekle
+        url.searchParams.delete("token");
+        url.searchParams.delete("type");
+        url.hash = `#access_token=${token}&type=${type}`;
+
+        // URL'i güncelle (sayfayı yenilemeden, redirect olmadan)
+        window.history.replaceState({}, "", url.toString());
+      }
+    }
+  }, []); // Sadece mount'ta çalış
 
   useEffect(() => {
     let subscription: { unsubscribe: () => void } | null = null;
@@ -77,45 +108,27 @@ function ResetPasswordContent() {
             return;
           }
 
-          // 2. Query parameter'dan token varsa (Supabase verify endpoint'inden geliyorsa)
-          // ÖNEMLİ: Bu işlemi sayfa yüklenir yüklenmez yapmalıyız
+          // 2. useLayoutEffect zaten query parameter'dan token'ı hash'e çevirdi
+          // Burada sadece hash'teki token'ı kontrol et
+          // Eğer hala query parameter'da token varsa (useLayoutEffect çalışmadıysa), hash'e çevir
           const token = searchParams.get("token");
           const type = searchParams.get("type");
 
           if (token && type === "recovery") {
-            console.log(
-              "Token query parameter'dan alındı, hash'e çevriliyor..."
-            );
+            // useLayoutEffect çalışmamış olabilir, burada da kontrol et
+            const hash = window.location.hash;
+            if (!hash.includes("access_token")) {
+              console.log(
+                "Token hala query parameter'da, hash'e çevriliyor..."
+              );
 
-            // Token'ı hash fragment'e çevir
-            // Önce query parameter'ları temizle, sonra hash ekle
-            const currentUrl = new URL(window.location.href);
-            currentUrl.searchParams.delete("token");
-            currentUrl.searchParams.delete("type");
-            currentUrl.hash = `#access_token=${token}&type=${type}`;
+              const currentUrl = new URL(window.location.href);
+              currentUrl.searchParams.delete("token");
+              currentUrl.searchParams.delete("type");
+              currentUrl.hash = `#access_token=${token}&type=${type}`;
 
-            // URL'i güncelle (sayfayı yenilemeden)
-            window.history.replaceState({}, "", currentUrl.toString());
-
-            // Supabase'in token'ı işlemesi için biraz bekle
-            // onAuthStateChange event'ini bekleyelim
-            timeoutId = setTimeout(async () => {
-              const {
-                data: { session },
-              } = await supabase.auth.getSession();
-
-              if (session) {
-                console.log("Session oluşturuldu (query param'dan)");
-                setIsValidToken(true);
-                setValidating(false);
-              } else {
-                console.log(
-                  "Session oluşturulamadı, event handler bekleniyor..."
-                );
-                // Event handler zaten kuruldu, o halledecek
-              }
-            }, 500);
-            return; // validateToken'ı bitir, event handler veya timeout halledecek
+              window.history.replaceState({}, "", currentUrl.toString());
+            }
           }
         }
 
