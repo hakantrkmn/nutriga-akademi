@@ -82,17 +82,29 @@ export default function LoginPage() {
               >
                 {loading ? "Giriş yapılıyor..." : "Giriş Yap"}
               </Button>
-              <p className="text-gray-600 text-sm text-center">
-                Hesabın yok mu?{" "}
-                <Button
-                  type="button"
-                  variant="link"
-                  className="text-green-600 hover:text-green-700 p-0 h-auto"
-                  onClick={() => router.push("/auth/register")}
-                >
-                  Kayıt ol
-                </Button>
-              </p>
+              <div className="space-y-2">
+                <p className="text-gray-600 text-sm text-center">
+                  Hesabın yok mu?{" "}
+                  <Button
+                    type="button"
+                    variant="link"
+                    className="text-green-600 hover:text-green-700 p-0 h-auto"
+                    onClick={() => router.push("/auth/register")}
+                  >
+                    Kayıt ol
+                  </Button>
+                </p>
+                <p className="text-gray-600 text-sm text-center">
+                  <Button
+                    type="button"
+                    variant="link"
+                    className="text-green-600 hover:text-green-700 p-0 h-auto"
+                    onClick={() => router.push("/auth/forgot-password")}
+                  >
+                    Şifremi Unuttum
+                  </Button>
+                </p>
+              </div>
             </form>
           </CardContent>
         </Card>

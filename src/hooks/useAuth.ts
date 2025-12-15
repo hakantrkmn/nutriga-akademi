@@ -63,8 +63,21 @@ export function useAuth() {
     return { error };
   };
 
-  const resetPassword = async (email: string) => {
-    const { error } = await supabase.auth.resetPasswordForEmail(email);
+  const resetPassword = async (email: string, redirectTo?: string) => {
+    const options: { redirectTo?: string } = {};
+
+    if (redirectTo) {
+      options.redirectTo = redirectTo;
+    } else {
+      // Fallback: Dinamik olarak oluştur
+      const baseUrl =
+        typeof window !== "undefined"
+          ? window.location.origin
+          : process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
+      options.redirectTo = `${baseUrl}/auth/reset-password`;
+    }
+
+    const { error } = await supabase.auth.resetPasswordForEmail(email, options);
     return { error };
   };
 
