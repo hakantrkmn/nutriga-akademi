@@ -43,6 +43,12 @@ export default function EgitimCard({ egitim }: EgitimCardProps) {
           <Badge className="absolute top-3 right-3 bg-primary-100 text-primary-800 text-xs px-2 py-1 rounded-md">
             {egitim.level || "Seviye"}
           </Badge>
+
+          {!egitim.isActive && (
+            <Badge className="absolute top-3 left-3 bg-red-100 text-red-800 text-xs px-2 py-1 rounded-md font-semibold">
+              Satışta Değil
+            </Badge>
+          )}
         </div>
 
         <CardContent className="p-6 flex flex-col min-h-[400px]">
@@ -73,12 +79,20 @@ export default function EgitimCard({ egitim }: EgitimCardProps) {
               </div>
 
               <div className="flex justify-between items-center w-full">
-                <div className="flex flex-col gap-1">
-                  <span className="text-2xl font-bold text-primary">
-                    ₺{egitim.price?.toString()}
-                  </span>
-                  <span className="text-xs text-muted">Tek seferlik ödeme</span>
-                </div>
+                {egitim.isActive ? (
+                  <div className="flex flex-col gap-1">
+                    <span className="text-2xl font-bold text-primary">
+                      ₺{egitim.price?.toString()}
+                    </span>
+                    <span className="text-xs text-muted">Tek seferlik ödeme</span>
+                  </div>
+                ) : (
+                  <div className="flex flex-col gap-1">
+                    <span className="text-sm font-semibold text-red-600">
+                      Satışta Değil
+                    </span>
+                  </div>
+                )}
 
                 <div className="flex flex-col gap-2">
                   <Button className="bg-primary hover:bg-primary-hover text-white text-sm rounded-lg px-4">
@@ -91,16 +105,18 @@ export default function EgitimCard({ egitim }: EgitimCardProps) {
                       added
                         ? "bg-primary-100 text-primary-800 border-primary-200"
                         : "border-primary text-primary hover:bg-primary-50"
-                    }`}
-                    disabled={adding}
+                    } ${!egitim.isActive ? "opacity-50 cursor-not-allowed" : ""}`}
+                    disabled={adding || !egitim.isActive}
                     onClick={handleAddToCart}
                   >
                     <FiShoppingCart className="mr-2 w-4 h-4" />
-                    {adding
-                      ? "Ekleniyor..."
-                      : added
-                        ? "Eklendi"
-                        : "Sepete Ekle"}
+                    {!egitim.isActive
+                      ? "Satışta Değil"
+                      : adding
+                        ? "Ekleniyor..."
+                        : added
+                          ? "Eklendi"
+                          : "Sepete Ekle"}
                   </Button>
                 </div>
               </div>

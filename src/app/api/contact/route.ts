@@ -1,3 +1,4 @@
+import { sendContactMessageNotificationToAdmin } from "@/lib/gmail-smtp";
 import { createSupabaseAdmin } from "@/lib/supabase";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -33,6 +34,42 @@ export async function POST(request: NextRequest) {
         { error: "Mesaj kaydedilirken bir hata oluştu" },
         { status: 500 }
       );
+    }
+
+    // Gmail SMTP ile admin'e bildirim gönder
+    try {
+      const messageDate = new Date().toLocaleDateString("tr-TR", {
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+        hour: "2-digit",
+        minute: "2-digit",
+      });
+
+      const adminNotificationResult =
+        await sendContactMessageNotificationToAdmin({
+          userName: name,
+          userEmail: email,
+          phone: phone || undefined,
+          message,
+          messageDate,
+        });
+
+      if (adminNotificationResult.success) {
+        console.log(
+          "Admin bildirimi başarıyla gönderildi:",
+          adminNotificationResult.messageId
+        );
+      } else {
+        console.error(
+          "Admin bildirimi gönderme hatası:",
+          adminNotificationResult.error
+        );
+        // Admin bildirimi hatası mesaj kaydını etkilemez
+      }
+    } catch (emailError) {
+      console.error("Admin bildirimi sırasında hata:", emailError);
+      // Email hatası mesaj kaydını etkilemez
     }
 
     return NextResponse.json({

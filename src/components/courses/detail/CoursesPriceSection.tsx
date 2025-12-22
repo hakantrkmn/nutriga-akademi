@@ -32,12 +32,22 @@ export default function EgitimPrice({ egitim }: EgitimPriceProps) {
           <div className="flex flex-col gap-6">
             {/* Price Section */}
             <div className="flex flex-col gap-2 items-center">
-              <div className="text-5xl font-bold text-primary font-[Poppins,sans-serif]">
-                ₺{formatPrice(egitim.price)}
-              </div>
-              <div className="text-sm text-muted font-medium">
-                Tek seferlik ödeme
-              </div>
+              {egitim.isActive ? (
+                <>
+                  <div className="text-5xl font-bold text-primary font-[Poppins,sans-serif]">
+                    ₺{formatPrice(egitim.price)}
+                  </div>
+                  <div className="text-sm text-muted font-medium">
+                    Tek seferlik ödeme
+                  </div>
+                </>
+              ) : (
+                <div className="px-4 py-3 bg-red-50 border border-red-200 rounded-lg">
+                  <p className="text-base font-semibold text-red-800 text-center">
+                    Satışta Değil
+                  </p>
+                </div>
+              )}
             </div>
 
             {/* Action Buttons */}
@@ -45,15 +55,25 @@ export default function EgitimPrice({ egitim }: EgitimPriceProps) {
               <Button
                 variant={added ? "default" : "outline"}
                 size="lg"
-                className={`w-full h-14 rounded-xl text-base font-semibold transition-all duration-200 hover:-translate-y-0.5 ${
+                className={`w-full h-14 rounded-xl text-base font-semibold transition-all duration-200 ${
+                  !egitim.isActive
+                    ? "opacity-50 cursor-not-allowed"
+                    : "hover:-translate-y-0.5"
+                } ${
                   added
                     ? "bg-accent hover:bg-accent/90 text-white"
                     : "border-accent text-accent hover:bg-accent/10"
                 }`}
-                disabled={adding}
+                disabled={adding || !egitim.isActive}
                 onClick={handleAddToCart}
               >
-                {adding ? "Ekleniyor..." : added ? "Eklendi" : "Sepete Ekle"}
+                {!egitim.isActive
+                  ? "Satışta Değil"
+                  : adding
+                    ? "Ekleniyor..."
+                    : added
+                      ? "Eklendi"
+                      : "Sepete Ekle"}
               </Button>
             </div>
 

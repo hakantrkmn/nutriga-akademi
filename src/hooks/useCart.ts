@@ -110,6 +110,31 @@ export function useCart() {
   // Sepete ürün ekle - sadece localStorage kullan
   const addItem = async (educationId: string, quantity = 1) => {
     setLoading(true);
+
+    // Eğitimin aktif olup olmadığını kontrol et
+    try {
+      const res = await fetch("/api/egitimler");
+      if (res.ok) {
+        const { data: educations } = await res.json();
+        const education = educations.find((e: Egitim) => e.id === educationId);
+
+        if (!education) {
+          toaster.error("Eğitim bulunamadı");
+          setLoading(false);
+          return false;
+        }
+
+        if (!education.isActive) {
+          toaster.error("Bu eğitim satışta değildir");
+          setLoading(false);
+          return false;
+        }
+      }
+    } catch (error) {
+      console.error("Failed to check education status:", error);
+      // Hata durumunda devam et, ama kullanıcıyı bilgilendir
+    }
+
     const localItems = getLocalCart();
     const existingIndex = localItems.findIndex(
       (item) => item.educationId === educationId

@@ -23,22 +23,29 @@ export default function EgitimCTA({ egitim }: EgitimCTAProps) {
 
             {/* Description */}
             <p className="max-w-2xl text-lg text-secondary leading-relaxed font-[Inter,sans-serif]">
-              Bu eğitim ile beslenme alanındaki bilginizi derinleştirin ve
-              profesyonel kariyerinizde fark yaratın. Uzman eğitmenlerden
-              öğrenin, sertifikanızı alın.
+              {!egitim.isActive
+                ? "Bu eğitim şu anda satışta değildir. Yeni eğitimlerimiz için bizi takip etmeye devam edin."
+                : "Bu eğitim ile beslenme alanındaki bilginizi derinleştirin ve profesyonel kariyerinizde fark yaratın. Uzman eğitmenlerden öğrenin, sertifikanızı alın."}
             </p>
 
             {/* Action Buttons */}
             <div className="flex gap-4 flex-wrap justify-center pt-2">
-              <Button
-                size="lg"
-                className="px-10 py-7 rounded-xl text-base font-semibold bg-primary hover:bg-primary/90 hover:-translate-y-0.5 hover:shadow-xl transition-all duration-300"
-                onClick={() => addItem(egitim.id)}
-              >
-                {loading
-                  ? "Ekleniyor..."
-                  : "Hemen Başla - ₺" + egitim.price?.toString()}
-              </Button>
+              {!egitim.isActive ? (
+                <div className="px-10 py-7 rounded-xl text-base font-semibold bg-red-50 border-2 border-red-200 text-red-800">
+                  Satışta Değil
+                </div>
+              ) : (
+                <Button
+                  size="lg"
+                  className="px-10 py-7 rounded-xl text-base font-semibold bg-primary hover:bg-primary/90 hover:-translate-y-0.5 hover:shadow-xl transition-all duration-300"
+                  onClick={() => addItem(egitim.id)}
+                  disabled={loading}
+                >
+                  {loading
+                    ? "Ekleniyor..."
+                    : "Hemen Başla - ₺" + egitim.price?.toString()}
+                </Button>
+              )}
             </div>
 
             {/* Features */}

@@ -29,9 +29,7 @@ export const getCourses = async () => {
   if (courses) {
     return JSON.parse(courses);
   } else {
-    const courses = await prisma.egitim.findMany({
-      where: { isActive: true },
-    });
+    const courses = await prisma.egitim.findMany();
     const convertedCourses = courses.map((course) => {
       return {
         ...course,
@@ -54,9 +52,7 @@ export const updateBlogPosts = async () => {
 };
 
 export const updateCourses = async () => {
-  const courses = await prisma.egitim.findMany({
-    where: { isActive: true },
-  });
+  const courses = await prisma.egitim.findMany();
   const convertedCourses = courses.map((course) => {
     return {
       ...course,

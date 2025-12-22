@@ -101,6 +101,55 @@ export interface UsersReport {
   authUserCount: number;
 }
 
+// Analiz Raporu Interface'leri
+export interface AnalizFilters {
+  dateFrom?: string;
+  dateTo?: string;
+  userId?: string | string[];
+  educationId?: string | string[];
+  profession?: string | string[];
+  category?: string | string[];
+}
+
+export interface SimpleUser {
+  id: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+  profession: string;
+}
+
+export interface UserAnalysisData {
+  totalSpent: number;
+  purchaseCount: number;
+  purchasedEducations: {
+    id: string;
+    userName: string;
+    title: string;
+    price: number;
+    purchaseDate: Date;
+    status: string;
+  }[];
+}
+
+export interface EducationAnalysisData {
+  salesCount: number;
+  totalRevenue: number;
+  buyers: {
+    id: string;
+    name: string;
+    email: string;
+    profession: string;
+    educationTitle: string;
+    purchaseDate: Date;
+  }[];
+}
+
+export interface AnalizResponse {
+  userAnalysis?: UserAnalysisData;
+  educationAnalysis?: EducationAnalysisData;
+}
+
 // API Base URL
 const API_BASE = "/api";
 
@@ -214,6 +263,53 @@ export const adminApi = {
 
   getUsersReport: (): Promise<ApiResponse<UsersReport>> =>
     apiCall<UsersReport>("/admin/reports/users"),
+
+  // Tüm kullanıcıları getir (seçim için)
+  getUsers: (): Promise<ApiResponse<SimpleUser[]>> =>
+    apiCall<SimpleUser[]>("/admin/users"),
+
+  // Analiz raporu
+  getAnaliz: (filters: AnalizFilters): Promise<ApiResponse<AnalizResponse>> => {
+    const queryParams = new URLSearchParams();
+    if (filters.dateFrom) queryParams.append("dateFrom", filters.dateFrom);
+    if (filters.dateTo) queryParams.append("dateTo", filters.dateTo);
+
+    if (filters.userId) {
+      if (Array.isArray(filters.userId)) {
+        filters.userId.forEach((id) => queryParams.append("userId", id));
+      } else {
+        queryParams.append("userId", filters.userId);
+      }
+    }
+
+    if (filters.educationId) {
+      if (Array.isArray(filters.educationId)) {
+        filters.educationId.forEach((id) =>
+          queryParams.append("educationId", id)
+        );
+      } else {
+        queryParams.append("educationId", filters.educationId);
+      }
+    }
+
+    if (filters.profession) {
+      if (Array.isArray(filters.profession)) {
+        filters.profession.forEach((p) => queryParams.append("profession", p));
+      } else {
+        queryParams.append("profession", filters.profession);
+      }
+    }
+
+    if (filters.category) {
+      if (Array.isArray(filters.category)) {
+        filters.category.forEach((c) => queryParams.append("category", c));
+      } else {
+        queryParams.append("category", filters.category);
+      }
+    }
+
+    return apiCall<AnalizResponse>(`/admin/analiz?${queryParams.toString()}`);
+  },
 };
 
 // Cart API

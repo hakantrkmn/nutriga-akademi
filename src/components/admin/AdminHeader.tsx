@@ -12,6 +12,7 @@ import {
   FiImage,
   FiLogOut,
   FiMail,
+  FiBarChart2,
 } from "react-icons/fi";
 
 export default function AdminHeader() {
@@ -133,6 +134,21 @@ export default function AdminHeader() {
               Mesajlar
             </Button>
           </Link>
+
+          <Link href="/admin/analiz">
+            <Button
+              variant="ghost"
+              size="sm"
+              className={`h-8 ${
+                isActive("/admin/analiz")
+                  ? "bg-primary-50 text-primary-600"
+                  : "text-gray-900 hover:bg-gray-50"
+              }`}
+            >
+              <FiBarChart2 className="mr-2 h-4 w-4" />
+              Analiz
+            </Button>
+          </Link>
         </div>
 
         {/* Mobil Navigation */}
@@ -190,6 +206,20 @@ export default function AdminHeader() {
               }`}
             >
               <FiMail className="h-3.5 w-3.5" />
+            </Button>
+          </Link>
+
+          <Link href="/admin/analiz">
+            <Button
+              variant="ghost"
+              size="sm"
+              className={`px-1.5 h-8 ${
+                isActive("/admin/analiz")
+                  ? "bg-primary-50 text-primary-600"
+                  : "text-gray-900 hover:bg-gray-50"
+              }`}
+            >
+              <FiBarChart2 className="h-3.5 w-3.5" />
             </Button>
           </Link>
         </div>
