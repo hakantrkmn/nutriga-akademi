@@ -2,16 +2,17 @@
 
 import { useEffect, useState } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { adminApi, egitimlerApi, AnalizFilters as IAnalizFilters, AnalizResponse } from "@/lib/api";
+import { adminApi, egitimlerApi, AnalizFilters as IAnalizFilters, AnalizResponse, SimpleUser } from "@/lib/api";
 import AnalizFilters from "@/components/admin/analiz/AnalizFilters";
 import UserAnalysis from "@/components/admin/analiz/UserAnalysis";
 import EducationAnalysis from "@/components/admin/analiz/EducationAnalysis";
 import { FiBarChart2, FiUsers, FiBookOpen } from "react-icons/fi";
 import { toast } from "sonner";
+import { Egitim } from "@/types";
 
 export default function AnalizPage() {
-  const [users, setUsers] = useState<any[]>([]);
-  const [educations, setEducations] = useState<any[]>([]);
+  const [users, setUsers] = useState<SimpleUser[]>([]);
+  const [educations, setEducations] = useState<Egitim[]>([]);
   const [analizData, setAnalizData] = useState<AnalizResponse | null>(null);
   const [loading, setLoading] = useState(false);
   const [initialLoading, setInitialLoading] = useState(true);

@@ -11,7 +11,7 @@ import {
 import { EducationAnalysisData } from "@/lib/api";
 import { format } from "date-fns";
 import { tr } from "date-fns/locale";
-import { FiTrendingUp, FiUsers, FiAward, FiBookOpen, FiArrowUp, FiArrowDown } from "react-icons/fi";
+import { FiTrendingUp, FiBookOpen, FiArrowUp, FiArrowDown } from "react-icons/fi";
 import StatCard from "@/components/admin/StatCard";
 import { useState, useMemo } from "react";
 import { exportToExcel } from "@/utils/export";
@@ -91,7 +91,7 @@ export default function EducationAnalysis({ data }: EducationAnalysisProps) {
               className="flex items-center gap-2"
             >
               <FiDownload />
-              Excel'e Aktar
+              Excel&apos;e Aktar
             </Button>
           </div>
           <div className="overflow-x-auto">

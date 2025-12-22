@@ -3,15 +3,16 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { COURSE_CATEGORIES, PROFESSIONS } from "@/constants";
-import { AnalizFilters as IAnalizFilters } from "@/lib/api";
+import { AnalizFilters as IAnalizFilters, SimpleUser } from "@/lib/api";
 import { useState } from "react";
 import { FiSearch, FiFilter } from "react-icons/fi";
 import { MultiSelect } from "./MultiSelect";
+import { Egitim } from "@/types";
 
 interface AnalizFiltersProps {
   onSearch: (filters: IAnalizFilters) => void;
-  users: any[];
-  educations: any[];
+  users: SimpleUser[];
+  educations: Egitim[];
   loading: boolean;
 }
 

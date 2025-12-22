@@ -1,5 +1,7 @@
 "use client";
 
+import StatCard from "@/components/admin/StatCard";
+import { Button } from "@/components/ui/button";
 import {
   Table,
   TableBody,
@@ -9,14 +11,18 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { UserAnalysisData } from "@/lib/api";
+import { exportToExcel } from "@/utils/export";
 import { format } from "date-fns";
 import { tr } from "date-fns/locale";
-import { FiDollarSign, FiShoppingBag, FiAward, FiUsers, FiArrowUp, FiArrowDown } from "react-icons/fi";
-import StatCard from "@/components/admin/StatCard";
-import { useState, useMemo } from "react";
-import { exportToExcel } from "@/utils/export";
-import { FiDownload } from "react-icons/fi";
-import { Button } from "@/components/ui/button";
+import { useMemo, useState } from "react";
+import {
+  FiArrowDown,
+  FiArrowUp,
+  FiDollarSign,
+  FiDownload,
+  FiShoppingBag,
+  FiUsers,
+} from "react-icons/fi";
 
 interface UserAnalysisProps {
   data: UserAnalysisData | null;
@@ -42,7 +48,7 @@ export default function UserAnalysis({ data }: UserAnalysisProps) {
     if (!data?.purchasedEducations) return;
 
     const exportData = data.purchasedEducations.map((edu) => ({
-      "Kullanıcı": edu.userName,
+      Kullanıcı: edu.userName,
       "Eğitim Adı": edu.title,
       Fiyat: `${edu.price} ₺`,
       Tarih: format(new Date(edu.purchaseDate), "d MMMM yyyy", { locale: tr }),
@@ -83,7 +89,9 @@ export default function UserAnalysis({ data }: UserAnalysisProps) {
         {/* Satın Alınan Eğitimler */}
         <div className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
           <div className="p-6 border-b border-gray-100 flex justify-between items-center">
-            <h3 className="text-lg font-semibold text-gray-900">Satın Alınan Eğitimler</h3>
+            <h3 className="text-lg font-semibold text-gray-900">
+              Satın Alınan Eğitimler
+            </h3>
             <Button
               onClick={handleExport}
               variant="outline"
@@ -91,7 +99,7 @@ export default function UserAnalysis({ data }: UserAnalysisProps) {
               className="flex items-center gap-2"
             >
               <FiDownload />
-              Excel'e Aktar
+              Excel&apos;e Aktar
             </Button>
           </div>
           <div className="overflow-x-auto">
@@ -127,20 +135,29 @@ export default function UserAnalysis({ data }: UserAnalysisProps) {
                       <TableCell className="text-gray-700">
                         {edu.title}
                       </TableCell>
-                      <TableCell>{edu.price.toLocaleString("tr-TR")} ₺</TableCell>
                       <TableCell>
-                        {format(new Date(edu.purchaseDate), "d MMMM yyyy", { locale: tr })}
+                        {edu.price.toLocaleString("tr-TR")} ₺
+                      </TableCell>
+                      <TableCell>
+                        {format(new Date(edu.purchaseDate), "d MMMM yyyy", {
+                          locale: tr,
+                        })}
                       </TableCell>
                       <TableCell>
                         <span className="px-2 py-1 rounded-full text-xs bg-green-100 text-green-700">
-                          {edu.status === "COMPLETED" ? "Tamamlandı" : edu.status}
+                          {edu.status === "COMPLETED"
+                            ? "Tamamlandı"
+                            : edu.status}
                         </span>
                       </TableCell>
                     </TableRow>
                   ))
                 ) : (
                   <TableRow>
-                    <TableCell colSpan={5} className="text-center py-8 text-gray-500">
+                    <TableCell
+                      colSpan={5}
+                      className="text-center py-8 text-gray-500"
+                    >
                       Bu kriterlere uygun eğitim bulunamadı.
                     </TableCell>
                   </TableRow>
@@ -153,4 +170,3 @@ export default function UserAnalysis({ data }: UserAnalysisProps) {
     </div>
   );
 }
-
