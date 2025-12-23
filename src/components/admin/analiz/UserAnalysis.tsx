@@ -51,6 +51,7 @@ export default function UserAnalysis({ data }: UserAnalysisProps) {
       Kullanıcı: edu.userName,
       "Eğitim Adı": edu.title,
       Fiyat: `${edu.price} ₺`,
+      "Ödenen Fiyat": `${edu.paidPrice} ₺`,
       Tarih: format(new Date(edu.purchaseDate), "d MMMM yyyy", { locale: tr }),
       Durum: edu.status === "COMPLETED" ? "Tamamlandı" : edu.status,
     }));
@@ -109,6 +110,7 @@ export default function UserAnalysis({ data }: UserAnalysisProps) {
                   <TableHead>Kullanıcı</TableHead>
                   <TableHead>Eğitim Adı</TableHead>
                   <TableHead>Fiyat</TableHead>
+                  <TableHead>Ödenen Fiyat</TableHead>
                   <TableHead
                     className="cursor-pointer hover:bg-gray-50 group transition-colors"
                     onClick={toggleSort}
@@ -138,6 +140,9 @@ export default function UserAnalysis({ data }: UserAnalysisProps) {
                       <TableCell>
                         {edu.price.toLocaleString("tr-TR")} ₺
                       </TableCell>
+                      <TableCell className="font-semibold text-green-700">
+                        {edu.paidPrice.toLocaleString("tr-TR")} ₺
+                      </TableCell>
                       <TableCell>
                         {format(new Date(edu.purchaseDate), "d MMMM yyyy", {
                           locale: tr,
@@ -155,7 +160,7 @@ export default function UserAnalysis({ data }: UserAnalysisProps) {
                 ) : (
                   <TableRow>
                     <TableCell
-                      colSpan={5}
+                      colSpan={6}
                       className="text-center py-8 text-gray-500"
                     >
                       Bu kriterlere uygun eğitim bulunamadı.

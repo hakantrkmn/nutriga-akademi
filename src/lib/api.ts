@@ -127,6 +127,7 @@ export interface UserAnalysisData {
     userName: string;
     title: string;
     price: number;
+    paidPrice: number;
     purchaseDate: Date;
     status: string;
   }[];
@@ -141,6 +142,7 @@ export interface EducationAnalysisData {
     email: string;
     profession: string;
     educationTitle: string;
+    paidPrice: number;
     purchaseDate: Date;
   }[];
 }
