@@ -46,6 +46,7 @@ export default function EducationAnalysis({ data }: EducationAnalysisProps) {
       Email: buyer.email,
       Meslek: buyer.profession,
       Eğitim: buyer.educationTitle,
+      Adet: buyer.quantity,
       "Ödenen Fiyat": `${buyer.paidPrice} ₺`,
       Tarih: format(new Date(buyer.purchaseDate), "d MMMM yyyy", { locale: tr }),
     }));
@@ -103,6 +104,7 @@ export default function EducationAnalysis({ data }: EducationAnalysisProps) {
                   <TableHead>Email</TableHead>
                   <TableHead>Meslek</TableHead>
                   <TableHead>Eğitim</TableHead>
+                  <TableHead>Adet</TableHead>
                   <TableHead>Ödenen Fiyat</TableHead>
                   <TableHead
                     className="cursor-pointer hover:bg-gray-50 group transition-colors"
@@ -133,6 +135,7 @@ export default function EducationAnalysis({ data }: EducationAnalysisProps) {
                           {buyer.educationTitle}
                         </span>
                       </TableCell>
+                      <TableCell>{buyer.quantity}</TableCell>
                       <TableCell className="font-semibold text-green-700">
                         {buyer.paidPrice.toLocaleString("tr-TR")} ₺
                       </TableCell>
@@ -143,7 +146,7 @@ export default function EducationAnalysis({ data }: EducationAnalysisProps) {
                   ))
                 ) : (
                   <TableRow>
-                    <TableCell colSpan={6} className="text-center py-8 text-gray-500">
+                  <TableCell colSpan={7} className="text-center py-8 text-gray-500">
                       Bu kriterlere uygun kullanıcı bulunamadı.
                     </TableCell>
                   </TableRow>

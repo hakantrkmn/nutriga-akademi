@@ -61,7 +61,8 @@ export async function GET(request: Request) {
           userName: `${p.user.firstName} ${p.user.lastName}`,
           title: pi.education.title,
           price: Number(pi.unitPrice),
-          paidPrice: Number(p.paidPrice || p.totalAmount),
+          quantity: pi.quantity,
+          paidPrice: Number(pi.totalPrice),
           purchaseDate: p.createdAt,
           status: p.status,
         }))
@@ -98,7 +99,8 @@ export async function GET(request: Request) {
           userName: `${p.user.firstName} ${p.user.lastName}`,
           title: pi.education.title,
           price: Number(pi.unitPrice),
-          paidPrice: Number(p.paidPrice || p.totalAmount),
+          quantity: pi.quantity,
+          paidPrice: Number(pi.totalPrice),
           purchaseDate: p.createdAt,
           status: p.status,
         }))
@@ -171,7 +173,8 @@ export async function GET(request: Request) {
         email: p.user.email,
         profession: p.user.profession,
         educationTitle: pi.education.title,
-        paidPrice: Number(p.paidPrice || p.totalAmount),
+        quantity: pi.quantity,
+        paidPrice: Number(pi.totalPrice),
         purchaseDate: p.createdAt,
       }))
     );
