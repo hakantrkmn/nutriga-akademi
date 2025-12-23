@@ -89,6 +89,7 @@ export async function GET(request: Request) {
           price: Number(pi.unitPrice),
           quantity: pi.quantity,
           paidPrice,
+          installment: p.installment,
           purchaseDate: p.createdAt,
           status: p.status,
         }));
@@ -128,6 +129,7 @@ export async function GET(request: Request) {
           price: Number(pi.unitPrice),
           quantity: pi.quantity,
           paidPrice,
+          installment: p.installment,
           purchaseDate: p.createdAt,
           status: p.status,
         }));
@@ -167,6 +169,7 @@ export async function GET(request: Request) {
       };
     }
 
+    // Get payments with ALL paymentItems (needed for correct ratio calculation)
     const paymentsForEducation = await prisma.payment.findMany({
       where: educationFilters,
       include: {
@@ -175,42 +178,59 @@ export async function GET(request: Request) {
           include: {
             education: true,
           },
-          where:
-            educationIds.length > 0
-              ? { educationId: { in: educationIds } }
-              : categories.length > 0
-                ? { education: { category: { in: categories } } }
-                : undefined,
+          // Include ALL items to calculate ratio correctly
         },
       },
     });
 
+    // Filter criteria for which items to show
+    const filterItemIds =
+      educationIds.length > 0
+        ? educationIds
+        : categories.length > 0
+          ? (
+              await prisma.egitim.findMany({
+                where: { category: { in: categories } },
+                select: { id: true },
+              })
+            ).map((e) => e.id)
+          : undefined;
+
     const salesCount = paymentsForEducation.length;
     const totalRevenue = paymentsForEducation.reduce((sum: number, p) => {
       const itemsWithPaid = mapPaymentItemWithPaid(p);
-      // only included items are already filtered in the query's include
-      const matchedIds = new Set(p.paymentItems.map((pi) => pi.id));
-      const perPayment = itemsWithPaid
-        .filter(({ paymentItem }) => matchedIds.has(paymentItem.id))
-        .reduce((acc: number, { paidPrice }) => acc + paidPrice, 0);
+      // Filter to only show items matching the filter criteria
+      const filteredItems = filterItemIds
+        ? itemsWithPaid.filter(({ paymentItem }) =>
+            filterItemIds.includes(paymentItem.educationId)
+          )
+        : itemsWithPaid;
+      const perPayment = filteredItems.reduce(
+        (acc: number, { paidPrice }) => acc + paidPrice,
+        0
+      );
       return sum + perPayment;
     }, 0);
 
     const buyers = paymentsForEducation.flatMap((p) => {
       const itemsWithPaid = mapPaymentItemWithPaid(p);
-      const matchedIds = new Set(p.paymentItems.map((pi) => pi.id));
-      return itemsWithPaid
-        .filter(({ paymentItem }) => matchedIds.has(paymentItem.id))
-        .map(({ paymentItem: pi, paidPrice }) => ({
-          id: p.user.id,
-          name: `${p.user.firstName} ${p.user.lastName}`,
-          email: p.user.email,
-          profession: p.user.profession,
-          educationTitle: pi.education.title,
-          quantity: pi.quantity,
-          paidPrice,
-          purchaseDate: p.createdAt,
-        }));
+      // Filter to only show items matching the filter criteria
+      const filteredItems = filterItemIds
+        ? itemsWithPaid.filter(({ paymentItem }) =>
+            filterItemIds.includes(paymentItem.educationId)
+          )
+        : itemsWithPaid;
+      return filteredItems.map(({ paymentItem: pi, paidPrice }) => ({
+        id: p.user.id,
+        name: `${p.user.firstName} ${p.user.lastName}`,
+        email: p.user.email,
+        profession: p.user.profession,
+        educationTitle: pi.education.title,
+        quantity: pi.quantity,
+        paidPrice,
+        installment: p.installment,
+        purchaseDate: p.createdAt,
+      }));
     });
 
     educationAnalysis = {

@@ -48,6 +48,7 @@ export default function EducationAnalysis({ data }: EducationAnalysisProps) {
       Eğitim: buyer.educationTitle,
       Adet: buyer.quantity,
       "Ödenen Fiyat": `${buyer.paidPrice} ₺`,
+      Taksit: buyer.installment === 1 ? "Tek Çekim" : `${buyer.installment} Taksit`,
       Tarih: format(new Date(buyer.purchaseDate), "d MMMM yyyy", { locale: tr }),
     }));
 
@@ -106,6 +107,7 @@ export default function EducationAnalysis({ data }: EducationAnalysisProps) {
                   <TableHead>Eğitim</TableHead>
                   <TableHead>Adet</TableHead>
                   <TableHead>Ödenen Fiyat</TableHead>
+                  <TableHead>Taksit</TableHead>
                   <TableHead
                     className="cursor-pointer hover:bg-gray-50 group transition-colors"
                     onClick={toggleSort}
@@ -140,13 +142,22 @@ export default function EducationAnalysis({ data }: EducationAnalysisProps) {
                         {buyer.paidPrice.toLocaleString("tr-TR")} ₺
                       </TableCell>
                       <TableCell>
+                        {buyer.installment === 1 ? (
+                          <span className="text-gray-600">Tek Çekim</span>
+                        ) : (
+                          <span className="font-medium text-blue-600">
+                            {buyer.installment} Taksit
+                          </span>
+                        )}
+                      </TableCell>
+                      <TableCell>
                         {format(new Date(buyer.purchaseDate), "d MMMM yyyy", { locale: tr })}
                       </TableCell>
                     </TableRow>
                   ))
                 ) : (
                   <TableRow>
-                  <TableCell colSpan={7} className="text-center py-8 text-gray-500">
+                  <TableCell colSpan={8} className="text-center py-8 text-gray-500">
                       Bu kriterlere uygun kullanıcı bulunamadı.
                     </TableCell>
                   </TableRow>

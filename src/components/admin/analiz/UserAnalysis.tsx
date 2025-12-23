@@ -53,6 +53,7 @@ export default function UserAnalysis({ data }: UserAnalysisProps) {
       Fiyat: `${edu.price} ₺`,
       Adet: edu.quantity,
       "Ödenen Fiyat": `${edu.paidPrice} ₺`,
+      Taksit: edu.installment === 1 ? "Tek Çekim" : `${edu.installment} Taksit`,
       Tarih: format(new Date(edu.purchaseDate), "d MMMM yyyy", { locale: tr }),
       Durum: edu.status === "COMPLETED" ? "Tamamlandı" : edu.status,
     }));
@@ -113,6 +114,7 @@ export default function UserAnalysis({ data }: UserAnalysisProps) {
                   <TableHead>Fiyat</TableHead>
                   <TableHead>Adet</TableHead>
                   <TableHead>Ödenen Fiyat</TableHead>
+                  <TableHead>Taksit</TableHead>
                   <TableHead
                     className="cursor-pointer hover:bg-gray-50 group transition-colors"
                     onClick={toggleSort}
@@ -147,6 +149,15 @@ export default function UserAnalysis({ data }: UserAnalysisProps) {
                         {edu.paidPrice.toLocaleString("tr-TR")} ₺
                       </TableCell>
                       <TableCell>
+                        {edu.installment === 1 ? (
+                          <span className="text-gray-600">Tek Çekim</span>
+                        ) : (
+                          <span className="font-medium text-blue-600">
+                            {edu.installment} Taksit
+                          </span>
+                        )}
+                      </TableCell>
+                      <TableCell>
                         {format(new Date(edu.purchaseDate), "d MMMM yyyy", {
                           locale: tr,
                         })}
@@ -163,7 +174,7 @@ export default function UserAnalysis({ data }: UserAnalysisProps) {
                 ) : (
                   <TableRow>
                     <TableCell
-                    colSpan={7}
+                    colSpan={8}
                       className="text-center py-8 text-gray-500"
                     >
                       Bu kriterlere uygun eğitim bulunamadı.
