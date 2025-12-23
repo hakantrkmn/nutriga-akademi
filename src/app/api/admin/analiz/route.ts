@@ -33,6 +33,31 @@ export async function GET(request: Request) {
       };
     }
 
+    // Helper: discounted per-item paid price (proportional)
+    type PaymentWithItems = Prisma.PaymentGetPayload<{
+      include: {
+        paymentItems: {
+          include: {
+            education: true;
+          };
+        };
+        user: true;
+      };
+    }>;
+
+    const mapPaymentItemWithPaid = (payment: PaymentWithItems) => {
+      const grossTotal = payment.paymentItems.reduce((sum: number, pi) => {
+        return sum + Number(pi.totalPrice);
+      }, 0);
+      const paidTotal = Number(payment.paidPrice ?? payment.totalAmount ?? 0);
+      const ratio = grossTotal > 0 ? paidTotal / grossTotal : 0;
+
+      return payment.paymentItems.map((pi) => ({
+        paymentItem: pi,
+        paidPrice: Number(pi.totalPrice) * ratio,
+      }));
+    };
+
     // User Analysis
     let userAnalysis = null;
     // Single user selection logic for detailed user analysis
@@ -55,18 +80,19 @@ export async function GET(request: Request) {
       );
       const purchaseCount = userPayments.length;
 
-      const purchasedEducations = userPayments.flatMap((p) =>
-        p.paymentItems.map((pi) => ({
+      const purchasedEducations = userPayments.flatMap((p) => {
+        const itemsWithPaid = mapPaymentItemWithPaid(p);
+        return itemsWithPaid.map(({ paymentItem: pi, paidPrice }) => ({
           id: pi.education.id,
           userName: `${p.user.firstName} ${p.user.lastName}`,
           title: pi.education.title,
           price: Number(pi.unitPrice),
           quantity: pi.quantity,
-          paidPrice: Number(pi.totalPrice),
+          paidPrice,
           purchaseDate: p.createdAt,
           status: p.status,
-        }))
-      );
+        }));
+      });
 
       userAnalysis = {
         totalSpent,
@@ -93,18 +119,19 @@ export async function GET(request: Request) {
       );
       const purchaseCount = userPayments.length;
 
-      const purchasedEducations = userPayments.flatMap((p) =>
-        p.paymentItems.map((pi) => ({
+      const purchasedEducations = userPayments.flatMap((p) => {
+        const itemsWithPaid = mapPaymentItemWithPaid(p);
+        return itemsWithPaid.map(({ paymentItem: pi, paidPrice }) => ({
           id: pi.education.id,
           userName: `${p.user.firstName} ${p.user.lastName}`,
           title: pi.education.title,
           price: Number(pi.unitPrice),
           quantity: pi.quantity,
-          paidPrice: Number(pi.totalPrice),
+          paidPrice,
           purchaseDate: p.createdAt,
           status: p.status,
-        }))
-      );
+        }));
+      });
 
       userAnalysis = {
         totalSpent,
@@ -159,25 +186,32 @@ export async function GET(request: Request) {
     });
 
     const salesCount = paymentsForEducation.length;
-    const totalRevenue = paymentsForEducation.reduce(
-      (sum, p) =>
-        sum +
-        p.paymentItems.reduce((pSum, pi) => pSum + Number(pi.totalPrice), 0),
-      0
-    );
+    const totalRevenue = paymentsForEducation.reduce((sum: number, p) => {
+      const itemsWithPaid = mapPaymentItemWithPaid(p);
+      // only included items are already filtered in the query's include
+      const matchedIds = new Set(p.paymentItems.map((pi) => pi.id));
+      const perPayment = itemsWithPaid
+        .filter(({ paymentItem }) => matchedIds.has(paymentItem.id))
+        .reduce((acc: number, { paidPrice }) => acc + paidPrice, 0);
+      return sum + perPayment;
+    }, 0);
 
-    const buyers = paymentsForEducation.flatMap((p) =>
-      p.paymentItems.map((pi) => ({
-        id: p.user.id,
-        name: `${p.user.firstName} ${p.user.lastName}`,
-        email: p.user.email,
-        profession: p.user.profession,
-        educationTitle: pi.education.title,
-        quantity: pi.quantity,
-        paidPrice: Number(pi.totalPrice),
-        purchaseDate: p.createdAt,
-      }))
-    );
+    const buyers = paymentsForEducation.flatMap((p) => {
+      const itemsWithPaid = mapPaymentItemWithPaid(p);
+      const matchedIds = new Set(p.paymentItems.map((pi) => pi.id));
+      return itemsWithPaid
+        .filter(({ paymentItem }) => matchedIds.has(paymentItem.id))
+        .map(({ paymentItem: pi, paidPrice }) => ({
+          id: p.user.id,
+          name: `${p.user.firstName} ${p.user.lastName}`,
+          email: p.user.email,
+          profession: p.user.profession,
+          educationTitle: pi.education.title,
+          quantity: pi.quantity,
+          paidPrice,
+          purchaseDate: p.createdAt,
+        }));
+    });
 
     educationAnalysis = {
       salesCount,
