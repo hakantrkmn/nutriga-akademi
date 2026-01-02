@@ -1,25 +1,15 @@
 import { prisma } from "@/lib/prisma";
-import { createSupabaseAdmin } from "@/lib/supabase";
 import { NextResponse } from "next/server";
 
 // GET - Admin dashboard istatistikleri
 export async function GET() {
   try {
     // Prisma ile sayıları al
-    const [egitimCount, blogCount] = await Promise.all([
+    const [egitimCount, blogCount, userCount] = await Promise.all([
       prisma.egitim.count(),
       prisma.blogPost.count(),
+      prisma.user.count(), // Prisma'dan tüm kullanıcı sayısını al
     ]);
-
-    // Supabase ile kullanıcı sayısını al
-    const supabaseAdmin = createSupabaseAdmin();
-    const { data: users, error } = await supabaseAdmin.auth.admin.listUsers();
-
-    if (error) {
-      console.error("Kullanıcılar listelenirken hata:", error);
-    }
-
-    const userCount = users?.users.length || 0;
 
     // Toplam satış sayısını hesapla (başarılı ödemeler)
     const totalSales = await prisma.payment.count({
